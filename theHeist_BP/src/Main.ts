@@ -1,10 +1,11 @@
-//import { ItemType, EffectTypes, system, Vector, world } from "mojang-minecraft";
-import { EntityTypes, BlockPermutation, EffectTypes, system, world, DynamicPropertiesDefinition, Vector, Vector3 } from "@minecraft/server";
+import { EntityTypes, system, world, DynamicPropertiesDefinition, Vector, Vector3 } from "@minecraft/server";
 import * as dataManager from "./imports/entity_dynamic_properties";
 import "./lvl_loader";
 import "./gameband";
 import "./alarm";
 import Utilities from "./Utilities";
+
+world.sendMessage('e');
 
 world.afterEvents.worldInitialize.subscribe(e => {
 	const def = new DynamicPropertiesDefinition(); // this holds the properties

@@ -1,4 +1,4 @@
-import { ItemStack, EffectTypes, Vector, system, world, DisplaySlotId, BlockInventoryComponent, EntityInventoryComponent } from "@minecraft/server";
+import { ItemStack, Vector, system, world, DisplaySlotId, BlockInventoryComponent, EntityInventoryComponent } from "@minecraft/server";
 import * as dataManager from "./imports/entity_dynamic_properties";
 
 // Tag length is max 255, need a different way to store lvl information other than tags :(
