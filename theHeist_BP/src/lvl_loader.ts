@@ -211,7 +211,6 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 						for (const entity of entities) {
 							if (entity.typeId != "minecraft:player") entity.kill();
 						}
-						//#region Setup cameras
 						// Camera 0
 						const camera0 = overworld.spawnEntity("armor_stand", { "x": 2014.5, "y": cameraHeight, "z": 51.5 });
 						camera0.setRotation({ "x": 0, "y": 10 });
@@ -291,8 +290,6 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 							"type": "camera"
 						};
 						dataManager.setData(camera5, "cameraTracker", camera5DataNode);
-						//#endregion
-						//#region Setup consoles
 						// Console 0 (Type: Computer)
 						const console0 = overworld.spawnEntity("armor_stand", { "x": 2020.5, "y": consolesHeight, "z": 54.5 });
 						overworld.runCommandAsync('setblock 2020 -58 54 theheist:computer ["theheist:rotation":5]');
@@ -502,8 +499,6 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 							]
 						};
 						dataManager.setData(console8, "actionTracker", console8ActionTracker);
-						//#endregion
-						//#region Setup recharge stations
 						// Recharge Station 0
 						const recharge0 = overworld.spawnEntity("minecraft:armor_stand", new Vector(1998.5, rechargeHeight, 72.5));
 						overworld.runCommandAsync('setblock 1998 -59 72 theheist:recharge_station ["theheist:rotation":5]');
@@ -524,8 +519,6 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 							"block": { "x": 1986, "y": -59, "z": 70, "rotation": 4 }
 						};
 						dataManager.setData(recharge1, "energyTracker", recharge1DataNode);
-						//#endregion
-						//#region Setup blocks
 						// Fill drawers
 						const drawer0InventoryContainer = (overworld.getBlock({ "x": 2002.5, "y": -59, "z": 75.5 })!.getComponent("inventory") as BlockInventoryComponent).container;
 						drawer0InventoryContainer.clearAll();
@@ -540,7 +533,6 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 						//Dimesion.fillBlocks() does not work
 						overworld.runCommandAsync('fill 2029.50 -59.00 56.50 2029.50 -59.00 61.50 redstone_block');
 						//overworld.fillBlocks({"x": 1988, "y": -61, "z": 67}, {"x": 1987, "y": -61, "z": 67}, "air");
-						//#endregion
 						// Teleport player from pre-hatch to post-hatch
 						player.teleport({ 'x': 2013.5, 'y': -52, 'z': 56.5 }, { 'dimension': overworld, 'rotation': { 'x': 0, 'y': 90 } });
 						player.runCommandAsync('tellraw @a {"rawtext":[{"text":"§5§oVoice:§r "}, {"translate":"map.sub.004"}]}');

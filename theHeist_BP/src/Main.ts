@@ -15,13 +15,10 @@ world.afterEvents.worldInitialize.subscribe(e => {
 	} // assign the definition to all entities, so every entity can use it
 });
 
-//#region Stop Watchdog Terminate
 system.beforeEvents.watchdogTerminate.subscribe((event) => {
 	event.cancel = true;
 });
-//#endregion
 
-//#region Admin Help
 const levelLocations: Record<string, Vector3> = {
 	"2": { 'x': 0.5, 'y': -50, 'z': 56.5 },
 	"1": { 'x': -22.5, 'y': -50, 'z': 56.5 },
@@ -140,4 +137,3 @@ world.beforeEvents.chatSend.subscribe(event => {
 			break;
 	}
 });
-//#endregion
