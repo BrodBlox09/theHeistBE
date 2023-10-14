@@ -1,0 +1,64 @@
+[
+    {
+        "flipbook_texture": "textures/blocks/camera_sight_red",
+        "atlas_tile": "camera_sight_red",
+        "ticks_per_frame": 2,
+        "blend_frames": false
+    },
+    {
+        "flipbook_texture": "textures/blocks/sonar_sight_blue",
+        "atlas_tile": "sonar_sight_blue",
+        "ticks_per_frame": 2,
+        "blend_frames": false
+    },
+    {
+        "flipbook_texture": "textures/items/paper",
+        "atlas_tile": "paper",
+        "ticks_per_frame": 2,
+        "blend_frames": false
+    },
+    {
+        "flipbook_texture": "textures/blocks/reinforced_iron_block",
+        "atlas_tile": "reinforced_iron_block",
+        "ticks_per_frame": 10
+    },
+    {
+        "flipbook_texture": "textures/blocks/redstone_block_animated",
+        "atlas_tile": "locked_screen",
+        "ticks_per_frame": 20
+    },
+    {
+        "flipbook_texture": "textures/blocks/computer_base_animated",
+        "atlas_tile": "computer_base_animated",
+        "ticks_per_frame": 20
+    },
+    {
+        "flipbook_texture": "textures/blocks/keypad_base_animated",
+        "atlas_tile": "keypad_base_animated",
+        "ticks_per_frame": 20
+    },
+    {
+        "flipbook_texture": "textures/blocks/keypad_base_animated_hack",
+        "atlas_tile": "keypad_base_animated_hack",
+        "ticks_per_frame": 2,
+        "blend_frames": false
+    },
+    {
+        "flipbook_texture": "textures/blocks/noise",
+        "atlas_tile": "noise",
+        "ticks_per_frame": 1,
+        "blend_frames": false
+    },
+    {
+        "flipbook_texture": "textures/blocks/server_screen",
+        "atlas_tile": "server_screen",
+        "ticks_per_frame": 3,
+        "blend_frames": false
+    },
+    {
+        "flipbook_texture": "textures/blocks/server_beep_boop",
+        "atlas_tile": "server_beep_boop",
+        "ticks_per_frame": 3,
+        "blend_frames": false
+    }
+]

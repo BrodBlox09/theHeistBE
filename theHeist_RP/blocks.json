@@ -1,0 +1,65 @@
+{
+    "format_version": "1.19.30",
+    "theheist:keypad": {
+        
+    },
+    "theheist:computer": {
+
+    },
+    "theheist:fake_iron_block": {
+        "textures": "fake_iron_block"
+    },
+    "theheist:green_block": {
+        "textures": "green_block"
+    },
+    "theheist:camera_sight": {
+        
+    },
+    "theheist:white_trapdoor": {
+
+    },
+    "theheist:reinforced_iron_block": {
+        "textures": "reinforced_iron_block"
+    },
+    "theheist:file_cabinet": {
+
+    },
+    "theheist:chair": {
+
+    },
+    "theheist:recharge_mode_lvl_1": {
+
+    },
+    "theheist:hacking_mode_lvl_1": {
+
+    },
+    "theheist:recharge_station": {
+
+    },
+    "theheist:projector": {
+
+    },
+    "theheist:drawer_decoration": {
+
+    },
+
+    "dropper" : {
+       "carried_textures" : {
+          "down" : "oak_log",
+          "east" : "oak_log",
+          "north" : "oak_log",
+          "south" : "oak_log",
+          "up" : "oak_log",
+          "west" : "oak_log"
+       },
+       "sound" : "stone",
+       "textures" : {
+          "down" : "oak_log",
+          "east" : "oak_log",
+          "north" : "oak_log",
+          "south" : "dropper_front_custom",
+          "up" : "oak_log",
+          "west" : "oak_log"
+       }
+    }
+}

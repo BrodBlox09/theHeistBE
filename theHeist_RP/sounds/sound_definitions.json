@@ -1,0 +1,381 @@
+{
+    "format_version": "1.14.0",
+    "sound_definitions": {
+        "map.alarm": {
+            "category": "ui",
+            "sounds": [
+                {
+                    "name": "sounds/map/alarm",
+                    "stream": false
+                }]
+        },
+        "map.robot": {
+            "category": "neutral",
+            "sounds": [
+                {
+                    "name": "sounds/map/robot",
+                    "stream": false
+                }]
+        },
+        "map.robot2": {
+            "category": "neutral",
+            "sounds": [
+                {
+                    "name": "sounds/map/robot2",
+                    "stream": false
+                }]
+        },
+        "map.001": {
+            "category": "ui",
+            "sounds": [
+                {
+                    "name": "sounds/map/001",
+                    "stream": true
+                }]
+        },
+        "map.002": {
+            "category": "ui",
+            "sounds": [
+                {
+                    "name": "sounds/map/002",
+                    "stream": true
+                }]
+        },
+        "map.003": {
+            "category": "ui",
+            "sounds": [
+                {
+                    "name": "sounds/map/003",
+                    "stream": true
+                }]
+        },
+        "map.004": {
+            "category": "ui",
+            "sounds": [
+                {
+                    "name": "sounds/map/004",
+                    "stream": true
+                }]
+        },
+        "map.101": {
+            "category": "ui",
+            "sounds": [
+                {
+                    "name": "sounds/map/101",
+                    "stream": true
+                }]
+        },
+        "map.102": {
+            "category": "ui",
+            "sounds": [
+                {
+                    "name": "sounds/map/102",
+                    "stream": true
+                }]
+        },
+        "map.103": {
+            "category": "ui",
+            "sounds": [
+                {
+                    "name": "sounds/map/103",
+                    "stream": true
+                }]
+        },
+        "map.104": {
+            "category": "ui",
+            "sounds": [
+                {
+                    "name": "sounds/map/104",
+                    "stream": true
+                }]
+        },
+        "map.105": {
+            "category": "ui",
+            "sounds": [
+                {
+                    "name": "sounds/map/105",
+                    "stream": true
+                }]
+        },
+        "map.106": {
+            "category": "ui",
+            "sounds": [
+                {
+                    "name": "sounds/map/106",
+                    "stream": true
+                }]
+        },
+        "map.107": {
+            "category": "ui",
+            "sounds": [
+                {
+                    "name": "sounds/map/107",
+                    "stream": true
+                }]
+        },
+        "map.108": {
+            "category": "ui",
+            "sounds": [
+                {
+                    "name": "sounds/map/108",
+                    "stream": true
+                }]
+        },
+        "map.109": {
+            "category": "ui",
+            "sounds": [
+                {
+                    "name": "sounds/map/109",
+                    "stream": true
+                }]
+        },
+        "map.200": {
+            "category": "ui",
+            "sounds": [
+                {
+                    "name": "sounds/map/200",
+                    "stream": true
+                }]
+        },
+        "map.201": {
+            "category": "ui",
+            "sounds": [
+                {
+                    "name": "sounds/map/201",
+                    "stream": true
+                }]
+        },
+        "map.202": {
+            "category": "ui",
+            "sounds": [
+                {
+                    "name": "sounds/map/202",
+                    "stream": true
+                }]
+        },
+        "map.203": {
+            "category": "ui",
+            "sounds": [
+                {
+                    "name": "sounds/map/203",
+                    "stream": true
+                }]
+        },
+        "map.204": {
+            "category": "ui",
+            "sounds": [
+                {
+                    "name": "sounds/map/204",
+                    "stream": true
+                }]
+        },
+        "map.300": {
+            "category": "ui",
+            "sounds": [
+                {
+                    "name": "sounds/map/300",
+                    "stream": true
+                }]
+        },
+        "map.301": {
+            "category": "ui",
+            "sounds": [
+                {
+                    "name": "sounds/map/301",
+                    "stream": true
+                }]
+        },
+        "map.302": {
+            "category": "ui",
+            "sounds": [
+                {
+                    "name": "sounds/map/302",
+                    "stream": true
+                }]
+        },
+        "map.400": {
+            "category": "ui",
+            "sounds": [
+                {
+                    "name": "sounds/map/400",
+                    "stream": true
+                }]
+        },
+        "map.401": {
+            "category": "ui",
+            "sounds": [
+                {
+                    "name": "sounds/map/401",
+                    "stream": true
+                }]
+        },
+        "map.402": {
+            "category": "ui",
+            "sounds": [
+                {
+                    "name": "sounds/map/402",
+                    "stream": true
+                }]
+        },
+        "map.403": {
+            "category": "ui",
+            "sounds": [
+                {
+                    "name": "sounds/map/403",
+                    "stream": true
+                }]
+        },
+        "map.404": {
+            "category": "ui",
+            "sounds": [
+                {
+                    "name": "sounds/map/404",
+                    "stream": true
+                }]
+        },
+        "map.500": {
+            "category": "ui",
+            "sounds": [
+                {
+                    "name": "sounds/map/500",
+                    "stream": true
+                }]
+        },
+        "map.501": {
+            "category": "ui",
+            "sounds": [
+                {
+                    "name": "sounds/map/501",
+                    "stream": true
+                }]
+        },
+        "map.502": {
+            "category": "ui",
+            "sounds": [
+                {
+                    "name": "sounds/map/502",
+                    "stream": true
+                }]
+        },
+        "map.503": {
+            "category": "ui",
+            "sounds": [
+                {
+                    "name": "sounds/map/503",
+                    "stream": true
+                }]
+        },
+        "map.504": {
+            "category": "ui",
+            "sounds": [
+                {
+                    "name": "sounds/map/504",
+                    "stream": true
+                }]
+        },
+        "map.600": {
+            "category": "ui",
+            "sounds": [
+                {
+                    "name": "sounds/map/600",
+                    "stream": true
+                }]
+        },
+        "map.601": {
+            "category": "ui",
+            "sounds": [
+                {
+                    "name": "sounds/map/601",
+                    "stream": true
+                }]
+        },
+        "map.602": {
+            "category": "ui",
+            "sounds": [
+                {
+                    "name": "sounds/map/602",
+                    "stream": true
+                }]
+        },
+        "map.700": {
+            "category": "ui",
+            "sounds": [
+                {
+                    "name": "sounds/map/700",
+                    "stream": true
+                }]
+        },
+        "map.701": {
+            "category": "ui",
+            "sounds": [
+                {
+                    "name": "sounds/map/701",
+                    "stream": true
+                }]
+        },
+        "map.702": {
+            "category": "ui",
+            "sounds": [
+                {
+                    "name": "sounds/map/702",
+                    "stream": true
+                }]
+        },
+        "map.703": {
+            "category": "ui",
+            "sounds": [
+                {
+                    "name": "sounds/map/703",
+                    "stream": true
+                }]
+        },
+        "map.704": {
+            "category": "ui",
+            "sounds": [
+                {
+                    "name": "sounds/map/704",
+                    "stream": true
+                }]
+        },
+        "map.disable": {
+            "category": "ui",
+            "sounds": [
+                {
+                    "name": "sounds/map/disable",
+                    "stream": false
+                }]
+        },
+        "map.forgot_prototypes": {
+            "category": "ui",
+            "sounds": [
+                {
+                    "name": "sounds/map/forgot_prototypes",
+                    "stream": false
+                }]
+        },
+        "map.shock": {
+            "category": "neutral",
+            "sounds": [
+                {
+                    "name": "sounds/map/shock",
+                    "stream": false
+                }]
+        },
+        "map.hack_use": {
+            "category": "ui",
+            "sounds": [
+                {
+                    "name": "sounds/map/hack_use",
+                    "stream": false
+                }]
+        },
+        "map.recharge_use": {
+            "category": "ui",
+            "sounds": [
+                {
+                    "name": "sounds/map/recharge_use",
+                    "stream": false
+                }]
+        }
+    }
+}

@@ -1,0 +1,128 @@
+{
+    "texture_data": {
+        "keypad_base": {
+            "textures": "textures/blocks/keypad_base"
+        },
+        "keypad_base_animated": {
+            "textures": "textures/blocks/keypad_base_animated"
+        },
+        "keypad_base_animated_hack": {
+            "textures": "textures/blocks/keypad_base_animated_hack"
+        },
+        "computer_base": {
+            "textures": "textures/blocks/computer_base"
+        },
+        "computer_base_animated": {
+            "textures": "textures/blocks/computer_base_animated"
+        },
+        "locked_screen": {
+            "textures": "textures/blocks/redstone_block_animated"
+        },
+        "unlocked_screen": {
+            "textures": "textures/blocks/hack_done"
+        },
+        "computer_screensaver_1": {
+            "textures": "textures/blocks/computer_screensaver_1"
+        },
+        "computer_screensaver_2": {
+            "textures": "textures/blocks/computer_screensaver_2"
+        },
+        "computer_screensaver_3": {
+            "textures": "textures/blocks/computer_screensaver_3"
+        },
+        "computer_screensaver_4": {
+            "textures": "textures/blocks/computer_screensaver_4"
+        },
+        "computer_screensaver_5": {
+            "textures": "textures/blocks/computer_screensaver_5"
+        },
+        "computer_screensaver_6": {
+            "textures": "textures/blocks/computer_screensaver_6"
+        },
+        "custom_door_1_bottom": {
+            "textures": "textures/blocks/door_dark_oak_lower"
+        },
+        "custom_door_1_top": {
+            "textures": "textures/blocks/door_dark_oak_upper"
+        },
+        "custom_door_1_handle": {
+            "textures": "textures/blocks/custom_door_1_handle"
+        },
+        "noise": {
+            "textures": "textures/blocks/noise"
+        },
+        "fake_iron_block": {
+            "textures": "textures/blocks/iron_block"
+        },
+        "green_block": {
+            "textures": "textures/blocks/green_block"
+        },
+        "camera_sight_red": {
+            "textures": "textures/blocks/camera_sight_red"
+        },
+        "sonar_sight_blue": {
+            "textures": "textures/blocks/sonar_sight_blue"
+        },
+        "white_trapdoor": {
+            "textures": "textures/blocks/white_trapdoor"
+        },
+        "reinforced_iron_block": {
+            "textures": "textures/blocks/reinforced_iron_block"
+        },
+        "file_cabinet": {
+            "textures": "textures/blocks/file_cabinet"
+        },
+        "chair": {
+            "textures": "textures/blocks/chair"
+        },
+        "recharge_mode": {
+            "textures": "textures/blocks/recharge_mode"
+        },
+        "hacking_mode": {
+            "textures": "textures/blocks/hacking_mode"
+        },
+        "recharge_station_1": {
+            "textures": "textures/blocks/recharge_station_1"
+        },
+        "recharge_station_2": {
+            "textures": "textures/blocks/recharge_station_2"
+        },
+        "recharge_station_3": {
+            "textures": "textures/blocks/recharge_station_3"
+        },
+        "server_screen": {
+            "textures": "textures/blocks/server_screen"
+        },
+        "server_side": {
+            "textures": "textures/blocks/server_side"
+        },
+        "server_beep_boop": {
+            "textures": "textures/blocks/server_beep_boop"
+        },
+        "black": {
+            "textures": "textures/blocks/black"
+        },
+        "projector": {
+            "textures": "textures/blocks/projector"
+        },
+
+        "oak_log": {
+            "textures": "textures/blocks/log_oak"
+        },
+        "dropper_front_custom": {
+            "textures": "textures/blocks/dropper_front_custom"
+        },
+        "drawer_decoration": {
+            "textures": "textures/blocks/drawer_decoration"
+        },
+        "vending_machine": {
+            "textures": "textures/blocks/vending_machine"
+        },
+        "black_wool": {
+            "textures": "textures/blocks/wool_colored_black"
+        },
+        "keycard_reader": {
+            "textures": "textures/blocks/keycard_reader"
+        }
+    }
+}

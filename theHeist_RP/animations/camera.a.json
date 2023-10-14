@@ -1,0 +1,25 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.camera.default": {
+			"loop": true
+			//Do something with Eye bone when figured out
+		},
+		"animation.camera.disable": {
+			"loop": "hold_on_last_frame",
+			"animation_length": 0.75,
+			"bones": {
+				"Eye": {
+					"position": {
+						"0.0": [0, 0, 0],
+						"0.5": [0, -33, 0]
+					},
+					"scale": {
+						"0.4688": [1, 1, 1],
+						"0.5": [0, 0, 0]
+					}
+				}
+			}
+		}
+	}
+}
