@@ -1,0 +1,94 @@
+{
+    "format_version": "1.16.100",
+    "minecraft:block": {
+        "description": {
+            "identifier": "theheist:chair",
+            "is_experimental": false,
+            "menu_category": {
+                "category": "construction"
+            },
+            "properties": {
+                "theheist:rotation": [2, 3, 4, 5],
+                "theheist:style": [1, 2]
+            }
+        },
+        "events": {
+            "theheist:set_rotation": {
+                "set_block_property": {
+                    "theheist:rotation": "(query.cardinal_facing_2d)"
+                }
+            }
+        },
+        "components": {
+            "minecraft:on_player_placing": {
+                "event": "theheist:set_rotation"
+            }
+        },
+        "permutations": [
+            {
+                "condition": "query.block_property('theheist:rotation') == 2",
+                "components": {
+                    "minecraft:rotation": [0, 180, 0]
+                }
+            },
+            {
+                "condition": "query.block_property('theheist:rotation') == 3",
+                "components": {
+                    "minecraft:rotation": [0, 0, 0]
+                }
+            },
+            {
+                "condition": "query.block_property('theheist:rotation') == 4",
+                "components": {
+                    "minecraft:rotation": [0, 270, 0]
+                }
+            },
+            {
+                "condition": "query.block_property('theheist:rotation') == 5",
+                "components": {
+                    "minecraft:rotation": [0, 90, 0]
+                }
+            },
+            {
+                "condition": "query.block_property('theheist:style') == 1",
+                "components": {
+                    "minecraft:collision_box": {
+                        "origin": [-8, 0, -8],
+                        "size": [16, 8, 16]
+                    },
+                    "minecraft:geometry": "geometry.chair",
+                    "minecraft:material_instances": {
+                        "*": {
+                            "texture": "chair",
+                            "ambient_occlusion": false
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "query.block_property('theheist:style') == 2",
+                "components": {
+                    "minecraft:collision_box": {
+                        "origin": [-8, 0, -8],
+                        "size": [16, 1, 16]
+                    },
+                    "minecraft:selection_box": {
+                        "origin": [-8, 0, -8],
+                        "size": [16, 1, 16]
+                    },
+                    "minecraft:geometry": "geometry.stool",
+                    "minecraft:material_instances": {
+                        "black_wool": {
+                            "texture": "black_wool",
+                            "ambient_occlusion": false
+                        },
+                        "*": {
+                            "texture": "oak_log",
+                            "ambient_occlusion": false
+                        }
+                    }
+                }
+            }
+        ]
+    }
+}

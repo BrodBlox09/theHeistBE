@@ -1,0 +1,17 @@
+{
+    "format_version": "1.16.100",
+    "minecraft:block": {
+        "description": {
+            "identifier": "theheist:fake_iron_block",
+            "is_experimental": false,
+            "register_to_creative_menu": true,
+            "menu_category": {
+                "category": "construction"
+            }
+        },
+        "components": {
+            "minecraft:collision_box": false,
+            "minecraft:selection_box": true
+        }
+    }
+}

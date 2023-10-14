@@ -1,0 +1,78 @@
+{
+    "format_version": "1.16.100",
+    "minecraft:block": {
+        "description": {
+            "identifier": "theheist:file_cabinet",
+            "is_experimental": false,
+            "menu_category": {
+                "category": "construction"
+            },
+            "properties": {
+                "theheist:style": [1, 2, 3],
+                "theheist:rotation": [2, 3, 4, 5]
+            }
+        },
+        "events": {
+            "theheist:set_rotation": {
+                "set_block_property": {
+                    "theheist:rotation": "(query.cardinal_facing_2d)"
+                }
+            }
+        },
+        "components": {
+            "minecraft:on_player_placing": {
+                "event": "theheist:set_rotation"
+            },
+            "minecraft:material_instances": {
+                "*": {
+                    "texture": "file_cabinet"
+                }
+            }
+        },
+        "permutations": [
+            {
+                "condition": "query.block_property('theheist:rotation') == 2",
+                "components": {
+                    "minecraft:rotation": [0, 180, 0]
+                }
+            },
+            {
+                "condition": "query.block_property('theheist:rotation') == 3",
+                "components": {
+                    "minecraft:rotation": [0, 0, 0]
+                }
+            },
+            {
+                "condition": "query.block_property('theheist:rotation') == 4",
+                "components": {
+                    "minecraft:rotation": [0, 270, 0]
+                }
+            },
+            {
+                "condition": "query.block_property('theheist:rotation') == 5",
+                "components": {
+                    "minecraft:rotation": [0, 90, 0]
+                }
+            },
+
+            {
+                "condition": "query.block_property('theheist:style') == 1",
+                "components": {
+                    "minecraft:geometry": "geometry.file_cabinet_1"
+                }
+            },
+            {
+                "condition": "query.block_property('theheist:style') == 2",
+                "components": {
+                    "minecraft:geometry": "geometry.file_cabinet_2"
+                }
+            },
+            {
+                "condition": "query.block_property('theheist:style') == 3",
+                "components": {
+                    "minecraft:geometry": "geometry.file_cabinet_3"
+                }
+            }
+        ]
+    }
+}

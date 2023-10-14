@@ -1,0 +1,105 @@
+{
+    "format_version": "1.16.100",
+    "minecraft:block": {
+        "description": {
+            "identifier": "theheist:keypad",
+            "is_experimental": false,
+            "register_to_creative_menu": true,
+            "menu_category": {
+                "category": "equipment"
+            },
+            "properties": {
+                "theheist:rotation": [2, 3, 4, 5],
+                "theheist:unlocked": [0, 1, 2]
+            }
+        },
+        "events": {
+            "theheist:set_rotation": {
+                "set_block_property": {
+                    "theheist:rotation": "(query.cardinal_facing_2d)"
+                }
+            }
+        },
+        "components": {
+            "minecraft:geometry": "geometry.keypad",
+            "minecraft:collision_box": false,
+            "minecraft:selection_box": {
+                "origin": [-4, 2, 8],
+                "size": [7, 12, -2]
+            },
+            "minecraft:on_player_placing": {
+                "event": "theheist:set_rotation"
+            },
+            "minecraft:light_dampening": 0
+        },
+        "permutations": [
+            {
+                "condition": "query.block_property('theheist:rotation') == 2",
+                "components": {
+                    "minecraft:rotation": [0, 180, 0]
+                }
+            },
+            {
+                "condition": "query.block_property('theheist:rotation') == 3",
+                "components": {
+                    "minecraft:rotation": [0, 0, 0]
+                }
+            },
+            {
+                "condition": "query.block_property('theheist:rotation') == 4",
+                "components": {
+                    "minecraft:rotation": [0, 270, 0]
+                }
+            },
+            {
+                "condition": "query.block_property('theheist:rotation') == 5",
+                "components": {
+                    "minecraft:rotation": [0, 90, 0]
+                }
+            },
+            
+            {
+                "condition": "query.block_property('theheist:unlocked') == 0",
+                "components": {
+                    "minecraft:material_instances": {
+                        "screen": {
+                            "texture": "locked_screen"
+                        },
+                        "*": {
+                            "texture": "keypad_base_animated",
+                            "ambient_occlusion": false
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "query.block_property('theheist:unlocked') == 1",
+                "components": {
+                    "minecraft:material_instances": {
+                        "screen": {
+                            "texture": "noise"
+                        },
+                        "*": {
+                            "texture": "keypad_base_animated_hack",
+                            "ambient_occlusion": false
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "query.block_property('theheist:unlocked') == 2",
+                "components": {
+                    "minecraft:material_instances": {
+                        "screen": {
+                            "texture": "unlocked_screen"
+                        },
+                        "*": {
+                            "texture": "keypad_base",
+                            "ambient_occlusion": false
+                        }
+                    }
+                }
+            }
+        ]
+    }
+}
