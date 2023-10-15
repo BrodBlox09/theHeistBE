@@ -1,4 +1,9 @@
-add Removed security warnings text when disabling security
-add call the authorities item
-reset level on restart (doors etc)
-add use keycard item
+Incomplete: ☐ | Complete: ☑️
+
+ ☑️ add Removed security warnings text when disabling security
+ ☐ add call the authorities item
+     ☐ create armor model
+     ☐ create attachable
+     ☐ determine how player activates this item (drop? use?)
+ ☐ reset level on restart (doors etc)
+ ☐ add use keycard item

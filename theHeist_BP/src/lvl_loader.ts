@@ -180,7 +180,9 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 					player.getTags().forEach((x) => { player.removeTag(x); });
 					// Add energyTracker data
 					const playerEnergyTrackerDataNode = { "name": "energyTracker", "energyUnits": 100.0, "recharging": false, "rechargeLevel": 1 };
+					console.error("dpfs1");
 					DataManager.setData(player, "energyTracker", playerEnergyTrackerDataNode);
+					player.sendMessage("dpfs1");
 
 					if (!bustedCounterObjective.hasParticipant(player)) {
 						bustedCounterObjective.setScore(player, 0);
@@ -190,7 +192,11 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 					//if (previousPlayerLevelInformation != undefined && previousPlayerLevelInformation.information[1].level != 0) const playerDataNode = { "name": "levelInformation", "information": [{ "name": "alarmLevel", "level": 0 }, { "name": "gameLevel", "level": 0 }, { "name": "bustedCounter", "value": 0 }] };
 					//else if (previousPlayerLevelInformation != undefined) const playerDataNode = { "name": "levelInformation", "information": [{ "name": "alarmLevel", "level": 0 }, { "name": "gameLevel", "level": 0 }, { "name": "bustedCounter", "value": previousPlayerLevelInformation.information[2].value }] };
 
+					console.error("dpfs2");
 					DataManager.setData(player, "levelInformation", playerLevelInformationDataNode);
+					player.sendMessage("dpfs2");
+					console.error(JSON.stringify(DataManager.getData(player, "levelInformation")));
+					player.sendMessage(JSON.stringify(DataManager.getData(player, "levelInformation")));
 					// Clear and setup inventory for game
 					const playerInvContainer = (player.getComponent('inventory') as EntityInventoryComponent).container;
 					playerInvContainer.clearAll();

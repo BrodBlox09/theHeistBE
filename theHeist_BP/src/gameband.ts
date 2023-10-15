@@ -281,6 +281,9 @@ function action(actionInfo: Action, player: Player) {
 			var lvlInfo = DataManager.getData(player, "levelInformation");
 			lvlInfo.information[0].level = actionInfo.do.value;
 			DataManager.setData(player, "levelInformation", lvlInfo);
+			if (actionInfo.do.value == 0) {
+				player.sendMessage([{ "translate": "map.console.alarm" }]);
+			}
 			//console.warn(actionInfo.do.value.toString());
 			//console.warn(DataManager.getData(player, "levelInformation").information[0].level.toString());
 			break;
