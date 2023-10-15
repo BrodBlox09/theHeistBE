@@ -1,5 +1,5 @@
 import { BlockPermutation, world, system } from "@minecraft/server";
-import * as dataManager from "./imports/entity_dynamic_properties";
+import DataManager from "./DataManager";
 import Utilities from "./Utilities";
 
 /**
@@ -25,25 +25,20 @@ const levelCloneInfo: Record<string, Record<string, number>> = {
 	}
 }
 
-// Second in ticks
-const SECOND = 20;
-
-const overworld = world.getDimension("overworld");
-
 system.runInterval(() => {
 	var player = world.getPlayers().filter((x) => (x != undefined && x != null))[0];
 	if (player == undefined) return;
 
-	var playerLevelInformationDataNode = dataManager.getData(player, "levelInformation");
+	var playerLevelInformationDataNode = DataManager.getData(player, "levelInformation");
 	var level = undefined;
 	if (playerLevelInformationDataNode) level = playerLevelInformationDataNode.information[1].level;
 	if (playerLevelInformationDataNode == undefined || level == undefined || level > 0) return;
 
-	var playerCameraMappingHeightBlock = overworld.getBlock({ "x": player.location.x, "y": cameraMappingHeight - 3, "z": player.location.z });
+	var playerCameraMappingHeightBlock = Utilities.dimensions.overworld.getBlock({ "x": player.location.x, "y": cameraMappingHeight - 3, "z": player.location.z });
 
 	if (playerCameraMappingHeightBlock && playerCameraMappingHeightBlock.typeId == "theheist:camera_sight" && player.location.y < -56 && !player.hasTag("BUSTED")) {
 		playerLevelInformationDataNode.information[0].level += 2;
-		dataManager.setData(player, "levelInformation", playerLevelInformationDataNode);
+		DataManager.setData(player, "levelInformation", playerLevelInformationDataNode);
 		//player.sendMessage("You are in the camera's vision!");
 	}
 
@@ -52,8 +47,8 @@ system.runInterval(() => {
 		"location": { 'x': player.location.x, 'y': cameraHeight, 'z': player.location.z },
 		"maxDistance": 50
 	};
-	const cameraArmorStands = overworld.getEntities(cameraQuery).filter((x) => {
-		var cameraTrackerDataNode = dataManager.getData(x, "cameraTracker");
+	const cameraArmorStands = Utilities.dimensions.overworld.getEntities(cameraQuery).filter((x) => {
+		var cameraTrackerDataNode = DataManager.getData(x, "cameraTracker");
 		return (x.location.y == cameraHeight && cameraTrackerDataNode && cameraTrackerDataNode.disabled == false && cameraTrackerDataNode.type == "camera");
 	});
 
@@ -62,17 +57,17 @@ system.runInterval(() => {
 		"location": { 'x': player.location.x, 'y': cameraMappingHeight, 'z': player.location.z },
 		"maxDistance": 50
 	};
-	const cameraMappingArmorStands = overworld.getEntities(cameraMappingQuery).filter((x) => (x.location.y == cameraMappingHeight));
+	const cameraMappingArmorStands = Utilities.dimensions.overworld.getEntities(cameraMappingQuery).filter((x) => (x.location.y == cameraMappingHeight));
 
 	if ((system.currentTick % 15 == 0)) {
 		// 15 tick interval elapsed
 		cameraMappingArmorStands.forEach((armorStand) => {
 			armorStand.kill();
 		});
-		overworld.runCommandAsync(`clone ${levelCloneInfo["level_" + level].startX} ${cameraMappingHeight - 2} ${levelCloneInfo["level_" + level].startZ} ${levelCloneInfo["level_" + level].endX} ${cameraMappingHeight - 2} ${levelCloneInfo["level_" + level].endZ} ${levelCloneInfo["level_" + level].startX} ${cameraMappingHeight - 3} ${levelCloneInfo["level_" + level].startZ}`);
-		overworld.runCommandAsync(`fill ${levelCloneInfo["level_" + level].startX} ${cameraMappingHeight - 2} ${levelCloneInfo["level_" + level].startZ} ${levelCloneInfo["level_" + level].endX} ${cameraMappingHeight - 2} ${levelCloneInfo["level_" + level].endZ} air`);
+		Utilities.dimensions.overworld.runCommandAsync(`clone ${levelCloneInfo["level_" + level].startX} ${cameraMappingHeight - 2} ${levelCloneInfo["level_" + level].startZ} ${levelCloneInfo["level_" + level].endX} ${cameraMappingHeight - 2} ${levelCloneInfo["level_" + level].endZ} ${levelCloneInfo["level_" + level].startX} ${cameraMappingHeight - 3} ${levelCloneInfo["level_" + level].startZ}`);
+		Utilities.dimensions.overworld.runCommandAsync(`fill ${levelCloneInfo["level_" + level].startX} ${cameraMappingHeight - 2} ${levelCloneInfo["level_" + level].startZ} ${levelCloneInfo["level_" + level].endX} ${cameraMappingHeight - 2} ${levelCloneInfo["level_" + level].endZ} air`);
 		cameraArmorStands.forEach((armorStand) => {
-			var cameraTrackerDataNode = dataManager.getData(armorStand, "cameraTracker");
+			var cameraTrackerDataNode = DataManager.getData(armorStand, "cameraTracker");
 			if (cameraTrackerDataNode.swivel) {
 				// The camera rotates
 				var rotateMode = cameraTrackerDataNode.swivel[0];
@@ -102,17 +97,17 @@ system.runInterval(() => {
 					"maxDistance": 3,
 					"closest": 1
 				}
-				var displayCamera = overworld.getEntities(displayCameraQuery)[0];
+				var displayCamera = Utilities.dimensions.overworld.getEntities(displayCameraQuery)[0];
 				displayCamera.setRotation({ "x": 0, "y": rotation });
 				armorStand.setRotation({ "x": 0, "y": rotation });
-				dataManager.setData(armorStand, "cameraTracker", cameraTrackerDataNode);
+				DataManager.setData(armorStand, "cameraTracker", cameraTrackerDataNode);
 			}
 			var yRot = armorStand.getRotation().y;
 			//armorStand.setRotation({"x": 0, "y": yRot - 5});
 			var FOV = 60;
 			var maxCount = 11;
 			for (var i = 0; i < maxCount; i++) {
-				var rayArmorStand = overworld.spawnEntity("armor_stand", { "x": armorStand.location.x, "y": cameraMappingHeight, "z": armorStand.location.z });
+				var rayArmorStand = Utilities.dimensions.overworld.spawnEntity("armor_stand", { "x": armorStand.location.x, "y": cameraMappingHeight, "z": armorStand.location.z });
 				rayArmorStand.setRotation({ "x": 0, "y": (yRot - FOV / 2) + (FOV * i / (maxCount - 1)) });
 			}
 		});
@@ -121,13 +116,13 @@ system.runInterval(() => {
 		const tpDistance = 0.7;
 		cameraMappingArmorStands.forEach((armorStand) => {
 			// x sin() needs to be inverted to work properly for some reason
-			armorStand.teleport({ "x": armorStand.location.x + -(Utilities.sin(armorStand.getRotation().y) * tpDistance), "y": cameraMappingHeight, "z": armorStand.location.z + (Utilities.cos(armorStand.getRotation().y) * tpDistance) }, { 'dimension': overworld });
-			var blockAtLevel = overworld.getBlock({ "x": armorStand.location.x, "y": levelHeight, "z": armorStand.location.z });
+			armorStand.teleport({ "x": armorStand.location.x + -(Utilities.sin(armorStand.getRotation().y) * tpDistance), "y": cameraMappingHeight, "z": armorStand.location.z + (Utilities.cos(armorStand.getRotation().y) * tpDistance) }, { 'dimension': Utilities.dimensions.overworld });
+			var blockAtLevel = Utilities.dimensions.overworld.getBlock({ "x": armorStand.location.x, "y": levelHeight, "z": armorStand.location.z });
 			//player.sendMessage(`Block: ${blockAtLevel.typeId}`);
-			//-----------------------------------------------------------------------overworld.fillBlocks
+			//-----------------------------------------------------------------------Utilities.dimensions.overworld.fillBlocks
 			//var belowBlock = new Vector(armorStand.location.x, armorStand.location.y - 2, armorStand.location.z);
 			var belowBlock = { "x": armorStand.location.x, "y": armorStand.location.y - 2, "z": armorStand.location.z };
-			if (blockAtLevel && blockAtLevel.typeId == "minecraft:air") overworld.fillBlocks(belowBlock, belowBlock, BlockPermutation.resolve("theheist:camera_sight"));
+			if (blockAtLevel && blockAtLevel.typeId == "minecraft:air") Utilities.dimensions.overworld.fillBlocks(belowBlock, belowBlock, BlockPermutation.resolve("theheist:camera_sight"));
 			//armorStand.runCommandAsync('setblock ~ ~-2 ~ theheist:camera_sight');
 			else armorStand.kill();
 			//player.sendMessage(`X: ${armorStand.location.x + -(sin(armorStand.getRotation().y) * tpDistance)} Y: ${cameraMappingHeight} Z: ${armorStand.location.z + (cos(armorStand.getRotation().y) * tpDistance)}`);

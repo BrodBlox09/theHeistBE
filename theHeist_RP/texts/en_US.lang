@@ -80,9 +80,9 @@ map.sub.704=Please don't!
 
 map.sub.forgot_prototypes=Hey dumb dumb, you forgot some of the prototypes!
 
-map.console.camera=Disabled camera
-map.console.sonar=Disabled sonar
-map.console.alarm=Removed security warnings
+map.console.camera=§o§7Disabled camera
+map.console.sonar=§o§7Disabled sonar
+map.console.alarm=§o§7Removed security warnings
 
 map.mail.001=Hey Tom, I found your keycard for the elevator again... You'll find it in the wooden desk drawer at the Support Office.
 map.mail.002=Lol, you should totally check out this video: CLICK HERE, Greetz, Zed

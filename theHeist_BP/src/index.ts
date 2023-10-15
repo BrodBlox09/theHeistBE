@@ -1,18 +1,16 @@
-import { EntityTypes, system, world, DynamicPropertiesDefinition, Vector, Vector3 } from "@minecraft/server";
-import * as dataManager from "./imports/entity_dynamic_properties";
+import { EntityTypes, system, world, DynamicPropertiesDefinition, Vector3 } from "@minecraft/server";
+import DataManager from "./DataManager";
 import "./lvl_loader";
 import "./gameband";
 import "./alarm";
 import Utilities from "./Utilities";
 
-world.sendMessage('e');
-
-world.afterEvents.worldInitialize.subscribe(e => {
-	const def = new DynamicPropertiesDefinition(); // this holds the properties
-	def.defineString("data", 99999); // we set the maximum length really high
-	for (const entity of EntityTypes.getAll()) {
-		e.propertyRegistry.registerEntityTypeDynamicProperties(def, entity);
-	} // assign the definition to all entities, so every entity can use it
+world.afterEvents.worldInitialize.subscribe(event => {
+	const def = new DynamicPropertiesDefinition();
+	def.defineString("data", 99999);
+	for (const entityType of EntityTypes.getAll()) {
+		event.propertyRegistry.registerEntityTypeDynamicProperties(def, entityType.id);
+	}
 });
 
 system.beforeEvents.watchdogTerminate.subscribe((event) => {
@@ -27,14 +25,19 @@ const levelLocations: Record<string, Vector3> = {
 	//"-1": {'x': 2000.5, 'y': -50, 'z': 56.5}
 }
 
-const objectivesObjective = world.scoreboard.getObjective("objectives");
+const objectivesObjective = world.scoreboard.getObjective("objectives") ?? world.scoreboard.addObjective("objectives", "Objectives");
 
-const overworld = world.getDimension("overworld");
+const allowedPlayers = [
+	"BrodBlox09",
+	"BrodBloxRox",
+	"FoxOfThunder13",
+	"McMelonTV"
+];
 
 world.beforeEvents.chatSend.subscribe(event => {
 	const player = event.sender;
 	const msg = event.message;
-	if (!(player.name == "BrodBlox09" || player.name == "BrodBloxRox" || player.name == "FoxOfThunder13") || !msg.startsWith("!")) return;
+	if (!allowedPlayers.includes(player.name) || !msg.startsWith("!")) return;
 	event.cancel = true;
 	const args = msg.slice(1).split(" ");
 	const cmd = args.shift();
@@ -83,13 +86,13 @@ world.beforeEvents.chatSend.subscribe(event => {
 			//console.error(player.getTags().find((x) => (JSON.parse(x).name == "levelInformation")).information[0].level);
 			break;
 		case "setLvlData":
-			dataManager.setData(player, "levelInformation", { "name": "levelInformation", "information": [{ "name": "alarmLevel", "level": 0 }, { "name": "gameLevel", "level": 0 }] });
+			DataManager.setData(player, "levelInformation", { "name": "levelInformation", "information": [{ "name": "alarmLevel", "level": 0 }, { "name": "gameLevel", "level": 0 }] });
 			break;
 		case "getData":
-			console.warn(JSON.stringify(dataManager.getData(player, 'energyTracker')));
+			console.warn(JSON.stringify(DataManager.getData(player, 'energyTracker')));
 			break;
 		case "clearData":
-			dataManager.clearData(player);
+			DataManager.clearData(player);
 			system.run(() => {
 				player.getTags().forEach((x) => { player.removeTag(x); });
 			});
@@ -116,7 +119,6 @@ world.beforeEvents.chatSend.subscribe(event => {
 			break;
 		case "addObj":
 			system.run(() => {
-				if (!objectivesObjective) return console.error("Objectives objective does not exist.");
 				objectivesObjective.setScore(`§c${args.join(" ")}§r`, 0);
 			});
 			break;

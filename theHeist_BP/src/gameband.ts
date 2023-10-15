@@ -1,6 +1,7 @@
 import { MolangVariableMap, BlockPermutation, EffectTypes, Vector, world, system, Player, EntityInventoryComponent, EffectType, DisplaySlotId } from "@minecraft/server";
-import * as dataManager from "./imports/entity_dynamic_properties";
+import DataManager from "./DataManager";
 import Utilities from "./Utilities";
+import GameObjectiveManager from "./GameObjectiveManager";
 
 /**
  * Unfinished objectives color: §c (Red)
@@ -20,8 +21,8 @@ class loreItem {
 }
 
 const loreItems = [
-	new loreItem("theheist:recharge_mode_lvl_1", "§1Recharge mode Lvl. 1", ["Right click/long press/RT to §r§6toggle", "Energy: 10 units/second", "Select to show objectives"]),
-	new loreItem("theheist:hacking_mode_lvl_1", "§2Hacking mode Lvl. 1", ["Right click/long press/RT to §r§6use", "Energy: 15 units"])
+	new loreItem("theheist:recharge_mode_lvl_1", "§r§9Recharge mode Lvl. 1", ["Use item to §r§6toggle", "Energy: 1.0 units/second", "Select to show objectives"]),
+	new loreItem("theheist:hacking_mode_lvl_1", "§r§2Hacking mode Lvl. 1", ["Use item to §r§6use", "Energy: 15 units"])
 ]
 
 const gamebandInfo: Record<string, Record<string, number>> = {
@@ -34,7 +35,6 @@ const gamebandInfo: Record<string, Record<string, number>> = {
 	}
 }
 
-const objectivesObjective = world.scoreboard.getObjective("objectives")!;
 const bustedCounterObjective = world.scoreboard.getObjective("bustedCounter")!;
 
 /**
@@ -100,8 +100,8 @@ function rechargeMode(lvl: number, player: Player) {
 	const armorStands = overworld.getEntities(query);
 	for (const armorStand of armorStands) {
 
-		var armorStandEnergyTrackerDataNode = dataManager.getData(armorStand, "energyTracker");
-		var playerEnergyTrackerDataNode = dataManager.getData(player, "energyTracker");
+		var armorStandEnergyTrackerDataNode = DataManager.getData(armorStand, "energyTracker");
+		var playerEnergyTrackerDataNode = DataManager.getData(player, "energyTracker");
 		var blockLocation = { "x": armorStandEnergyTrackerDataNode.block.x, "y": armorStandEnergyTrackerDataNode.block.y, "z": armorStandEnergyTrackerDataNode.block.z };
 		if (playerEnergyTrackerDataNode.recharging == false) {
 			if (armorStandEnergyTrackerDataNode.energyUnits == 0.0) return;
@@ -117,13 +117,13 @@ function rechargeMode(lvl: number, player: Player) {
 			//overworld.runCommandAsync(`setBlock ${armorStandEnergyTrackerDataNode.block.x} ${armorStandEnergyTrackerDataNode.block.y} ${armorStandEnergyTrackerDataNode.block.z} theheist:recharge_station ["theheist:rotation":${armorStandEnergyTrackerDataNode.block.rotation}, "theheist:state":1]`);
 			playerEnergyTrackerDataNode.usingRechargerID = -1;
 		}
-		dataManager.setData(player, "energyTracker", playerEnergyTrackerDataNode);
-		//console.warn(JSON.stringify(dataManager.getData(player, "energyTracker")));
+		DataManager.setData(player, "energyTracker", playerEnergyTrackerDataNode);
+		//console.warn(JSON.stringify(DataManager.getData(player, "energyTracker")));
 	}
 }
 
 function hackingMode(lvl: number, player: Player) {
-	var playerEnergyTracker = dataManager.getData(player, "energyTracker");
+	var playerEnergyTracker = DataManager.getData(player, "energyTracker");
 	const query = {
 		"type": "armor_stand",
 		"location": new Vector(player.location.x, consolesHeight, player.location.z),
@@ -136,7 +136,7 @@ function hackingMode(lvl: number, player: Player) {
 	for (const armorStand of armorStands) {
 		i++;
 		//player.sendMessage(armorStand.location.x + ", " + armorStand.location.y + ", and " + armorStand.location.z);
-		var armorStandActionTracker = dataManager.getData(armorStand, 'actionTracker');
+		var armorStandActionTracker = DataManager.getData(armorStand, 'actionTracker');
 		if (armorStandActionTracker.used == true || armorStandActionTracker.isKeycardReader) {
 			i--;
 			return;
@@ -148,7 +148,7 @@ function hackingMode(lvl: number, player: Player) {
 			}
 			player.playSound('map.hack_use');
 			playerEnergyTracker.energyUnits -= gamebandInfo["hackingMode"]["level" + lvl + "Cost"];
-			dataManager.setData(player, "energyTracker", playerEnergyTracker);
+			DataManager.setData(player, "energyTracker", playerEnergyTracker);
 			/*var block = armorStandActionTracker.block;
 			if (block.type != "keycard_reader") {
 				// _____________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________WHYWHYWHY!!!
@@ -168,7 +168,7 @@ function hackingMode(lvl: number, player: Player) {
 			// Player hacked the device, now disable it
 			armorStandActionTracker.used = true;
 			// Remove old data & add the modified data
-			dataManager.setData(armorStand, "actionTracker", armorStandActionTracker);
+			DataManager.setData(armorStand, "actionTracker", armorStandActionTracker);
 		} else {
 			player.sendMessage("§cConsole is too complicated");
 			return;
@@ -206,13 +206,13 @@ function action(actionInfo: Action, player: Player) {
 				"maxDistance": 50
 			};
 			var cameraArmorStand = overworld.getEntities(cameraQuery).filter((x) => {
-				var cameraTrackerDataNode = dataManager.getData(x, "cameraTracker");
+				var cameraTrackerDataNode = DataManager.getData(x, "cameraTracker");
 				return (x.location.y == cameraHeight && cameraTrackerDataNode && cameraTrackerDataNode.disabled == false && cameraTrackerDataNode.cameraID == cameraID);
 			})[0];
 			if (cameraArmorStand == undefined) return;
-			var cameraTrackerDataNode = dataManager.getData(cameraArmorStand, "cameraTracker");
+			var cameraTrackerDataNode = DataManager.getData(cameraArmorStand, "cameraTracker");
 			cameraTrackerDataNode.disabled = true;
-			dataManager.setData(cameraArmorStand, "cameraTracker", cameraTrackerDataNode);
+			DataManager.setData(cameraArmorStand, "cameraTracker", cameraTrackerDataNode);
 			console.warn(cameraArmorStand.location.x.toString());
 			var displayCameraLocation = { "x": cameraArmorStand.location.x, "y": -57, "z": cameraArmorStand.location.z };
 			var displayCameraQuery = {
@@ -259,7 +259,7 @@ function action(actionInfo: Action, player: Player) {
 				"closest": 1
 			};
 			var armorStand = overworld.getEntities(query)[0];
-			var actionTracker = dataManager.getData(armorStand, "actionTracker");
+			var actionTracker = DataManager.getData(armorStand, "actionTracker");
 			actionTracker.actions.forEach((x: Action) => {
 				if (x.type == "hack_console") return;
 				if (!x.delay) {
@@ -271,18 +271,18 @@ function action(actionInfo: Action, player: Player) {
 				}
 			});
 			actionTracker.used = true;
-			dataManager.setData(armorStand, "actionTracker", actionTracker);
+			DataManager.setData(armorStand, "actionTracker", actionTracker);
 			break;
 		case "display_mail":
 			var mailID = actionInfo.do.mailID;
 			player.sendMessage([{ "text": "§c§oEmail:§r " }, { "translate": `map.mail.${mailID}` }]);
 			break;
 		case "set_alarm_level":
-			var lvlInfo = dataManager.getData(player, "levelInformation");
+			var lvlInfo = DataManager.getData(player, "levelInformation");
 			lvlInfo.information[0].level = actionInfo.do.value;
-			dataManager.setData(player, "levelInformation", lvlInfo);
+			DataManager.setData(player, "levelInformation", lvlInfo);
 			//console.warn(actionInfo.do.value.toString());
-			//console.warn(dataManager.getData(player, "levelInformation").information[0].level.toString());
+			//console.warn(DataManager.getData(player, "levelInformation").information[0].level.toString());
 			break;
 		case "manage_objectives":
 			var manageType = actionInfo.do.manageType;
@@ -293,28 +293,21 @@ function action(actionInfo: Action, player: Player) {
 					// Add an unfinished objective
 					var objective = actionInfo.do.objective;
 					var sortOrder = actionInfo.do.sortOrder;
-					objectivesObjective.setScore(`§c${objective}§r`, sortOrder);
-					player.sendMessage([{ "text": `§o§7New objective: §r§c${objective}§r` }]);
-					// Minecraft 1.20.30.21 fixes this bug
-					reloadSidebarDisplay();
+
+					GameObjectiveManager.addObjective(objective, sortOrder);
 					break;
 				case 2:
 					// Finish an objective
 					var objective = actionInfo.do.objective;
 					var sortOrder = actionInfo.do.sortOrder;
-					objectivesObjective.removeParticipant(`§c${objective}§r`);
-					objectivesObjective.setScore(`§a${objective}§r`, sortOrder);
-					player.sendMessage([{ "text": `§o§7Completed objective: §r§a${objective}§r` }]);
-					// Minecraft 1.20.30.21 fixes this bug
-					reloadSidebarDisplay();
+
+					GameObjectiveManager.completeObjective(objective, sortOrder);
 					break;
 				case 3:
 					// Remove an objective
 					var objective = actionInfo.do.objective;
-					objectivesObjective.removeParticipant(`§c${objective}§r`);
-					objectivesObjective.removeParticipant(`§a${objective}§r`);
-					// Minecraft 1.20.30.21 fixes this bug
-					reloadSidebarDisplay();
+
+					GameObjectiveManager.removeObjective(objective);
 					break;
 			}
 	}
@@ -334,7 +327,7 @@ function keycard(keycardType: string, player: Player) {
 	}
 	var armorStand = overworld.getEntities(query)[0];
 	if (!armorStand) return;
-	var actionTracker = dataManager.getData(armorStand, "actionTracker");
+	var actionTracker = DataManager.getData(armorStand, "actionTracker");
 	console.warn("a");
 	if (!actionTracker || !actionTracker.isKeycardReader || actionTracker.used == true || (actionTracker.keycardType != keycardType && keycardType != "all")) return;
 	console.warn("b");
@@ -349,12 +342,6 @@ function keycard(keycardType: string, player: Player) {
 	});
 }
 
-// Minecraft 1.20.30.21 fixes this bug
-function reloadSidebarDisplay() {
-	world.scoreboard.clearObjectiveAtDisplaySlot(DisplaySlotId.Sidebar);
-	world.scoreboard.setObjectiveAtDisplaySlot(DisplaySlotId.Sidebar, { "objective": objectivesObjective });
-}
-
 function startSlideshow(slideshowID: number, /** @type {Player} */ player: Player) {
 	switch (slideshowID) {
 		case 1:
@@ -366,7 +353,7 @@ function startSlideshow(slideshowID: number, /** @type {Player} */ player: Playe
 			player.playSound('map.001');
 			player.runCommandAsync('tellraw @a {"rawtext":[{"text":"§5§oVoice:§r "}, {"translate":"map.sub.001.A"}]}');
 			player.runCommandAsync('tellraw @a {"rawtext":[{"text":"§5§oVoice:§r "}, {"translate":"map.sub.001.B"}]}');
-			player.runCommandAsync('replaceitem entity @s slot.armor.head 0 carved_pumpkin');
+			player.runCommandAsync('replaceitem entity @s slot.armor.head 0 carved_pumpkin 1 0 {"item_lock": {"mode": "lock_in_slot"}}');
 
 			let tpInterval: number;
 
@@ -408,10 +395,10 @@ function startSlideshow(slideshowID: number, /** @type {Player} */ player: Playe
 function playerBusted(player: Player, currentLevel: number) {
 	switch (currentLevel) {
 		case 0:
-			var playerLevelInformation = dataManager.getData(player, "levelInformation");
+			var playerLevelInformation = DataManager.getData(player, "levelInformation");
 			bustedCounterObjective.setScore(player, (bustedCounterObjective.getScore(player) ?? 0) + 1);
 			playerLevelInformation.information[0].level = 0;
-			dataManager.setData(player, "levelInformation", playerLevelInformation);
+			DataManager.setData(player, "levelInformation", playerLevelInformation);
 			player.playSound("map.alarm");
 			player.addTag("BUSTED");
 			(player.getComponent("inventory") as EntityInventoryComponent).container.clearAll();
@@ -455,17 +442,16 @@ system.runInterval(() => {
 	}
 	var selectedItemStack = playerInvContainer.getItem(player.selectedSlot);
 	if (selectedItemStack != undefined && selectedItemStack.typeId.startsWith("theheist:recharge_mode_lvl_")) {
-		// Player is holding recharge mode
-		if (world.scoreboard.getObjectiveAtDisplaySlot(DisplaySlotId.Sidebar) == undefined) world.scoreboard.setObjectiveAtDisplaySlot(DisplaySlotId.Sidebar, { "objective": objectivesObjective });
+		GameObjectiveManager.showSidebar();
 	} else {
-		if (world.scoreboard.getObjectiveAtDisplaySlot(DisplaySlotId.Sidebar) != undefined) world.scoreboard.clearObjectiveAtDisplaySlot(DisplaySlotId.Sidebar);
+		GameObjectiveManager.hideSidebar();
 	}
 
 	//console.warn('0');
 	// Set player level to player energy level
-	var playerEnergyTracker = dataManager.getData(player, "energyTracker");
+	var playerEnergyTracker = DataManager.getData(player, "energyTracker");
 	console.log((playerEnergyTracker));
-	var playerLevelInformation = dataManager.getData(player, "levelInformation");
+	var playerLevelInformation = DataManager.getData(player, "levelInformation");
 	//console.warn('1');
 	if ((playerEnergyTracker && playerEnergyTracker.energyUnits != player.level) || (playerLevelInformation && player.xpEarnedAtCurrentLevel != ((((playerLevelInformation.information[0].level / 100) - 0.06) * 742) + 41))) {
 		//console.warn('2');
@@ -495,7 +481,7 @@ system.runInterval(() => {
 		var i = 0;
 		//{"name":"energyTracker", "energyUnits":21.0, "block":{"x":-22, "y":-59, "z":62, "rotation":5}}
 		for (const armorStand of armorStands) {
-			var armorStandEnergyTracker = dataManager.getData(armorStand, "energyTracker");
+			var armorStandEnergyTracker = DataManager.getData(armorStand, "energyTracker");
 			if (armorStandEnergyTracker.rechargerID != playerEnergyTracker.usingRechargerID) continue;
 			i++;
 		}
@@ -510,7 +496,7 @@ system.runInterval(() => {
 			}
 			const subArmorStands = overworld.getEntities(subQuery);
 			for (const subArmorStand of subArmorStands) {
-				var armorStandEnergyTracker = dataManager.getData(subArmorStand, "energyTracker");
+				var armorStandEnergyTracker = DataManager.getData(subArmorStand, "energyTracker");
 				if (armorStandEnergyTracker.rechargerID != playerEnergyTracker.usingRechargerID) continue;
 				overworld.runCommandAsync(`setBlock ${armorStandEnergyTracker.block.x} ${armorStandEnergyTracker.block.y} ${armorStandEnergyTracker.block.z} theheist:recharge_station ["theheist:rotation":${armorStandEnergyTracker.block.rotation}, "theheist:state":1]`);
 				playerEnergyTracker.usingRechargerID = -1;
@@ -528,7 +514,7 @@ system.runInterval(() => {
 			playerEnergyTracker.energyUnits += addEnergy;
 			//{"name":"energyTracker", "energyUnits":21.0, "block":{"x":-22, "y":-59, "z":62, "rotation":5}}
 			for (const armorStand of armorStands) {
-				var armorStandEnergyTracker = dataManager.getData(armorStand, "energyTracker");
+				var armorStandEnergyTracker = DataManager.getData(armorStand, "energyTracker");
 				if (armorStandEnergyTracker.rechargerID != playerEnergyTracker.usingRechargerID) continue;
 
 				armorStandEnergyTracker.energyUnits -= addEnergy;
@@ -547,10 +533,10 @@ system.runInterval(() => {
 						});
 					}
 				}
-				dataManager.setData(armorStand, "energyTracker", armorStandEnergyTracker);
+				DataManager.setData(armorStand, "energyTracker", armorStandEnergyTracker);
 			}
 		}
-		dataManager.setData(player, "energyTracker", playerEnergyTracker);
+		DataManager.setData(player, "energyTracker", playerEnergyTracker);
 	}
 	//player.sendMessage(parseInt(playerEnergyTracker.energyUnits) + "||" + player.level);
 	// Set map if possible

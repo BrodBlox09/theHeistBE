@@ -1,5 +1,6 @@
 import { ItemStack, Vector, system, world, DisplaySlotId, BlockInventoryComponent, EntityInventoryComponent } from "@minecraft/server";
-import * as dataManager from "./imports/entity_dynamic_properties";
+import DataManager from "./DataManager";
+import VoiceOverManager from "./VoiceOverManager";
 
 // Tag length is max 255, need a different way to store lvl information other than tags :(
 // Perhaps similar to how I stored information in the item speedrun thing
@@ -86,14 +87,14 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 					const player = world.getPlayers().filter((x) => (x != undefined && x != null))[0];
 					if (player == undefined) return;
 					// Clear all data on player
-					dataManager.clearData(player);
+					DataManager.clearData(player);
 					player.getTags().forEach((x) => { player.removeTag(x); });
 					// Add energyTracker data node
 					const playerEnergyTrackerDataNode = { "name": "energyTracker", "energyUnits": 0.0, "recharging": false, "usingRechargerID": -1, "rechargeLevel": 1 };
-					dataManager.setData(player, "energyTracker", playerEnergyTrackerDataNode);
+					DataManager.setData(player, "energyTracker", playerEnergyTrackerDataNode);
 					// Add level information data node
 					const playerLevelInformationDataNode = { "name": "levelInformation", "information": [{ "name": "alarmLevel", "level": 0 }, { "name": "gameLevel", "level": 1 }] };
-					dataManager.setData(player, "levelInformation", playerLevelInformationDataNode);
+					DataManager.setData(player, "levelInformation", playerLevelInformationDataNode);
 					// Clear and setup inventory for game
 					const playerInvContainer = (player.getComponent('inventory') as EntityInventoryComponent).container;
 					playerInvContainer.clearAll();
@@ -111,7 +112,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 					//recharge0.setRotation(0, n);
 					// Use for cameras that need to be facing different directions than north (I think)
 					const recharge0DataNode = { "name": "energyTracker", "rechargerID": 0, "energyUnits": 21.0, "block": { "x": -22, "y": -59, "z": 62, "rotation": 5 }, "actions": [{ "type": "manage_objectives", "do": { "manageType": 2, "objective": "Recharge Gameband", "sortOrder": 1 } }] };
-					dataManager.setData(recharge0, "energyTracker", recharge0DataNode);
+					DataManager.setData(recharge0, "energyTracker", recharge0DataNode);
 					overworld.runCommandAsync('setblock -22 -59 62 theheist:recharge_station ["theheist:rotation":5, "theheist:state":1]');
 					// Load hackable console 0
 					const computer0 = overworld.spawnEntity("minecraft:armor_stand", new Vector(-21.5, consolesHeight, 58.5));
@@ -134,7 +135,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 							}
 						]
 					};
-					dataManager.setData(computer0, "actionTracker", computer0DataNode);
+					DataManager.setData(computer0, "actionTracker", computer0DataNode);
 					// 2 seconds or 2000 milliseconds for static, then green and action!
 					overworld.runCommandAsync('setblock -22 -58 58 theheist:computer ["theheist:rotation":5, "theheist:unlocked":0]');
 					break;
@@ -145,13 +146,13 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 					const player = world.getPlayers().filter((x) => (x != undefined && x != null))[0];
 					if (player == undefined) return;
 					// Clear all data on player
-					dataManager.clearData(player);
+					DataManager.clearData(player);
 					player.getTags().forEach((x) => { player.removeTag(x); });
 					// Add energyTracker data
 					const playerEnergyTrackerDataNode = { "name": "energyTracker", "energyUnits": 0.0, "recharging": false, "rechargeLevel": 1 };
-					dataManager.setData(player, "energyTracker", playerEnergyTrackerDataNode);
+					DataManager.setData(player, "energyTracker", playerEnergyTrackerDataNode);
 					const playerLevelInformationDataNode = { "name": "levelInformation", "information": [{ "name": "alarmLevel", "level": 0 }, { "name": "gameLevel", "level": 0.5 }] };
-					dataManager.setData(player, "levelInformation", playerLevelInformationDataNode);
+					DataManager.setData(player, "levelInformation", playerLevelInformationDataNode);
 					// Clear and setup inventory for game
 					const playerInvContainer = (player.getComponent('inventory') as EntityInventoryComponent).container;
 					playerInvContainer.clearAll();
@@ -174,12 +175,12 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 						return;
 					}
 					// Clear all data on player
-					dataManager.clearData(player);
+					DataManager.clearData(player);
 					// Previous level made use of tags, clear them here
 					player.getTags().forEach((x) => { player.removeTag(x); });
 					// Add energyTracker data
 					const playerEnergyTrackerDataNode = { "name": "energyTracker", "energyUnits": 100.0, "recharging": false, "rechargeLevel": 1 };
-					dataManager.setData(player, "energyTracker", playerEnergyTrackerDataNode);
+					DataManager.setData(player, "energyTracker", playerEnergyTrackerDataNode);
 
 					if (!bustedCounterObjective.hasParticipant(player)) {
 						bustedCounterObjective.setScore(player, 0);
@@ -189,7 +190,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 					//if (previousPlayerLevelInformation != undefined && previousPlayerLevelInformation.information[1].level != 0) const playerDataNode = { "name": "levelInformation", "information": [{ "name": "alarmLevel", "level": 0 }, { "name": "gameLevel", "level": 0 }, { "name": "bustedCounter", "value": 0 }] };
 					//else if (previousPlayerLevelInformation != undefined) const playerDataNode = { "name": "levelInformation", "information": [{ "name": "alarmLevel", "level": 0 }, { "name": "gameLevel", "level": 0 }, { "name": "bustedCounter", "value": previousPlayerLevelInformation.information[2].value }] };
 
-					dataManager.setData(player, "levelInformation", playerLevelInformationDataNode);
+					DataManager.setData(player, "levelInformation", playerLevelInformationDataNode);
 					// Clear and setup inventory for game
 					const playerInvContainer = (player.getComponent('inventory') as EntityInventoryComponent).container;
 					playerInvContainer.clearAll();
@@ -201,8 +202,9 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 					reloadSidebarDisplay();
 
 					player.teleport({ 'x': 2013.5, 'y': -52, 'z': 53.5 }, { 'dimension': overworld, 'rotation': { 'x': 0, 'y': 90 } });
-					system.runTimeout(() => { player.playSound("map.003"); }, 1);
-					player.runCommandAsync('tellraw @a {"rawtext":[{"text":"§5§oVoice:§r "}, {"translate":"map.sub.003"}]}');
+					system.runTimeout(() => {
+						VoiceOverManager.play(player, "003");
+					}, 1);
 
 					system.runTimeout(() => {
 						// Load level and send player
@@ -223,7 +225,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 							"cameraID": 0,
 							"type": "camera"
 						};
-						dataManager.setData(camera0, "cameraTracker", camera0DataNode);
+						DataManager.setData(camera0, "cameraTracker", camera0DataNode);
 						// Camera 1
 						const camera1 = overworld.spawnEntity("armor_stand", { "x": 2005.5, "y": cameraHeight, "z": 52.5 });
 						camera1.setRotation({ "x": 0, "y": 150 });
@@ -236,7 +238,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 							"cameraID": 1,
 							"type": "camera"
 						};
-						dataManager.setData(camera1, "cameraTracker", camera1DataNode);
+						DataManager.setData(camera1, "cameraTracker", camera1DataNode);
 						// Camera 2
 						const camera2 = overworld.spawnEntity("armor_stand", { "x": 1991.5, "y": cameraHeight, "z": 52.5 });
 						camera2.setRotation({ "x": 0, "y": 210 });
@@ -249,7 +251,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 							"cameraID": 2,
 							"type": "camera"
 						};
-						dataManager.setData(camera2, "cameraTracker", camera2DataNode);
+						DataManager.setData(camera2, "cameraTracker", camera2DataNode);
 						// Camera 3
 						const camera3 = overworld.spawnEntity("armor_stand", { "x": 2014.5, "y": cameraHeight, "z": 67.5 });
 						camera3.setRotation({ "x": 0, "y": 100 });
@@ -262,7 +264,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 							"cameraID": 3,
 							"type": "camera"
 						};
-						dataManager.setData(camera3, "cameraTracker", camera3DataNode);
+						DataManager.setData(camera3, "cameraTracker", camera3DataNode);
 						// Camera 4
 						const camera4 = overworld.spawnEntity("armor_stand", { "x": 2010.5, "y": cameraHeight, "z": 76.5 });
 						camera4.setRotation({ "x": 4, "y": 190 });
@@ -275,7 +277,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 							"cameraID": 4,
 							"type": "camera"
 						};
-						dataManager.setData(camera4, "cameraTracker", camera4DataNode);
+						DataManager.setData(camera4, "cameraTracker", camera4DataNode);
 						// Camera 5
 						const camera5 = overworld.spawnEntity("armor_stand", { "x": 1992.5, "y": cameraHeight, "z": 59.5 });
 						camera5.setRotation({ "x": 0, "y": 20 });
@@ -289,7 +291,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 							"cameraID": 5,
 							"type": "camera"
 						};
-						dataManager.setData(camera5, "cameraTracker", camera5DataNode);
+						DataManager.setData(camera5, "cameraTracker", camera5DataNode);
 						// Console 0 (Type: Computer)
 						const console0 = overworld.spawnEntity("armor_stand", { "x": 2020.5, "y": consolesHeight, "z": 54.5 });
 						overworld.runCommandAsync('setblock 2020 -58 54 theheist:computer ["theheist:rotation":5]');
@@ -315,7 +317,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 								}
 							]
 						};
-						dataManager.setData(console0, "actionTracker", console0ActionTracker);
+						DataManager.setData(console0, "actionTracker", console0ActionTracker);
 						// Console 1 (Type: Computer)
 						const console1 = overworld.spawnEntity("armor_stand", { "x": 2017.5, "y": consolesHeight, "z": 52.5 });
 						overworld.runCommandAsync('setblock 2017 -58 52 theheist:computer ["theheist:rotation":2]');
@@ -335,7 +337,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 								}
 							]
 						};
-						dataManager.setData(console1, "actionTracker", console1ActionTracker);
+						DataManager.setData(console1, "actionTracker", console1ActionTracker);
 						// Console 2 (Type: Keypad)
 						const console2 = overworld.spawnEntity("armor_stand", { "x": 2014.5, "y": consolesHeight, "z": 60.5 });
 						overworld.runCommandAsync('setblock 2014 -58 60 theheist:keypad ["theheist:rotation":5]');
@@ -359,7 +361,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 								}
 							]
 						};
-						dataManager.setData(console2, "actionTracker", console2ActionTracker);
+						DataManager.setData(console2, "actionTracker", console2ActionTracker);
 						// Console 3 (Type: Computer)
 						const console3 = overworld.spawnEntity("armor_stand", { "x": 2018.5, "y": consolesHeight, "z": 65.5 });
 						overworld.runCommandAsync('setblock 2018 -58 65 theheist:computer ["theheist:rotation":2]');
@@ -385,7 +387,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 								}
 							]
 						};
-						dataManager.setData(console3, "actionTracker", console3ActionTracker);
+						DataManager.setData(console3, "actionTracker", console3ActionTracker);
 						// Console 4 (Type: Keypad)
 						const console4 = overworld.spawnEntity("armor_stand", { "x": 1996.5, "y": consolesHeight, "z": 55.5 });
 						overworld.runCommandAsync('setblock 1996 -58 55 theheist:keypad ["theheist:rotation":3]');
@@ -410,7 +412,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 								}
 							]
 						};
-						dataManager.setData(console4, "actionTracker", console4ActionTracker);
+						DataManager.setData(console4, "actionTracker", console4ActionTracker);
 						// Console 5 (Type: Keypad)
 						const console5 = overworld.spawnEntity("armor_stand", { "x": 1992.5, "y": consolesHeight, "z": 62.5 });
 						overworld.runCommandAsync('setblock 1992 -58 62 theheist:keypad ["theheist:rotation":5]');
@@ -435,7 +437,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 								}
 							]
 						};
-						dataManager.setData(console5, "actionTracker", console5ActionTracker);
+						DataManager.setData(console5, "actionTracker", console5ActionTracker);
 						// Console 6 (Type: Computer)
 						const console6 = overworld.spawnEntity("armor_stand", { "x": 1978.5, "y": consolesHeight, "z": 64.5 });
 						overworld.runCommandAsync('setblock 1978 -58 64 theheist:computer ["theheist:rotation":3]');
@@ -458,7 +460,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 								}
 							]
 						};
-						dataManager.setData(console6, "actionTracker", console6ActionTracker);
+						DataManager.setData(console6, "actionTracker", console6ActionTracker);
 						// Console 7 (Type: Computer)
 						const console7 = overworld.spawnEntity("armor_stand", { "x": 1978.5, "y": consolesHeight, "z": 56.5 });
 						overworld.runCommandAsync('setblock 1978 -58 56 theheist:computer ["theheist:rotation":2]');
@@ -478,7 +480,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 								}
 							]
 						};
-						dataManager.setData(console7, "actionTracker", console7ActionTracker);
+						DataManager.setData(console7, "actionTracker", console7ActionTracker);
 						// Console 8 (Type: Keycard Reader)
 						const console8 = overworld.spawnEntity("armor_stand", { "x": 1990.5, "y": consolesHeight, "z": 67.5 });
 						const console8ActionTracker = {
@@ -498,7 +500,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 								}
 							]
 						};
-						dataManager.setData(console8, "actionTracker", console8ActionTracker);
+						DataManager.setData(console8, "actionTracker", console8ActionTracker);
 						// Recharge Station 0
 						const recharge0 = overworld.spawnEntity("minecraft:armor_stand", new Vector(1998.5, rechargeHeight, 72.5));
 						overworld.runCommandAsync('setblock 1998 -59 72 theheist:recharge_station ["theheist:rotation":5]');
@@ -508,7 +510,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 							"energyUnits": 100.0,
 							"block": { "x": 1998, "y": -59, "z": 72, "rotation": 5 }
 						};
-						dataManager.setData(recharge0, "energyTracker", recharge0DataNode);
+						DataManager.setData(recharge0, "energyTracker", recharge0DataNode);
 						// Recharge Station 1
 						const recharge1 = overworld.spawnEntity("minecraft:armor_stand", new Vector(1986.5, rechargeHeight, 70.5));
 						overworld.runCommandAsync('setblock 1986 -59 70 theheist:recharge_station ["theheist:rotation":4]');
@@ -518,7 +520,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 							"energyUnits": 100.0,
 							"block": { "x": 1986, "y": -59, "z": 70, "rotation": 4 }
 						};
-						dataManager.setData(recharge1, "energyTracker", recharge1DataNode);
+						DataManager.setData(recharge1, "energyTracker", recharge1DataNode);
 						// Fill drawers
 						const drawer0InventoryContainer = (overworld.getBlock({ "x": 2002.5, "y": -59, "z": 75.5 })!.getComponent("inventory") as BlockInventoryComponent).container;
 						drawer0InventoryContainer.clearAll();
@@ -535,8 +537,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 						//overworld.fillBlocks({"x": 1988, "y": -61, "z": 67}, {"x": 1987, "y": -61, "z": 67}, "air");
 						// Teleport player from pre-hatch to post-hatch
 						player.teleport({ 'x': 2013.5, 'y': -52, 'z': 56.5 }, { 'dimension': overworld, 'rotation': { 'x': 0, 'y': 90 } });
-						player.runCommandAsync('tellraw @a {"rawtext":[{"text":"§5§oVoice:§r "}, {"translate":"map.sub.004"}]}');
-						player.playSound("map.004");
+						VoiceOverManager.play(player, '004')
 
 					}, SECOND * 7.5);
 					break;
@@ -545,8 +546,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 			break;
 		case "theheist:voice-says": {
 			const player = world.getPlayers().filter((x) => (x != undefined))[0];
-			player.playSound("map." + msg);
-			player.sendMessage([{ "text": "§5§oVoice:§r " }, { "translate": `map.sub.${msg}` }]);
+			VoiceOverManager.play(player, msg);
 			break;
 		}
 		case "theheist:attempt_end_level":
@@ -586,7 +586,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 // Maybe
 function createRechargeStation(x: number, z: number, energyTracker: object, rotation: number) {
 	const recharge = overworld.spawnEntity("minecraft:armor_stand", new Vector(x, rechargeHeight, z));
-	dataManager.setData(recharge, "energyTracker", energyTracker);
+	DataManager.setData(recharge, "energyTracker", energyTracker);
 	overworld.runCommandAsync(`setblock -22 -59 62 theheist:recharge_station ["theheist:rotation":${rotation}, "theheist:state":1]`);
 	return recharge;
 }
