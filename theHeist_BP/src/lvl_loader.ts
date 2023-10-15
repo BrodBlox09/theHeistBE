@@ -187,9 +187,6 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 					}
 					const playerLevelInformationDataNode = { "name": "levelInformation", "information": [{ "name": "alarmLevel", "level": 0 }, { "name": "gameLevel", "level": 0 }, { "name": "bustedCounter", "value": bustedCounterObjective.getScore(player) }] };
 
-					//if (previousPlayerLevelInformation != undefined && previousPlayerLevelInformation.information[1].level != 0) const playerDataNode = { "name": "levelInformation", "information": [{ "name": "alarmLevel", "level": 0 }, { "name": "gameLevel", "level": 0 }, { "name": "bustedCounter", "value": 0 }] };
-					//else if (previousPlayerLevelInformation != undefined) const playerDataNode = { "name": "levelInformation", "information": [{ "name": "alarmLevel", "level": 0 }, { "name": "gameLevel", "level": 0 }, { "name": "bustedCounter", "value": previousPlayerLevelInformation.information[2].value }] };
-
 					DataManager.setData(player, "levelInformation", playerLevelInformationDataNode);
 					// Clear and setup inventory for game
 					const playerInvContainer = (player.getComponent('inventory') as EntityInventoryComponent).container;
