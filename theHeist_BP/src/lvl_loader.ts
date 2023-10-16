@@ -161,6 +161,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 					// set title options uses ticks instead of seconds now
 					player.onScreenDisplay.setTitle("§o§7Outside the HQ", { "fadeInDuration": 20, "fadeOutDuration": 20, "stayDuration": 160 });
 					player.teleport({ 'x': 1000.5, 'y': -59, 'z': 57.5 }, { 'dimension': overworld, 'rotation': { 'x': 0, 'y': 90 } });
+					player.camera.clear()
 					clearObjectives();
 					addUnfinishedObjective("Get into the building", 0);
 					reloadSidebarDisplay();

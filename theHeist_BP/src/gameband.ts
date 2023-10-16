@@ -366,36 +366,53 @@ function startSlideshow(slideshowID: number, /** @type {Player} */ player: Playe
 
 			// First TP
 			tpInterval = system.runInterval(() => {
-				player.teleport({ 'x': 1030.50, 'y': -59.00, 'z': 107.50 }, { 'dimension': overworld, 'rotation': { 'x': 0, 'y': 180 } });
+				player.teleport({ x: 998.5, y: -60, z: 112.5 }, { 'dimension': overworld, 'rotation': { 'x': 0, 'y': 180 } });
+				player.camera.setCamera('minecraft:free', {
+					location: { x: 1030.5, y: -57.25, z: 107.5 },
+					rotation: { x: 0, y: 180 }
+				})
 			});
 
 			system.runTimeout(() => {
 				system.clearRun(tpInterval);
 				tpInterval = system.runInterval(() => {
-					player.teleport({ 'x': 1031.50, 'y': -59.00, 'z': 88.50 }, { 'dimension': overworld, 'rotation': { 'x': -30, 'y': 125 } });
+					// player.teleport({ 'x': 1031.50, 'y': -59.00, 'z': 88.50 }, { 'dimension': overworld, 'rotation': { 'x': -30, 'y': 125 } });
+					player.camera.setCamera('minecraft:free', {
+						location: { x: 1031.5, y: -57.25, z: 88.5 },
+						rotation: { x: -30, y: 125 }
+					})
 				});
 			}, SECOND * 5);
 
 			system.runTimeout(() => {
 				system.clearRun(tpInterval);
 				tpInterval = system.runInterval(() => {
-					player.teleport({ 'x': 1027.50, 'y': -59.00, 'z': 68.50 }, { 'dimension': overworld, 'rotation': { 'x': 0, 'y': 135 } });
+					// player.teleport({ 'x': 1027.50, 'y': -59.00, 'z': 68.50 }, { 'dimension': overworld, 'rotation': { 'x': 0, 'y': 135 } });
+					player.camera.setCamera('minecraft:free', {
+						location: { x: 1027.5, y: -57.25, z: 68.5 },
+						rotation: { x: 0, y: 135 }
+					})
 				});
 			}, SECOND * 13);
 
 			system.runTimeout(() => {
 				system.clearRun(tpInterval);
 				tpInterval = system.runInterval(() => {
-					player.teleport({ 'x': 1017.50, 'y': -59.00, 'z': 56.50 }, { 'dimension': overworld, 'rotation': { 'x': -25, 'y': 80 } });
+					// player.teleport({ 'x': 1017.50, 'y': -59.00, 'z': 56.50 }, { 'dimension': overworld, 'rotation': { 'x': -25, 'y': 80 } });
+					player.camera.setCamera('minecraft:free', {
+						location: { x: 1017.5, y: -57.25, z: 56.5 },
+						rotation: { x: -25, y: 80 }
+					})
 				});
 			}, SECOND * 22);
 
 			system.runTimeout(() => {
 				system.clearRun(tpInterval);
-				overworld.runCommandAsync("scriptevent theheist:load-level 0-1");
-				player.runCommandAsync('replaceitem entity @s slot.armor.head 0 air');
 				system.clearRun(hideHud);
 				player.onScreenDisplay.setTitle('')
+				overworld.runCommandAsync("scriptevent theheist:load-level 0-1");
+				player.runCommandAsync('replaceitem entity @s slot.armor.head 0 air');
+				player.camera.clear()
 			}, SECOND * 30.5);
 			break;
 	}
