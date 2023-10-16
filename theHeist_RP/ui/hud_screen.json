@@ -41,20 +41,20 @@
 			}
 		]
 	},
-	"chat_panel": {
-		"bindings": [
-			{
-				"binding_name": "#hud_title_text_string",
-				"binding_name_override": "#text",
-				"binding_type": "global"
-			},
-			{
-				"binding_type": "view",
-				"source_property_name": "(not (#text = 'hideHud'))",
-				"target_property_name": "#visible"
-			}
-		]
-	},
+	// "chat_panel": {
+	// 	"bindings": [
+	// 		{
+	// 			"binding_name": "#hud_title_text_string",
+	// 			"binding_name_override": "#text",
+	// 			"binding_type": "global"
+	// 		},
+	// 		{
+	// 			"binding_type": "view",
+	// 			"source_property_name": "(not (#text = 'hideHud'))",
+	// 			"target_property_name": "#visible"
+	// 		}
+	// 	]
+	// },
 	"centered_gui_elements": {
 		"bindings": [
 			{

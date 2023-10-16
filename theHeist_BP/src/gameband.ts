@@ -354,65 +354,45 @@ function startSlideshow(slideshowID: number, /** @type {Player} */ player: Playe
 
 			// Start speaking & send subtitles
 			player.playSound('map.001');
-			player.runCommandAsync('tellraw @a {"rawtext":[{"text":"§5§oVoice:§r "}, {"translate":"map.sub.001.A"}]}');
-			player.runCommandAsync('tellraw @a {"rawtext":[{"text":"§5§oVoice:§r "}, {"translate":"map.sub.001.B"}]}');
-			player.runCommandAsync('replaceitem entity @s slot.armor.head 0 carved_pumpkin 1 0 {"item_lock": {"mode": "lock_in_slot"}}');
+			player.sendMessage([{ "text": "§5§oVoice:§r " }, { "translate": "map.sub.001.A" }]);
+			player.sendMessage([{ "text": "§5§oVoice:§r " }, { "translate": "map.sub.001.B" }]);
 
 			const hideHud = system.runInterval(() => {
 				player.onScreenDisplay.setTitle('hideHud')
 			}, 0)
 
-			let tpInterval: number;
-
 			// First TP
-			tpInterval = system.runInterval(() => {
-				player.teleport({ x: 998.5, y: -60, z: 112.5 }, { 'dimension': overworld, 'rotation': { 'x': 0, 'y': 180 } });
-				player.camera.setCamera('minecraft:free', {
-					location: { x: 1030.5, y: -57.25, z: 107.5 },
-					rotation: { x: 0, y: 180 }
-				})
-			});
+			player.teleport({ x: 998.5, y: -60, z: 112.5 }, { 'dimension': overworld });
+			player.camera.setCamera('minecraft:free', {
+				location: { x: 1030.5, y: -57.25, z: 107.5 },
+				rotation: { x: 0, y: 180 }
+			})
 
 			system.runTimeout(() => {
-				system.clearRun(tpInterval);
-				tpInterval = system.runInterval(() => {
-					// player.teleport({ 'x': 1031.50, 'y': -59.00, 'z': 88.50 }, { 'dimension': overworld, 'rotation': { 'x': -30, 'y': 125 } });
-					player.camera.setCamera('minecraft:free', {
-						location: { x: 1031.5, y: -57.25, z: 88.5 },
-						rotation: { x: -30, y: 125 }
-					})
-				});
+				player.camera.setCamera('minecraft:free', {
+					location: { x: 1031.5, y: -57.25, z: 88.5 },
+					rotation: { x: -30, y: 125 }
+				})
 			}, SECOND * 5);
 
 			system.runTimeout(() => {
-				system.clearRun(tpInterval);
-				tpInterval = system.runInterval(() => {
-					// player.teleport({ 'x': 1027.50, 'y': -59.00, 'z': 68.50 }, { 'dimension': overworld, 'rotation': { 'x': 0, 'y': 135 } });
-					player.camera.setCamera('minecraft:free', {
-						location: { x: 1027.5, y: -57.25, z: 68.5 },
-						rotation: { x: 0, y: 135 }
-					})
-				});
+				player.camera.setCamera('minecraft:free', {
+					location: { x: 1027.5, y: -57.25, z: 68.5 },
+					rotation: { x: 0, y: 135 }
+				})
 			}, SECOND * 13);
 
 			system.runTimeout(() => {
-				system.clearRun(tpInterval);
-				tpInterval = system.runInterval(() => {
-					// player.teleport({ 'x': 1017.50, 'y': -59.00, 'z': 56.50 }, { 'dimension': overworld, 'rotation': { 'x': -25, 'y': 80 } });
-					player.camera.setCamera('minecraft:free', {
-						location: { x: 1017.5, y: -57.25, z: 56.5 },
-						rotation: { x: -25, y: 80 }
-					})
-				});
+				player.camera.setCamera('minecraft:free', {
+					location: { x: 1017.5, y: -57.25, z: 56.5 },
+					rotation: { x: -25, y: 80 }
+				})
 			}, SECOND * 22);
 
 			system.runTimeout(() => {
-				system.clearRun(tpInterval);
 				system.clearRun(hideHud);
-				player.onScreenDisplay.setTitle('')
+				player.camera.clear();
 				overworld.runCommandAsync("scriptevent theheist:load-level 0-1");
-				player.runCommandAsync('replaceitem entity @s slot.armor.head 0 air');
-				player.camera.clear()
 			}, SECOND * 30.5);
 			break;
 	}
