@@ -345,7 +345,7 @@ function keycard(keycardType: string, player: Player) {
 	});
 }
 
-function startSlideshow(slideshowID: number, /** @type {Player} */ player: Player) {
+function startSlideshow(slideshowID: number, player: Player) {
 	switch (slideshowID) {
 		case 1:
 			// Clear player's inventory
