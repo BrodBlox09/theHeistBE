@@ -358,6 +358,10 @@ function startSlideshow(slideshowID: number, /** @type {Player} */ player: Playe
 			player.runCommandAsync('tellraw @a {"rawtext":[{"text":"§5§oVoice:§r "}, {"translate":"map.sub.001.B"}]}');
 			player.runCommandAsync('replaceitem entity @s slot.armor.head 0 carved_pumpkin 1 0 {"item_lock": {"mode": "lock_in_slot"}}');
 
+			const hideHud = system.runInterval(() => {
+				player.onScreenDisplay.setTitle('hideHud')
+			}, 0)
+
 			let tpInterval: number;
 
 			// First TP
@@ -390,6 +394,8 @@ function startSlideshow(slideshowID: number, /** @type {Player} */ player: Playe
 				system.clearRun(tpInterval);
 				overworld.runCommandAsync("scriptevent theheist:load-level 0-1");
 				player.runCommandAsync('replaceitem entity @s slot.armor.head 0 air');
+				system.clearRun(hideHud);
+				player.onScreenDisplay.setTitle('')
 			}, SECOND * 30.5);
 			break;
 	}

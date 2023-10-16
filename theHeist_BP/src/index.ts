@@ -137,5 +137,21 @@ world.beforeEvents.chatSend.subscribe(event => {
 				Utilities.setBlock(player.location, `theheist:${block.type}`, { "theheist:unlocked": 2, "theheist:rotation": 1 });
 			});
 			break;
+		case 'start': {
+			system.runTimeout(() => {
+				player.teleport({
+					x: 0.5,
+					y: -59,
+					z: 61.5
+				}, {
+					dimension: Utilities.dimensions.overworld,
+					rotation: {
+						x: 0,
+						y: 90
+					}
+				})
+			}, 0)
+			break
+		}
 	}
 });
