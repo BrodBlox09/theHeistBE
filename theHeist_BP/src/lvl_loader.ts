@@ -1,4 +1,4 @@
-import { ItemStack, Vector, system, world, DisplaySlotId, BlockInventoryComponent, EntityInventoryComponent } from "@minecraft/server";
+import { ItemStack, Vector, system, world, DisplaySlotId, BlockInventoryComponent, EntityInventoryComponent, ItemLockMode } from "@minecraft/server";
 import DataManager from "./DataManager";
 import VoiceOverManager from "./VoiceOverManager";
 
@@ -153,19 +153,27 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 					DataManager.setData(player, "energyTracker", playerEnergyTrackerDataNode);
 					const playerLevelInformationDataNode = { "name": "levelInformation", "information": [{ "name": "alarmLevel", "level": 0 }, { "name": "gameLevel", "level": 0.5 }] };
 					DataManager.setData(player, "levelInformation", playerLevelInformationDataNode);
-					// Clear and setup inventory for game
+
 					const playerInvContainer = (player.getComponent('inventory') as EntityInventoryComponent).container;
 					playerInvContainer.clearAll();
-					player.runCommandAsync('replaceitem entity @s slot.hotbar 0 theheist:recharge_mode_lvl_1');
-					player.runCommandAsync('replaceitem entity @s slot.hotbar 1 theheist:hacking_mode_lvl_1');
-					// set title options uses ticks instead of seconds now
-					player.onScreenDisplay.setTitle("§o§7Outside the HQ", { "fadeInDuration": 20, "fadeOutDuration": 20, "stayDuration": 160 });
+
+					const RechargeModeItem = new ItemStack('theheist:recharge_mode_lvl_1')
+					RechargeModeItem.lockMode = ItemLockMode.slot
+					RechargeModeItem.keepOnDeath = true
+
+					const HackingModeItem = new ItemStack('theheist:hacking_mode_lvl_1')
+					HackingModeItem.lockMode = ItemLockMode.slot
+					HackingModeItem.keepOnDeath = true
+
+					playerInvContainer.setItem(0, RechargeModeItem);
+					playerInvContainer.setItem(1, HackingModeItem);
+
 					player.teleport({ 'x': 1000.5, 'y': -59, 'z': 57.5 }, { 'dimension': overworld, 'rotation': { 'x': 0, 'y': 90 } });
 					player.camera.clear()
+					player.onScreenDisplay.setTitle("§o§7Outside the HQ", { "fadeInDuration": 20, "fadeOutDuration": 20, "stayDuration": 160 });
 					clearObjectives();
 					addUnfinishedObjective("Get into the building", 0);
 					reloadSidebarDisplay();
-					//overworld.runCommandAsync("tp @a 1000 -59 57 90 0");
 					break;
 				}
 				case "0-2": {
@@ -189,13 +197,22 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 					const playerLevelInformationDataNode = { "name": "levelInformation", "information": [{ "name": "alarmLevel", "level": 0 }, { "name": "gameLevel", "level": 0 }, { "name": "bustedCounter", "value": bustedCounterObjective.getScore(player) }] };
 
 					DataManager.setData(player, "levelInformation", playerLevelInformationDataNode);
-					// Clear and setup inventory for game
+
 					const playerInvContainer = (player.getComponent('inventory') as EntityInventoryComponent).container;
 					playerInvContainer.clearAll();
-					player.runCommandAsync('replaceitem entity @s slot.hotbar 0 theheist:recharge_mode_lvl_1');
-					player.runCommandAsync('replaceitem entity @s slot.hotbar 1 theheist:hacking_mode_lvl_1');
+
+					const RechargeModeItem = new ItemStack('theheist:recharge_mode_lvl_1')
+					RechargeModeItem.lockMode = ItemLockMode.slot
+					RechargeModeItem.keepOnDeath = true
+
+					const HackingModeItem = new ItemStack('theheist:hacking_mode_lvl_1')
+					HackingModeItem.lockMode = ItemLockMode.slot
+					HackingModeItem.keepOnDeath = true
+
+					playerInvContainer.setItem(0, RechargeModeItem);
+					playerInvContainer.setItem(1, HackingModeItem);
+
 					player.onScreenDisplay.setTitle("§o§7Level 0", { "fadeInDuration": 20, "fadeOutDuration": 20, "stayDuration": 160 });
-					// Player is in hatch, play appropriate sound files, send message, and teleport player to level pre-hatch //180 y turn
 					clearObjectives();
 					reloadSidebarDisplay();
 
