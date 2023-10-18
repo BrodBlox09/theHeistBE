@@ -124,11 +124,23 @@
         "keycard_reader": {
             "textures": "textures/blocks/keycard_reader"
         },
-        "chemical_deco_1": {
-            "textures": "textures/blocks/chemical_deco_1"
+        "chemical_deco_blue": {
+            "textures": "textures/blocks/chemical_deco_blue"
         },
-        "chemical_deco_2": {
-            "textures": "textures/blocks/chemical_deco_2"
+        "chemical_deco_red": {
+            "textures": "textures/blocks/chemical_deco_red"
+        },
+        "chemical_deco_2color": {
+            "textures": "textures/blocks/chemical_deco_2color"
+        },
+        "chemical_deco_metal": {
+            "textures": "textures/blocks/chemical_deco_metal"
+        },
+        "fire": {
+            "textures": "textures/blocks/fire"
+        },
+        "grate": {
+            "textures": "textures/blocks/grate"
         }
     }
 }
