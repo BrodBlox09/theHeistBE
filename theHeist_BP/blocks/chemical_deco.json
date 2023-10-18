@@ -1,0 +1,139 @@
+{
+    "format_version": "1.16.100",
+    "minecraft:block": {
+        "description": {
+            "identifier": "theheist:chemistry_decoration",
+            "is_experimental": false,
+            "menu_category": {
+                "category": "construction"
+            },
+            "properties": {
+                "theheist:type": [0, 1, 2, 3, 4, 5]
+            }
+        },
+        "events": {
+            "theheist:setup_block": {
+                "sequence": [
+                    {
+                        "set_block_property": {
+                            "theheist:type": "(math.die_roll_integer(1, 0, 5))"
+                        }
+                    }
+                ]
+            }
+        },
+        "components": {
+            "minecraft:on_player_placing": {
+                "event": "theheist:setup_block"
+            },
+            "minecraft:light_dampening": 0
+        },
+        "permutations": [
+            {
+                // Water
+                "condition": "query.block_property('theheist:type') == 0",
+                "components": {
+                    "minecraft:geometry": "geometry.chemical_deco_1",
+                    "minecraft:material_instances": {
+                        "*": {
+                            "texture": "chemical_deco_blue",
+                            "ambient_occlusion": false,
+                            // Blend allows for transparent textures
+                            "render_method": "blend"
+                        }
+                    }
+                }
+            },
+            {
+                // Blood lookin thing
+                "condition": "query.block_property('theheist:type') == 1",
+                "components": {
+                    "minecraft:geometry": "geometry.chemical_deco_2",
+                    "minecraft:material_instances": {
+                        "*": {
+                            "texture": "chemical_deco_red",
+                            "ambient_occlusion": false,
+                            // Blend allows for transparent textures
+                            "render_method": "blend"
+                        }
+                    }
+                }
+            },
+            {
+                // Double vials
+                "condition": "query.block_property('theheist:type') == 2",
+                "components": {
+                    "minecraft:geometry": "geometry.chemical_deco_3",
+                    "minecraft:material_instances": {
+                        "*": {
+                            "texture": "chemical_deco_2color",
+                            "ambient_occlusion": false,
+                            // Blend allows for transparent textures
+                            "render_method": "blend"
+                        }
+                    }
+                }
+            },
+            {
+                // Double vials on a stand
+                "condition": "query.block_property('theheist:type') == 3",
+                "components": {
+                    "minecraft:geometry": "geometry.chemical_deco_4",
+                    "minecraft:material_instances": {
+                        "wood": {
+                            "texture": "oak_log",
+                            "ambient_occlusion": false,
+                            // Blend is required here because "MaterialInstances can't mix and match opaque and blend rendering methods"
+                            "render_method": "blend"
+                        },
+                        "*": {
+                            "texture": "chemical_deco_2color",
+                            "ambient_occlusion": false,
+                            // Blend allows for transparent textures
+                            "render_method": "blend"
+                        }
+                    }
+                }
+            },
+            {
+                // Single large vial
+                "condition": "query.block_property('theheist:type') == 4",
+                "components": {
+                    "minecraft:geometry": "geometry.chemical_deco_5",
+                    "minecraft:material_instances": {
+                        "*": {
+                            "texture": "chemical_deco_red",
+                            "ambient_occlusion": false,
+                            // Blend allows for transparent textures
+                            "render_method": "blend"
+                        }
+                    }
+                }
+            },
+            {
+                // Bunsen Burner
+                "condition": "query.block_property('theheist:type') == 5",
+                "components": {
+                    "minecraft:geometry": "geometry.chemical_deco_6",
+                    "minecraft:material_instances": {
+                        "fire": {
+                            "texture": "fire",
+                            "ambient_occlusion": false,
+                            "render_method": "alpha_test"
+                        },
+                        "grate": {
+                            "texture": "grate",
+                            "ambient_occlusion": false,
+                            "render_method": "alpha_test"
+                        },
+                        "*": {
+                            "texture": "chemical_deco_metal",
+                            "ambient_occlusion": false,
+                            "render_method": "alpha_test"
+                        }
+                    }
+                }
+            }
+        ]
+    }
+}
