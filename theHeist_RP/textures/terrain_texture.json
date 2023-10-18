@@ -123,6 +123,12 @@
         },
         "keycard_reader": {
             "textures": "textures/blocks/keycard_reader"
+        },
+        "chemical_deco_1": {
+            "textures": "textures/blocks/chemical_deco_1"
+        },
+        "chemical_deco_2": {
+            "textures": "textures/blocks/chemical_deco_2"
         }
     }
 }
