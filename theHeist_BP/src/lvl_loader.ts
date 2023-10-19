@@ -95,7 +95,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 					// Add level information data node
 					const playerLevelInformationDataNode = { "name": "levelInformation", "information": [{ "name": "alarmLevel", "level": 0 }, { "name": "gameLevel", "level": 1 }] };
 					DataManager.setData(player, "levelInformation", playerLevelInformationDataNode);
-
+					// Clear and setup inventory for game
 					const playerInvContainer = (player.getComponent('inventory') as EntityInventoryComponent).container;
 					playerInvContainer.clearAll();
 

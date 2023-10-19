@@ -141,6 +141,12 @@
         },
         "grate": {
             "textures": "textures/blocks/grate"
+        },
+        "hack_icon": {
+            "textures": "textures/blocks/hack_icon"
+        },
+        "recharge_icon": {
+            "textures": "textures/blocks/recharge_icon"
         }
     }
 }

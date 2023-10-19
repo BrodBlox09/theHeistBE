@@ -8,6 +8,9 @@
         "components": {
             "minecraft:geometry": "geometry.recharge_mode",
             "minecraft:material_instances": {
+                "icon": {
+                    "texture": "recharge_icon"
+                },
                 "*": {
                     "texture": "recharge_mode"
                 }
