@@ -99,8 +99,7 @@ world.beforeEvents.chatSend.subscribe(event => {
 			break;
 		case "fillLarge":
 			system.run(() => {
-				//world.getDimension("overworld").fillBlocks({"x": parseInt(args[0]), "y": parseInt(args[1]), "z": parseInt(args[2])}, {"x": parseInt(args[3]), "y": parseInt(args[4]), "z": parseInt(args[5])}, args[6]);
-				player.runCommandAsync(`fill ${args[0]} ${args[1]} ${args[2]} ${args[3]} ${args[4]} ${args[5]} ${args[6]}`);
+				player.dimension.fillBlocks({ x: Number(args[0]), y: Number(args[1]), z: Number(args[2]) }, { x: Number(args[3]), y: Number(args[4]), z: Number(args[5]) }, args[6]);
 			});
 			break;
 		case "tpCam":

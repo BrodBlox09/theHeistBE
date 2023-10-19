@@ -115,13 +115,11 @@ function rechargeMode(lvl: number, player: Player) {
 			playerEnergyTrackerDataNode.recharging = true;//${armorStandEnergyTrackerDataNode.block.rotation}
 			player.playSound('map.recharge_use', { "volume": 0.5 });
 			Utilities.setBlock(blockLocation, "theheist:recharge_station", { "theheist:rotation": armorStandEnergyTrackerDataNode.block.rotation, "theheist:state": 2 });
-			//overworld.runCommandAsync(`setBlock ${armorStandEnergyTrackerDataNode.block.x} ${armorStandEnergyTrackerDataNode.block.y} ${armorStandEnergyTrackerDataNode.block.z} theheist:recharge_station ["theheist:rotation":${armorStandEnergyTrackerDataNode.block.rotation}, "theheist:state":2]`);
 			playerEnergyTrackerDataNode.usingRechargerID = armorStandEnergyTrackerDataNode.rechargerID;
 		} else {
 			// The player is currently recharging
 			playerEnergyTrackerDataNode.recharging = false;
 			Utilities.setBlock(blockLocation, "theheist:recharge_station", { "theheist:rotation": armorStandEnergyTrackerDataNode.block.rotation, "theheist:state": 1 });
-			//overworld.runCommandAsync(`setBlock ${armorStandEnergyTrackerDataNode.block.x} ${armorStandEnergyTrackerDataNode.block.y} ${armorStandEnergyTrackerDataNode.block.z} theheist:recharge_station ["theheist:rotation":${armorStandEnergyTrackerDataNode.block.rotation}, "theheist:state":1]`);
 			playerEnergyTrackerDataNode.usingRechargerID = -1;
 		}
 		DataManager.setData(player, "energyTracker", playerEnergyTrackerDataNode);
@@ -182,7 +180,6 @@ function hackingMode(lvl: number, player: Player) {
 		}
 	}
 	if (i == 0) {
-		// No console
 		player.sendMessage("§cNo console");
 		return;
 	}
@@ -200,9 +197,7 @@ function action(actionInfo: Action, player: Player) {
 			var z = actionInfo.do.z;
 			var block = actionInfo.do.block;
 			var permutations = actionInfo.do.permutations;
-			overworld.runCommandAsync(`setBlock ${x} ${y} ${z} ${block} ${permutations}`);
-			//Utilities.setBlock({"x": x, "y": y, "z": z}, block, permutations);
-			//console.warn(JSON.stringify(permutations));
+			Utilities.setBlock({ x: x, y: y, z: z }, block, permutations);
 			break;
 		case "disable_camera":
 			player.playSound('map.disable');
@@ -238,7 +233,7 @@ function action(actionInfo: Action, player: Player) {
 				const x = displayCameraLocation.x + ((Utilities.cos(360 * (i / maxParticles)) * radius));
 				const y = displayCameraLocation.y + 0.5;
 				const z = displayCameraLocation.z + ((Utilities.sin(360 * (i / maxParticles)) * radius));
-				//overworld.runCommandAsync(`particle minecraft:explosion_particle ${x} ${y} ${z}`)
+
 				try {
 					overworld.spawnParticle("minecraft:explosion_particle", { "x": x, "y": y, "z": z }, new MolangVariableMap());
 				} catch (err) { }
@@ -511,7 +506,7 @@ system.runInterval(() => {
 			for (const subArmorStand of subArmorStands) {
 				var armorStandEnergyTracker = DataManager.getData(subArmorStand, "energyTracker");
 				if (armorStandEnergyTracker.rechargerID != playerEnergyTracker.usingRechargerID) continue;
-				overworld.runCommandAsync(`setBlock ${armorStandEnergyTracker.block.x} ${armorStandEnergyTracker.block.y} ${armorStandEnergyTracker.block.z} theheist:recharge_station ["theheist:rotation":${armorStandEnergyTracker.block.rotation}, "theheist:state":1]`);
+				Utilities.setBlock({ x: armorStandEnergyTracker.block.x, y: armorStandEnergyTracker.block.y, z: armorStandEnergyTracker.block.z }, "theheist:recharge_station", { "theheist:rotation": armorStandEnergyTracker.block.rotation, "theheist:state": 1 });
 				playerEnergyTracker.usingRechargerID = -1;
 			}
 		} else if (playerEnergyTracker.energyUnits < gamebandInfo.rechargeMode["level" + playerEnergyTracker.rechargeLevel + "Max"]) {
@@ -536,7 +531,7 @@ system.runInterval(() => {
 					var diff = Math.abs(armorStandEnergyTracker.energyUnits);
 					playerEnergyTracker.energyUnits -= diff;
 					armorStandEnergyTracker.energyUnits = 0;
-					overworld.runCommandAsync(`setBlock ${armorStandEnergyTracker.block.x} ${armorStandEnergyTracker.block.y} ${armorStandEnergyTracker.block.z} theheist:recharge_station ["theheist:rotation":${armorStandEnergyTracker.block.rotation}, "theheist:state":3]`);
+					Utilities.setBlock({ x: armorStandEnergyTracker.block.x, y: armorStandEnergyTracker.block.y, z: armorStandEnergyTracker.block.z }, "theheist:recharge_station", { "theheist:rotation": armorStandEnergyTracker.block.rotation, "theheist:state": 3 });
 					playerEnergyTracker.recharging = false;
 					playerEnergyTracker.usingRechargerID = -1;
 					if (armorStandEnergyTracker.actions) {

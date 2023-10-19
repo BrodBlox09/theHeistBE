@@ -123,7 +123,6 @@ system.runInterval(() => {
 			//var belowBlock = new Vector(armorStand.location.x, armorStand.location.y - 2, armorStand.location.z);
 			var belowBlock = { "x": armorStand.location.x, "y": armorStand.location.y - 2, "z": armorStand.location.z };
 			if (blockAtLevel && blockAtLevel.typeId == "minecraft:air") Utilities.dimensions.overworld.fillBlocks(belowBlock, belowBlock, BlockPermutation.resolve("theheist:camera_sight"));
-			//armorStand.runCommandAsync('setblock ~ ~-2 ~ theheist:camera_sight');
 			else armorStand.kill();
 			//player.sendMessage(`X: ${armorStand.location.x + -(sin(armorStand.getRotation().y) * tpDistance)} Y: ${cameraMappingHeight} Z: ${armorStand.location.z + (cos(armorStand.getRotation().y) * tpDistance)}`);
 		});

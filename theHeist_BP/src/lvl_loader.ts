@@ -1,6 +1,7 @@
-import { ItemStack, Vector, system, world, DisplaySlotId, BlockInventoryComponent, EntityInventoryComponent, ItemLockMode } from "@minecraft/server";
+import { ItemStack, Vector, system, world, DisplaySlotId, BlockInventoryComponent, EntityInventoryComponent, ItemLockMode, BlockPermutation } from "@minecraft/server";
 import DataManager from "./DataManager";
 import VoiceOverManager from "./VoiceOverManager";
+import Utilities from "./Utilities";
 
 // Tag length is max 255, need a different way to store lvl information other than tags :(
 // Perhaps similar to how I stored information in the item speedrun thing
@@ -95,7 +96,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 					// Add level information data node
 					const playerLevelInformationDataNode = { "name": "levelInformation", "information": [{ "name": "alarmLevel", "level": 0 }, { "name": "gameLevel", "level": 1 }] };
 					DataManager.setData(player, "levelInformation", playerLevelInformationDataNode);
-					// Clear and setup inventory for game
+
 					const playerInvContainer = (player.getComponent('inventory') as EntityInventoryComponent).container;
 					playerInvContainer.clearAll();
 
@@ -123,7 +124,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 					// Use for cameras that need to be facing different directions than north (I think)
 					const recharge0DataNode = { "name": "energyTracker", "rechargerID": 0, "energyUnits": 21.0, "block": { "x": -22, "y": -59, "z": 62, "rotation": 5 }, "actions": [{ "type": "manage_objectives", "do": { "manageType": 2, "objective": "Recharge Gameband", "sortOrder": 1 } }] };
 					DataManager.setData(recharge0, "energyTracker", recharge0DataNode);
-					overworld.runCommandAsync('setblock -22 -59 62 theheist:recharge_station ["theheist:rotation":5, "theheist:state":1]');
+					Utilities.setBlock({ x: -22, y: -59, z: 62 }, "theheist:recharge_station", { "theheist:rotation": 5, "theheist:state": 1 });
 					// Load hackable console 0
 					const computer0 = overworld.spawnEntity("minecraft:armor_stand", new Vector(-21.5, consolesHeight, 58.5));
 					const computer0DataNode = {
@@ -147,7 +148,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 					};
 					DataManager.setData(computer0, "actionTracker", computer0DataNode);
 					// 2 seconds or 2000 milliseconds for static, then green and action!
-					overworld.runCommandAsync('setblock -22 -58 58 theheist:computer ["theheist:rotation":5, "theheist:unlocked":0]');
+					Utilities.setBlock({ x: -22, y: -58, z: 58 }, "theheist:computer", { "theheist:rotation": 5, "theheist:unlocked": 0 });
 					break;
 				}
 				case "0-1": {
@@ -319,7 +320,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 						DataManager.setData(camera5, "cameraTracker", camera5DataNode);
 						// Console 0 (Type: Computer)
 						const console0 = overworld.spawnEntity("armor_stand", { "x": 2020.5, "y": consolesHeight, "z": 54.5 });
-						overworld.runCommandAsync('setblock 2020 -58 54 theheist:computer ["theheist:rotation":5]');
+						Utilities.setBlock({ x: 2020, y: -58, z: 54 }, "theheist:computer", { "theheist:rotation": 5 });
 						const console0ActionTracker = {
 							"name": "actionTracker",
 							"used": false,
@@ -345,7 +346,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 						DataManager.setData(console0, "actionTracker", console0ActionTracker);
 						// Console 1 (Type: Computer)
 						const console1 = overworld.spawnEntity("armor_stand", { "x": 2017.5, "y": consolesHeight, "z": 52.5 });
-						overworld.runCommandAsync('setblock 2017 -58 52 theheist:computer ["theheist:rotation":2]');
+						Utilities.setBlock({ x: 2017, y: -58, z: 52 }, "theheist:computer", { "theheist:rotation": 2 });
 						const console1ActionTracker = {
 							"name": "actionTracker",
 							"used": false,
@@ -365,8 +366,8 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 						DataManager.setData(console1, "actionTracker", console1ActionTracker);
 						// Console 2 (Type: Keypad)
 						const console2 = overworld.spawnEntity("armor_stand", { "x": 2014.5, "y": consolesHeight, "z": 60.5 });
-						overworld.runCommandAsync('setblock 2014 -58 60 theheist:keypad ["theheist:rotation":5]');
-						overworld.runCommandAsync('setblock 2015 -59 61 theheist:custom_door_1_bottom ["theheist:rotation":5, "theheist:unlocked":false]');
+						Utilities.setBlock({ x: 2014, y: -58, z: 60 }, "theheist:keypad", { "theheist:rotation": 5 });
+						Utilities.setBlock({ x: 2015, y: -59, z: 61 }, "theheist:custom_door_1_bottom", { "theheist:rotation": 5, "theheist:unlocked": false });
 						const console2ActionTracker = {
 							"name": "actionTracker",
 							"used": false,
@@ -389,7 +390,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 						DataManager.setData(console2, "actionTracker", console2ActionTracker);
 						// Console 3 (Type: Computer)
 						const console3 = overworld.spawnEntity("armor_stand", { "x": 2018.5, "y": consolesHeight, "z": 65.5 });
-						overworld.runCommandAsync('setblock 2018 -58 65 theheist:computer ["theheist:rotation":2]');
+						Utilities.setBlock({ x: 2018, y: -58, z: 65 }, "theheist:computer", { "theheist:rotation": 2 });
 						const console3ActionTracker = {
 							"name": "actionTracker",
 							"used": false,
@@ -415,8 +416,8 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 						DataManager.setData(console3, "actionTracker", console3ActionTracker);
 						// Console 4 (Type: Keypad)
 						const console4 = overworld.spawnEntity("armor_stand", { "x": 1996.5, "y": consolesHeight, "z": 55.5 });
-						overworld.runCommandAsync('setblock 1996 -58 55 theheist:keypad ["theheist:rotation":3]');
-						overworld.runCommandAsync('setblock 1995 -59 56 theheist:custom_door_1_bottom ["theheist:rotation":3, "theheist:unlocked":false]');
+						Utilities.setBlock({ x: 1996, y: -58, z: 55 }, "theheist:keypad", { "theheist:rotation": 3 });
+						Utilities.setBlock({ x: 1995, y: -59, z: 56 }, "theheist:custom_door_1_bottom", { "theheist:rotation": 3, "theheist:unlocked": false });
 						const console4ActionTracker = {
 							"name": "actionTracker",
 							"used": false,
@@ -440,8 +441,8 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 						DataManager.setData(console4, "actionTracker", console4ActionTracker);
 						// Console 5 (Type: Keypad)
 						const console5 = overworld.spawnEntity("armor_stand", { "x": 1992.5, "y": consolesHeight, "z": 62.5 });
-						overworld.runCommandAsync('setblock 1992 -58 62 theheist:keypad ["theheist:rotation":5]');
-						overworld.runCommandAsync('setblock 1993 -59 61 theheist:custom_door_1_bottom ["theheist:rotation":5, "theheist:unlocked":false]');
+						Utilities.setBlock({ x: 1992, y: -58, z: 62 }, "theheist:keypad", { "theheist:rotation": 5 });
+						Utilities.setBlock({ x: 1993, y: -59, z: 61 }, "theheist:custom_door_1_bottom", { "theheist:rotation": 5, "theheist:unlocked": false });
 						const console5ActionTracker = {
 							"name": "actionTracker",
 							"used": false,
@@ -465,7 +466,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 						DataManager.setData(console5, "actionTracker", console5ActionTracker);
 						// Console 6 (Type: Computer)
 						const console6 = overworld.spawnEntity("armor_stand", { "x": 1978.5, "y": consolesHeight, "z": 64.5 });
-						overworld.runCommandAsync('setblock 1978 -58 64 theheist:computer ["theheist:rotation":3]');
+						Utilities.setBlock({ x: 1978, y: -58, z: 64 }, "theheist:computer", { "theheist:rotation": 3 });
 						const console6ActionTracker = {
 							"name": "actionTracker",
 							"used": false,
@@ -488,7 +489,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 						DataManager.setData(console6, "actionTracker", console6ActionTracker);
 						// Console 7 (Type: Computer)
 						const console7 = overworld.spawnEntity("armor_stand", { "x": 1978.5, "y": consolesHeight, "z": 56.5 });
-						overworld.runCommandAsync('setblock 1978 -58 56 theheist:computer ["theheist:rotation":2]');
+						Utilities.setBlock({ x: 1978, y: -58, z: 56 }, "theheist:computer", { "theheist:rotation": 2 });
 						const console7ActionTracker = {
 							"name": "actionTracker",
 							"used": false,
@@ -528,7 +529,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 						DataManager.setData(console8, "actionTracker", console8ActionTracker);
 						// Recharge Station 0
 						const recharge0 = overworld.spawnEntity("minecraft:armor_stand", new Vector(1998.5, rechargeHeight, 72.5));
-						overworld.runCommandAsync('setblock 1998 -59 72 theheist:recharge_station ["theheist:rotation":5]');
+						Utilities.setBlock({ x: 1998, y: -59, z: 72 }, "theheist:recharge_station", { "theheist:rotation": 5 });
 						const recharge0DataNode = {
 							"name": "energyTracker",
 							"rechargerID": 0,
@@ -538,7 +539,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 						DataManager.setData(recharge0, "energyTracker", recharge0DataNode);
 						// Recharge Station 1
 						const recharge1 = overworld.spawnEntity("minecraft:armor_stand", new Vector(1986.5, rechargeHeight, 70.5));
-						overworld.runCommandAsync('setblock 1986 -59 70 theheist:recharge_station ["theheist:rotation":4]');
+						Utilities.setBlock({ x: 1986, y: -59, z: 70 }, "theheist:recharge_station", { "theheist:rotation": 4 });
 						const recharge1DataNode = {
 							"name": "energyTracker",
 							"rechargerID": 0,
@@ -553,15 +554,11 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 						// Set doors and trapdoors
 
 						// Reset end level doors
-						overworld.runCommandAsync(`fill 1988 -61 67 1987 -61 67 air`);
+						overworld.fillBlocks({ x: 1988, y: -61, z: 67 }, { x: 1987, y: -61, z: 67 }, BlockPermutation.resolve('minecraft:air'));
 						// Turn on command blocks
-						//{"x": 2029.50, "y": -59.00, "z": 56.50}
-						//{"x": 2029.50, "y": -59.00, "z": 61.50}
-						//Dimesion.fillBlocks() does not work
-						overworld.runCommandAsync('fill 2029.50 -59.00 56.50 2029.50 -59.00 61.50 redstone_block');
-						//overworld.fillBlocks({"x": 1988, "y": -61, "z": 67}, {"x": 1987, "y": -61, "z": 67}, "air");
+						overworld.fillBlocks({ x: 2029.50, y: -59.00, z: 56.50 }, { x: 2029.50, y: -59.00, z: 61.50 }, BlockPermutation.resolve('minecraft:redstone_block'));
 						// Teleport player from pre-hatch to post-hatch
-						player.teleport({ 'x': 2013.5, 'y': -52, 'z': 56.5 }, { 'dimension': overworld, 'rotation': { 'x': 0, 'y': 90 } });
+						player.teleport({ x: 2013.5, y: -52, z: 56.5 }, { dimension: overworld, rotation: { x: 0, y: 90 } });
 						VoiceOverManager.play(player, '004')
 
 					}, SECOND * 7.5);
@@ -589,12 +586,12 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 			/*if (//determine if player has more prototypes to unlock) {
 				player.sendMessage([{"text": "§5§oVoice:§r "}, {"translate": `map.sub.forgot_prototypes`}]);
 				player.playSound("map.forgot_prototypes");
-				overworld.runCommandAsync(`setblock ${x} ${y} ${z} lever ${rotation}`);
+				Utilities.setBlock({ x: Number(x), y: Number(y), z: Number(z) }, "minecraft:lever", { "minecraft:lever_direction": rotation });
 			}*/
 			if (objectives.some((x) => (x.startsWith("§c")))) {
 				// Player hasn't finished all the objectives yet
 				player.sendMessage([{ "text": "§5§oVoice:§r " }, { "text": "You still have unfinished objectives!" }]);
-				overworld.runCommandAsync(`setblock ${x} ${y} ${z} lever ["minecraft:lever_direction":"${rotation}"]`);
+				Utilities.setBlock({ x: Number(x), y: Number(y), z: Number(z) }, "minecraft:lever", { "minecraft:lever_direction": rotation });
 				//return;
 			}
 			bustedCounterObjective.setScore(player, 0);
@@ -612,7 +609,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 function createRechargeStation(x: number, z: number, energyTracker: object, rotation: number) {
 	const recharge = overworld.spawnEntity("minecraft:armor_stand", new Vector(x, rechargeHeight, z));
 	DataManager.setData(recharge, "energyTracker", energyTracker);
-	overworld.runCommandAsync(`setblock -22 -59 62 theheist:recharge_station ["theheist:rotation":${rotation}, "theheist:state":1]`);
+	Utilities.setBlock({ x, y: rechargeHeight, z }, "theheist:recharge_station", { "theheist:rotation": rotation });
 	return recharge;
 }
 
