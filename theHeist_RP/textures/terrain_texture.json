@@ -78,8 +78,20 @@
         "recharge_mode": {
             "textures": "textures/blocks/recharge_mode"
         },
+        "recharge_icon": {
+            "textures": "textures/blocks/recharge_icon"
+        },
         "hacking_mode": {
             "textures": "textures/blocks/hacking_mode"
+        },
+        "hack_icon": {
+            "textures": "textures/blocks/hack_icon"
+        },
+        "sensor_mode": {
+            "textures": "textures/blocks/sensor_mode"
+        },
+        "sensor_icon": {
+            "textures": "textures/blocks/sensor_icon"
         },
         "recharge_station_1": {
             "textures": "textures/blocks/recharge_station_1"
@@ -141,12 +153,6 @@
         },
         "grate": {
             "textures": "textures/blocks/grate"
-        },
-        "hack_icon": {
-            "textures": "textures/blocks/hack_icon"
-        },
-        "recharge_icon": {
-            "textures": "textures/blocks/recharge_icon"
         }
     }
 }

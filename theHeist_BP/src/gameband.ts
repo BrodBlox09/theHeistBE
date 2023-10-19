@@ -22,7 +22,8 @@ class loreItem {
 
 const loreItems = [
 	new loreItem("theheist:recharge_mode_lvl_1", "§r§9Recharge mode Lvl. 1", ["Use item to §r§6toggle", "Energy: 1.0 units/second", "Select to show objectives"]),
-	new loreItem("theheist:hacking_mode_lvl_1", "§r§2Hacking mode Lvl. 1", ["Use item to §r§6use", "Energy: 15 units"])
+	new loreItem("theheist:hacking_mode_lvl_1", "§r§2Hacking mode Lvl. 1", ["Use item to §r§6use", "Energy: 15 units"]),
+	new loreItem("theheist:sensor_mode_lvl_1", "§r§6Sensor mode Lvl. 1", ["Use item to §r§6toggle", "Energy: 1.0 units/second"])
 ]
 
 const gamebandInfo: Record<string, Record<string, number>> = {
@@ -63,31 +64,37 @@ world.afterEvents.itemUse.subscribe((event) => {
 	//const inv = player.getComponent("minecraft:inventory").container;
 	//const text = inv.getSlot(0).typeId;
 	const text = event.itemStack.typeId;
-	if (!["theheist:recharge_mode_lvl_1", "theheist:hacking_mode_lvl_1", "minecraft:red_dye", "minecraft:yellow_dye", "minecraft:green_dye", "minecraft:paper"].includes(text)) return;
 	let keycardType;
 	switch (text) {
 		case "theheist:recharge_mode_lvl_1":
 			rechargeMode(1, player);
 			break;
 		case "theheist:hacking_mode_lvl_1":
-			//player.resetLevel();
 			hackingMode(1, player);
+			break;
+		case "theheist:sensor_mode_lvl_1":
+			sensorMode(1, player);
 			break;
 		case "minecraft:red_dye":
 			console.warn("r");
 			keycardType = "red"
 		case "minecraft:yellow_dye":
 			console.warn("y");
-			if (!keycardType) keycardType = "yellow"
+			if (!keycardType) keycardType = "yellow";
 		case "minecraft:green_dye":
 			console.warn("g");
-			if (!keycardType) keycardType = "green"
+			if (!keycardType) keycardType = "green";
 		case "minecraft:paper":
 			console.warn("p");
-			if (!keycardType) keycardType = "all"
+			if (!keycardType) keycardType = "all";
+			keycard(keycardType!, player);
+			break;
 	}
-	keycard(keycardType!, player);
 });
+
+function sensorMode(lvl: number, player: Player) {
+	console.warn("You used sensor mode.");
+}
 
 function rechargeMode(lvl: number, player: Player) {
 	const query = {
