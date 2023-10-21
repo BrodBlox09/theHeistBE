@@ -30,6 +30,7 @@ const loreItems = [
 	new loreItem('minecraft:green_dye', '§oGreen Keycard§r', ['Used on matching Keycard reader']),
 	new loreItem('minecraft:blue_dye', '§oBlue Keycard§r', ['Used on matching Keycard reader']),
 	new loreItem('minecraft:leather_helmet', '§oCall the authorities§r', ['Drop to restart level']),
+	new loreItem('theheist:nv_glasses', '§oNV Goggles§r', ['Drop to regain items']),
 ]
 
 const gamebandInfo: Record<string, Record<string, number>> = {

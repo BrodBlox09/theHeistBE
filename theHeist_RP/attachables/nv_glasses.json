@@ -1,0 +1,36 @@
+{
+	"format_version": "1.10.0",
+	"minecraft:attachable": {
+		"description": {
+			"identifier": "theheist:nv_glasses",
+			"materials": {
+				"default": "entity_alphatest",
+				"enchanted": "entity_alphatest_glint"
+			},
+			"textures": {
+				"default": "textures/entity/nv_glasses",
+				"enchanted": "textures/misc/enchanted_item_glint"
+			},
+			"geometry": {
+				"default": "geometry.nv_glasses"
+			},
+			"animations": {
+				"fpv": "animation.nv_glasses.fpv",
+				"tpv": "animation.nv_glasses.tpv"
+			},
+			"scripts": {
+				"animate": [
+					{
+						"fpv": "context.is_first_person == 1.0"
+					},
+					{
+						"tpv": "context.is_first_person == 0.0"
+					}
+				]
+			},
+			"render_controllers": [
+				"controller.render.item_default"
+			]
+		}
+	}
+}
