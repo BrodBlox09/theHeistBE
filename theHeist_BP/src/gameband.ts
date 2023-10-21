@@ -197,7 +197,7 @@ function action(actionInfo: Action, player: Player) {
 			var z = actionInfo.do.z;
 			var block = actionInfo.do.block;
 			var permutations = actionInfo.do.permutations;
-			Utilities.setBlock({ x: x, y: y, z: z }, block, permutations);
+			overworld.runCommandAsync(`setBlock ${x} ${y} ${z} ${block} ${permutations}`)
 			break;
 		case "disable_camera":
 			player.playSound('map.disable');
