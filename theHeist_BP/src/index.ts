@@ -138,6 +138,7 @@ world.beforeEvents.chatSend.subscribe(event => {
 			break;
 		case 'start': {
 			system.runTimeout(() => {
+				player.dimension.runCommand(`time set 20000`)
 				player.runCommand(`gamemode a`)
 				player.teleport({
 					x: 0.5,
