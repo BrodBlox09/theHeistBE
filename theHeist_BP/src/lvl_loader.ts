@@ -523,6 +523,9 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 								},
 								{
 									"type": "voice_says", "do": { "soundID": "109" }
+								},
+								{
+									"type": "manage_objectives", "do": { "manageType": 2, "objective": "Access the elevator", "sortOrder": 1 }
 								}
 							]
 						};
@@ -554,7 +557,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 						// Set doors and trapdoors
 
 						// Reset end level doors
-						overworld.fillBlocks({ x: 1988, y: -61, z: 67 }, { x: 1987, y: -61, z: 67 }, BlockPermutation.resolve('minecraft:air'));
+						overworld.fillBlocks({ x: 1988, y: -61, z: 68 }, { x: 1987, y: -61, z: 68 }, BlockPermutation.resolve('minecraft:air'));
 						// Turn on command blocks
 						overworld.fillBlocks({ x: 2029.50, y: -59.00, z: 56.50 }, { x: 2029.50, y: -59.00, z: 61.50 }, BlockPermutation.resolve('minecraft:redstone_block'));
 						// Teleport player from pre-hatch to post-hatch

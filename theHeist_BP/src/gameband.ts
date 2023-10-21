@@ -235,7 +235,9 @@ function action(actionInfo: Action, player: Player) {
 				const z = displayCameraLocation.z + ((Utilities.sin(360 * (i / maxParticles)) * radius));
 
 				try {
-					overworld.spawnParticle("minecraft:explosion_particle", { "x": x, "y": y, "z": z }, new MolangVariableMap());
+					const molangVarMap = new MolangVariableMap()
+					molangVarMap.setVector3("velocity", { x, y, z })
+					overworld.spawnParticle("minecraft:explosion_particle", { x, y, z }, molangVarMap);
 				} catch (err) { }
 
 			}

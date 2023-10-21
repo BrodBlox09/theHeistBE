@@ -138,6 +138,7 @@ world.beforeEvents.chatSend.subscribe(event => {
 			break;
 		case 'start': {
 			system.runTimeout(() => {
+				player.runCommand(`gamemode a`)
 				player.teleport({
 					x: 0.5,
 					y: -59,
@@ -151,6 +152,12 @@ world.beforeEvents.chatSend.subscribe(event => {
 				})
 			}, 0)
 			break
+		}
+		case 'playVoice': {
+			system.runTimeout(() => {
+				player.playSound(`map.${args[0]}`)
+				player.sendMessage([{ text: '§5§oVoice:§r ' }, { translate: `map.sub.${args[0]}` }])
+			}, 0)
 		}
 	}
 });
