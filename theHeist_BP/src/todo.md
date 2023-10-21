@@ -11,6 +11,9 @@
 - [ ] add texts to intercatable blocks through armor stands or other entities
 - [ ] rotate lvl 1 cameras to match the original
 - [ ] add paintings and itemframe items
+- [ ] fix the differences in the start van (missing models, missing driver, outside is different, command block textures are different, lighting is different)
+- [ ] recharging is faster in java + when recharging, other gamebands are taken away
+- [ ] there should be a blindness effect in between cutscene scenes
 ### UI
 - [ ] edit inventory ui
 ### Other
