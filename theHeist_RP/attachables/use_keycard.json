@@ -1,0 +1,37 @@
+{
+	"format_version": "1.10.0",
+	"minecraft:attachable": {
+		"description": {
+			"identifier": "minecraft:paper",
+			"materials": {
+				"default": "entity_alphatest"
+			},
+			"textures": {
+				"blue": "textures/items/dye_powder_blue",
+				"green": "textures/items/dye_powder_green",
+				"yellow": "textures/items/dye_powder_yellow",
+				"red": "textures/items/dye_powder_red"
+			},
+			"geometry": {
+				"default": "geometry.use_keycard"
+			},
+			"animations": {
+				"vision1": "animation.use_keycard.fpv",
+				"vision2": "animation.use_keycard.tpv"
+			},
+			"scripts": {
+				"animate": [
+					{
+						"vision1": "c.is_first_person"
+					},
+					{
+						"vision2": "!c.is_first_person"
+					}
+				]
+			},
+			"render_controllers": [
+				"controller.render.use_keycard_anim"
+			]
+		}
+	}
+}

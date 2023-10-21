@@ -1,0 +1,26 @@
+{
+	"format_version": "1.10",
+	"render_controllers": {
+		"controller.render.use_keycard_anim": {
+			"arrays": {
+				"textures": {
+					"array.item_frames": [
+						"texture.blue",
+						"texture.green",
+						"texture.yellow",
+						"texture.red"
+					]
+				}
+			},
+			"textures": [
+				"temp.life_time = query.life_time * 1.0; return array.item_frames[temp.life_time];"
+			],
+			"geometry": "Geometry.default",
+			"materials": [
+				{
+					"*": "material.default"
+				}
+			]
+		}
+	}
+}

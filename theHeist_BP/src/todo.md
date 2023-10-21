@@ -1,7 +1,7 @@
 ## To-do
 ### Items
-- [ ] add Call the authorities item {name:'§oCall the authorities§r', lore:['Drop to restart level']}
-- [ ] add Use Keycard item {name:'§oUse Keycard§r', lore:['Can trigger any Keycard reader', 'for which you own a matching card']}
+- [x] add Call the authorities item {name:'§oCall the authorities§r', lore:['Drop to restart level']}
+- [x] add Use Keycard item {name:'§oUse Keycard§r', lore:['Can trigger any Keycard reader', 'for which you own a matching card']}
 - [ ] add NV Goggles item {name:'§oNV Goggles§r', lore:['Drop to regain items']}
 	- [ ] create armor model
 	- [ ] create attachable

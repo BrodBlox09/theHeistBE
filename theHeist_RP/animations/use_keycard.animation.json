@@ -1,0 +1,41 @@
+{
+	"format_version": "1.10.0",
+	"animations": {
+		"animation.use_keycard.fpv": {
+			"loop": true,
+			"bones": {
+				"rightitem": {
+					"position": [
+						-2.0,
+						-17.0,
+						1.0
+					],
+					"rotation": [
+						-45.75,
+						-1.0,
+						197.09
+					],
+					"scale": 1.46
+				}
+			}
+		},
+		"animation.use_keycard.tpv": {
+			"loop": true,
+			"bones": {
+				"rightitem": {
+					"position": [
+						3.0,
+						0.55,
+						-9.78
+					],
+					"rotation": [
+						25.0,
+						10.0,
+						200.0
+					],
+					"scale": 0.59
+				}
+			}
+		}
+	}
+}
