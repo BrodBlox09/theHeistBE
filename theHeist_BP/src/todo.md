@@ -8,11 +8,14 @@
 ### Map
 - [ ] reset level on restart (doors, levers (elevator), etc)
 - [ ] redo the level 1 map to match the original
-- [ ] add texts to intercatable blocks through armor stands or other entities
+- [ ] add texts to interactable blocks through armor stands or other entities
 - [ ] rotate lvl 1 cameras to match the original
+- [x] fix camera FOV angle to match the original
+- [ ] add ticking sound whenever player is caught by the security system
 - [ ] add paintings and itemframe items
 - [ ] fix the differences in the start van (missing models, missing driver, outside is different, command block textures are different, lighting is different)
-- [ ] recharging is faster in java + when recharging, other gamebands are taken away
+- [x] recharging is faster in java
+- [ ] when recharging, other gamebands are taken away
 - [ ] there should be a blindness effect in between cutscene scenes
 ### UI
 - [ ] edit inventory ui

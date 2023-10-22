@@ -23,6 +23,7 @@ tile.theheist:projector.name=Projector
 tile.theheist:drawer_decoration.name=Drawer Decoration
 tile.theheist:keycard_reader.name=Keycard Reader
 tile.theheist:chemistry_decoration.name=Chemistry Decoration
+item.theheist:nv_glasses.name=NV Goggles
 
 ## Rename vanilla items
 item.dye.red.name=Red Keycard

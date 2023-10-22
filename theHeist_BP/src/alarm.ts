@@ -13,6 +13,8 @@ const cameraHeight = -25;
 const cameraMappingHeight = -30;
 const levelHeight = -59;
 
+const cameraFOV = 40;
+
 const levelCloneInfo: Record<string, Record<string, number>> = {
 	"level_0": {
 		"startX": 1975,
@@ -104,11 +106,10 @@ system.runInterval(() => {
 			}
 			var yRot = armorStand.getRotation().y;
 			//armorStand.setRotation({"x": 0, "y": yRot - 5});
-			var FOV = 60;
 			var maxCount = 11;
 			for (var i = 0; i < maxCount; i++) {
 				var rayArmorStand = Utilities.dimensions.overworld.spawnEntity("armor_stand", { "x": armorStand.location.x, "y": cameraMappingHeight, "z": armorStand.location.z });
-				rayArmorStand.setRotation({ "x": 0, "y": (yRot - FOV / 2) + (FOV * i / (maxCount - 1)) });
+				rayArmorStand.setRotation({ "x": 0, "y": (yRot - cameraFOV / 2) + (cameraFOV * i / (maxCount - 1)) });
 			}
 		});
 	} else {
