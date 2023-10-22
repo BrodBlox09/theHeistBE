@@ -1,4 +1,4 @@
-import { EntityTypes, system, world, DynamicPropertiesDefinition, Vector3 } from "@minecraft/server";
+import { EntityTypes, system, world, DynamicPropertiesDefinition, Vector3, EntityInventoryComponent } from "@minecraft/server";
 import DataManager from "./DataManager";
 import "./lvl_loader";
 import "./gameband";
@@ -134,6 +134,12 @@ world.beforeEvents.chatSend.subscribe(event => {
 				//console.warn(JSON.stringify(blockSetter1.do));
 				//setBlock(player.location, blockSetter1.do.block, blockSetter1.do.permutations);
 				Utilities.setBlock(player.location, `theheist:${block.type}`, { "theheist:unlocked": 2, "theheist:rotation": 1 });
+			});
+			break;
+		case "setLore":
+			var playerInv = player.getComponent("minecraft:inventory") as EntityInventoryComponent;
+			system.run(() => {
+				playerInv.container.getSlot(0).setLore(["test"]);
 			});
 			break;
 		case 'start': {

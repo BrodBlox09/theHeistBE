@@ -28,14 +28,14 @@ const loreItems = [
 	new loreItem('minecraft:red_dye', '§oRed Keycard§r', ['Used on matching Keycard reader']),
 	new loreItem('minecraft:yellow_dye', '§oYellow Keycard§r', ['Used on matching Keycard reader']),
 	new loreItem('minecraft:green_dye', '§oGreen Keycard§r', ['Used on matching Keycard reader']),
-	new loreItem('minecraft:blue_dye', '§oBlue Keycard§r', ['Used on matching Keycard reader']),
+	new loreItem('minecraft:lapis_lazuli', '§oBlue Keycard§r', ['Used on matching Keycard reader']),
 	new loreItem('minecraft:leather_helmet', '§oCall the authorities§r', ['Drop to restart level']),
 	new loreItem('theheist:nv_glasses', '§oNV Goggles§r', ['Drop to regain items']),
 ]
 
 const gamebandInfo: Record<string, Record<string, number>> = {
 	"rechargeMode": {
-		"level1Speed": 10.0,
+		"level1Speed": 20.0,
 		"level1Max": 100.0
 	},
 	"hackingMode": {
@@ -91,6 +91,9 @@ world.afterEvents.itemUse.subscribe((event) => {
 		case "minecraft:green_dye":
 			console.warn("g");
 			if (!keycardType) keycardType = "green";
+		case "minecraft:lapis_lazuli":
+			console.warn("b");
+			if (!keycardType) keycardType = "blue";
 		case "minecraft:paper":
 			console.warn("p");
 			if (!keycardType) keycardType = "all";
