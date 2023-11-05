@@ -1,17 +1,17 @@
-import { EntityTypes, system, world, DynamicPropertiesDefinition, Vector3, EntityInventoryComponent } from "@minecraft/server";
+import { EntityTypes, system, world, Vector3, EntityInventoryComponent } from "@minecraft/server";
 import DataManager from "./DataManager";
 import "./lvl_loader";
 import "./gameband";
 import "./alarm";
 import Utilities from "./Utilities";
 
-world.afterEvents.worldInitialize.subscribe(event => {
+/*world.afterEvents.worldInitialize.subscribe(event => {
 	const def = new DynamicPropertiesDefinition();
 	def.defineString("data", 99999);
 	for (const entityType of EntityTypes.getAll()) {
 		event.propertyRegistry.registerEntityTypeDynamicProperties(def, entityType.id);
 	}
-});
+});*/
 
 system.beforeEvents.watchdogTerminate.subscribe((event) => {
 	event.cancel = true;
