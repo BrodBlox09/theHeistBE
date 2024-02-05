@@ -157,8 +157,8 @@ world.beforeEvents.chatSend.subscribe(event => {
 						y: 90
 					}
 				})
-			}, 0)
-			break
+			}, 0);
+			break;
 		}
 		case 'playVoice': {
 			system.runTimeout(() => {

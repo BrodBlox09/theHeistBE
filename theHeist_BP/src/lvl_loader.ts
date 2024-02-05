@@ -1,11 +1,7 @@
-import { ItemStack, Vector, system, world, DisplaySlotId, BlockInventoryComponent, EntityInventoryComponent, ItemLockMode, BlockPermutation } from "@minecraft/server";
+import { ItemStack, Vector, system, world, DisplaySlotId, BlockInventoryComponent, EntityInventoryComponent, ItemLockMode, BlockPermutation, Player, EntityEquippableComponent, Container, EquipmentSlot } from "@minecraft/server";
 import DataManager from "./DataManager";
 import VoiceOverManager from "./VoiceOverManager";
 import Utilities from "./Utilities";
-
-// Tag length is max 255, need a different way to store lvl information other than tags :(
-// Perhaps similar to how I stored information in the item speedrun thing
-// The above worked! Dynamic properties for the win!
 
 // Hack delay: 2 seconds or 40 ticks
 
@@ -25,6 +21,21 @@ import Utilities from "./Utilities";
 			{
 				"name":"alarmLevel",
 				"level":0
+			},
+			{
+				"name": "gameLevel",
+				"level": #
+			},
+			{
+				"name": "playerInv",
+				"inventory": [
+					{
+						"containerType": "normal"|"equipment"
+						"slot": #|"Head"|"Chest"|etc., // First for "normal" containerType, the rest for "equipment" container type. For all options see https://learn.microsoft.com/en-us/minecraft/creator/scriptapi/minecraft/server/equipmentslot?view=minecraft-bedrock-stable
+						"typeId": "", // The typeId of the item stack you would like to place in the player's inventory
+						"lockMode": "none"|"inventory"|"slot" // See https://learn.microsoft.com/en-us/minecraft/creator/scriptapi/minecraft/server/itemlockmode?view=minecraft-bedrock-experimental
+					}
+				]
 			}
 		]
 	}
@@ -41,7 +52,7 @@ import Utilities from "./Utilities";
 		"name": "cameraTracker",
 		"isRobot": false,
 		"rotation": #,
-		"swing": [#, #] or null,
+		"swing": [#, #]|null,
 		"disabled": false,
 		"cameraID": #,
 		"type": "camera"|"sonar"
@@ -94,22 +105,10 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 					const playerEnergyTrackerDataNode = { "name": "energyTracker", "energyUnits": 0.0, "recharging": false, "usingRechargerID": -1, "rechargeLevel": 1 };
 					DataManager.setData(player, "energyTracker", playerEnergyTrackerDataNode);
 					// Add level information data node
-					const playerLevelInformationDataNode = { "name": "levelInformation", "information": [{ "name": "alarmLevel", "level": 0 }, { "name": "gameLevel", "level": 1 }] };
+					const playerLevelInformationDataNode = { "name": "levelInformation", "information": [{ "name": "alarmLevel", "level": 0 }, { "name": "gameLevel", "level": 1 }, { "name": "playerInv", "inventory": [{ "containerType": "normal", "slot": 0, "typeId": 'theheist:recharge_mode_lvl_1', "lockMode": "slot" }, { "containerType": "normal", "slot": 1, "typeId": 'theheist:hacking_mode_lvl_1', "lockMode": "slot" } ]}] };
 					DataManager.setData(player, "levelInformation", playerLevelInformationDataNode);
-
-					const playerInvContainer = (player.getComponent('inventory') as EntityInventoryComponent).container;
-					playerInvContainer.clearAll();
-
-					const RechargeModeItem = new ItemStack('theheist:recharge_mode_lvl_1')
-					RechargeModeItem.lockMode = ItemLockMode.slot
-					RechargeModeItem.keepOnDeath = true
-
-					const HackingModeItem = new ItemStack('theheist:hacking_mode_lvl_1')
-					HackingModeItem.lockMode = ItemLockMode.slot
-					HackingModeItem.keepOnDeath = true
-
-					playerInvContainer.setItem(0, RechargeModeItem);
-					playerInvContainer.setItem(1, HackingModeItem);
+					
+					Utilities.reloadPlayerInv(player, playerLevelInformationDataNode);
 
 					player.teleport({ 'x': -22.5, 'y': -59, 'z': 61.5 }, { 'dimension': overworld, 'rotation': { 'x': 0, 'y': -90 } });
 
@@ -168,13 +167,13 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 					const playerInvContainer = (player.getComponent('inventory') as EntityInventoryComponent).container;
 					playerInvContainer.clearAll();
 
-					const RechargeModeItem = new ItemStack('theheist:recharge_mode_lvl_1')
-					RechargeModeItem.lockMode = ItemLockMode.slot
-					RechargeModeItem.keepOnDeath = true
+					const RechargeModeItem = new ItemStack('theheist:recharge_mode_lvl_1');
+					RechargeModeItem.lockMode = ItemLockMode.slot;
+					RechargeModeItem.keepOnDeath = true;
 
-					const HackingModeItem = new ItemStack('theheist:hacking_mode_lvl_1')
-					HackingModeItem.lockMode = ItemLockMode.slot
-					HackingModeItem.keepOnDeath = true
+					const HackingModeItem = new ItemStack('theheist:hacking_mode_lvl_1');
+					HackingModeItem.lockMode = ItemLockMode.slot;
+					HackingModeItem.keepOnDeath = true;
 
 					playerInvContainer.setItem(0, RechargeModeItem);
 					playerInvContainer.setItem(1, HackingModeItem);

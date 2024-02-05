@@ -1,4 +1,4 @@
-import { MolangVariableMap, BlockPermutation, EffectTypes, Vector, world, system, Player, EntityInventoryComponent, EffectType, DisplaySlotId } from "@minecraft/server";
+import { MolangVariableMap, BlockPermutation, EffectTypes, Vector, world, system, Player, EntityInventoryComponent, EffectType, DisplaySlotId, ScoreboardObjective, Container, ItemStack } from "@minecraft/server";
 import DataManager from "./DataManager";
 import Utilities from "./Utilities";
 import GameObjectiveManager from "./GameObjectiveManager";
@@ -43,7 +43,7 @@ const gamebandInfo: Record<string, Record<string, number>> = {
 	}
 }
 
-const bustedCounterObjective = world.scoreboard.getObjective("bustedCounter")!;
+const bustedCounterObjective: ScoreboardObjective = world.scoreboard.getObjective("bustedCounter")!;
 
 /**
  * Layer information:
@@ -83,29 +83,36 @@ world.afterEvents.itemUse.subscribe((event) => {
 			sensorMode(1, player);
 			break;
 		case "minecraft:red_dye":
-			console.warn("r");
 			keycardType = "red"
 		case "minecraft:yellow_dye":
-			console.warn("y");
 			if (!keycardType) keycardType = "yellow";
 		case "minecraft:green_dye":
-			console.warn("g");
 			if (!keycardType) keycardType = "green";
 		case "minecraft:lapis_lazuli":
-			console.warn("b");
 			if (!keycardType) keycardType = "blue";
 		case "minecraft:paper":
-			console.warn("p");
 			if (!keycardType) keycardType = "all";
 			keycard(keycardType!, player);
 			break;
 	}
 });
 
+/**
+ * @description Mode Type: Loop
+ * @param lvl 
+ * @param player 
+ * @returns 
+ */
 function sensorMode(lvl: number, player: Player) {
 	console.warn("You used sensor mode.");
 }
 
+/**
+ * @description Mode Type: Loop
+ * @param lvl 
+ * @param player 
+ * @returns 
+ */
 function rechargeMode(lvl: number, player: Player) {
 	const query = {
 		"type": "armor_stand",
@@ -137,6 +144,12 @@ function rechargeMode(lvl: number, player: Player) {
 	}
 }
 
+/**
+ * @description Mode Type: Instant
+ * @param lvl 
+ * @param player 
+ * @returns 
+ */
 function hackingMode(lvl: number, player: Player) {
 	var playerEnergyTracker = DataManager.getData(player, "energyTracker");
 	const query = {
@@ -193,6 +206,27 @@ function hackingMode(lvl: number, player: Player) {
 		player.sendMessage("§cNo console");
 		return;
 	}
+}
+
+/**
+ * @description Starts a mode of type looping. See endLoopingMode() to stop a looping mode.
+ * @param mode The string for the id of the item that was used to start the loop.
+ * @param player 
+ * @returns 
+ */
+function startLoopingMode(mode: string, player: Player) {
+	var playerInvContainer: Container = (player.getComponent("inventory") as EntityInventoryComponent).container;
+	var itemStackIndex = null;
+	for (var i = 0; i < playerInvContainer.size; i++) {
+		var itemStackTypeId = playerInvContainer.getItem(i)?.typeId;
+		if (itemStackTypeId == mode) {
+			itemStackIndex = itemStackTypeId;
+			break;
+		}
+	}
+	if (itemStackIndex == null) return;
+	playerInvContainer.clearAll();
+	playerInvContainer.addItem(new ItemStack(mode));
 }
 
 function action(actionInfo: Action, player: Player) {

@@ -3,7 +3,7 @@ import { Entity, world } from '@minecraft/server';
 export default class DataManager {
 	static getData(entity: Entity, dataNodeName: string) {
 		const dataStr = entity.getDynamicProperty('data') as string;
-		if (dataStr == null) return;
+		if (!dataStr) return;
 		const dataNodes = JSON.parse(dataStr);
 		const dataNode = dataNodes.find((x: any) => (x.name == dataNodeName));
 		if (!dataNode) return undefined;
@@ -29,7 +29,7 @@ export default class DataManager {
 	}
 
 	static clearData(entity: Entity) {
-		entity.removeDynamicProperty('data');
+		entity.setDynamicProperty('data', "");
 		return true;
 	}
 }
