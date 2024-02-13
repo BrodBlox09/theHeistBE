@@ -12,10 +12,10 @@
 - [ ] rotate lvl 1 cameras to match the original
 - [x] fix camera FOV angle to match the original
 - [ ] add ticking sound whenever player is caught by the security system
-- [ ] add paintings and itemframe items
+- [ ] add paintings and itemframe items <!-- What does this mean? Where are the paintings and itemframes supposed to be that are missing? -->
 - [ ] fix the differences in the start van (missing models, missing driver, outside is different, command block textures are different, lighting is different)
 - [x] recharging is faster in java
-- [ ] when recharging, other gamebands are taken away
+- [x] when recharging, other gamebands are taken away
 - [ ] there should be a blindness effect in between cutscene scenes
 ### UI
 - [ ] edit inventory ui

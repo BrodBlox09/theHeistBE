@@ -40,7 +40,7 @@ system.runInterval(() => {
 
 	if (playerCameraMappingHeightBlock && playerCameraMappingHeightBlock.typeId == "theheist:camera_sight" && player.location.y < -56 && !player.hasTag("BUSTED")) {
 		playerLevelInformationDataNode.information[0].level += 2;
-		DataManager.setData(player, "levelInformation", playerLevelInformationDataNode);
+		DataManager.setData(player, playerLevelInformationDataNode);
 		//player.sendMessage("You are in the camera's vision!");
 	}
 
@@ -102,7 +102,7 @@ system.runInterval(() => {
 				var displayCamera = Utilities.dimensions.overworld.getEntities(displayCameraQuery)[0];
 				displayCamera.setRotation({ "x": 0, "y": rotation });
 				armorStand.setRotation({ "x": 0, "y": rotation });
-				DataManager.setData(armorStand, "cameraTracker", cameraTrackerDataNode);
+				DataManager.setData(armorStand, cameraTrackerDataNode);
 			}
 			var yRot = armorStand.getRotation().y;
 			//armorStand.setRotation({"x": 0, "y": yRot - 5});

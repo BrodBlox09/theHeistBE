@@ -7,6 +7,22 @@ export default class Utilities {
 		the_end: world.getDimension("the_end")
 	}
 
+	static swapKVPs(json: Record<any, any>) {
+		var ret: Record<any, any> = {};
+		for(var key in json){
+			ret[json[key]] = key;
+		}
+		return ret;
+	}
+
+	static levelToLevelID: Record<number, string> = {
+		1: "1-1",
+		0.5: "0-1",
+		0: "0-2"
+	}
+
+	static levelIDToLevel: Record<string, number> = this.swapKVPs(this.levelToLevelID);
+
 	static sin(d: number) {
 		return Math.sin(d * Math.PI / 180);
 	}
@@ -20,26 +36,28 @@ export default class Utilities {
 	}
 
 	static reloadPlayerInv(player: Player, levelData: any) {
-		var playerInvContainer: Container;
-		var playerEquipInv: EntityEquippableComponent;
+		var playerInvContainer = (player.getComponent("inventory") as EntityInventoryComponent).container as Container;
+		playerInvContainer.clearAll();
 		var playerInvData = levelData.information[2].inventory; // Array of player inventory slots
 		playerInvData.forEach((invSlotData: any) => {
-			switch (invSlotData.containerType) {
-				case "normal":
-					if (!playerInvContainer) playerInvContainer = (player.getComponent("inventory") as EntityInventoryComponent).container;
-					var itemStack: ItemStack = new ItemStack(invSlotData.typeId);
-					itemStack.keepOnDeath = true;
-					itemStack.lockMode = ItemLockMode[invSlotData.lockMode as keyof typeof ItemLockMode];
-					playerInvContainer.setItem(invSlotData.slot, itemStack);
-					break;
-				case "equipment":
-					if (!playerEquipInv) playerEquipInv = player.getComponent("equippable") as EntityEquippableComponent;
-					var itemStack: ItemStack = new ItemStack(invSlotData.typeId);
-					itemStack.keepOnDeath = true;
-					itemStack.lockMode = ItemLockMode[invSlotData.lockMode as keyof typeof ItemLockMode];
-					playerEquipInv.setEquipment(EquipmentSlot[invSlotData.slot as keyof typeof EquipmentSlot], itemStack);
-					break;
-			}
+			var itemStack: ItemStack = new ItemStack(invSlotData.typeId);
+			itemStack.keepOnDeath = true;
+			itemStack.lockMode = ItemLockMode[invSlotData.lockMode as keyof typeof ItemLockMode];
+			playerInvContainer.setItem(invSlotData.slot, itemStack);
 		});
+	}
+
+	static gamebandInfo: Record<string, Record<number, Record<string, any>>> = {
+		"rechargeMode": {
+			1: {
+				"speed": 20.0,
+				"max": 100.0
+			}
+		},
+		"hackingMode": {
+			1: {
+				"cost": 15.0
+			}
+		}
 	}
 }

@@ -17,6 +17,7 @@ import Utilities from "./Utilities";
  * Base player level information data node:
 	{
 		"name":"levelInformation",
+		"currentModes": [], // A list of the current modes as a ModeData interface in use by the player. Does not include the recharge mode because it has exceptionally special functionality.
 		"information": [
 			{
 				"name":"alarmLevel",
@@ -30,8 +31,7 @@ import Utilities from "./Utilities";
 				"name": "playerInv",
 				"inventory": [
 					{
-						"containerType": "normal"|"equipment"
-						"slot": #|"Head"|"Chest"|etc., // First for "normal" containerType, the rest for "equipment" container type. For all options see https://learn.microsoft.com/en-us/minecraft/creator/scriptapi/minecraft/server/equipmentslot?view=minecraft-bedrock-stable
+						"slot": #,
 						"typeId": "", // The typeId of the item stack you would like to place in the player's inventory
 						"lockMode": "none"|"inventory"|"slot" // See https://learn.microsoft.com/en-us/minecraft/creator/scriptapi/minecraft/server/itemlockmode?view=minecraft-bedrock-experimental
 					}
@@ -87,26 +87,39 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 	const id = event.id;
 	const msg = event.message;
 	switch (id) {
-		case "theheist:load-level":
+		case "theheist:load-level": {
 			const entities = overworld.getEntities();
 			for (const entity of entities) {
 				if (entity.typeId != "minecraft:player") entity.kill();
 			}
+			const player = world.getPlayers().filter((x) => (x != undefined && x != null))[0];
+			if (player == undefined) {
+				world.sendMessage("Could not find player");
+				return;
+			}
+			var lvlInfo = DataManager.getData(player, "levelInformation");
+			if (lvlInfo) {
+				var currPlayerLevel = Utilities.levelToLevelID[lvlInfo.information[1]];
+				if (currPlayerLevel != msg) {
+					// Player is going to a new level, so clear busted counter
+					bustedCounterObjective.setScore(player, 0);
+				}
+			}
 			switch (msg) {
 				case "1-1": {
 					// Load level 1 (The van tutorial level)
-					// Load player
-					const player = world.getPlayers().filter((x) => (x != undefined && x != null))[0];
-					if (player == undefined) return;
 					// Clear all data on player
 					DataManager.clearData(player);
 					player.getTags().forEach((x) => { player.removeTag(x); });
 					// Add energyTracker data node
 					const playerEnergyTrackerDataNode = { "name": "energyTracker", "energyUnits": 0.0, "recharging": false, "usingRechargerID": -1, "rechargeLevel": 1 };
-					DataManager.setData(player, "energyTracker", playerEnergyTrackerDataNode);
+					DataManager.setData(player, playerEnergyTrackerDataNode);
 					// Add level information data node
-					const playerLevelInformationDataNode = { "name": "levelInformation", "information": [{ "name": "alarmLevel", "level": 0 }, { "name": "gameLevel", "level": 1 }, { "name": "playerInv", "inventory": [{ "containerType": "normal", "slot": 0, "typeId": 'theheist:recharge_mode_lvl_1', "lockMode": "slot" }, { "containerType": "normal", "slot": 1, "typeId": 'theheist:hacking_mode_lvl_1', "lockMode": "slot" } ]}] };
-					DataManager.setData(player, "levelInformation", playerLevelInformationDataNode);
+					if (!bustedCounterObjective.hasParticipant(player)) {
+						bustedCounterObjective.setScore(player, 0);
+					}
+					const playerLevelInformationDataNode = { "name": "levelInformation", "information": [{ "name": "alarmLevel", "level": 0 }, { "name": "gameLevel", "level": 1 }, { "name": "playerInv", "inventory": [{ "slot": 0, "typeId": 'theheist:recharge_mode_lvl_1', "lockMode": "slot" }, { "slot": 1, "typeId": 'theheist:hacking_mode_lvl_1', "lockMode": "slot" }] }] };
+					DataManager.setData(player, playerLevelInformationDataNode);
 					
 					Utilities.reloadPlayerInv(player, playerLevelInformationDataNode);
 
@@ -122,7 +135,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 					//recharge0.setRotation(0, n);
 					// Use for cameras that need to be facing different directions than north (I think)
 					const recharge0DataNode = { "name": "energyTracker", "rechargerID": 0, "energyUnits": 21.0, "block": { "x": -22, "y": -59, "z": 62, "rotation": 5 }, "actions": [{ "type": "manage_objectives", "do": { "manageType": 2, "objective": "Recharge Gameband", "sortOrder": 1 } }] };
-					DataManager.setData(recharge0, "energyTracker", recharge0DataNode);
+					DataManager.setData(recharge0, recharge0DataNode);
 					Utilities.setBlock({ x: -22, y: -59, z: 62 }, "theheist:recharge_station", { "theheist:rotation": 5, "theheist:state": 1 });
 					// Load hackable console 0
 					const computer0 = overworld.spawnEntity("minecraft:armor_stand", new Vector(-21.5, consolesHeight, 58.5));
@@ -145,38 +158,26 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 							}
 						]
 					};
-					DataManager.setData(computer0, "actionTracker", computer0DataNode);
+					DataManager.setData(computer0, computer0DataNode);
 					// 2 seconds or 2000 milliseconds for static, then green and action!
 					Utilities.setBlock({ x: -22, y: -58, z: 58 }, "theheist:computer", { "theheist:rotation": 5, "theheist:unlocked": 0 });
 					break;
 				}
 				case "0-1": {
 					// Load level 0.5 (The vent intro level)
-					// Load player
-					const player = world.getPlayers().filter((x) => (x != undefined && x != null))[0];
-					if (player == undefined) return;
 					// Clear all data on player
 					DataManager.clearData(player);
 					player.getTags().forEach((x) => { player.removeTag(x); });
 					// Add energyTracker data
 					const playerEnergyTrackerDataNode = { "name": "energyTracker", "energyUnits": 0.0, "recharging": false, "rechargeLevel": 1 };
-					DataManager.setData(player, "energyTracker", playerEnergyTrackerDataNode);
-					const playerLevelInformationDataNode = { "name": "levelInformation", "information": [{ "name": "alarmLevel", "level": 0 }, { "name": "gameLevel", "level": 0.5 }] };
-					DataManager.setData(player, "levelInformation", playerLevelInformationDataNode);
+					DataManager.setData(player, playerEnergyTrackerDataNode);
+					if (!bustedCounterObjective.hasParticipant(player)) {
+						bustedCounterObjective.setScore(player, 0);
+					}
+					const playerLevelInformationDataNode = { "name": "levelInformation", "information": [{ "name": "alarmLevel", "level": 0 }, { "name": "gameLevel", "level": 0.5 }, { "name": "playerInv", "inventory": [{ "slot": 0, "typeId": 'theheist:recharge_mode_lvl_1', "lockMode": "slot" }, { "slot": 1, "typeId": 'theheist:hacking_mode_lvl_1', "lockMode": "slot" }] }] };
+					DataManager.setData(player, playerLevelInformationDataNode);
 
-					const playerInvContainer = (player.getComponent('inventory') as EntityInventoryComponent).container;
-					playerInvContainer.clearAll();
-
-					const RechargeModeItem = new ItemStack('theheist:recharge_mode_lvl_1');
-					RechargeModeItem.lockMode = ItemLockMode.slot;
-					RechargeModeItem.keepOnDeath = true;
-
-					const HackingModeItem = new ItemStack('theheist:hacking_mode_lvl_1');
-					HackingModeItem.lockMode = ItemLockMode.slot;
-					HackingModeItem.keepOnDeath = true;
-
-					playerInvContainer.setItem(0, RechargeModeItem);
-					playerInvContainer.setItem(1, HackingModeItem);
+					Utilities.reloadPlayerInv(player, playerLevelInformationDataNode);
 
 					player.teleport({ 'x': 1000.5, 'y': -59, 'z': 57.5 }, { 'dimension': overworld, 'rotation': { 'x': 0, 'y': 90 } });
 					player.camera.clear()
@@ -188,39 +189,22 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 				}
 				case "0-2": {
 					// Load level 0 (The first level)
-					const player = world.getPlayers().filter((x) => (x != undefined && x != null))[0];
-					if (player == undefined) {
-						world.sendMessage("Could not find player");
-						return;
-					}
 					// Clear all data on player
 					DataManager.clearData(player);
 					// Previous level made use of tags, clear them here
 					player.getTags().forEach((x) => { player.removeTag(x); });
 					// Add energyTracker data
 					const playerEnergyTrackerDataNode = { "name": "energyTracker", "energyUnits": 100.0, "recharging": false, "rechargeLevel": 1 };
-					DataManager.setData(player, "energyTracker", playerEnergyTrackerDataNode);
+					DataManager.setData(player, playerEnergyTrackerDataNode);
 
 					if (!bustedCounterObjective.hasParticipant(player)) {
 						bustedCounterObjective.setScore(player, 0);
 					}
-					const playerLevelInformationDataNode = { "name": "levelInformation", "information": [{ "name": "alarmLevel", "level": 0 }, { "name": "gameLevel", "level": 0 }, { "name": "bustedCounter", "value": bustedCounterObjective.getScore(player) }] };
+					const playerLevelInformationDataNode = { "name": "levelInformation", "information": [{ "name": "alarmLevel", "level": 0 }, { "name": "gameLevel", "level": 0 }, { "name": "playerInv", "inventory": [{ "slot": 0, "typeId": 'theheist:recharge_mode_lvl_1', "lockMode": "slot" }, { "slot": 1, "typeId": 'theheist:hacking_mode_lvl_1', "lockMode": "slot" }] }] };
 
-					DataManager.setData(player, "levelInformation", playerLevelInformationDataNode);
+					DataManager.setData(player, playerLevelInformationDataNode);
 
-					const playerInvContainer = (player.getComponent('inventory') as EntityInventoryComponent).container;
-					playerInvContainer.clearAll();
-
-					const RechargeModeItem = new ItemStack('theheist:recharge_mode_lvl_1')
-					RechargeModeItem.lockMode = ItemLockMode.slot
-					RechargeModeItem.keepOnDeath = true
-
-					const HackingModeItem = new ItemStack('theheist:hacking_mode_lvl_1')
-					HackingModeItem.lockMode = ItemLockMode.slot
-					HackingModeItem.keepOnDeath = true
-
-					playerInvContainer.setItem(0, RechargeModeItem);
-					playerInvContainer.setItem(1, HackingModeItem);
+					Utilities.reloadPlayerInv(player, playerLevelInformationDataNode);
 
 					player.onScreenDisplay.setTitle("§o§7Level 0", { "fadeInDuration": 20, "fadeOutDuration": 20, "stayDuration": 160 });
 					clearObjectives();
@@ -250,7 +234,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 							"cameraID": 0,
 							"type": "camera"
 						};
-						DataManager.setData(camera0, "cameraTracker", camera0DataNode);
+						DataManager.setData(camera0, camera0DataNode);
 						// Camera 1
 						const camera1 = overworld.spawnEntity("armor_stand", { "x": 2005.5, "y": cameraHeight, "z": 52.5 });
 						camera1.setRotation({ "x": 0, "y": 150 });
@@ -263,7 +247,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 							"cameraID": 1,
 							"type": "camera"
 						};
-						DataManager.setData(camera1, "cameraTracker", camera1DataNode);
+						DataManager.setData(camera1, camera1DataNode);
 						// Camera 2
 						const camera2 = overworld.spawnEntity("armor_stand", { "x": 1991.5, "y": cameraHeight, "z": 52.5 });
 						camera2.setRotation({ "x": 0, "y": 210 });
@@ -276,7 +260,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 							"cameraID": 2,
 							"type": "camera"
 						};
-						DataManager.setData(camera2, "cameraTracker", camera2DataNode);
+						DataManager.setData(camera2, camera2DataNode);
 						// Camera 3
 						const camera3 = overworld.spawnEntity("armor_stand", { "x": 2014.5, "y": cameraHeight, "z": 67.5 });
 						camera3.setRotation({ "x": 0, "y": 100 });
@@ -289,7 +273,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 							"cameraID": 3,
 							"type": "camera"
 						};
-						DataManager.setData(camera3, "cameraTracker", camera3DataNode);
+						DataManager.setData(camera3, camera3DataNode);
 						// Camera 4
 						const camera4 = overworld.spawnEntity("armor_stand", { "x": 2010.5, "y": cameraHeight, "z": 76.5 });
 						camera4.setRotation({ "x": 4, "y": 190 });
@@ -302,7 +286,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 							"cameraID": 4,
 							"type": "camera"
 						};
-						DataManager.setData(camera4, "cameraTracker", camera4DataNode);
+						DataManager.setData(camera4, camera4DataNode);
 						// Camera 5
 						const camera5 = overworld.spawnEntity("armor_stand", { "x": 1992.5, "y": cameraHeight, "z": 59.5 });
 						camera5.setRotation({ "x": 0, "y": 20 });
@@ -316,7 +300,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 							"cameraID": 5,
 							"type": "camera"
 						};
-						DataManager.setData(camera5, "cameraTracker", camera5DataNode);
+						DataManager.setData(camera5, camera5DataNode);
 						// Console 0 (Type: Computer)
 						const console0 = overworld.spawnEntity("armor_stand", { "x": 2020.5, "y": consolesHeight, "z": 54.5 });
 						Utilities.setBlock({ x: 2020, y: -58, z: 54 }, "theheist:computer", { "theheist:rotation": 5 });
@@ -342,7 +326,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 								}
 							]
 						};
-						DataManager.setData(console0, "actionTracker", console0ActionTracker);
+						DataManager.setData(console0, console0ActionTracker);
 						// Console 1 (Type: Computer)
 						const console1 = overworld.spawnEntity("armor_stand", { "x": 2017.5, "y": consolesHeight, "z": 52.5 });
 						Utilities.setBlock({ x: 2017, y: -58, z: 52 }, "theheist:computer", { "theheist:rotation": 2 });
@@ -362,7 +346,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 								}
 							]
 						};
-						DataManager.setData(console1, "actionTracker", console1ActionTracker);
+						DataManager.setData(console1, console1ActionTracker);
 						// Console 2 (Type: Keypad)
 						const console2 = overworld.spawnEntity("armor_stand", { "x": 2014.5, "y": consolesHeight, "z": 60.5 });
 						Utilities.setBlock({ x: 2014, y: -58, z: 60 }, "theheist:keypad", { "theheist:rotation": 5 });
@@ -386,7 +370,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 								}
 							]
 						};
-						DataManager.setData(console2, "actionTracker", console2ActionTracker);
+						DataManager.setData(console2, console2ActionTracker);
 						// Console 3 (Type: Computer)
 						const console3 = overworld.spawnEntity("armor_stand", { "x": 2018.5, "y": consolesHeight, "z": 65.5 });
 						Utilities.setBlock({ x: 2018, y: -58, z: 65 }, "theheist:computer", { "theheist:rotation": 2 });
@@ -412,7 +396,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 								}
 							]
 						};
-						DataManager.setData(console3, "actionTracker", console3ActionTracker);
+						DataManager.setData(console3, console3ActionTracker);
 						// Console 4 (Type: Keypad)
 						const console4 = overworld.spawnEntity("armor_stand", { "x": 1996.5, "y": consolesHeight, "z": 55.5 });
 						Utilities.setBlock({ x: 1996, y: -58, z: 55 }, "theheist:keypad", { "theheist:rotation": 3 });
@@ -437,7 +421,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 								}
 							]
 						};
-						DataManager.setData(console4, "actionTracker", console4ActionTracker);
+						DataManager.setData(console4, console4ActionTracker);
 						// Console 5 (Type: Keypad)
 						const console5 = overworld.spawnEntity("armor_stand", { "x": 1992.5, "y": consolesHeight, "z": 62.5 });
 						Utilities.setBlock({ x: 1992, y: -58, z: 62 }, "theheist:keypad", { "theheist:rotation": 5 });
@@ -462,7 +446,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 								}
 							]
 						};
-						DataManager.setData(console5, "actionTracker", console5ActionTracker);
+						DataManager.setData(console5, console5ActionTracker);
 						// Console 6 (Type: Computer)
 						const console6 = overworld.spawnEntity("armor_stand", { "x": 1978.5, "y": consolesHeight, "z": 64.5 });
 						Utilities.setBlock({ x: 1978, y: -58, z: 64 }, "theheist:computer", { "theheist:rotation": 3 });
@@ -485,7 +469,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 								}
 							]
 						};
-						DataManager.setData(console6, "actionTracker", console6ActionTracker);
+						DataManager.setData(console6, console6ActionTracker);
 						// Console 7 (Type: Computer)
 						const console7 = overworld.spawnEntity("armor_stand", { "x": 1978.5, "y": consolesHeight, "z": 56.5 });
 						Utilities.setBlock({ x: 1978, y: -58, z: 56 }, "theheist:computer", { "theheist:rotation": 2 });
@@ -505,7 +489,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 								}
 							]
 						};
-						DataManager.setData(console7, "actionTracker", console7ActionTracker);
+						DataManager.setData(console7, console7ActionTracker);
 						// Console 8 (Type: Keycard Reader)
 						const console8 = overworld.spawnEntity("armor_stand", { "x": 1990.5, "y": consolesHeight, "z": 67.5 });
 						const console8ActionTracker = {
@@ -528,7 +512,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 								}
 							]
 						};
-						DataManager.setData(console8, "actionTracker", console8ActionTracker);
+						DataManager.setData(console8, console8ActionTracker);
 						// Recharge Station 0
 						const recharge0 = overworld.spawnEntity("minecraft:armor_stand", new Vector(1998.5, rechargeHeight, 72.5));
 						Utilities.setBlock({ x: 1998, y: -59, z: 72 }, "theheist:recharge_station", { "theheist:rotation": 5 });
@@ -538,7 +522,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 							"energyUnits": 100.0,
 							"block": { "x": 1998, "y": -59, "z": 72, "rotation": 5 }
 						};
-						DataManager.setData(recharge0, "energyTracker", recharge0DataNode);
+						DataManager.setData(recharge0, recharge0DataNode);
 						// Recharge Station 1
 						const recharge1 = overworld.spawnEntity("minecraft:armor_stand", new Vector(1986.5, rechargeHeight, 70.5));
 						Utilities.setBlock({ x: 1986, y: -59, z: 70 }, "theheist:recharge_station", { "theheist:rotation": 4 });
@@ -548,9 +532,9 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 							"energyUnits": 100.0,
 							"block": { "x": 1986, "y": -59, "z": 70, "rotation": 4 }
 						};
-						DataManager.setData(recharge1, "energyTracker", recharge1DataNode);
+						DataManager.setData(recharge1, recharge1DataNode);
 						// Fill drawers
-						const drawer0InventoryContainer = (overworld.getBlock({ "x": 2002.5, "y": -59, "z": 75.5 })!.getComponent("inventory") as BlockInventoryComponent).container;
+						const drawer0InventoryContainer = (overworld.getBlock({ "x": 2002.5, "y": -59, "z": 75.5 })!.getComponent("inventory") as BlockInventoryComponent).container  as Container;
 						drawer0InventoryContainer.clearAll();
 						drawer0InventoryContainer.setItem(4, new ItemStack("yellow_dye"));
 						// Set doors and trapdoors
@@ -568,12 +552,13 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 				}
 			}
 			break;
+		}
 		case "theheist:voice-says": {
 			const player = world.getPlayers().filter((x) => (x != undefined))[0];
 			VoiceOverManager.play(player, msg);
 			break;
 		}
-		case "theheist:attempt_end_level":
+		case "theheist:attempt_end_level": {
 			const valueArray = msg.split(/ /);
 			const level = valueArray[0];
 			const x = valueArray[1];
@@ -604,13 +589,14 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 			player.onScreenDisplay.setTitle("§5§oThanks for playing!§r");
 			player.sendMessage("Congratulations! You finished the demo!");
 			break;
+		}
 	}
 });
 
 // Maybe
 function createRechargeStation(x: number, z: number, energyTracker: object, rotation: number) {
 	const recharge = overworld.spawnEntity("minecraft:armor_stand", new Vector(x, rechargeHeight, z));
-	DataManager.setData(recharge, "energyTracker", energyTracker);
+	DataManager.setData(recharge, energyTracker);
 	Utilities.setBlock({ x, y: rechargeHeight, z }, "theheist:recharge_station", { "theheist:rotation": rotation });
 	return recharge;
 }
@@ -628,4 +614,9 @@ function clearObjectives() {
 function reloadSidebarDisplay() {
 	world.scoreboard.clearObjectiveAtDisplaySlot(DisplaySlotId.Sidebar);
 	world.scoreboard.setObjectiveAtDisplaySlot(DisplaySlotId.Sidebar, { "objective": objectivesObjective });
+}
+
+interface ModeData {
+	mode: string,
+	level: number
 }

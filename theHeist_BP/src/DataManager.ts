@@ -6,18 +6,18 @@ export default class DataManager {
 		if (!dataStr) return;
 		const dataNodes = JSON.parse(dataStr);
 		const dataNode = dataNodes.find((x: any) => (x.name == dataNodeName));
-		if (!dataNode) return undefined;
+		if (!dataNode) return;
 		else return dataNode;
 	}
 
-	static setData(entity: Entity, dataNodeName: string, object: object) {
+	static setData(entity: Entity, object: Record<string, any>) {
 		const dataStr = entity.getDynamicProperty('data') as string;
 		if (!dataStr) {
 			entity.setDynamicProperty('data', JSON.stringify([object]));
 			return true;
 		}
 		const dataNodes = JSON.parse(dataStr);
-		const dataNodeIndex = dataNodes.findIndex((x: any) => (x.name == dataNodeName));
+		const dataNodeIndex = dataNodes.findIndex((x: Record<string, any>) => (x.name == object.name));
 		if (dataNodeIndex == -1) {
 			dataNodes.push(object);
 			entity.setDynamicProperty('data', JSON.stringify(dataNodes));

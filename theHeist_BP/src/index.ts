@@ -30,7 +30,6 @@ const objectivesObjective = world.scoreboard.getObjective("objectives") ?? world
 const allowedPlayers = [
 	"BrodBlox09",
 	"BrodBloxRox",
-	"FoxOfThunder13",
 	"McMelonTV"
 ];
 
@@ -64,32 +63,13 @@ world.beforeEvents.chatSend.subscribe(event => {
 			const playerLevelInformationTag = player.getTags().find((x) => (JSON.parse(x).name == "levelInformation"));
 			if (!playerLevelInformationTag) return console.error("Player does not have levelInformation tag.");
 			const playerLevelInformationTagJSON = JSON.parse(playerLevelInformationTag);
-			//if ((playerEnergyTagJSON && playerEnergyTagJSON.energyUnits != player.level) || (player.xpEarnedAtCurrentLevel != (playerLevelInformationTagJSON.information[0].level / 100) * 742)) {
-			//player.resetLevel();
-			//player.addLevels(100);
-			// 9 * 100 - 158
-			//const alarmLvlXpVal = (((Number(args[0]) / 100) - 0.06) * 742) + 41;
-			//player.addExperience(alarmLvlXpVal);
-			//player.addLevels(-100);
-			//player.addLevels(Math.floor(playerEnergyTagJSON.energyUnits));
-			//player.addExperience(10); Even though it doesn't exist right now, alarm lvl. tracker must be added!
-			//}*/
-			//console.error(JSON.stringify(playerLevelInformationTagJSON.information[0].level));
 			playerLevelInformationTagJSON.information[0].level = Number(args[0]);
 			const newPlayerLevelInformationTag = JSON.stringify(playerLevelInformationTagJSON);
 			system.run(() => {
-				// As of 1.3.0-beta, native function code that changes game states requires 1 tick of wait and then can run, in before events
+				// As of 1.3.0-beta, native function code that changes game states requires 1 tick of wait and then can run, in before events // WOW This is so old XD
 				player.removeTag(playerLevelInformationTag);
 				player.addTag(newPlayerLevelInformationTag);
 			});
-			//console.error(player.xpEarnedAtCurrentLevel);
-			//console.error(player.getTags().find((x) => (JSON.parse(x).name == "levelInformation")).information[0].level);
-			break;
-		case "setLvlData":
-			DataManager.setData(player, "levelInformation", { "name": "levelInformation", "information": [{ "name": "alarmLevel", "level": 0 }, { "name": "gameLevel", "level": 0 }] });
-			break;
-		case "getData":
-			console.warn(JSON.stringify(DataManager.getData(player, 'energyTracker')));
 			break;
 		case "clearData":
 			DataManager.clearData(player);
@@ -97,12 +77,7 @@ world.beforeEvents.chatSend.subscribe(event => {
 				player.getTags().forEach((x) => { player.removeTag(x); });
 			});
 			break;
-		case "fillLarge":
-			system.run(() => {
-				player.dimension.fillBlocks({ x: Number(args[0]), y: Number(args[1]), z: Number(args[2]) }, { x: Number(args[3]), y: Number(args[4]), z: Number(args[5]) }, args[6]);
-			});
-			break;
-		case "tpCam":
+		case "rotateCam":
 			system.run(() => {
 				const camera = world.getDimension("overworld").getEntities({
 					"type": "theheist:camera",
@@ -114,32 +89,6 @@ world.beforeEvents.chatSend.subscribe(event => {
 				player.sendMessage(camera.getRotation().y.toString());
 				camera.setRotation({ 'x': 0, 'y': parseInt(args[0]) });
 				player.sendMessage("Camera rotated" + camera.getRotation().y.toString());
-			});
-			break;
-		case "addObj":
-			system.run(() => {
-				objectivesObjective.setScore(`§c${args.join(" ")}§r`, 0);
-			});
-			break;
-		case "tpFacing":
-			system.run(() => {
-				//player.teleport({"x": ,"y": , "z": }, {'dimension': world.getDimension("overworld")});
-				player.sendMessage(`X: ${Utilities.cos(player.getRotation().x) * 0.7} Z: ${Utilities.sin(player.getRotation().x) * 0.7}`);
-			});
-			break;
-		case "setBlock":
-			system.run(() => {
-				const block = { "type": "computer", "x": -22, "y": -58, "z": 58, "rotation": 5 };
-				const blockSetter1 = { "type": "set_block", "do": { "x": block.x, "y": block.y, "z": block.z, "block": `theheist:${block.type}`, "permutations": { "theheist:rotation": block.rotation, "theheist:unlocked": 1 } } };
-				//console.warn(JSON.stringify(blockSetter1.do));
-				//setBlock(player.location, blockSetter1.do.block, blockSetter1.do.permutations);
-				Utilities.setBlock(player.location, `theheist:${block.type}`, { "theheist:unlocked": 2, "theheist:rotation": 1 });
-			});
-			break;
-		case "setLore":
-			var playerInv = player.getComponent("minecraft:inventory") as EntityInventoryComponent;
-			system.run(() => {
-				playerInv.container.getSlot(0).setLore(["test"]);
 			});
 			break;
 		case 'start': {
