@@ -65,5 +65,35 @@
         "flipbook_texture": "textures/blocks/fire",
         "atlas_tile": "fire",
         "frames": [ 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 ]
+    },
+    {
+        "flipbook_texture": "textures/blocks/recharge_icon_enchanted",
+        "atlas_tile": "recharge_icon_enchanted",
+        "ticks_per_frame": 1,
+        "blend_frames": true
+    },
+    {
+        "flipbook_texture": "textures/blocks/recharge_mode_enchanted",
+        "atlas_tile": "recharge_mode_enchanted",
+        "ticks_per_frame": 1,
+        "blend_frames": true
+    },
+    {
+        "flipbook_texture": "textures/blocks/sensor_mode_enchanted",
+        "atlas_tile": "sensor_mode_enchanted",
+        "ticks_per_frame": 1,
+        "blend_frames": true
+    },
+    {
+        "flipbook_texture": "textures/blocks/sensor_icon_enchanted",
+        "atlas_tile": "sensor_icon_enchanted",
+        "ticks_per_frame": 1,
+        "blend_frames": true
+    },
+    {
+        "flipbook_texture": "textures/blocks/camera_sight_red_enchanted",
+        "atlas_tile": "camera_sight_red_enchanted",
+        "ticks_per_frame": 1,
+        "blend_frames": false
     }
 ]

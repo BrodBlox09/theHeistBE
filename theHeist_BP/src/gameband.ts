@@ -60,7 +60,8 @@ world.afterEvents.itemUse.subscribe((event) => {
 	const rot = player.getRotation().x;
 	//const inv = player.getComponent("minecraft:inventory").container;
 	//const text = inv.getSlot(0).typeId;
-	const text = event.itemStack.typeId;
+	var text = event.itemStack.typeId;
+	if (text.endsWith("_enchanted")) text = text.substring(0, text.length - "_enchanted".length);
 	let keycardType;
 	switch (text) {
 		case "theheist:recharge_mode_lvl_1":
@@ -129,7 +130,7 @@ function rechargeMode(lvl: number, player: Player) {
 			savePlayerInventory(player);
 			var playerInvContainer = (player.getComponent("inventory") as EntityInventoryComponent).container as Container;
 			playerInvContainer.clearAll();
-			var rechargeModeItemStack = new ItemStack(`theheist:recharge_mode_lvl_${lvl}`);
+			var rechargeModeItemStack = new ItemStack(`theheist:recharge_mode_lvl_${lvl}_enchanted`);
 			rechargeModeItemStack.lockMode = ItemLockMode.slot;
 			playerInvContainer.setItem(0, rechargeModeItemStack);
 		} else {
@@ -503,7 +504,9 @@ system.runInterval(() => {
 	for (let i = 0; i < playerInvContainer.size; i++) {
 		const item = playerInvContainer.getItem(i);
 		if (!item || !item.getLore()) continue;
-		const foundItem = loreItems.find(x => x.id == item.typeId)!;
+		var itemTypeId = item.typeId;
+		if (itemTypeId.endsWith("_enchanted")) itemTypeId = itemTypeId.substring(0, itemTypeId.length - "_enchanted".length);
+		const foundItem = loreItems.find(x => x.id == itemTypeId)!;
 		try {
 			item.setLore(foundItem.lore);
 			item.nameTag = foundItem.nameTag;

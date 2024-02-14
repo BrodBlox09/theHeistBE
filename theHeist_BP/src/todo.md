@@ -5,6 +5,7 @@
 - [x] add NV Goggles item {name:'§oNV Goggles§r', lore:['Drop to regain items']}
 	- [x] create armor model
 	- [x] create attachable
+- [ ] make enchanted textures for all gamebands
 ### Map
 - [ ] reset level on restart (doors, levers (elevator), etc)
 - [ ] redo the level 1 map to match the original
@@ -14,7 +15,7 @@
 - [ ] add ticking sound whenever player is caught by the security system
 - [ ] add paintings and itemframe items <!-- What does this mean? Where are the paintings and itemframes supposed to be that are missing? -->
 - [ ] fix the differences in the start van (missing models, missing driver, outside is different, command block textures are different, lighting is different)
-- [x] recharging is faster in java
+- [x] recharging is faster in java <!-- This was actually a Java bug, I think they might have put an extra 0 somewhere or forgot a decimal place so instead of 1.0 it was 10 -->
 - [x] when recharging, other gamebands are taken away
 - [ ] there should be a blindness effect in between cutscene scenes
 ### UI
