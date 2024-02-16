@@ -1,0 +1,67 @@
+{
+	"format_version": "1.16.0",
+	"minecraft:entity": {
+		"description": {
+            "identifier": "theheist:hover_text",
+            "is_summonable": true,
+            "is_spawnable": false,
+            "is_experimental": false
+        },
+		"components": {
+            "minecraft:pushable": {
+                "is_pushable": false,
+                "is_pushable_by_piston": false
+            },
+            "minecraft:damage_sensor": {
+                "triggers": {
+                    "deals_damage": false
+                }
+            },
+            "minecraft:physics": {
+                "has_collision": false,
+                "has_gravity": false
+            },
+            "minecraft:collision_box": {
+                "height": 0,
+                "width": 0
+            },
+            "minecraft:environment_sensor": {
+                "triggers": [
+                    {
+                        "event": "theheist:show_text",
+                        "target": "self",
+                        "filters": {
+                            "test": "distance_to_nearest_player",
+                            "value": 2,
+                            "operator": "<="
+                        }
+                    },
+                    {
+                        "event": "theheist:hide_text",
+                        "target": "self",
+                        "filters": {
+                            "test": "distance_to_nearest_player",
+                            "value": 2,
+                            "operator": ">"
+                        }
+                    }
+                ]
+            },
+            "minecraft:nameable": {
+                "always_show": true
+            }
+        },
+        "events": {
+            "theheist:show_text": {
+                "queue_command": {
+                    "command": "effect @s invisibility 0 0 true"
+                }
+            },
+            "theheist:hide_text": {
+                "queue_command": {
+                    "command": "effect @s invisibility 1 1 true"
+                }
+            }
+        }
+    }
+}

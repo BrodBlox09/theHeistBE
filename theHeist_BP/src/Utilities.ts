@@ -31,7 +31,7 @@ export default class Utilities {
 		return Math.cos(d * Math.PI / 180);
 	}
 
-	static setBlock(location: Vector3, block: string, permutations: Record<string, string | number | boolean> | undefined) {
+	static setBlock(location: Vector3, block: string, permutations: Record<string, string | number | boolean> | undefined = undefined) {
 		this.dimensions.overworld.fillBlocks(location, location, BlockPermutation.resolve(block, permutations));
 	}
 

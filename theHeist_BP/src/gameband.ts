@@ -1,4 +1,4 @@
-import { MolangVariableMap, BlockPermutation, EffectTypes, Vector, world, system, Player, EntityInventoryComponent, EffectType, DisplaySlotId, ScoreboardObjective, Container, ItemStack, ItemLockMode, Entity, Dimension } from "@minecraft/server";
+import { MolangVariableMap, BlockPermutation, EffectTypes, Vector, world, system, Player, EntityInventoryComponent, EffectType, DisplaySlotId, ScoreboardObjective, Container, ItemStack, ItemLockMode, Entity, Dimension, ItemUseAfterEvent } from "@minecraft/server";
 import DataManager from "./DataManager";
 import Utilities from "./Utilities";
 import GameObjectiveManager from "./GameObjectiveManager";
@@ -55,9 +55,8 @@ const SECOND = 20;
 
 const overworld = world.getDimension("overworld");
 
-world.afterEvents.itemUse.subscribe((event) => {
+world.afterEvents.itemUse.subscribe((event: ItemUseAfterEvent) => {
 	const player = event.source;
-	const rot = player.getRotation().x;
 	//const inv = player.getComponent("minecraft:inventory").container;
 	//const text = inv.getSlot(0).typeId;
 	var text = event.itemStack.typeId;
@@ -254,14 +253,26 @@ function action(actionInfo: Action, player: Player) {
 			var slideshowID = actionInfo.do;
 			startSlideshow(slideshowID, player);
 			break;
-		case "set_block":
+		case "set_block": {
 			var x = actionInfo.do.x;
 			var y = actionInfo.do.y;
 			var z = actionInfo.do.z;
 			var block = actionInfo.do.block;
 			var permutations = actionInfo.do.permutations;
-			overworld.runCommandAsync(`setBlock ${x} ${y} ${z} ${block} ${permutations}`)
+			//overworld.runCommandAsync(`setBlock ${x} ${y} ${z} ${block} ${permutations}`)
+			Utilities.setBlock({"x": x, "y": y, "z": z}, block, permutations);
+			var query: Record<any, any> = {
+				"type": "theheist:hover_text",
+				"location": {"x": x, "y": y, "z": z},
+				"maxDistance": 1,
+				"closest": 1
+			};
+			var hoverText = overworld.getEntities(query)[0];
+			// To not show the death particles
+			hoverText?.teleport({"x": x, "y": y + 10, "z": z});
+			hoverText?.kill();
 			break;
+		}
 		case "disable_camera":
 			player.playSound('map.disable');
 			var cameraID = actionInfo.do.cameraID;
@@ -270,7 +281,7 @@ function action(actionInfo: Action, player: Player) {
 				"location": { 'x': player.location.x, 'y': cameraHeight, 'z': player.location.z },
 				"maxDistance": 50
 			};
-			var cameraArmorStand = overworld.getEntities(cameraQuery).filter((x) => {
+			var cameraArmorStand = overworld.getEntities(cameraQuery).filter((x: Entity) => {
 				var cameraTrackerDataNode = DataManager.getData(x, "cameraTracker");
 				return (x.location.y == cameraHeight && cameraTrackerDataNode && cameraTrackerDataNode.disabled == false && cameraTrackerDataNode.cameraID == cameraID);
 			})[0];
@@ -315,10 +326,10 @@ function action(actionInfo: Action, player: Player) {
 			var command = actionInfo.do.command;
 			overworld.runCommandAsync(command);
 			break;
-		case "hack_console":
+		case "hack_console": {
 			var x = actionInfo.do.x;
 			var z = actionInfo.do.z;
-			var query = {
+			var query: Record<any, any> = {
 				"type": "armor_stand",
 				"location": new Vector(x, consolesHeight, z),
 				"maxDistance": 2,
@@ -339,6 +350,7 @@ function action(actionInfo: Action, player: Player) {
 			actionTracker.used = true;
 			DataManager.setData(armorStand, actionTracker);
 			break;
+		}
 		case "display_mail":
 			var mailID = actionInfo.do.mailID;
 			player.sendMessage([{ "text": "§c§oEmail:§r " }, { "translate": `map.mail.${mailID}` }]);
@@ -490,7 +502,7 @@ function playerBusted(player: Player, currentLevel: number) {
 }
 
 system.runInterval(() => {
-	const player = world.getPlayers().filter((x) => (x != undefined && x != null))[0];
+	const player = world.getPlayers().filter((x: Player) => (x != undefined && x != null))[0];
 	if (player == undefined) return;
 	// Give player effects
 	const saturation = EffectTypes.get('saturation')!;
@@ -525,7 +537,6 @@ system.runInterval(() => {
 	//console.warn('0');
 	// Set player level to player energy level
 	var playerEnergyTracker = DataManager.getData(player, "energyTracker");
-	console.log((playerEnergyTracker));
 	var playerLevelInformation = DataManager.getData(player, "levelInformation");
 	if ((playerEnergyTracker && playerEnergyTracker.energyUnits != player.level) || (playerLevelInformation && player.xpEarnedAtCurrentLevel != ((((playerLevelInformation.information[0].level / 100) - 0.06) * 742) + 41))) {
 		player.resetLevel();

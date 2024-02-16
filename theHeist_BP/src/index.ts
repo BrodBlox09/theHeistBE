@@ -113,7 +113,8 @@ world.beforeEvents.chatSend.subscribe(event => {
 			system.runTimeout(() => {
 				player.playSound(`map.${args[0]}`)
 				player.sendMessage([{ text: '§5§oVoice:§r ' }, { translate: `map.sub.${args[0]}` }])
-			}, 0)
+			}, 0);
+			break;
 		}
 	}
 });
