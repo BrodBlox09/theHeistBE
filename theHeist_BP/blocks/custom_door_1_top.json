@@ -7,8 +7,7 @@
             "properties": {
                 "theheist:rotation": [2, 3, 4, 5],
                 "theheist:unlocked": [true, false],
-                "theheist:open": [false, true],
-                "theheist:should_change": [true, false]
+                "theheist:open": [false, true]
             }
         },
         "events": {
@@ -108,8 +107,7 @@
                     {
                         "condition": "(query.block_property('theheist:open') == false)",
                         "set_block_property": {
-                            "theheist:open": true,
-                            "theheist:should_change": false
+                            "theheist:open": true
                         }
                     },
                     {
@@ -123,8 +121,7 @@
                     {
                         "condition": "(query.block_property('theheist:open') == true)",
                         "set_block_property": {
-                            "theheist:open": false,
-                            "theheist:should_change": false
+                            "theheist:open": false
                         }
                     },
                     {

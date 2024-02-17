@@ -1,0 +1,20 @@
+{
+    "format_version": "1.10.0",
+    "minecraft:client_entity": {
+        "description": {
+            "identifier": "theheist:camera_robot",
+            "materials": {
+                "default": "camera_robot_animated"
+            },
+            "textures": {
+                "default": "textures/entity/camera_robot"
+            },
+            "geometry": {
+                "default": "geometry.robot"
+            },
+            "render_controllers": [
+                "controller.render.camera_robot"
+            ]
+        }
+    }
+}

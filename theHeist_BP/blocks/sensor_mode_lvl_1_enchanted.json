@@ -12,7 +12,7 @@
                     "texture": "sensor_icon_enchanted"
                 },
                 "camera_sight": {
-                    "texture": "camera_sight_red_enchanted"
+                    "texture": "camera_sight_enchanted"
                 },
                 "*": {
                     "texture": "sensor_mode_enchanted"

@@ -57,11 +57,11 @@
         "green_block": {
             "textures": "textures/blocks/green_block"
         },
-        "camera_sight_red": {
-            "textures": "textures/blocks/camera_sight_red"
+        "camera_sight": {
+            "textures": "textures/blocks/camera_sight"
         },
-        "sonar_sight_blue": {
-            "textures": "textures/blocks/sonar_sight_blue"
+        "sonar_sight": {
+            "textures": "textures/blocks/sonar_sight"
         },
         "white_trapdoor": {
             "textures": "textures/blocks/white_trapdoor"
@@ -105,8 +105,8 @@
         "sensor_icon_enchanted": {
             "textures": "textures/blocks/sensor_icon_enchanted"
         },
-        "camera_sight_red_enchanted": {
-            "textures": "textures/blocks/camera_sight_red_enchanted"
+        "camera_sight_enchanted": {
+            "textures": "textures/blocks/camera_sight_enchanted"
         },
         "recharge_station_1": {
             "textures": "textures/blocks/recharge_station_1"

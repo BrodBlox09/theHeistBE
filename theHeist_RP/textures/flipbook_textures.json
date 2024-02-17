@@ -1,13 +1,13 @@
 [
     {
-        "flipbook_texture": "textures/blocks/camera_sight_red",
-        "atlas_tile": "camera_sight_red",
+        "flipbook_texture": "textures/blocks/camera_sight",
+        "atlas_tile": "camera_sight",
         "ticks_per_frame": 2,
         "blend_frames": false
     },
     {
-        "flipbook_texture": "textures/blocks/sonar_sight_blue",
-        "atlas_tile": "sonar_sight_blue",
+        "flipbook_texture": "textures/blocks/sonar_sight",
+        "atlas_tile": "sonar_sight",
         "ticks_per_frame": 2,
         "blend_frames": false
     },
@@ -91,8 +91,8 @@
         "blend_frames": true
     },
     {
-        "flipbook_texture": "textures/blocks/camera_sight_red_enchanted",
-        "atlas_tile": "camera_sight_red_enchanted",
+        "flipbook_texture": "textures/blocks/camera_sight_enchanted",
+        "atlas_tile": "camera_sight_enchanted",
         "ticks_per_frame": 1,
         "blend_frames": false
     }

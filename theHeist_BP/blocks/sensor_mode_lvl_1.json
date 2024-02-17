@@ -12,7 +12,7 @@
                     "texture": "sensor_icon"
                 },
                 "camera_sight": {
-                    "texture": "camera_sight_red"
+                    "texture": "camera_sight"
                 },
                 "*": {
                     "texture": "sensor_mode"

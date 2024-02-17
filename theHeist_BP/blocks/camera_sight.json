@@ -14,7 +14,7 @@
             "minecraft:geometry": "geometry.normal",
             "minecraft:material_instances": {
                 "*": {
-                    "texture": "camera_sight_red"
+                    "texture": "camera_sight"
                 }
             }
         }

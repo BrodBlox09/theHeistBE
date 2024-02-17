@@ -1,0 +1,9 @@
+{
+    "materials": {
+        "version": "1.0.0",
+        "camera_robot_animated:entity_alphablend": {
+            "+defines": [ "USE_UV_ANIM" ],
+            "+states": [ "Blending" ]
+        }
+    }
+}
