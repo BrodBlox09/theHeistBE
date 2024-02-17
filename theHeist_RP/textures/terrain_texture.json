@@ -132,7 +132,9 @@
         "projector": {
             "textures": "textures/blocks/projector"
         },
-
+        "door_iron_lower": {
+            "textures": "textures/blocks/door_iron_lower"
+        },
         "oak_log": {
             "textures": "textures/blocks/log_oak"
         },

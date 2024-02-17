@@ -1,0 +1,94 @@
+{
+    "format_version": "1.16.100",
+    "minecraft:block": {
+        "description": {
+            "identifier": "theheist:hardware_decoration",
+            "is_experimental": false,
+            "menu_category": {
+                "category": "construction"
+            },
+            "properties": {
+                "theheist:type": [0, 1, 2],
+                "theheist:rotation": [2, 3, 4, 5]
+            }
+        },
+        "events": {
+            "theheist:setup_block": {
+                "sequence": [
+                    {
+                        "set_block_property": {
+                            "theheist:type": "(math.die_roll_integer(1, 0, 2))",
+                            "theheist:rotation": "(query.cardinal_facing_2d)"
+                        }
+                    }
+                ]
+            }
+        },
+        "components": {
+            "minecraft:on_player_placing": {
+                "event": "theheist:setup_block"
+            },
+            "minecraft:light_dampening": 0,
+            "minecraft:material_instances": {
+                "wood": {
+                    "texture": "oak_log"
+                },
+                "*": {
+                    "texture": "door_iron_lower"
+                }
+            },
+            "minecraft:collision_box": {
+                "origin": [ -8, 0, -8 ],
+                "size": [ 16, 1, 16 ]
+            },
+            "minecraft:selection_box": {
+                "origin": [ -8, 0, -8 ],
+                "size": [ 16, 1, 16 ]
+            }
+        },
+        "permutations": [
+            {
+                "condition": "query.block_property('theheist:rotation') == 2",
+                "components": {
+                    "minecraft:rotation": [0, 180, 0]
+                }
+            },
+            {
+                "condition": "query.block_property('theheist:rotation') == 3",
+                "components": {
+                    "minecraft:rotation": [0, 0, 0]
+                }
+            },
+            {
+                "condition": "query.block_property('theheist:rotation') == 4",
+                "components": {
+                    "minecraft:rotation": [0, 270, 0]
+                }
+            },
+            {
+                "condition": "query.block_property('theheist:rotation') == 5",
+                "components": {
+                    "minecraft:rotation": [0, 90, 0]
+                }
+            },
+            {
+                "condition": "query.block_property('theheist:type') == 0",
+                "components": {
+                    "minecraft:geometry": "geometry.hardware_deco_1"
+                }
+            },
+            {
+                "condition": "query.block_property('theheist:type') == 1",
+                "components": {
+                    "minecraft:geometry": "geometry.hardware_deco_2"
+                }
+            },
+            {
+                "condition": "query.block_property('theheist:type') == 2",
+                "components": {
+                    "minecraft:geometry": "geometry.hardware_deco_3"
+                }
+            }
+        ]
+    }
+}

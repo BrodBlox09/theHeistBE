@@ -28,7 +28,7 @@ const levelCloneInfo: Record<string, Record<string, number>> = {
 }
 
 // Robots take exactly 1 second to turn 90 degrees
-// Robots move at a speed of 1 blocks per 20 ticks or 1/20 blocks per tick
+// Robots move at a speed of 1 blocks per 20 ticks
 
 system.runInterval(() => {
 	var player = world.getPlayers().filter((x) => (x != undefined && x != null))[0];
@@ -44,7 +44,6 @@ system.runInterval(() => {
 	if (playerCameraMappingHeightBlock && playerCameraMappingHeightBlock.typeId == "theheist:camera_sight" && player.location.y < -56 && !player.hasTag("BUSTED")) {
 		playerLevelInformationDataNode.information[0].level += 2;
 		DataManager.setData(player, playerLevelInformationDataNode);
-		//player.sendMessage("You are in the camera's vision!");
 	}
 
 	var cameraQuery = {
