@@ -1,4 +1,4 @@
-import { BlockPermutation, world, system } from "@minecraft/server";
+import { BlockPermutation, world, system, GameMode } from "@minecraft/server";
 import DataManager from "./DataManager";
 import Utilities from "./Utilities";
 
@@ -31,7 +31,8 @@ const levelCloneInfo: Record<string, Record<string, number>> = {
 // Robots move at a speed of 1 blocks per 20 ticks
 
 system.runInterval(() => {
-	var player = world.getPlayers().filter((x) => (x != undefined && x != null))[0];
+	// Only include adventure mode players
+	var player = world.getPlayers({"gameMode": GameMode.adventure}).filter((x) => (x != undefined && x != null))[0];
 	if (player == undefined) return;
 
 	var playerLevelInformationDataNode = DataManager.getData(player, "levelInformation");

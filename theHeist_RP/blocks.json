@@ -60,5 +60,8 @@
           "up" : "oak_log",
           "west" : "oak_log"
        }
+    },
+    "theheist:dropper_block": {
+        "textures": "dropper_top"
     }
 }

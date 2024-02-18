@@ -1,4 +1,4 @@
-import { EntityTypes, system, world, Vector3, EntityInventoryComponent } from "@minecraft/server";
+import { EntityTypes, system, world, Vector3, EntityInventoryComponent, GameMode } from "@minecraft/server";
 import DataManager from "./DataManager";
 import "./lvl_loader";
 import "./gameband";
