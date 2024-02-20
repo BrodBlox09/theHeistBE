@@ -1,4 +1,4 @@
-import { ItemStack, Vector, system, world, DisplaySlotId, BlockInventoryComponent, EntityInventoryComponent, ItemLockMode, BlockPermutation, Player, EntityEquippableComponent, Container, EquipmentSlot } from "@minecraft/server";
+import { ItemStack, Vector, system, world, DisplaySlotId, BlockInventoryComponent, BlockPermutation, Container } from "@minecraft/server";
 import DataManager from "./DataManager";
 import VoiceOverManager from "./VoiceOverManager";
 import Utilities from "./Utilities";
@@ -558,6 +558,54 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 
 					}, SECOND * 7.5);
 					break;
+				}
+				case "-1-1": {
+					// Load level -1 (the second level)
+					// Clear all data on player
+					DataManager.clearData(player);
+					// Previous level made use of tags, clear them here
+					player.getTags().forEach((x) => { player.removeTag(x); });
+					// Add energyTracker data
+					const playerEnergyTrackerDataNode = { "name": "energyTracker", "energyUnits": 100.0, "recharging": false, "rechargeLevel": 1 };
+					DataManager.setData(player, playerEnergyTrackerDataNode);
+
+					if (!bustedCounterObjective.hasParticipant(player)) {
+						bustedCounterObjective.setScore(player, 0);
+					}
+					const playerLevelInformationDataNode = { "name": "levelInformation", "information": [{ "name": "alarmLevel", "level": 0 }, { "name": "gameLevel", "level": -1 }, { "name": "playerInv", "inventory": [{ "slot": 0, "typeId": 'theheist:recharge_mode_lvl_1', "lockMode": "slot" }, { "slot": 1, "typeId": 'theheist:hacking_mode_lvl_1', "lockMode": "slot" }] }] };
+
+					DataManager.setData(player, playerLevelInformationDataNode);
+
+					Utilities.reloadPlayerInv(player, playerLevelInformationDataNode);
+
+					player.onScreenDisplay.setTitle("§o§7Level 0", { "fadeInDuration": 20, "fadeOutDuration": 20, "stayDuration": 160 });
+					clearObjectives();
+					reloadSidebarDisplay();
+
+					player.teleport({ 'x': 3099.0, 'y': -56, 'z': 109.0 }, { 'dimension': overworld, 'rotation': { 'x': 0, 'y': -90 } });
+					var elevatorIndex = 0;
+					var elevatorEdgesBottom = [{'x': 3096.5, 'y': -60, 'z': 106.5}, {'x': 3101.5, 'y': -60, 'z': 106.5}, {'x': 3101.5, 'y': -60, 'z': 111.5}, {'x': 3096.5, 'y': -60, 'z': 111.5}];
+					var elevatorEdgesTop = elevatorEdgesBottom.map((pos) => {
+						return {'x': pos.x, 'y': -49, 'z': pos.z};
+					});
+					var elevatorInterval = system.runInterval(() => {
+						elevatorEdgesBottom.forEach((pos, i) => {
+							overworld.fillBlocks(pos, elevatorEdgesTop[i], BlockPermutation.resolve("minecraft:polished_andesite"));
+						});
+						for (var i = 0; i < 4; i++) {
+							var currY = elevatorEdgesBottom[0].y + 3 * i;
+							elevatorEdgesBottom.forEach((pos) => {
+								Utilities.setBlock({'x': pos.x, 'y': currY + elevatorIndex, 'z': pos.z}, "minecraft:redstone_lamp");
+							});
+						}
+						elevatorIndex++;
+						elevatorIndex = elevatorIndex % 3;
+					}, 10); // Every 0.5 seconds update the elevator
+
+					system.runTimeout(() => { // After 10 seconds bring the player out of the elevator and end the interval
+						system.clearRun(elevatorInterval);
+						player.teleport({ "x": 3086.0, "y": -60, "z": 110.0 }, { 'dimension': overworld, 'rotation': { 'x': 0, 'y': 90 } });
+					}, SECOND * 10);
 				}
 			}
 			break;

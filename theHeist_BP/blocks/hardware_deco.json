@@ -34,7 +34,7 @@
                     "texture": "oak_log"
                 },
                 "*": {
-                    "texture": "door_iron_lower"
+                    "texture": "door_iron_lower_a"
                 }
             },
             "minecraft:collision_box": {
