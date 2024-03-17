@@ -9,7 +9,7 @@
 ### Map
 - [ ] reset level on restart (doors, levers (elevator), etc)
 - [ ] redo the level 1 map to match the original
-- [ ] add texts to interactable blocks through armor stands or other entities
+- [x] add texts to interactable blocks through armor stands or other entities
 - [ ] rotate lvl 1 cameras to match the original
 - [x] fix camera FOV angle to match the original
 - [ ] add ticking sound whenever player is caught by the security system
