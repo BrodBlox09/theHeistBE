@@ -23,7 +23,10 @@ const levelCloneInfo: Record<string, Record<string, number>> = {
 		"endZ": 77
 	},
 	"level_-1": {
-
+		"startX": 3028,
+		"startZ": 97,
+		"endX": 3109,
+		"endZ": 161
 	}
 }
 

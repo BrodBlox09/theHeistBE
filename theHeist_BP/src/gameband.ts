@@ -625,10 +625,8 @@ system.runInterval(() => {
 	const playerRotX = player.getRotation().x;
 	if (playerRotX < 90 && playerRotX > 80) {
 		// Player is looking down
-		for (let i = 0; i < playerInvContainer.size; i++) {
-			const itemStack = playerInvContainer.getItem(i);
-
-		}
+		// Only possible slot for the sensor mode to be in
+		const itemStack = playerInvContainer.getItem(2);
 	}
 });
 

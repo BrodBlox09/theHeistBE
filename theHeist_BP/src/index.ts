@@ -1,4 +1,4 @@
-import { EntityTypes, system, world, Vector3, EntityInventoryComponent, GameMode } from "@minecraft/server";
+import { EntityTypes, system, world, Vector3, EntityInventoryComponent, GameMode, Vector } from "@minecraft/server";
 import DataManager from "./DataManager";
 import "./lvl_loader";
 import "./gameband";
@@ -115,6 +115,11 @@ world.beforeEvents.chatSend.subscribe(event => {
 				player.sendMessage([{ text: '§5§oVoice:§r ' }, { translate: `map.sub.${args[0]}` }])
 			}, 0);
 			break;
+		}
+		case "fillLarge": {
+			system.run(() => {
+				Utilities.dimensions.overworld.fillBlocks(new Vector(3028, parseInt(args[0]), 97), new Vector(3109, parseInt(args[0]), 161), "minecraft:iron_block");
+			});
 		}
 	}
 });
