@@ -1,4 +1,5 @@
-import { ItemStack, Vector, system, world, DisplaySlotId, BlockInventoryComponent, BlockPermutation, Container } from "@minecraft/server";
+import { ItemStack, Vector3, system, world, DisplaySlotId, BlockInventoryComponent, BlockPermutation, Container } from "@minecraft/server";
+import Vector from "./Vector";
 import DataManager from "./DataManager";
 import VoiceOverManager from "./VoiceOverManager";
 import Utilities from "./Utilities";
@@ -694,7 +695,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
  */
 function runElelevatorAnimation(middleBottomPos: Vector): number {
 	var elevatorIndex = 0;
-	var elevatorEdgesBottom = [Vector.add(middleBottomPos, new Vector(-2.5,0,-2.5)),Vector.add(middleBottomPos, new Vector(-2.5,0,2.5)), Vector.add(middleBottomPos, new Vector(2.5,0,-2.5)), Vector.add(middleBottomPos, new Vector(2.5,0,2.5))];
+	var elevatorEdgesBottom = [middleBottomPos.add(new Vector(-2.5,0,-2.5)),middleBottomPos.add(new Vector(-2.5,0,2.5)),middleBottomPos.add(new Vector(2.5,0,-2.5)),middleBottomPos.add(new Vector(2.5,0,2.5))];
 	var elevatorEdgesTop = elevatorEdgesBottom.map((pos) => {
 		return { 'x': pos.x, 'y': middleBottomPos.y + 11, 'z': pos.z };
 	});

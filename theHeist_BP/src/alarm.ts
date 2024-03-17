@@ -1,4 +1,4 @@
-import { BlockPermutation, world, system, GameMode } from "@minecraft/server";
+import { world, system, GameMode } from "@minecraft/server";
 import DataManager from "./DataManager";
 import Utilities from "./Utilities";
 
@@ -44,7 +44,7 @@ system.runInterval(() => {
 	if (playerLevelInformationDataNode == undefined || level == undefined || level > 0) return;
 
 	var playerCameraMappingHeightBlock = Utilities.dimensions.overworld.getBlock({ "x": player.location.x, "y": cameraMappingHeight - 3, "z": player.location.z });
-
+	
 	if (playerCameraMappingHeightBlock && playerCameraMappingHeightBlock.typeId == "theheist:camera_sight" && player.location.y < -56 && !player.hasTag("BUSTED")) {
 		playerLevelInformationDataNode.information[0].level += 2;
 		DataManager.setData(player, playerLevelInformationDataNode);
