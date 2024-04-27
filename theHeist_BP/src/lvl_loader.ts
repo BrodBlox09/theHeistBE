@@ -588,7 +588,6 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 					var elevatorInterval =  runElelevatorAnimation(new Vector(3099.0, -60, 109.0));
 
 					system.runTimeout(() => { // After 10 seconds bring the player out of the elevator and end the interval
-						console.warn("Attept abort");
 						system.clearRun(elevatorInterval);
 						player.teleport({ "x": 3086.0, "y": -60, "z": 110.0 }, { 'dimension': overworld, 'rotation': { 'x': 0, 'y': 90 } });
 					}, SECOND * 10);
@@ -624,18 +623,38 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 							"level": 1,
 							"actions": [
 								{
-									"type": "set_block", "do": { "x": 3079, "y": -50, "z": 107, "block": "theheist:keypad", "permutations": { "theheist:rotation": 2, "theheist:unlocked": 1 } }
+									"type": "set_block", "do": { "x": 3079, "y": -59, "z": 107, "block": "theheist:keypad", "permutations": { "theheist:rotation": 2, "theheist:unlocked": 1 } }
 								},
 								{
-									"type": "set_block", "do": { "x": 3079, "y": -50, "z": 107, "block": "theheist:keypad", "permutations": { "theheist:rotation": 2, "theheist:unlocked": 2 } }, "delay": 40
+									"type": "set_block", "do": { "x": 3079, "y": -59, "z": 107, "block": "theheist:keypad", "permutations": { "theheist:rotation": 2, "theheist:unlocked": 2 } }, "delay": 40
 								},
 								{
 									"type": "set_block", "do": { "x": 3078, "y": -60, "z": 106, "block": "theheist:custom_door_1_bottom", "permutations": { "theheist:rotation": 2, "theheist:unlocked": true } }, "delay": 40
 								}
 							]
 						};
-						// ---------------------------- UPDATE COORDINATES TO MATCH ACTUAL LEVEL -------------------------------------
 						DataManager.setData(console0, console0ActionTracker);
+						// Console 1 (Type: Computer)
+						const console1 = overworld.spawnEntity("armor_stand", { "x": 3072.5, "y": consolesHeight, "z": 105.5 });
+						Utilities.setBlock({ x: 3072, y: -59, z: 105 }, "theheist:computer", { "theheist:rotation": 3 });
+						overworld.spawnEntity("theheist:hover_text", { x: 3072.5, y: -59, z: 105.5 }).nameTag = "Research info";
+						const console1ActionTracker = {
+							"name": "actionTracker",
+							"used": false,
+							"level": 1,
+							"actions": [
+								{
+									"type": "set_block", "do": { "x": 3072, "y": -59, "z": 105, "block": "theheist:computer", "permutations": { "theheist:rotation": 3, "theheist:unlocked": 1 } }
+								},
+								{
+									"type": "set_block", "do": { "x": 3072, "y": -59, "z": 105, "block": "theheist:computer", "permutations": { "theheist:rotation": 3, "theheist:unlocked": 2 } }, "delay": 40
+								},
+								{
+									"type": "display_research", "do": { "researchID": 100 }, "delay": 40
+								}
+							]
+						};
+						DataManager.setData(console1, console1ActionTracker);
 						// Recharge Station 0
 						const recharge0 = overworld.spawnEntity("minecraft:armor_stand", new Vector(3070.5, rechargeHeight, 110.5));
 						Utilities.setBlock({ x: 3070, y: -60, z: 110 }, "theheist:recharge_station", { "theheist:rotation": 4 });
@@ -711,7 +730,6 @@ function runElelevatorAnimation(middleBottomPos: Vector): number {
 		}
 		elevatorIndex++;
 		elevatorIndex = elevatorIndex % 3;
-		console.warn("Still running...");
 	}, 10); // Every 0.5 seconds update the elevator
 	return elevatorInterval;
 }

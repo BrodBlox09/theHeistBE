@@ -1,4 +1,4 @@
-import { EntityTypes, system, world, Vector3, EntityInventoryComponent, GameMode } from "@minecraft/server";
+import { EntityTypes, system, world, Vector3, EntityInventoryComponent, GameMode, EntityQueryOptions } from "@minecraft/server";
 import Vector from "./Vector";
 import DataManager from "./DataManager";
 import "./lvl_loader";
@@ -22,8 +22,8 @@ const levelLocations: Record<string, Vector3> = {
 	"2": { 'x': 0.5, 'y': -50, 'z': 56.5 },
 	"1": { 'x': -22.5, 'y': -50, 'z': 56.5 },
 	"0.5": { 'x': 1000.5, 'y': -50, 'z': 56.5 },
-	"0": { 'x': 2000.5, 'y': -50, 'z': 56.5 }//,
-	//"-1": {'x': 2000.5, 'y': -50, 'z': 56.5}
+	"0": { 'x': 2000.5, 'y': -50, 'z': 56.5 },
+	"-1": {'x': 3075.5, 'y': -50, 'z': 100.5}
 }
 
 const objectivesObjective = world.scoreboard.getObjective("objectives") ?? world.scoreboard.addObjective("objectives", "Objectives");
@@ -119,8 +119,15 @@ world.beforeEvents.chatSend.subscribe(event => {
 		}
 		case "fillLarge": {
 			system.run(() => {
-				Utilities.dimensions.overworld.fillBlocks(new Vector(3028, parseInt(args[0]), 97), new Vector(3109, parseInt(args[0]), 161), "minecraft:iron_block");
+				Utilities.dimensions.overworld.fillBlocks(new Vector(3028, parseInt(args[0]), 97), new Vector(3109, parseInt(args[0]), 161), args[1]);
 			});
+		}
+		case "getData": {
+			var query: EntityQueryOptions = {
+				closest: 1,
+				excludeTypes: ["minecraft:player"]
+			};
+			world.sendMessage(DataManager.GetDataRaw(Utilities.dimensions.overworld.getEntities(query)[0]) as string);
 		}
 	}
 });

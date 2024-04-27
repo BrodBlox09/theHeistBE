@@ -10,6 +10,12 @@ export default class DataManager {
 		else return dataNode;
 	}
 
+	static GetDataRaw(entity: Entity): string | undefined {
+		const dataStr = entity.getDynamicProperty('data') as string;
+		if (!dataStr) return;
+		return dataStr;
+	}
+
 	static setData(entity: Entity, object: Record<string, any>) {
 		const dataStr = entity.getDynamicProperty('data') as string;
 		if (!dataStr) {

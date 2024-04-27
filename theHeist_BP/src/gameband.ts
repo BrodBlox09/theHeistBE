@@ -123,7 +123,7 @@ function rechargeMode(lvl: number, player: Player) {
 		if (playerEnergyTrackerDataNode.recharging == false) {
 			if (armorStandEnergyTrackerDataNode.energyUnits == 0.0) return;
 			playerEnergyTrackerDataNode.recharging = true;//${armorStandEnergyTrackerDataNode.block.rotation}
-			player.playSound('map.recharge_use', { "volume": 0.5 });
+			player.playSound('map.recharge_use', { "volume": 0.25 });
 			Utilities.setBlock(blockLocation, "theheist:recharge_station", { "theheist:rotation": armorStandEnergyTrackerDataNode.block.rotation, "theheist:state": 2 });
 			playerEnergyTrackerDataNode.usingRechargerID = armorStandEnergyTrackerDataNode.rechargerID;
 			// Enter "1 mode only" state
@@ -352,9 +352,14 @@ function action(actionInfo: Action, player: Player) {
 			DataManager.setData(armorStand, actionTracker);
 			break;
 		}
+		// Are the italics in the wrong spot here?
 		case "display_mail":
 			var mailID = actionInfo.do.mailID;
 			player.sendMessage([{ "text": "§c§oEmail:§r " }, { "translate": `map.mail.${mailID}` }]);
+			break;
+		case "display_research":
+			var researchID = actionInfo.do.researchID;
+			player.sendMessage([{ "text": "§9§oResearch Report:§r " }, { "translate": `map.mail.${researchID}` }]);
 			break;
 		case "set_alarm_level":
 			var lvlInfo = DataManager.getData(player, "levelInformation");
