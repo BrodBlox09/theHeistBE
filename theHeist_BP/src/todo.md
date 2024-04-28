@@ -18,6 +18,9 @@
 - [x] recharging is faster in java <!-- This was actually a Java bug, I think they might have put an extra 0 somewhere or forgot a decimal place so instead of 1.0 it was 10 -->
 - [x] when recharging, other gamebands are taken away
 - [ ] there should be a blindness effect in between cutscene scenes
+### Camera / Sensor
+- [ ] Add functionality to sensor mode
+- [ ] Fix camera sight (wall checks don't match Java, e.g. 2 high glass isn't seen through when it should be)
 ### UI
 - [ ] edit inventory ui
 ### Other
