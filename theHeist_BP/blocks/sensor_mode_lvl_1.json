@@ -7,6 +7,9 @@
         },
         "components": {
             "minecraft:geometry": "geometry.sensor_mode",
+            "minecraft:on_player_placing": {
+                "event": "theheist:set_rotation"
+            },
             "minecraft:material_instances": {
                 "icon": {
                     "texture": "sensor_icon"

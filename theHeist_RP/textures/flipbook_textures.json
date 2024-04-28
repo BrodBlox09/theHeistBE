@@ -95,5 +95,11 @@
         "atlas_tile": "camera_sight_enchanted",
         "ticks_per_frame": 1,
         "blend_frames": false
+    },
+    {
+        "flipbook_texture": "textures/blocks/gameband-displays/power_green",
+        "atlas_tile": "power_green",
+        "ticks_per_frame": 40,
+        "blend_frames": true
     }
 ]

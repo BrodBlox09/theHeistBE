@@ -1,5 +1,20 @@
 {
     "texture_data": {
+        "power_green": {
+            "textures": "textures/blocks/gameband-displays/power_green"
+        },
+        "quartz_theme_side": {
+            "textures": "textures/blocks/gameband-displays/quartz_theme_side"
+        },
+        "quartz_theme_top": {
+            "textures": "textures/blocks/gameband-displays/quartz_theme_top"
+        },
+        "command_decoration": {
+            "textures": "textures/blocks/command_block"
+        },
+        "gray_base": {
+            "textures": "textures/blocks/gameband-displays/gray_base"
+        },
         "keypad_base": {
             "textures": "textures/blocks/keypad_base"
         },
