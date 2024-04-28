@@ -24,4 +24,6 @@
 - [ ] somehow make reach shorter to match the original
 - [ ] use the original models and textures for the gamebands (animated stuff  and laser thingy is missing), computers, drawers, signs, chairs, recharge stations, etc
 ### Backend
-- [] Rewrite the data management system (DataManager-rewrite branch)
+- [ ] Rewrite the data management system (DataManager-rewrite branch)
+- [ ] Separate the functionality of each gameband into seperate files
+- [ ] Rewrite objective system to rely on IDs to update each objective's status?

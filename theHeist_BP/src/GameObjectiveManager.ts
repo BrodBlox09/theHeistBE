@@ -9,10 +9,11 @@ export default class GameObjectiveManager {
 		this.reloadSidebar()
 	}
 
-	static completeObjective(objective: string, sortOrder: number) {
-		objectivesObjective.removeParticipant(`§c${objective}§r`)
-		objectivesObjective.setScore(`§a${objective}§r`, sortOrder)
-		world.sendMessage([{ "text": `§o§7Completed objective: §r§a${objective}§r` }])
+	static completeObjective(objective: string) {
+		var sortOrder: number = objectivesObjective.getScore(`§c${objective}§r`) as number;
+		objectivesObjective.removeParticipant(`§c${objective}§r`);
+		objectivesObjective.setScore(`§a${objective}§r`, sortOrder);
+		world.sendMessage([{ "text": `§o§7Completed objective: §r§a${objective}§r` }]);
 		this.reloadSidebar()
 	}
 

@@ -1,4 +1,5 @@
 import { BlockPermutation, Vector3, world, Player, Container, EntityEquippableComponent, EntityInventoryComponent, ItemStack, EquipmentSlot, ItemLockMode } from "@minecraft/server";
+import DataManager from "./DataManager";
 
 export default class Utilities {
 	static dimensions = {
@@ -35,7 +36,8 @@ export default class Utilities {
 		this.dimensions.overworld.fillBlocks(location, location, BlockPermutation.resolve(block, permutations));
 	}
 
-	static reloadPlayerInv(player: Player, levelData: any) {
+	static reloadPlayerInv(player: Player, levelData: any = null) {
+		if (levelData == null) levelData = DataManager.getData(player, "levelInformation");
 		var playerInvContainer = (player.getComponent("inventory") as EntityInventoryComponent).container as Container;
 		playerInvContainer.clearAll();
 		var playerInvData = levelData.information[2].inventory; // Array of player inventory slots

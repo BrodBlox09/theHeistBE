@@ -580,17 +580,21 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 
 					Utilities.reloadPlayerInv(player, playerLevelInformationDataNode);
 
-					player.onScreenDisplay.setTitle("§o§7Level 0", { "fadeInDuration": 20, "fadeOutDuration": 20, "stayDuration": 160 });
+					player.onScreenDisplay.setTitle("§o§7Level -1", { "fadeInDuration": 20, "fadeOutDuration": 20, "stayDuration": 160 });
 					clearObjectives();
+					addUnfinishedObjective("Access next level", 3);
+					addUnfinishedObjective("Get Sensor mode", 2);
+					addUnfinishedObjective("Get Hacking upgrade", 1);
+					addUnfinishedObjective("Get Recharge upgrade", 0);
 					reloadSidebarDisplay();
 
 					player.teleport({ 'x': 3099.0, 'y': -56, 'z': 109.0 }, { 'dimension': overworld, 'rotation': { 'x': 0, 'y': -90 } });
-					var elevatorInterval =  runElelevatorAnimation(new Vector(3099.0, -60, 109.0));
+					//var elevatorInterval =  runElelevatorAnimation(new Vector(3099.0, -60, 109.0));
 
 					system.runTimeout(() => { // After 10 seconds bring the player out of the elevator and end the interval
-						system.clearRun(elevatorInterval);
+						//system.clearRun(elevatorInterval);
 						player.teleport({ "x": 3086.0, "y": -60, "z": 110.0 }, { 'dimension': overworld, 'rotation': { 'x': 0, 'y': 90 } });
-					}, SECOND * 10);
+					}, SECOND * 2);
 					system.runTimeout(() => { // After 7.5 seconds load the level objects
 						// Kill all entities
 						const entities = overworld.getEntities();
@@ -655,6 +659,29 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 							]
 						};
 						DataManager.setData(console1, console1ActionTracker);
+						// Console 2 (Type: Gameband Upgrade)
+						const console2 = overworld.spawnEntity("armor_stand", { "x": 3074.5, "y": consolesHeight, "z": 100.5 });
+						Utilities.setBlock({ x: 3074, y: -59, z: 100 }, "theheist:sensor_mode_display", { "theheist:rotation": 2 });
+						const console2ActionTracker = {
+							"name": "actionTracker",
+							"used": false,
+							"level": 0,
+							"actions": [
+								{
+									"type": "new_gameband", "do": {
+										"displayBlock": { "x": 3074, "y": -59, "z": 100 },
+										"mode": "sensor",
+										"modeText": "§6§lSensor",
+										"level": 1,
+										"slot": 2
+									}
+								},
+								{
+									"type": "manage_objectives", "do": { "manageType": 2, "objective": "Get Sensor mode" }
+								}
+							]
+						};
+						DataManager.setData(console2, console2ActionTracker);
 						// Recharge Station 0
 						const recharge0 = overworld.spawnEntity("minecraft:armor_stand", new Vector(3070.5, rechargeHeight, 110.5));
 						Utilities.setBlock({ x: 3070, y: -60, z: 110 }, "theheist:recharge_station", { "theheist:rotation": 4 });
@@ -665,7 +692,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 							"block": { "x": 3070, "y": -60, "z": 110, "rotation": 4 }
 						};
 						DataManager.setData(recharge0, recharge0DataNode);
-					}, SECOND * 7.5);
+					}, SECOND * 1);
 				}
 			}
 			break;
@@ -742,6 +769,11 @@ function createRechargeStation(x: number, z: number, energyTracker: object, rota
 	return recharge;
 }
 
+/**
+ * Add an unfinished objective to the objective sidebar
+ * @param objective The description of the objective.
+ * @param sortOrder The sort index of the objective. Objectives are sorted from highest to lowest.
+ */
 function addUnfinishedObjective(objective: string, sortOrder: number) {
 	objectivesObjective.setScore(`§c${objective}§r`, sortOrder);
 }
