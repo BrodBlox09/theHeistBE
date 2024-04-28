@@ -3,6 +3,7 @@ import Vector from "./Vector";
 import DataManager from "./DataManager";
 import Utilities from "./Utilities";
 import GameObjectiveManager from "./GameObjectiveManager";
+import * as SensorModeFunc from "./gamebands/sensor";
 
 /**
  * Unfinished objectives color: §c (Red)
@@ -98,6 +99,7 @@ function sensorMode(lvl: number, player: Player) {
 	// Sensor mode has a radius of 14 blocks from the player, or 14.5 blocks directly including the block the player is standing on.
 	/* NOTE: When a region is cloned, the region defined by the first 2 Vector3s will be cloned by the block which is the lowest and most NW (most negative in every direction xyz).
 	*  A copy of that block is then translated to the third Vector3 as well as a copy of the rest of the region and then cloned there. */
+	SensorModeFunc.toggleSensorMode(player, lvl);
 }
 
 /**
@@ -156,7 +158,7 @@ function hackingMode(lvl: number, player: Player) {
 	var playerEnergyTracker = DataManager.getData(player, "energyTracker");
 	const query = {
 		"type": "armor_stand",
-		"location": new Vector(player.location.x, consolesHeight, player.location.z),
+		"location": { "x": player.location.x, "y": consolesHeight, "z": player.location.z },
 		"maxDistance": 2,
 		"closest": 1
 	}
@@ -177,7 +179,7 @@ function hackingMode(lvl: number, player: Player) {
 				return;
 			}
 			player.playSound('map.hack_use');
-			playerEnergyTracker.energyUnits -= Utilities.gamebandInfo.hackingMode[lvl].cost;
+			if (armorStandActionTracker.level != 0) playerEnergyTracker.energyUnits -= Utilities.gamebandInfo.hackingMode[lvl].cost;
 			DataManager.setData(player, playerEnergyTracker);
 			/*var block = armorStandActionTracker.block;
 			if (block.type != "keycard_reader") {
@@ -352,14 +354,13 @@ function action(actionInfo: Action, player: Player) {
 			DataManager.setData(armorStand, actionTracker);
 			break;
 		}
-		// Are the italics in the wrong spot here?
 		case "display_mail":
 			var mailID = actionInfo.do.mailID;
-			player.sendMessage([{ "text": "§c§oEmail:§r " }, { "translate": `map.mail.${mailID}` }]);
+			player.sendMessage([{ "text": "§cEmail:§r §o" }, { "translate": `map.mail.${mailID}` }]);
 			break;
 		case "display_research":
 			var researchID = actionInfo.do.researchID;
-			player.sendMessage([{ "text": "§9§oResearch Report:§r " }, { "translate": `map.mail.${researchID}` }]);
+			player.sendMessage([{ "text": "§9Research Report:§r §o" }, { "translate": `map.mail.${researchID}` }]);
 			break;
 		case "set_alarm_level":
 			var lvlInfo = DataManager.getData(player, "levelInformation");
@@ -386,9 +387,8 @@ function action(actionInfo: Action, player: Player) {
 				case 2:
 					// Finish an objective
 					var objective = actionInfo.do.objective;
-					var sortOrder = actionInfo.do.sortOrder;
 
-					GameObjectiveManager.completeObjective(objective, sortOrder);
+					GameObjectiveManager.completeObjective(objective);
 					break;
 				case 3:
 					// Remove an objective
@@ -397,6 +397,23 @@ function action(actionInfo: Action, player: Player) {
 					GameObjectiveManager.removeObjective(objective);
 					break;
 			}
+			break;
+		case "new_gameband": {
+			/**
+			 * actionInfo.do.displayBlock: Vector3
+			 * actionInfo.do.mode: string
+			 * actionInfo.do.slot: number
+			 * actionInfo.do.modeText: string
+			 * actionInfo.do.level: number
+			 */
+			var levelInformation = DataManager.getData(player, "levelInformation");
+			levelInformation.information[2].inventory.push({ "slot": actionInfo.do.slot, "typeId": `theheist:${actionInfo.do.mode}_mode_lvl_${actionInfo.do.level}`, "lockMode": "slot" });
+			DataManager.setData(player, levelInformation);
+			Utilities.reloadPlayerInv(player);
+			Utilities.dimensions.overworld.setBlockType(actionInfo.do.displayBlock, "minecraft:air");
+			world.sendMessage([{ "text": "§7New Mode Available: §r" + actionInfo.do.modeText }]);
+			break;
+		}
 	}
 }
 
@@ -540,10 +557,12 @@ system.runInterval(() => {
 		GameObjectiveManager.hideSidebar();
 	}
 
-	//console.warn('0');
 	// Set player level to player energy level
-	var playerEnergyTracker = DataManager.getData(player, "energyTracker");
-	var playerLevelInformation = DataManager.getData(player, "levelInformation");
+	var playerEnergyTracker: EnergyTracker = DataManager.getData(player, "energyTracker");
+	var playerLevelInformation: LevelInformation = DataManager.getData(player, "levelInformation");
+
+	if (playerEnergyTracker && playerLevelInformation) SensorModeFunc.sensorTick(player, playerLevelInformation, playerEnergyTracker);
+
 	if ((playerEnergyTracker && playerEnergyTracker.energyUnits != player.level) || (playerLevelInformation && player.xpEarnedAtCurrentLevel != ((((playerLevelInformation.information[0].level / 100) - 0.06) * 742) + 41))) {
 		player.resetLevel();
 		player.addLevels(100);

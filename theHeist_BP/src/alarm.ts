@@ -1,4 +1,5 @@
 import { world, system, GameMode } from "@minecraft/server";
+import * as SensorModeFunc from "./gamebands/sensor";
 import DataManager from "./DataManager";
 import Utilities from "./Utilities";
 
@@ -15,21 +16,6 @@ const levelHeight = -59;
 
 const cameraFOV = 40;
 
-const levelCloneInfo: Record<string, Record<string, number>> = {
-	"level_0": {
-		"startX": 1975,
-		"startZ": 42,
-		"endX": 2022,
-		"endZ": 77
-	},
-	"level_-1": {
-		"startX": 3028,
-		"startZ": 97,
-		"endX": 3109,
-		"endZ": 161
-	}
-}
-
 // Robots take exactly 1 second to turn 90 degrees
 // Robots move at a speed of 1 blocks per 20 ticks
 
@@ -42,7 +28,7 @@ system.runInterval(() => {
 	var level = undefined;
 	if (playerLevelInformationDataNode) level = playerLevelInformationDataNode.information[1].level;
 	if (playerLevelInformationDataNode == undefined || level == undefined || level > 0) return;
-
+	
 	var playerCameraMappingHeightBlock = Utilities.dimensions.overworld.getBlock({ "x": player.location.x, "y": cameraMappingHeight - 3, "z": player.location.z });
 	
 	if (playerCameraMappingHeightBlock && playerCameraMappingHeightBlock.typeId == "theheist:camera_sight" && player.location.y < -56 && !player.hasTag("BUSTED")) {
@@ -118,8 +104,9 @@ system.runInterval(() => {
 			// Before we save the mapped out camera sight area, make sure we remove the block below the camera if there is one
 			Utilities.setBlock({"x": armorStand.location.x, "y": cameraMappingHeight - 2, "z": armorStand.location.z}, "air");
 		});
-		Utilities.dimensions.overworld.runCommandAsync(`clone ${levelCloneInfo["level_" + level].startX} ${cameraMappingHeight - 2} ${levelCloneInfo["level_" + level].startZ} ${levelCloneInfo["level_" + level].endX} ${cameraMappingHeight - 2} ${levelCloneInfo["level_" + level].endZ} ${levelCloneInfo["level_" + level].startX} ${cameraMappingHeight - 3} ${levelCloneInfo["level_" + level].startZ}`);
-		Utilities.dimensions.overworld.runCommandAsync(`fill ${levelCloneInfo["level_" + level].startX} ${cameraMappingHeight - 2} ${levelCloneInfo["level_" + level].startZ} ${levelCloneInfo["level_" + level].endX} ${cameraMappingHeight - 2} ${levelCloneInfo["level_" + level].endZ} air`);
+		Utilities.dimensions.overworld.runCommandAsync(`clone ${Utilities.levelCloneInfo["level_" + level].startX} ${cameraMappingHeight - 2} ${Utilities.levelCloneInfo["level_" + level].startZ} ${Utilities.levelCloneInfo["level_" + level].endX} ${cameraMappingHeight - 2} ${Utilities.levelCloneInfo["level_" + level].endZ} ${Utilities.levelCloneInfo["level_" + level].startX} ${cameraMappingHeight - 3} ${Utilities.levelCloneInfo["level_" + level].startZ}`);
+		Utilities.dimensions.overworld.runCommandAsync(`fill ${Utilities.levelCloneInfo["level_" + level].startX} ${cameraMappingHeight - 2} ${Utilities.levelCloneInfo["level_" + level].startZ} ${Utilities.levelCloneInfo["level_" + level].endX} ${cameraMappingHeight - 2} ${Utilities.levelCloneInfo["level_" + level].endZ} air`);
+		system.runTimeout(()=>{SensorModeFunc.updateSensorDisplay();}, 2); // Ensure the new blocks load before we update sensor display
 	} else {
 		//X: sin(player.getRotation().x) * 0.7
 		const tpDistance = 0.7;

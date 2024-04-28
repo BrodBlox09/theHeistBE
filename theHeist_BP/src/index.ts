@@ -121,13 +121,21 @@ world.beforeEvents.chatSend.subscribe(event => {
 			system.run(() => {
 				Utilities.dimensions.overworld.fillBlocks(new Vector(3028, parseInt(args[0]), 97), new Vector(3109, parseInt(args[0]), 161), args[1]);
 			});
+			break;
 		}
 		case "getData": {
 			var query: EntityQueryOptions = {
 				closest: 1,
-				excludeTypes: ["minecraft:player"]
+				excludeTypes: ["minecraft:player"],
+				location: player.location
 			};
 			world.sendMessage(DataManager.GetDataRaw(Utilities.dimensions.overworld.getEntities(query)[0]) as string);
+			break;
+		}
+		case "lvlData": {
+			var data = DataManager.getData(player, "levelInformation");
+			world.sendMessage(JSON.stringify(data));
+			break;
 		}
 	}
 });
