@@ -3,6 +3,7 @@ import Vector from "./Vector";
 import DataManager from "./DataManager";
 import Utilities from "./Utilities";
 import GameObjectiveManager from "./GameObjectiveManager";
+import * as SensorModeFunc from "./gamebands/sensor";
 
 /**
  * Unfinished objectives color: §c (Red)
@@ -98,6 +99,7 @@ function sensorMode(lvl: number, player: Player) {
 	// Sensor mode has a radius of 14 blocks from the player, or 14.5 blocks directly including the block the player is standing on.
 	/* NOTE: When a region is cloned, the region defined by the first 2 Vector3s will be cloned by the block which is the lowest and most NW (most negative in every direction xyz).
 	*  A copy of that block is then translated to the third Vector3 as well as a copy of the rest of the region and then cloned there. */
+	SensorModeFunc.toggleSensorMode(player, lvl);
 }
 
 /**
@@ -555,10 +557,12 @@ system.runInterval(() => {
 		GameObjectiveManager.hideSidebar();
 	}
 
-	//console.warn('0');
 	// Set player level to player energy level
-	var playerEnergyTracker = DataManager.getData(player, "energyTracker");
-	var playerLevelInformation = DataManager.getData(player, "levelInformation");
+	var playerEnergyTracker: EnergyTracker = DataManager.getData(player, "energyTracker");
+	var playerLevelInformation: LevelInformation = DataManager.getData(player, "levelInformation");
+
+	if (playerEnergyTracker && playerLevelInformation) SensorModeFunc.sensorTick(player, playerLevelInformation, playerEnergyTracker);
+
 	if ((playerEnergyTracker && playerEnergyTracker.energyUnits != player.level) || (playerLevelInformation && player.xpEarnedAtCurrentLevel != ((((playerLevelInformation.information[0].level / 100) - 0.06) * 742) + 41))) {
 		player.resetLevel();
 		player.addLevels(100);

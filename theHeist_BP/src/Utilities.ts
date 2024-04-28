@@ -40,7 +40,7 @@ export default class Utilities {
 		if (levelData == null) levelData = DataManager.getData(player, "levelInformation");
 		var playerInvContainer = (player.getComponent("inventory") as EntityInventoryComponent).container as Container;
 		playerInvContainer.clearAll();
-		var playerInvData = levelData.information[2].inventory; // Array of player inventory slots
+		var playerInvData = levelData!.information[2].inventory; // Array of player inventory slots
 		playerInvData.forEach((invSlotData: any) => {
 			var itemStack: ItemStack = new ItemStack(invSlotData.typeId);
 			itemStack.keepOnDeath = true;
@@ -60,6 +60,26 @@ export default class Utilities {
 			1: {
 				"cost": 15.0
 			}
+		},
+		"sensorMode": {
+			1: {
+				"cost": 1.0
+			}
+		}
+	}
+
+	static levelCloneInfo: Record<string, ILevelCloneInfo> = {
+		"level_0": {
+			"startX": 1975,
+			"startZ": 42,
+			"endX": 2022,
+			"endZ": 77
+		},
+		"level_-1": {
+			"startX": 3028,
+			"startZ": 97,
+			"endX": 3109,
+			"endZ": 161
 		}
 	}
 }
