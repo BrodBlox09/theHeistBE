@@ -20,7 +20,7 @@
 - [ ] there should be a blindness effect in between cutscene scenes
 ### Camera / Sensor
 - [x] Add functionality to sensor mode
-- [ ] Fix camera sight (wall checks don't match Java, e.g. 2 high glass isn't seen through when it should be)
+- [x] Fix camera sight (wall checks don't match Java, e.g. 2 high glass isn't seen through when it should be)
 ### UI
 - [ ] edit inventory ui
 ### Other

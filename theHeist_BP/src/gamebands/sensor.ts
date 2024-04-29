@@ -18,6 +18,7 @@ function tryStartSensorMode(player: Player, lvl: number, levelInformation: Level
     levelInformation.information[2].inventory.push({ "slot": 2, "typeId": `theheist:sensor_mode_lvl_${lvl}_enchanted`, "lockMode": "slot" });
     DataManager.setData(player, levelInformation);
     Utilities.reloadPlayerInv(player, levelInformation);
+    updateSensorDisplay(player, levelInformation);
 }
 
 function endSensorMode(player: Player, levelInformation: LevelInformation) {
