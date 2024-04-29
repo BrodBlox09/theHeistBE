@@ -73,13 +73,22 @@ export default class Utilities {
 			"startX": 1975,
 			"startZ": 42,
 			"endX": 2022,
-			"endZ": 77
+			"endZ": 77,
+			"mainFloorBlock": "minecraft:brown_terracotta"
 		},
 		"level_-1": {
 			"startX": 3028,
 			"startZ": 97,
 			"endX": 3109,
-			"endZ": 161
+			"endZ": 161,
+			"mainFloorBlock": "minecraft:red_terracotta"
 		}
 	}
+
+	static levelMapHeight = 20;
+	static consolesHeight = -15;
+	static rechargeHeight = -20;
+	static cameraHeight = -25;
+	static cameraMappingHeight = -30;
+	static levelHeight = -60;
 }

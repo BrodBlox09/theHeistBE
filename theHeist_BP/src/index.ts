@@ -137,5 +137,9 @@ world.beforeEvents.chatSend.subscribe(event => {
 			world.sendMessage(JSON.stringify(data));
 			break;
 		}
+		case "getBlockPermutation": {
+			var block = Utilities.dimensions.overworld.getBlock(player.location)!;
+			console.log(block.typeId);
+		}
 	}
 });

@@ -18,4 +18,16 @@ export default class Vector implements Vector3 {
     add(oV: Vector): Vector {
         return new Vector(this.x + oV.x, this.y + oV.y, this.z + oV.z);
     }
+
+    /**
+     * 
+     * @param oV Other vector to subtract
+     */
+    subtract(oV: Vector): Vector {
+        return new Vector(this.x - oV.x, this.y - oV.y, this.z - oV.z);
+    }
+
+    static v3ToVector(v3: Vector3) {
+        return new Vector(v3.x, v3.y, v3.z);
+    }
 }

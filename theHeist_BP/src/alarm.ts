@@ -1,7 +1,8 @@
-import { world, system, GameMode } from "@minecraft/server";
+import { world, system, GameMode, TicksPerDay } from "@minecraft/server";
 import * as SensorModeFunc from "./gamebands/sensor";
 import DataManager from "./DataManager";
 import Utilities from "./Utilities";
+import Vector from "./Vector";
 
 /**
  * The alarm XP bar texture can sometimes, seemingly at random, break and use a strange default-looking one. Just reload the world until you get the custom xp bar.
@@ -18,6 +19,18 @@ const cameraFOV = 40;
 
 // Robots take exactly 1 second to turn 90 degrees
 // Robots move at a speed of 1 blocks per 20 ticks
+
+function cameraCanSeeThrough(location: Vector): boolean {
+	var topBlockTID = Utilities.dimensions.overworld.getBlock(location)!.typeId;
+	var bottomBlock = Utilities.dimensions.overworld.getBlock(location.subtract(new Vector(0, 1, 0)))!;
+	var bottomBlockTID = bottomBlock.typeId;
+	if (topBlockTID == "minecraft:air" && bottomBlockTID == "minecraft:air") return true;
+	if (topBlockTID == "minecraft:glass" && bottomBlockTID == "minecraft:glass") return true;
+	if (topBlockTID == "minecraft:air" && bottomBlockTID == "theheist:chair") return true;
+	console.log(topBlockTID + " " + bottomBlockTID);
+	if (bottomBlockTID == "theheist:custom_door_1_bottom" && bottomBlock.permutation.getState("theheist:open")) return true;
+	return false;
+}
 
 system.runInterval(() => {
 	// Only include adventure mode players
@@ -95,7 +108,6 @@ system.runInterval(() => {
 				DataManager.setData(armorStand, cameraTrackerDataNode);
 			}
 			var yRot = armorStand.getRotation().y;
-			//armorStand.setRotation({"x": 0, "y": yRot - 5});
 			var maxCount = 11;
 			for (var i = 0; i < maxCount; i++) {
 				var rayArmorStand = Utilities.dimensions.overworld.spawnEntity("armor_stand", { "x": armorStand.location.x, "y": cameraMappingHeight, "z": armorStand.location.z });
@@ -106,20 +118,18 @@ system.runInterval(() => {
 		});
 		Utilities.dimensions.overworld.runCommandAsync(`clone ${Utilities.levelCloneInfo["level_" + level].startX} ${cameraMappingHeight - 2} ${Utilities.levelCloneInfo["level_" + level].startZ} ${Utilities.levelCloneInfo["level_" + level].endX} ${cameraMappingHeight - 2} ${Utilities.levelCloneInfo["level_" + level].endZ} ${Utilities.levelCloneInfo["level_" + level].startX} ${cameraMappingHeight - 3} ${Utilities.levelCloneInfo["level_" + level].startZ}`);
 		Utilities.dimensions.overworld.runCommandAsync(`fill ${Utilities.levelCloneInfo["level_" + level].startX} ${cameraMappingHeight - 2} ${Utilities.levelCloneInfo["level_" + level].startZ} ${Utilities.levelCloneInfo["level_" + level].endX} ${cameraMappingHeight - 2} ${Utilities.levelCloneInfo["level_" + level].endZ} air`);
-		system.runTimeout(()=>{SensorModeFunc.updateSensorDisplay();}, 2); // Ensure the new blocks load before we update sensor display
+		system.runTimeout(()=>{SensorModeFunc.updateSensorDisplay(player, DataManager.getData(player, "levelInformation"));}, 2); // Ensure the new blocks load before we update sensor display
 	} else {
 		//X: sin(player.getRotation().x) * 0.7
 		const tpDistance = 0.7;
+		const checkDistance = 0.1;
 		cameraMappingArmorStands.forEach((armorStand) => {
 			// x sin() needs to be inverted to work properly for some reason
-			armorStand.teleport({ "x": armorStand.location.x + -(Utilities.sin(armorStand.getRotation().y) * tpDistance), "y": cameraMappingHeight, "z": armorStand.location.z + (Utilities.cos(armorStand.getRotation().y) * tpDistance) }, { 'dimension': Utilities.dimensions.overworld });
-			var blockAtLevel = Utilities.dimensions.overworld.getBlock({ "x": armorStand.location.x, "y": levelHeight, "z": armorStand.location.z });
-			//player.sendMessage(`Block: ${blockAtLevel.typeId}`);
-			//-----------------------------------------------------------------------Utilities.dimensions.overworld.fillBlocks
 			var belowBlock = { "x": armorStand.location.x, "y": armorStand.location.y - 2, "z": armorStand.location.z };
-			if (blockAtLevel && blockAtLevel.typeId == "minecraft:air") Utilities.setBlock(belowBlock, "theheist:camera_sight");
+			armorStand.teleport({ "x": armorStand.location.x + -(Utilities.sin(armorStand.getRotation().y) * tpDistance), "y": cameraMappingHeight, "z": armorStand.location.z + (Utilities.cos(armorStand.getRotation().y) * tpDistance) }, { 'dimension': Utilities.dimensions.overworld });
+			if (cameraCanSeeThrough(Vector.v3ToVector({ "x": armorStand.location.x + -(Utilities.sin(armorStand.getRotation().y) * checkDistance), "y": levelHeight, "z": armorStand.location.z + (Utilities.cos(armorStand.getRotation().y) * checkDistance) })))
+				Utilities.setBlock(belowBlock, "theheist:camera_sight");
 			else armorStand.kill();
-			//player.sendMessage(`X: ${armorStand.location.x + -(sin(armorStand.getRotation().y) * tpDistance)} Y: ${cameraMappingHeight} Z: ${armorStand.location.z + (cos(armorStand.getRotation().y) * tpDistance)}`);
 		});
 	}
 
