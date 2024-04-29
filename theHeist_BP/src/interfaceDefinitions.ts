@@ -34,5 +34,6 @@ interface ILevelCloneInfo {
 	"startX": number,
 	"startZ": number,
 	"endX": number,
-	"endZ": number
+	"endZ": number,
+	"mainFloorBlock": string
 }

@@ -19,7 +19,7 @@
 - [x] when recharging, other gamebands are taken away
 - [ ] there should be a blindness effect in between cutscene scenes
 ### Camera / Sensor
-- [ ] Add functionality to sensor mode
+- [x] Add functionality to sensor mode
 - [ ] Fix camera sight (wall checks don't match Java, e.g. 2 high glass isn't seen through when it should be)
 ### UI
 - [ ] edit inventory ui
