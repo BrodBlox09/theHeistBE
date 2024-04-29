@@ -3,8 +3,8 @@ import DataManager from "../DataManager";
 import Utilities from "../Utilities";
 import Vector from "../Vector";
 
-const sensingRange = 5;
-const clearRange = 7;
+const sensingRange = 30;
+const clearRange = 35;
 
 export function toggleSensorMode(player: Player, lvl: number) {
     var levelInformation: LevelInformation = DataManager.getData(player, "levelInformation");
