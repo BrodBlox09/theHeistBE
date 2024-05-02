@@ -1,4 +1,4 @@
-import { world, system, GameMode, TicksPerDay } from "@minecraft/server";
+import { world, system, GameMode, TicksPerDay, BlockPermutation } from "@minecraft/server";
 import * as SensorModeFunc from "./gamebands/sensor";
 import DataManager from "./DataManager";
 import Utilities from "./Utilities";
@@ -21,8 +21,10 @@ const cameraFOV = 40;
 // Robots move at a speed of 1 blocks per 20 ticks
 
 function cameraCanSeeThrough(location: Vector): boolean {
-	var topBlockTID = Utilities.dimensions.overworld.getBlock(location)!.typeId;
-	var bottomBlock = Utilities.dimensions.overworld.getBlock(location.subtract(new Vector(0, 1, 0)))!;
+	var topBlock = Utilities.dimensions.overworld.getBlock(location);
+	var bottomBlock = Utilities.dimensions.overworld.getBlock(location.subtract(new Vector(0, 1, 0)));
+	if (!topBlock || !bottomBlock) return false;
+	var topBlockTID = topBlock.typeId;
 	var bottomBlockTID = bottomBlock.typeId;
 	if (topBlockTID == "minecraft:air" && bottomBlockTID == "minecraft:air") return true;
 	if (topBlockTID == "minecraft:glass" && bottomBlockTID == "minecraft:glass") return true;

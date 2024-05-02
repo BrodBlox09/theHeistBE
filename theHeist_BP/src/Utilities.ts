@@ -49,16 +49,37 @@ export default class Utilities {
 		});
 	}
 
+	static inventoryContainerHasItem(container: Container, item: string): boolean {
+		for (var i = 0; i < container.size; i++) {
+			if (container.getItem(i)?.typeId == item) return true;
+		}
+		return false;
+	}
+
+	static inventoryContainerIndexOf(container: Container, item: string): number | null {
+		for (var i = 0; i < container.size; i++) {
+			if (container.getItem(i)?.typeId == item) return i;
+		}
+		return null;
+	}
+
 	static gamebandInfo: Record<string, Record<number, Record<string, any>>> = {
 		"rechargeMode": {
 			1: {
 				"speed": 20.0,
 				"max": 100.0
+			},
+			2: {
+				"speed": 20.0,
+				"max": 150.0
 			}
 		},
 		"hackingMode": {
 			1: {
 				"cost": 15.0
+			},
+			2: {
+				"cost": 10.0
 			}
 		},
 		"sensorMode": {

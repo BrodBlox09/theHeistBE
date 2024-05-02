@@ -4,6 +4,7 @@ import DataManager from "./DataManager";
 import Utilities from "./Utilities";
 import GameObjectiveManager from "./GameObjectiveManager";
 import * as SensorModeFunc from "./gamebands/sensor";
+import { CountQueuingStrategy } from "stream/web";
 
 /**
  * Unfinished objectives color: §c (Red)
@@ -24,7 +25,9 @@ class loreItem {
 
 const loreItems = [
 	new loreItem("theheist:recharge_mode_lvl_1", "§r§9Recharge mode Lvl. 1", ["Use item to §r§6toggle", "Energy: 1.0 units/second", "Select to show objectives"]),
+	new loreItem("theheist:recharge_mode_lvl_2", "§r§9Recharge mode Lvl. 2", ["Use item to §r§6toggle", "Energy: 1.0 units/second", "Select to show objectives"]),
 	new loreItem("theheist:hacking_mode_lvl_1", "§r§2Hacking mode Lvl. 1", ["Use item to §r§6use", "Energy: 15 units"]),
+	new loreItem("theheist:hacking_mode_lvl_2", "§r§2Hacking mode Lvl. 2", ["Use item to §r§6use", "Energy: 10 units"]),
 	new loreItem("theheist:sensor_mode_lvl_1", "§r§6Sensor mode Lvl. 1", ["Use item to §r§6toggle", "Energy: 1.0 units/second"]),
 	new loreItem('minecraft:paper', '§oUse Keycard§r', ['Can trigger any Keycard reader', 'for which you own a matching card']),
 	new loreItem('minecraft:red_dye', '§oRed Keycard§r', ['Used on matching Keycard reader']),
@@ -68,8 +71,14 @@ world.afterEvents.itemUse.subscribe((event: ItemUseAfterEvent) => {
 		case "theheist:recharge_mode_lvl_1":
 			rechargeMode(1, player);
 			break;
+		case "theheist:recharge_mode_lvl_2":
+			rechargeMode(2, player);
+			break;
 		case "theheist:hacking_mode_lvl_1":
 			hackingMode(1, player);
+			break;
+		case "theheist:hacking_mode_lvl_2":
+			hackingMode(2, player);
 			break;
 		case "theheist:sensor_mode_lvl_1":
 			sensorMode(1, player);
@@ -96,7 +105,6 @@ world.afterEvents.itemUse.subscribe((event: ItemUseAfterEvent) => {
  * @returns 
  */
 function sensorMode(lvl: number, player: Player) {
-	// Sensor mode has a radius of 14 blocks from the player, or 14.5 blocks directly including the block the player is standing on.
 	/* NOTE: When a region is cloned, the region defined by the first 2 Vector3s will be cloned by the block which is the lowest and most NW (most negative in every direction xyz).
 	*  A copy of that block is then translated to the third Vector3 as well as a copy of the rest of the region and then cloned there. */
 	SensorModeFunc.toggleSensorMode(player, lvl);
@@ -414,6 +422,22 @@ function action(actionInfo: Action, player: Player) {
 			world.sendMessage([{ "text": "§7New Mode Available: §r" + actionInfo.do.modeText }]);
 			break;
 		}
+		case "upgrade_gameband": {
+			/**
+			 * actionInfo.do.displayBlock: Vector3
+			 * actionInfo.do.mode: string
+			 * actionInfo.do.slot: number
+			 * actionInfo.do.modeText: string
+			 * actionInfo.do.level: number
+			 */
+			var levelInformation = DataManager.getData(player, "levelInformation");
+			levelInformation.information[2].inventory.push({ "slot": actionInfo.do.slot, "typeId": `theheist:${actionInfo.do.mode}_mode_lvl_${actionInfo.do.level}`, "lockMode": "slot" });
+			DataManager.setData(player, levelInformation);
+			Utilities.reloadPlayerInv(player);
+			Utilities.dimensions.overworld.setBlockType(actionInfo.do.displayBlock, "minecraft:air");
+			world.sendMessage([{ "text": "§7Upgrade Recieved: §r" + actionInfo.do.modeText }]);
+			break;
+		}
 	}
 }
 
@@ -433,6 +457,14 @@ function keycard(keycardType: string, player: Player) {
 	if (!armorStand) return;
 	var actionTracker = DataManager.getData(armorStand, "actionTracker");
 	if (!actionTracker || !actionTracker.isKeycardReader || actionTracker.used == true || (actionTracker.keycardType != keycardType && keycardType != "all")) return;
+	if (keycardType == "all") {
+		var playerInvContainer = player.getComponent("inventory")!.container as Container;
+		if (actionTracker.keycardType != "blue") {
+			if (!Utilities.inventoryContainerHasItem(playerInvContainer, `minecraft:${actionTracker.keycardType}_dye`)) return;
+		} else {
+			if (!Utilities.inventoryContainerHasItem(playerInvContainer, "minecraft:lapis_lazuli")) return;
+		}
+	}
 	actionTracker.actions.forEach((x: Action) => {
 		if (!x.delay) {
 			action(x, player);
