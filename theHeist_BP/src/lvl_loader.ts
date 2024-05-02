@@ -1,8 +1,9 @@
-import { ItemStack, Vector3, system, world, DisplaySlotId, BlockInventoryComponent, BlockPermutation, Container } from "@minecraft/server";
+import { ItemStack, Vector3, system, world, DisplaySlotId, BlockInventoryComponent, BlockPermutation, Container, ItemLockMode } from "@minecraft/server";
 import Vector from "./Vector";
 import DataManager from "./DataManager";
 import VoiceOverManager from "./VoiceOverManager";
 import Utilities from "./Utilities";
+import GameObjectiveManager from "./GameObjectiveManager";
 
 // Hack delay: 2 seconds or 40 ticks
 
@@ -82,7 +83,7 @@ const SECOND = 20;
 const objectivesObjective = world.scoreboard.getObjective("objectives")!;
 const bustedCounterObjective = world.scoreboard.getObjective("bustedCounter")!;
 
-const overworld = world.getDimension("overworld");
+const overworld = Utilities.dimensions.overworld;
 
 system.afterEvents.scriptEventReceive.subscribe((event) => {
 	const id = event.id;
@@ -496,6 +497,9 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 								},
 								{
 									"type": "display_mail", "do": { "mailID": "001" }, "delay": 40
+								},
+								{
+									"type": "manage_objectives", "do": { "manageType": 1, "objective": "Find Yellow Keycard", "sortOrder": -1 }, "delay": 40
 								}
 							]
 						};
@@ -574,7 +578,10 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 					if (!bustedCounterObjective.hasParticipant(player)) {
 						bustedCounterObjective.setScore(player, 0);
 					}
-					const playerLevelInformationDataNode = { "name": "levelInformation", "currentModes": [], "information": [{ "name": "alarmLevel", "level": 0 }, { "name": "gameLevel", "level": -1 }, { "name": "playerInv", "inventory": [{ "slot": 0, "typeId": 'theheist:recharge_mode_lvl_1', "lockMode": "slot" }, { "slot": 1, "typeId": 'theheist:hacking_mode_lvl_1', "lockMode": "slot" }] }] };
+					// Proper one is below
+					//const playerLevelInformationDataNode = { "name": "levelInformation", "currentModes": [], "information": [{ "name": "alarmLevel", "level": 0 }, { "name": "gameLevel", "level": -1 }, { "name": "playerInv", "inventory": [{ "slot": 0, "typeId": 'theheist:recharge_mode_lvl_1', "lockMode": "slot" }, { "slot": 1, "typeId": 'theheist:hacking_mode_lvl_1', "lockMode": "slot" }] }] };
+					// Testing one is below
+					const playerLevelInformationDataNode = { "name": "levelInformation", "currentModes": [], "information": [{ "name": "alarmLevel", "level": 0 }, { "name": "gameLevel", "level": -1 }, { "name": "playerInv", "inventory": [{ "slot": 0, "typeId": 'theheist:recharge_mode_lvl_1', "lockMode": "slot" }, { "slot": 1, "typeId": 'theheist:hacking_mode_lvl_2', "lockMode": "slot" }] }] };
 
 					DataManager.setData(player, playerLevelInformationDataNode);
 
@@ -582,10 +589,10 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 
 					player.onScreenDisplay.setTitle("§o§7Level -1", { "fadeInDuration": 20, "fadeOutDuration": 20, "stayDuration": 160 });
 					clearObjectives();
-					addUnfinishedObjective("Access next level", 3);
-					addUnfinishedObjective("Get Sensor mode", 2);
-					addUnfinishedObjective("Get Hacking upgrade", 1);
-					addUnfinishedObjective("Get Recharge upgrade", 0);
+					addUnfinishedObjective("Access next level", 5);
+					addUnfinishedObjective("Get Sensor mode", 4);
+					addUnfinishedObjective("Get Hacking upgrade", 3);
+					addUnfinishedObjective("Get Recharge upgrade", 2);
 					reloadSidebarDisplay();
 
 					player.teleport({ 'x': 3099.0, 'y': -56, 'z': 109.0 }, { 'dimension': overworld, 'rotation': { 'x': 0, 'y': -90 } });
@@ -614,6 +621,9 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 							"type": "camera"
 						};
 						DataManager.setData(camera0, camera0DataNode);
+
+						// Consoles 0-9
+						{
 						// Console 0 (Type: Keypad)
 						const console0 = overworld.spawnEntity("armor_stand", { "x": 3079.5, "y": consolesHeight, "z": 107.5 });
 						Utilities.setBlock({ x: 3079, y: -59, z: 107 }, "theheist:keypad", { "theheist:rotation": 2 });
@@ -657,7 +667,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 							]
 						};
 						DataManager.setData(console1, console1ActionTracker);
-						// Console 2 (Type: Gameband Upgrade)
+						// Console 2 (Type: New Gameband)
 						const console2 = overworld.spawnEntity("armor_stand", { "x": 3074.5, "y": consolesHeight, "z": 100.5 });
 						Utilities.setBlock({ x: 3074, y: -59, z: 100 }, "theheist:sensor_mode_display", { "theheist:rotation": 2 });
 						const console2ActionTracker = {
@@ -734,6 +744,238 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 							]
 						};
 						DataManager.setData(console5, console5ActionTracker);
+						// Console 6 (Type: Keypad)
+						const console6 = overworld.spawnEntity("armor_stand", { "x": 3074.5, "y": consolesHeight, "z": 139.5 });
+						Utilities.setBlock({ x: 3074, y: -59, z: 139 }, "theheist:keypad", { "theheist:rotation": 5 });
+						overworld.spawnEntity("theheist:hover_text", { x: 3074.5, y: -59, z: 139.5 }).nameTag = "Lvl. 1";
+						Utilities.setBlock({ x: 3075, y: -60, z: 140 }, "theheist:custom_door_1_bottom", { "theheist:rotation": 5, "theheist:unlocked": false });
+						const console6ActionTracker = {
+							"name": "actionTracker",
+							"used": false,
+							"level": 1,
+							"actions": [
+								{
+									"type": "set_block", "do": { "x": 3074, "y": -59, "z": 139, "block": "theheist:keypad", "permutations": { "theheist:rotation": 5, "theheist:unlocked": 1 } }
+								},
+								{
+									"type": "set_block", "do": { "x": 3074, "y": -59, "z": 139, "block": "theheist:keypad", "permutations": { "theheist:rotation": 5, "theheist:unlocked": 2 } }, "delay": 40
+								},
+								{
+									"type": "set_block", "do": { "x": 3075, "y": -60, "z": 140, "block": "theheist:custom_door_1_bottom", "permutations": { "theheist:rotation": 5, "theheist:unlocked": true } }, "delay": 40
+								}
+							]
+						};
+						DataManager.setData(console6, console6ActionTracker);
+						// Console 7 (Type: Computer)
+						const console7 = overworld.spawnEntity("armor_stand", { "x": 3080.5, "y": consolesHeight, "z": 142.5 });
+						Utilities.setBlock({ x: 3080, y: -59, z: 142 }, "theheist:computer", { "theheist:rotation": 3 });
+						overworld.spawnEntity("theheist:hover_text", { x: 3080.5, y: -59, z: 142.5 }).nameTag = "Clear alarm status";
+						const console7ActionTracker = {
+							"name": "actionTracker",
+							"used": false,
+							"level": 1,
+							"actions": [
+								{
+									"type": "set_block", "do": { "x": 3080, "y": -59, "z": 142, "block": "theheist:computer", "permutations": { "theheist:rotation": 3, "theheist:unlocked": 1 } }
+								},
+								{
+									"type": "set_block", "do": { "x": 3080, "y": -59, "z": 142, "block": "theheist:computer", "permutations": { "theheist:rotation": 3, "theheist:unlocked": 2 } }, "delay": 40
+								},
+								{
+									"type": "set_alarm_level", "do": { "value": 0 }, "delay": 40
+								}
+							]
+						};
+						DataManager.setData(console7, console7ActionTracker);
+						// Console 8 (Type: Computer)
+						const console8 = overworld.spawnEntity("armor_stand", { "x": 3082.5, "y": consolesHeight, "z": 118.5 });
+						Utilities.setBlock({ x: 3082, y: -59, z: 118 }, "theheist:computer", { "theheist:rotation": 5 });
+						overworld.spawnEntity("theheist:hover_text", { x: 3082.5, y: -59, z: 118.5 }).nameTag = "Mail";
+						const console8ActionTracker = {
+							"name": "actionTracker",
+							"used": false,
+							"level": 1,
+							"actions": [
+								{
+									"type": "set_block", "do": { "x": 3082, "y": -59, "z": 118, "block": "theheist:computer", "permutations": { "theheist:rotation": 5, "theheist:unlocked": 1 } }
+								},
+								{
+									"type": "set_block", "do": { "x": 3082, "y": -59, "z": 118, "block": "theheist:computer", "permutations": { "theheist:rotation": 5, "theheist:unlocked": 2 } }, "delay": 40
+								},
+								{
+									"type": "display_mail", "do": { "mailID": 104 }, "delay": 40
+								},
+								{
+									"type": "manage_objectives", "do": { "manageType": 1, "objective": "Find Yellow Keycard", "sortOrder": 1 }, "delay": 40
+								},
+								{
+									"type": "manage_objectives", "do": { "manageType": 1, "objective": "Find Green Keycard", "sortOrder": 0 }, "delay": 40
+								}
+							]
+						};
+						DataManager.setData(console8, console8ActionTracker);
+						// Console 9 (Type: Keypad)
+						const console9 = overworld.spawnEntity("armor_stand", { "x": 3104.5, "y": consolesHeight, "z": 116.5 });
+						Utilities.setBlock({ x: 3104, y: -59, z: 116 }, "theheist:keypad", { "theheist:rotation": 4 });
+						overworld.spawnEntity("theheist:hover_text", { x: 3104.5, y: -59, z: 116.5 }).nameTag = "Lvl. 2";
+						Utilities.setBlock({ x: 3103, y: -60, z: 115 }, "theheist:custom_door_2_bottom", { "theheist:rotation": 4, "theheist:unlocked": false });
+						const console9ActionTracker = {
+							"name": "actionTracker",
+							"used": false,
+							"level": 2,
+							"actions": [
+								{
+									"type": "set_block", "do": { "x": 3104, "y": -59, "z": 116, "block": "theheist:keypad", "permutations": { "theheist:rotation": 4, "theheist:unlocked": 1 } }
+								},
+								{
+									"type": "set_block", "do": { "x": 3104, "y": -59, "z": 116, "block": "theheist:keypad", "permutations": { "theheist:rotation": 4, "theheist:unlocked": 2 } }, "delay": 40
+								},
+								{
+									"type": "set_block", "do": { "x": 3103, "y": -60, "z": 115, "block": "theheist:custom_door_2_bottom", "permutations": { "theheist:rotation": 4, "theheist:unlocked": true } }, "delay": 40
+								},
+								{
+									"type": "hack_console", "do": { "x": 3097, "z": 123 }, "delay": 40
+								}
+							]
+						};
+						DataManager.setData(console9, console9ActionTracker);
+						}
+						// Console 10 (Type: Keypad)
+						const console10 = overworld.spawnEntity("armor_stand", { "x": 3097.5, "y": consolesHeight, "z": 123.5 });
+						Utilities.setBlock({ x: 3097, y: -59, z: 123 }, "theheist:keypad", { "theheist:rotation": 2 });
+						overworld.spawnEntity("theheist:hover_text", { x: 3097.5, y: -59, z: 123.5 }).nameTag = "Lvl. 2";
+						Utilities.setBlock({ x: 3096, y: -60, z: 122 }, "theheist:custom_door_2_bottom", { "theheist:rotation": 2, "theheist:unlocked": false });
+						const console10ActionTracker = {
+							"name": "actionTracker",
+							"used": false,
+							"level": 2,
+							"actions": [
+								{
+									"type": "set_block", "do": { "x": 3097, "y": -59, "z": 123, "block": "theheist:keypad", "permutations": { "theheist:rotation": 2, "theheist:unlocked": 1 } }
+								},
+								{
+									"type": "set_block", "do": { "x": 3097, "y": -59, "z": 123, "block": "theheist:keypad", "permutations": { "theheist:rotation": 2, "theheist:unlocked": 2 } }, "delay": 40
+								},
+								{
+									"type": "set_block", "do": { "x": 3096, "y": -60, "z": 122, "block": "theheist:custom_door_2_bottom", "permutations": { "theheist:rotation": 2, "theheist:unlocked": true } }, "delay": 40
+								},
+								{
+									"type": "hack_console", "do": { "x": 3104, "z": 116 }, "delay": 40
+								}
+							]
+						};
+						DataManager.setData(console10, console10ActionTracker);
+						// Console 11 (Type: Computer)
+						const console11 = overworld.spawnEntity("armor_stand", { "x": 3097.5, "y": consolesHeight, "z": 114.5 });
+						Utilities.setBlock({ x: 3097, y: -59, z: 114 }, "theheist:computer", { "theheist:rotation": 2 });
+						overworld.spawnEntity("theheist:hover_text", { x: 3097.5, y: -59, z: 114.5 }).nameTag = "Research info";
+						const console11ActionTracker = {
+							"name": "actionTracker",
+							"used": false,
+							"level": 1,
+							"actions": [
+								{
+									"type": "set_block", "do": { "x": 3097, "y": -59, "z": 114, "block": "theheist:computer", "permutations": { "theheist:rotation": 2, "theheist:unlocked": 1 } }
+								},
+								{
+									"type": "set_block", "do": { "x": 3097, "y": -59, "z": 114, "block": "theheist:computer", "permutations": { "theheist:rotation": 2, "theheist:unlocked": 2 } }, "delay": 40
+								},
+								{
+									"type": "display_research", "do": { "researchID": 101 }, "delay": 40
+								}
+							]
+						};
+						DataManager.setData(console11, console11ActionTracker);
+						// Console 12 (Type: Gameband Upgrade)
+						const console12 = overworld.spawnEntity("armor_stand", { "x": 3105.5, "y": consolesHeight, "z": 117.5 });
+						Utilities.setBlock({ x: 3106, y: -59, z: 117 }, "theheist:hacking_mode_display", { "theheist:rotation": 5 });
+						const console12ActionTracker = {
+							"name": "actionTracker",
+							"used": false,
+							"level": 0,
+							"actions": [
+								{
+									"type": "upgrade_gameband", "do": {
+										"displayBlock": { "x": 3106, "y": -59, "z": 117 },
+										"mode": "hacking",
+										"modeText": "§2§lHacking Lvl. 2",
+										"level": 2,
+										"slot": 1
+									}
+								},
+								{
+									"type": "manage_objectives", "do": { "manageType": 2, "objective": "Get Hacking upgrade" }
+								}
+							]
+						};
+						DataManager.setData(console12, console12ActionTracker);
+						// Console 13 (Type: Keypad)
+						const console13 = overworld.spawnEntity("armor_stand", { "x": 3062.5, "y": consolesHeight, "z": 150.5 });
+						Utilities.setBlock({ x: 3062, y: -59, z: 150 }, "theheist:keypad", { "theheist:rotation": 3 });
+						overworld.spawnEntity("theheist:hover_text", { x: 3062.5, y: -59, z: 150.5 }).nameTag = "Lvl. 2";
+						Utilities.setBlock({ x: 3061, y: -60, z: 151 }, "theheist:custom_door_2_bottom", { "theheist:rotation": 3, "theheist:unlocked": false });
+						const console13ActionTracker = {
+							"name": "actionTracker",
+							"used": false,
+							"level": 2,
+							"actions": [
+								{
+									"type": "set_block", "do": { "x": 3062, "y": -59, "z": 150, "block": "theheist:keypad", "permutations": { "theheist:rotation": 3, "theheist:unlocked": 1 } }
+								},
+								{
+									"type": "set_block", "do": { "x": 3062, "y": -59, "z": 150, "block": "theheist:keypad", "permutations": { "theheist:rotation": 3, "theheist:unlocked": 2 } }, "delay": 40
+								},
+								{
+									"type": "set_block", "do": { "x": 3061, "y": -60, "z": 151, "block": "theheist:custom_door_2_bottom", "permutations": { "theheist:rotation": 3, "theheist:unlocked": true } }, "delay": 40
+								}
+							]
+						};
+						DataManager.setData(console13, console13ActionTracker);
+						// Console 14 (Type: Computer)
+						const console14 = overworld.spawnEntity("armor_stand", { "x": 3058.5, "y": consolesHeight, "z": 156.5 });
+						Utilities.setBlock({ x: 3058, y: -59, z: 156 }, "theheist:computer", { "theheist:rotation": 4 });
+						overworld.spawnEntity("theheist:hover_text", { x: 3058.5, y: -59, z: 156.5 }).nameTag = "Research info";
+						const console14ActionTracker = {
+							"name": "actionTracker",
+							"used": false,
+							"level": 1,
+							"actions": [
+								{
+									"type": "set_block", "do": { "x": 3058, "y": -59, "z": 156, "block": "theheist:computer", "permutations": { "theheist:rotation": 4, "theheist:unlocked": 1 } }
+								},
+								{
+									"type": "set_block", "do": { "x": 3058, "y": -59, "z": 156, "block": "theheist:computer", "permutations": { "theheist:rotation": 4, "theheist:unlocked": 2 } }, "delay": 40
+								},
+								{
+									"type": "display_research", "do": { "researchID": 102 }, "delay": 40
+								}
+							]
+						};
+						DataManager.setData(console14, console14ActionTracker);
+						// Console 15 (Type: Gameband Upgrade)
+						const console15 = overworld.spawnEntity("armor_stand", { "x": 3063.5, "y": consolesHeight, "z": 159.5 });
+						Utilities.setBlock({ x: 3063, y: -59, z: 159 }, "theheist:hacking_mode_display", { "theheist:rotation": 3 });
+						const console15ActionTracker = {
+							"name": "actionTracker",
+							"used": false,
+							"level": 0,
+							"actions": [
+								{
+									"type": "upgrade_gameband", "do": {
+										"displayBlock": { "x": 3063, "y": -59, "z": 159 },
+										"mode": "recharge",
+										"modeText": "§1§lRecharge Lvl. 2",
+										"level": 2,
+										"slot": 0
+									}
+								},
+								{
+									"type": "manage_objectives", "do": { "manageType": 2, "objective": "Get Recharge upgrade" }
+								}
+							]
+						};
+						DataManager.setData(console15, console15ActionTracker);
+
 						// Recharge Station 0
 						const recharge0 = overworld.spawnEntity("minecraft:armor_stand", new Vector(3070.5, rechargeHeight, 110.5));
 						Utilities.setBlock({ x: 3070, y: -60, z: 110 }, "theheist:recharge_station", { "theheist:rotation": 4 });
@@ -744,9 +986,34 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 							"block": { "x": 3070, "y": -60, "z": 110, "rotation": 4 }
 						};
 						DataManager.setData(recharge0, recharge0DataNode);
+						// Recharge Station 1
+						const recharge1 = overworld.spawnEntity("minecraft:armor_stand", new Vector(3100.5, rechargeHeight, 121.5));
+						Utilities.setBlock({ x: 3100, y: -60, z: 121 }, "theheist:recharge_station", { "theheist:rotation": 3 });
+						const recharge1DataNode = {
+							"name": "energyTracker",
+							"rechargerID": 1,
+							"energyUnits": 100.0,
+							"block": { "x": 3100, "y": -60, "z": 121, "rotation": 3 }
+						};
+						DataManager.setData(recharge1, recharge1DataNode);
+						// Recharge Station 2
+						const recharge2 = overworld.spawnEntity("minecraft:armor_stand", new Vector(3061.5, rechargeHeight, 138.5));
+						Utilities.setBlock({ x: 3061, y: -60, z: 138 }, "theheist:recharge_station", { "theheist:rotation": 2 });
+						const recharge2DataNode = {
+							"name": "energyTracker",
+							"rechargerID": 2,
+							"energyUnits": 100.0,
+							"block": { "x": 3061, "y": -60, "z": 138, "rotation": 2 }
+						};
+						DataManager.setData(recharge2, recharge2DataNode);
 
 						Utilities.dimensions.overworld.setBlockType(new Vector(3073, -55, 127), "minecraft:air");
 						Utilities.dimensions.overworld.spawnEntity("theheist:camera_robot", new Vector(3053.5, -59, 110.5)).setRotation({ "x": 0, "y": 180 });
+						// Fill drawers
+						const drawer0InventoryContainer = overworld.getBlock(new Vector(3058, -60, 157))?.getComponent("inventory")!.container as Container;
+						drawer0InventoryContainer.clearAll();
+						drawer0InventoryContainer.setItem(4, new ItemStack("minecraft:yellow_dye"));
+
 					}, SECOND * 7.5);
 				}
 			}
@@ -755,6 +1022,30 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 		case "theheist:voice-says": {
 			const player = world.getPlayers().filter((x) => (x != undefined))[0];
 			VoiceOverManager.play(player, msg);
+			break;
+		}
+		case "theheist:keycard-objective": {
+			const valueArray = msg.split(/ /);
+			const color = valueArray[0];
+			const sortOrder = parseInt(valueArray[1]);
+			const colorInCase = color.substring(0, 1).toUpperCase() + color.substring(1).toLowerCase();
+			var keycardItemTypeId = `minecraft:${color}_dye`;
+			if (color == "blue") keycardItemTypeId == "minecraft:lapis_lazuli";
+
+			const player = world.getPlayers().filter((x) => (x != undefined))[0];
+			var playerInvContainer = player.getComponent("inventory")!.container as Container;
+			var index = Utilities.inventoryContainerIndexOf(playerInvContainer, keycardItemTypeId);
+			var i2 = 19;
+			while (playerInvContainer.getItem(i2) && i2 < playerInvContainer.size) i2++;
+			if (index) playerInvContainer.setItem(index);
+			var itemStack = new ItemStack(keycardItemTypeId);
+			itemStack.lockMode = ItemLockMode.slot;
+			playerInvContainer.setItem(i2, itemStack);
+			var itemStack2 = new ItemStack("minecraft:paper");
+			itemStack2.lockMode = ItemLockMode.slot;
+			playerInvContainer.setItem(8, itemStack2);
+
+			GameObjectiveManager.completeKeycardObjective(`Find ${colorInCase} Keycard`, sortOrder);
 			break;
 		}
 		case "theheist:attempt_end_level": {
