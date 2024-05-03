@@ -137,7 +137,7 @@ function rechargeMode(lvl: number, player: Player) {
 			Utilities.setBlock(blockLocation, "theheist:recharge_station", { "theheist:rotation": armorStandEnergyTrackerDataNode.block.rotation, "theheist:state": 2 });
 			playerEnergyTrackerDataNode.usingRechargerID = armorStandEnergyTrackerDataNode.rechargerID;
 			// Enter "1 mode only" state
-			savePlayerInventory(player);
+			Utilities.savePlayerInventory(player);
 			var playerInvContainer = (player.getComponent("inventory") as EntityInventoryComponent).container as Container;
 			playerInvContainer.clearAll();
 			var rechargeModeItemStack = new ItemStack(`theheist:recharge_mode_lvl_${lvl}_enchanted`);
@@ -234,28 +234,6 @@ function resetPlayerInventory(player: Player) {
 		itemStack.lockMode = ItemLockMode[invSlotData.lockMode as keyof typeof ItemLockMode];
 		playerInvContainer.setItem(invSlotData.slot, itemStack);
 	});
-}
-
-/**
- * @description Saves player's inventory. Ensure this function is run BEFORE whenever you want to enter into a "1 mode only" state.
- * @param player 
- * @returns 
- */
-function savePlayerInventory(player: Player) {
-	var playerInvContainer = (player.getComponent("inventory") as EntityInventoryComponent).container as Container;
-	var playerLevelData = DataManager.getData(player, "levelInformation");
-	var newPlayerInvData = [];
-	for (var i = 0; i < playerInvContainer.size; i++) {
-		var itemStack = playerInvContainer.getItem(i);
-		if (itemStack) newPlayerInvData.push({
-			"slot": i,
-			"typeId": itemStack.typeId,
-			"lockMode": itemStack.lockMode
-		});
-	}
-	playerLevelData.information[2].inventory = newPlayerInvData;
-	// Update player information
-	DataManager.setData(player, playerLevelData);
 }
 
 function action(actionInfo: Action, player: Player) {
@@ -544,7 +522,7 @@ function playerBusted(player: Player, currentLevel: number) {
 			(player.getComponent("inventory") as EntityInventoryComponent).container?.clearAll();
 			overworld.fillBlocks({ "x": 2029.50, "y": -59.00, "z": 56.50 }, { "x": 2029.50, "y": -59.00, "z": 61.50 }, BlockPermutation.resolve("minecraft:air"));
 			system.runTimeout(() => {
-				player.runCommandAsync('stopsound @s');
+				stopAllSound();
 				player.teleport({ "x": 2037.5, "y": -59, "z": 59.5 });
 				player.sendMessage(`You got busted §c§l${bustedCounterObjective.getScore(player)}§r time(s)`);
 			}, SECOND * 3);
@@ -553,7 +531,29 @@ function playerBusted(player: Player, currentLevel: number) {
 				overworld.runCommandAsync('scriptevent theheist:load-level 0-2');
 			}, SECOND * (3 + 5));
 			break;
+		default:
+			var playerLevelInformation = DataManager.getData(player, "levelInformation");
+			bustedCounterObjective.setScore(player, (bustedCounterObjective.getScore(player) ?? 0) + 1);
+			playerLevelInformation.information[0].level = 0;
+			DataManager.setData(player, playerLevelInformation);
+			player.playSound("map.alarm");
+			player.addTag("BUSTED");
+			(player.getComponent("inventory") as EntityInventoryComponent).container?.clearAll();
+			system.runTimeout(() => {
+				stopAllSound();
+				player.teleport(Utilities.levelCloneInfo[`level_${currentLevel}`].prisonLoc);
+				player.sendMessage(`You got busted §c§l${bustedCounterObjective.getScore(player)}§r time(s)`);
+			}, SECOND * 3);
+			system.runTimeout(() => {
+				player.removeTag("BUSTED");
+				overworld.runCommandAsync(`scriptevent theheist:load-level ${currentLevel}-1`);
+			}, SECOND * (3 + 5));
+			break;
 	}
+}
+
+function stopAllSound() {
+	overworld.getEntities().forEach((e) => e.runCommandAsync('stopsound @s'));
 }
 
 system.runInterval(() => {
