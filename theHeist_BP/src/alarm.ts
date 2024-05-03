@@ -1,4 +1,4 @@
-import { world, system, GameMode, TicksPerDay, BlockPermutation } from "@minecraft/server";
+import { world, system, GameMode, TicksPerDay, BlockPermutation, Player } from "@minecraft/server";
 import * as SensorModeFunc from "./gamebands/sensor";
 import DataManager from "./DataManager";
 import Utilities from "./Utilities";
@@ -13,9 +13,13 @@ const consolesHeight = -15;
 const rechargeHeight = -20;
 const cameraHeight = -25;
 const cameraMappingHeight = -30;
+const robotPathHeight = -49;
 const levelHeight = -59;
 
 const cameraFOV = 40;
+const rayDensity = 11;
+
+const overworld = Utilities.dimensions.overworld;
 
 // Robots take exactly 1 second to turn 90 degrees
 // Robots move at a speed of 1 blocks per 20 ticks
@@ -26,11 +30,12 @@ function cameraCanSeeThrough(location: Vector): boolean {
 	if (!topBlock || !bottomBlock) return false;
 	var topBlockTID = topBlock.typeId;
 	var bottomBlockTID = bottomBlock.typeId;
-	if (topBlockTID == "minecraft:air" && bottomBlockTID == "minecraft:air") return true;
+	if (bottomBlockTID == "minecraft:air") return true;
 	if (topBlockTID == "minecraft:glass" && bottomBlockTID == "minecraft:glass") return true;
+	if (topBlockTID.endsWith("_stained_glass") && bottomBlockTID.endsWith("_stained_glass")) return true;
 	if (topBlockTID == "minecraft:air" && bottomBlockTID == "theheist:chair") return true;
 	console.log(topBlockTID + " " + bottomBlockTID);
-	if (bottomBlockTID == "theheist:custom_door_1_bottom" && bottomBlock.permutation.getState("theheist:open")) return true;
+	if (bottomBlockTID.startsWith("theheist:custom_door_") && bottomBlock.permutation.getState("theheist:open")) return true;
 	return false;
 }
 
@@ -44,6 +49,79 @@ system.runInterval(() => {
 	if (playerLevelInformationDataNode) level = playerLevelInformationDataNode.information[1].level;
 	if (playerLevelInformationDataNode == undefined || level == undefined || level > 0) return;
 	
+	updateCameras(player, level, playerLevelInformationDataNode);
+	updateCameraRobots(player, level, playerLevelInformationDataNode);
+
+});
+
+function updateCameraRobots(player: Player, level: number, levelInformation: LevelInformation) {
+	const tpDistance = 0.05;
+
+	var cameraRobotArmorStandsQuery = {
+		"type": "armor_stand",
+		"location": { 'x': player.location.x, 'y': cameraHeight, 'z': player.location.z },
+		"maxDistance": 50
+	};
+	const cameraRobotArmorStands = Utilities.dimensions.overworld.getEntities(cameraRobotArmorStandsQuery).filter((x) => {
+		var cameraRobotTrackerDataNode = DataManager.getData(x, "cameraTracker");
+		return (x.location.y == cameraHeight && cameraRobotTrackerDataNode && !cameraRobotTrackerDataNode.disabled && cameraRobotTrackerDataNode.type == "camera" && cameraRobotTrackerDataNode.isRobot);
+	});
+
+	cameraRobotArmorStands.forEach((cameraRobotArmorStand) => {
+		var move = true;
+		var tryRotate = true;
+		var pathLevelBlock = overworld.getBlock(new Vector(cameraRobotArmorStand.location.x, robotPathHeight, cameraRobotArmorStand.location.z))!;
+		var currRot = cameraRobotArmorStand.getRotation().y;
+		if (Math.abs(cameraRobotArmorStand.location.x % 1 - 0.5) > 0.15) tryRotate = false; // Ensure the robot only turns near the center
+		if (Math.abs(cameraRobotArmorStand.location.z % 1 - 0.5) > 0.15) tryRotate = false;
+		if (tryRotate && pathLevelBlock.typeId == "minecraft:stone_brick_stairs") { // Terrible solution but works, see if it can be made better later
+			var reqRot = getRotFromWeirdoDir(pathLevelBlock.permutation.getState("weirdo_direction") as number);
+			if (Math.abs(reqRot - currRot) >= 25) {
+				if (reqRot < 0 && currRot > 90) reqRot = 270;
+				if (reqRot > 0 && currRot < 0) currRot = 360 - currRot;
+				//console.log(`Curr: ${currRot}\nReq: ${reqRot}\nDir: ${Math.sign(reqRot - currRot)}`);
+				cameraRobotArmorStand.setRotation({"x": 0, "y": currRot + Math.sign(reqRot - currRot) * 4.5});
+				move = false;
+			} else cameraRobotArmorStand.setRotation({"x": 0, "y": reqRot});
+		}
+		if (move) cameraRobotArmorStand.teleport({ "x": cameraRobotArmorStand.location.x + -(Utilities.sin(cameraRobotArmorStand.getRotation().y) * tpDistance), "y": cameraRobotArmorStand.location.y, "z": cameraRobotArmorStand.location.z + (Utilities.cos(cameraRobotArmorStand.getRotation().y) * tpDistance) })
+		var cameraDataNode = DataManager.getData(cameraRobotArmorStand, "cameraTracker");
+		cameraDataNode.rotation = cameraRobotArmorStand.getRotation().y;
+		DataManager.setData(cameraRobotArmorStand, cameraDataNode);
+
+		// Update visuals
+		var cameraRobotQuery = {
+			"type": "theheist:camera_robot",
+			"location": { 'x': cameraRobotArmorStand.location.x, 'y': levelHeight, 'z': cameraRobotArmorStand.location.z },
+			"maxDistance": 50,
+			"closest": 1
+		};
+		var cameraRobot = Utilities.dimensions.overworld.getEntities(cameraRobotQuery)[0];
+		cameraRobot.teleport(new Vector(cameraRobotArmorStand.location.x, -59.25, cameraRobotArmorStand.location.z));
+		cameraRobot.setRotation(cameraRobotArmorStand.getRotation());
+		if (system.currentTick % (20 * 5)) overworld.playSound("map.robot", cameraRobot.location) // Every 5 seconds play robot ambience sound
+	});
+}
+
+function getRotFromWeirdoDir(weirdoDir: number): number {
+	switch (weirdoDir) {
+		case 0:
+			return 90;
+			break;
+		case 1:
+			return -90;
+			break;
+		case 2:
+			return 180;
+			break;
+		case 3:
+			return 0;
+			break;
+	}
+	return 0;
+}
+
+function updateCameras(player: Player, level: number, playerLevelInformationDataNode: LevelInformation) {
 	var playerCameraMappingHeightBlock = Utilities.dimensions.overworld.getBlock({ "x": player.location.x, "y": cameraMappingHeight - 3, "z": player.location.z });
 	
 	if (playerCameraMappingHeightBlock && playerCameraMappingHeightBlock.typeId == "theheist:camera_sight" && player.location.y < -56 && !player.hasTag("BUSTED")) {
@@ -110,10 +188,13 @@ system.runInterval(() => {
 				DataManager.setData(armorStand, cameraTrackerDataNode);
 			}
 			var yRot = armorStand.getRotation().y;
-			var maxCount = 11;
+			var maxCount = rayDensity;
 			for (var i = 0; i < maxCount; i++) {
 				var rayArmorStand = Utilities.dimensions.overworld.spawnEntity("armor_stand", { "x": armorStand.location.x, "y": cameraMappingHeight, "z": armorStand.location.z });
 				rayArmorStand.setRotation({ "x": 0, "y": (yRot - cameraFOV / 2) + (cameraFOV * i / (maxCount - 1)) });
+				if (cameraTrackerDataNode.isRobot) {
+					rayArmorStand.teleport({ "x": armorStand.location.x + -(Utilities.sin(armorStand.getRotation().y) * 0.7), "y": cameraMappingHeight, "z": armorStand.location.z + (Utilities.cos(armorStand.getRotation().y) * 0.7) });
+				}
 			}
 			// Before we save the mapped out camera sight area, make sure we remove the block below the camera if there is one
 			Utilities.setBlock({"x": armorStand.location.x, "y": cameraMappingHeight - 2, "z": armorStand.location.z}, "air");
@@ -124,7 +205,7 @@ system.runInterval(() => {
 	} else {
 		//X: sin(player.getRotation().x) * 0.7
 		const tpDistance = 0.7;
-		const checkDistance = 0.1;
+		const checkDistance = 0;
 		cameraMappingArmorStands.forEach((armorStand) => {
 			// x sin() needs to be inverted to work properly for some reason
 			var belowBlock = { "x": armorStand.location.x, "y": armorStand.location.y - 2, "z": armorStand.location.z };
@@ -134,5 +215,4 @@ system.runInterval(() => {
 			else armorStand.kill();
 		});
 	}
-
-});
+}

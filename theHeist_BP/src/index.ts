@@ -140,6 +140,17 @@ world.beforeEvents.chatSend.subscribe(event => {
 		case "getBlockPermutation": {
 			var block = Utilities.dimensions.overworld.getBlock(player.location)!;
 			console.log(block.typeId);
+			break;
+		}
+		case "startR": {
+			const overworld = Utilities.dimensions.overworld;
+			system.run(() => overworld.spawnEntity("theheist:camera_robot", new Vector(3086.5, -59.25, 92.5)));
+			break;
+		}
+		case "endR": {
+			const overworld = Utilities.dimensions.overworld;
+			system.run(() => overworld.getEntities({ "type": "theheist:camera_robot" }).forEach((x) => x.kill()));
+			break;
 		}
 	}
 });

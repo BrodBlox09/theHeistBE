@@ -1,5 +1,6 @@
 import { BlockPermutation, Vector3, world, Player, Container, EntityEquippableComponent, EntityInventoryComponent, ItemStack, EquipmentSlot, ItemLockMode } from "@minecraft/server";
 import DataManager from "./DataManager";
+import Vector from "./Vector";
 
 export default class Utilities {
 	static dimensions = {
@@ -10,7 +11,7 @@ export default class Utilities {
 
 	static swapKVPs(json: Record<any, any>) {
 		var ret: Record<any, any> = {};
-		for(var key in json){
+		for (var key in json) {
 			ret[json[key]] = key;
 		}
 		return ret;
@@ -47,6 +48,28 @@ export default class Utilities {
 			itemStack.lockMode = ItemLockMode[invSlotData.lockMode as keyof typeof ItemLockMode];
 			playerInvContainer.setItem(invSlotData.slot, itemStack);
 		});
+	}
+
+	/**
+	 * @description Saves player's inventory. Ensure this function is run BEFORE whenever you want to enter into a "1 mode only" state.
+	 * @param player 
+	 * @returns 
+	 */
+	static savePlayerInventory(player: Player) {
+		var playerInvContainer = (player.getComponent("inventory") as EntityInventoryComponent).container as Container;
+		var playerLevelData = DataManager.getData(player, "levelInformation");
+		var newPlayerInvData = [];
+		for (var i = 0; i < playerInvContainer.size; i++) {
+			var itemStack = playerInvContainer.getItem(i);
+			if (itemStack) newPlayerInvData.push({
+				"slot": i,
+				"typeId": itemStack.typeId,
+				"lockMode": itemStack.lockMode
+			});
+		}
+		playerLevelData.information[2].inventory = newPlayerInvData;
+		// Update player information
+		DataManager.setData(player, playerLevelData);
 	}
 
 	static inventoryContainerHasItem(container: Container, item: string): boolean {
@@ -95,14 +118,16 @@ export default class Utilities {
 			"startZ": 42,
 			"endX": 2022,
 			"endZ": 77,
-			"mainFloorBlock": "minecraft:brown_terracotta"
+			"mainFloorBlock": "minecraft:brown_terracotta",
+			"prisonLoc": new Vector(0,0,0)
 		},
 		"level_-1": {
 			"startX": 3028,
 			"startZ": 97,
 			"endX": 3109,
 			"endZ": 161,
-			"mainFloorBlock": "minecraft:red_terracotta"
+			"mainFloorBlock": "minecraft:red_terracotta",
+			"prisonLoc": new Vector(3109.5, -59, 91.5)
 		}
 	}
 
