@@ -5,6 +5,7 @@ import "./lvl_loader";
 import "./gameband";
 import "./alarm";
 import Utilities from "./Utilities";
+import VoiceOverManager from "./VoiceOverManager";
 
 /*world.afterEvents.worldInitialize.subscribe(event => {
 	const def = new DynamicPropertiesDefinition();
@@ -151,6 +152,9 @@ world.beforeEvents.chatSend.subscribe(event => {
 			const overworld = Utilities.dimensions.overworld;
 			system.run(() => overworld.getEntities({ "type": "theheist:camera_robot" }).forEach((x) => x.kill()));
 			break;
+		}
+		case "test": {
+			system.run(() => VoiceOverManager.play(player, "forgot_prototypes"));
 		}
 	}
 });

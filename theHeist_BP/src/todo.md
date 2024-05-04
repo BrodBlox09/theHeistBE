@@ -19,7 +19,7 @@
 - [x] when recharging, other gamebands are taken away
 - [ ] there should be a blindness effect in between cutscene scenes
 ## Level -1
-- [ ] Finish adding functionality to all keypads, computers, and keycard scanners (almost done!)
+- [x] Finish adding functionality to all keypads, computers, and keycard scanners (almost done!)
 ### Camera / Sensor
 - [x] Add functionality to sensor mode
 - [x] Fix camera sight (wall checks don't match Java, e.g. 2 high glass isn't seen through when it should be)

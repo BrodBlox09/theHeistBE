@@ -30,6 +30,7 @@ function endSensorMode(player: Player, levelInformation: LevelInformation) {
     DataManager.setData(player, levelInformation);
     Utilities.reloadPlayerInv(player, levelInformation);
     clearSensed(player, levelInformation);
+    system.runTimeout(() => clearSensed(player, levelInformation), 5); // Ensure everything actually gets cleared
 }
 
 export function sensorTick(player: Player, levelInformation: LevelInformation, energyTracker: EnergyTracker) {
