@@ -1,4 +1,4 @@
-import { ItemStack, Vector3, system, world, DisplaySlotId, BlockInventoryComponent, BlockPermutation, Container, ItemLockMode } from "@minecraft/server";
+import { ItemStack, Player, system, world, DisplaySlotId, BlockInventoryComponent, BlockPermutation, Container, ItemLockMode } from "@minecraft/server";
 import Vector from "./Vector";
 import DataManager from "./DataManager";
 import VoiceOverManager from "./VoiceOverManager";
@@ -99,13 +99,8 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 				world.sendMessage("Could not find player");
 				return;
 			}
-			var lvlInfo = DataManager.getData(player, "levelInformation");
-			if (lvlInfo) {
-				var currPlayerLevel = Utilities.levelToLevelID[lvlInfo.information[1]];
-				if (currPlayerLevel != msg) {
-					// Player is going to a new level, so clear busted counter
-					bustedCounterObjective.setScore(player, 0);
-				}
+			if (!bustedCounterObjective.hasParticipant(player)) {
+				bustedCounterObjective.setScore(player, 0);
 			}
 			switch (msg) {
 				case "1-1": {
@@ -557,6 +552,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 						// Reset end level doors
 						Utilities.setBlock(new Vector(1988, -60, 68), "theheist:custom_door_4_bottom_l", { "theheist:rotation": 3, "theheist:unlocked": false });
 						Utilities.setBlock(new Vector(1987, -60, 68), "theheist:custom_door_4_bottom_r", { "theheist:rotation": 3, "theheist:unlocked": false });
+						Utilities.setBlock(new Vector(1987, -59, 73), "minecraft:lever", { "lever_direction": "north" });
 						// Turn on command blocks
 						overworld.fillBlocks({ x: 2029.50, y: -59.00, z: 56.50 }, { x: 2029.50, y: -59.00, z: 61.50 }, BlockPermutation.resolve('minecraft:redstone_block'));
 						// Teleport player from pre-hatch to post-hatch
@@ -573,7 +569,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 					// Previous level made use of tags, clear them here
 					player.getTags().forEach((x) => { player.removeTag(x); });
 					// Add energyTracker data
-					const playerEnergyTrackerDataNode: EnergyTracker = { "name": "energyTracker", "energyUnits": 100.0, "recharging": false, "usingRechargerID": -1, "rechargeLevel": 1 };
+					const playerEnergyTrackerDataNode: EnergyTracker = { "name": "energyTracker", "energyUnits": 100.0, "recharging": false, "usingRechargerID": -1, "rechargeLevel": 2 };
 					DataManager.setData(player, playerEnergyTrackerDataNode);
 
 					if (!bustedCounterObjective.hasParticipant(player)) {
@@ -581,9 +577,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 					}
 					// Proper one is below
 					const playerLevelInformationDataNode = { "name": "levelInformation", "currentModes": [], "information": [{ "name": "alarmLevel", "level": 0 }, { "name": "gameLevel", "level": -1 }, { "name": "playerInv", "inventory": [{ "slot": 0, "typeId": 'theheist:recharge_mode_lvl_1', "lockMode": "slot" }, { "slot": 1, "typeId": 'theheist:hacking_mode_lvl_1', "lockMode": "slot" }] }] };
-					// Testing one is below
-					//const playerLevelInformationDataNode = { "name": "levelInformation", "currentModes": [], "information": [{ "name": "alarmLevel", "level": 0 }, { "name": "gameLevel", "level": -1 }, { "name": "playerInv", "inventory": [{ "slot": 0, "typeId": 'theheist:recharge_mode_lvl_1', "lockMode": "slot" }, { "slot": 1, "typeId": 'theheist:hacking_mode_lvl_2', "lockMode": "slot" }] }] };
-
+					
 					DataManager.setData(player, playerLevelInformationDataNode);
 
 					Utilities.reloadPlayerInv(player, playerLevelInformationDataNode);
@@ -643,13 +637,13 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 						DataManager.setData(camera1, camera1DataNode);
 						// Camera 2
 						const camera2 = overworld.spawnEntity("armor_stand", { "x": 3080.5, "y": cameraHeight, "z": 127.5 });
-						camera2.setRotation({ "x": 0, "y": 30 });
-						overworld.spawnEntity("theheist:camera", { "x": 3080.5, "y": -58, "z": 127.5 }).setRotation({ "x": 0, "y": 30 });
+						camera2.setRotation({ "x": 0, "y": 150 });
+						overworld.spawnEntity("theheist:camera", { "x": 3080.5, "y": -58, "z": 127.5 }).setRotation({ "x": 0, "y": 150 });
 						const camera2DataNode = {
 							"name": "cameraTracker",
 							"isRobot": false,
-							"rotation": 30,
-							"swivel": [1, 30, 150],
+							"rotation": 150,
+							"swivel": [0, 30, 150],
 							"disabled": false,
 							"cameraID": 2,
 							"type": "camera"
@@ -1089,7 +1083,10 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 							"keycardType": "yellow",
 							"actions": [
 								{
-									"type": "set_block", "do": { "x": 3038, "y": -60, "z": 131, "block": "theheist:custom_door_2_bottom", "permutations": { "theheist:rotation": 4, "theheist:unlocked": true } }
+									"type": "set_block", "do": { "x": 3038, "y": -60, "z": 131, "block": "theheist:custom_door_2_bottom", "permutations": { "theheist:rotation": 4, "theheist:unlocked": true, "theheist:open": true } }
+								},
+								{
+									"type": "play_sound", "do": { "soundID": "random.door_open" }
 								}
 							]
 						};
@@ -1109,6 +1106,9 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 								},
 								{
 									"type": "set_block", "do": { "x": 3090, "y": -60, "z": 130, "block": "theheist:custom_door_4_bottom_r", "permutations": { "theheist:rotation": 2, "theheist:unlocked": true, "theheist:open": true  } }
+								},
+								{
+									"type": "play_sound", "do": { "soundID": "random.door_open" }
 								},
 								{
 									"type": "manage_objectives", "do": { "manageType": 2, "objective": "Access next level" }
@@ -1184,6 +1184,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 
 						// Decorations & Miscellaneous
 						Utilities.dimensions.overworld.setBlockType(new Vector(3073, -55, 127), "minecraft:redstone_block");
+						Utilities.setBlock(new Vector(3090, -59, 124), "minecraft:lever", { "lever_direction": "south" });
 						Utilities.dimensions.overworld.spawnEntity("theheist:camera_robot", new Vector(3053.5, -59, 110.5)).setRotation({ "x": 0, "y": 180 });
 						const decorativeCamera0 = Utilities.dimensions.overworld.spawnEntity("theheist:camera", new Vector(3034.5, -59, 141.5));
 						decorativeCamera0.setRotation({ "x": 0, "y": 180 });
@@ -1239,34 +1240,40 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 		}
 		case "theheist:attempt_end_level": {
 			const valueArray = msg.split(/ /);
-			const level = valueArray[0];
+			const currLevel = parseInt(valueArray[0]);
 			const x = valueArray[1];
 			const y = valueArray[2];
 			const z = valueArray[3];
 			const rotation = valueArray[4];
-			const player = world.getPlayers().filter((x) => (x != undefined && x != null))[0];
+			const player = world.getPlayers().filter((player) => (player != undefined && player != null))[0];
 			if (player == undefined) return;
-			const objectives = objectivesObjective.getParticipants().map((x) => {
-				return x.displayName;
+			const objectives = objectivesObjective.getParticipants().map((obj) => {
+				return obj.displayName;
 			});
-			if (objectives.some((x) => (x.startsWith("§c") && (x.includes("upgrade") || x.includes("mode"))))) { // If the objective text includes "upgrade" then the objective is talking about upgrading a gameband. If "mode", then the objective is talking about gaining a new gameband
+			if (objectives.some((obj) => (obj.startsWith("§c") && (obj.includes("upgrade") || obj.includes("mode"))))) { // If the objective text includes "upgrade" then the objective is talking about upgrading a gameband. If "mode", then the objective is talking about gaining a new gameband
 				// Player hasn't finished all the gameband-related objectives yet
 				VoiceOverManager.play(player, "forgot_prototypes");
 				Utilities.setBlock({ x: Number(x), y: Number(y), z: Number(z) }, "minecraft:lever", { "lever_direction": rotation });
-				//return;
-			} else if (objectives.some((x) => (x.startsWith("§c")))) {
-				// Player hasn't finished all the objectives yet
-				player.sendMessage([{ "text": "§5§oVoice:§r " }, { "text": "You still have unfinished objectives!" }]);
-				Utilities.setBlock({ x: Number(x), y: Number(y), z: Number(z) }, "minecraft:lever", { "lever_direction": rotation });
-				//return;
+				return;
 			}
 			bustedCounterObjective.setScore(player, 0);
-			//Normally:
-			overworld.runCommandAsync(`scriptevent theheist:load-level ${parseInt(level) - 1}-1`);
+
+			if (currLevel != -1) overworld.runCommandAsync(`scriptevent theheist:load-level ${currLevel - 1}-1`);
+			else endDemo(player);
 			break;
 		}
 	}
 });
+
+function endDemo(player: Player) {
+	player.teleport(new Vector(-22.5, -59, 67.5));
+	player.onScreenDisplay.setTitle("Thanks for playing!", {
+		"fadeInDuration": 20,
+		"fadeOutDuration": 20,
+		"stayDuration": 160,
+		"subtitle": "More levels coming soon"
+	});
+}
 
 /**
  * Assumes elevator height of 12 blocks

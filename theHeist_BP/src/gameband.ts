@@ -5,6 +5,7 @@ import Utilities from "./Utilities";
 import GameObjectiveManager from "./GameObjectiveManager";
 import * as SensorModeFunc from "./gamebands/sensor";
 import { CountQueuingStrategy } from "stream/web";
+import VoiceOverManager from "./VoiceOverManager";
 
 /**
  * Unfinished objectives color: §c (Red)
@@ -128,7 +129,9 @@ function rechargeMode(lvl: number, player: Player) {
 	for (const armorStand of armorStands) {
 
 		var armorStandEnergyTrackerDataNode = DataManager.getData(armorStand, "energyTracker");
-		var playerEnergyTrackerDataNode = DataManager.getData(player, "energyTracker");
+		var playerEnergyTrackerDataNode: EnergyTracker = DataManager.getData(player, "energyTracker");
+		playerEnergyTrackerDataNode.rechargeLevel = lvl;
+		//DataManager.setData(player, playerEnergyTrackerDataNode);
 		var blockLocation = { "x": armorStandEnergyTrackerDataNode.block.x, "y": armorStandEnergyTrackerDataNode.block.y, "z": armorStandEnergyTrackerDataNode.block.z };
 		if (playerEnergyTrackerDataNode.recharging == false) {
 			if (armorStandEnergyTrackerDataNode.energyUnits == 0.0) return;
@@ -311,6 +314,10 @@ function action(actionInfo: Action, player: Player) {
 			player.playSound(`map.${soundID}`);
 			player.sendMessage([{ "text": "§5§oVoice:§r " }, { "translate": `map.sub.${soundID}` }]);
 			break;
+		case "play_sound":
+			var soundID = actionInfo.do.soundID;
+			player.playSound(soundID);
+			break;
 		case "run_command":
 			var command = actionInfo.do.command;
 			overworld.runCommandAsync(command);
@@ -412,6 +419,11 @@ function action(actionInfo: Action, player: Player) {
 			levelInformation.information[2].inventory.push({ "slot": actionInfo.do.slot, "typeId": `theheist:${actionInfo.do.mode}_mode_lvl_${actionInfo.do.level}`, "lockMode": "slot" });
 			DataManager.setData(player, levelInformation);
 			Utilities.reloadPlayerInv(player);
+			if (actionInfo.do.mode == "recharge") {
+				var playerEnergyTracker: EnergyTracker = DataManager.getData(player, "energyTracker");
+				playerEnergyTracker.rechargeLevel = actionInfo.do.level;
+				DataManager.setData(player, playerEnergyTracker);
+			}
 			Utilities.dimensions.overworld.setBlockType(actionInfo.do.displayBlock, "minecraft:air");
 			world.sendMessage([{ "text": "§7Upgrade Recieved: §r" + actionInfo.do.modeText }]);
 			break;
@@ -553,7 +565,7 @@ function playerBusted(player: Player, currentLevel: number) {
 }
 
 function stopAllSound() {
-	overworld.getEntities().forEach((e) => e.runCommandAsync('stopsound @s'));
+	overworld.getEntities({ "excludeTypes": [ "minecraft:armor_stand", "theheist:hover_text" ] }).forEach((e) => { try { e.runCommandAsync('stopsound @s'); } catch {} });
 }
 
 system.runInterval(() => {
@@ -641,16 +653,10 @@ system.runInterval(() => {
 				playerEnergyTracker.usingRechargerID = -1;
 			}
 		} else if (playerEnergyTracker.energyUnits < Utilities.gamebandInfo.rechargeMode[playerEnergyTracker.rechargeLevel].max) {
-			var addEnergy = 0.0;
-			switch (playerEnergyTracker.rechargeLevel) {
-				case 1:
-					addEnergy = Utilities.gamebandInfo.rechargeMode[playerEnergyTracker.rechargeLevel].speed;
-					break;
-			}
+			var addEnergy = Utilities.gamebandInfo.rechargeMode[playerEnergyTracker.rechargeLevel].speed;
 			// Divided by ticks in a second, because this is happening every tick (1/20th of a second)
 			addEnergy /= 20;
-			addEnergy = Math.min(addEnergy, Utilities.gamebandInfo.rechargeMode[playerEnergyTracker.rechargeLevel].max);
-			playerEnergyTracker.energyUnits += addEnergy;
+			playerEnergyTracker.energyUnits = Math.min(playerEnergyTracker.energyUnits + addEnergy, Utilities.gamebandInfo.rechargeMode[playerEnergyTracker.rechargeLevel].max);
 			for (const armorStand of armorStands) {
 				var armorStandEnergyTracker = DataManager.getData(armorStand, "energyTracker");
 				if (armorStandEnergyTracker.rechargerID != playerEnergyTracker.usingRechargerID) continue;

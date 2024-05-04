@@ -34,7 +34,6 @@ function cameraCanSeeThrough(location: Vector): boolean {
 	if (topBlockTID == "minecraft:glass" && bottomBlockTID == "minecraft:glass") return true;
 	if (topBlockTID.endsWith("_stained_glass") && bottomBlockTID.endsWith("_stained_glass")) return true;
 	if (topBlockTID == "minecraft:air" && bottomBlockTID == "theheist:chair") return true;
-	console.log(topBlockTID + " " + bottomBlockTID);
 	if (bottomBlockTID.startsWith("theheist:custom_door_") && bottomBlock.permutation.getState("theheist:open")) return true;
 	return false;
 }
@@ -76,9 +75,9 @@ function updateCameraRobots(player: Player, level: number, levelInformation: Lev
 		if (Math.abs(cameraRobotArmorStand.location.z % 1 - 0.5) > 0.15) tryRotate = false;
 		if (tryRotate && pathLevelBlock.typeId == "minecraft:stone_brick_stairs") { // Terrible solution but works, see if it can be made better later
 			var reqRot = getRotFromWeirdoDir(pathLevelBlock.permutation.getState("weirdo_direction") as number);
+			if (reqRot < 0 && currRot > 90) reqRot = 270;
+			if (reqRot > 0 && currRot < 0) currRot = 360 + currRot;
 			if (Math.abs(reqRot - currRot) >= 25) {
-				if (reqRot < 0 && currRot > 90) reqRot = 270;
-				if (reqRot > 0 && currRot < 0) currRot = 360 - currRot;
 				//console.log(`Curr: ${currRot}\nReq: ${reqRot}\nDir: ${Math.sign(reqRot - currRot)}`);
 				cameraRobotArmorStand.setRotation({"x": 0, "y": currRot + Math.sign(reqRot - currRot) * 4.5});
 				move = false;
@@ -93,13 +92,13 @@ function updateCameraRobots(player: Player, level: number, levelInformation: Lev
 		var cameraRobotQuery = {
 			"type": "theheist:camera_robot",
 			"location": { 'x': cameraRobotArmorStand.location.x, 'y': levelHeight, 'z': cameraRobotArmorStand.location.z },
-			"maxDistance": 50,
+			"maxDistance": 5,
 			"closest": 1
 		};
 		var cameraRobot = Utilities.dimensions.overworld.getEntities(cameraRobotQuery)[0];
 		cameraRobot.teleport(new Vector(cameraRobotArmorStand.location.x, -59.25, cameraRobotArmorStand.location.z));
 		cameraRobot.setRotation(cameraRobotArmorStand.getRotation());
-		if (system.currentTick % (20 * 5)) overworld.playSound("map.robot", cameraRobot.location) // Every 5 seconds play robot ambience sound
+		if (system.currentTick % 100 == 0) overworld.playSound("map.robot", cameraRobot.location, { "volume": 2 }); // Every 5 seconds play robot ambience sound (100 = 20 * 5)
 	});
 }
 
