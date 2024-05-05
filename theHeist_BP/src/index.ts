@@ -24,7 +24,8 @@ const levelLocations: Record<string, Vector3> = {
 	"1": { 'x': -22.5, 'y': -50, 'z': 56.5 },
 	"0.5": { 'x': 1000.5, 'y': -50, 'z': 56.5 },
 	"0": { 'x': 2000.5, 'y': -50, 'z': 56.5 },
-	"-1": {'x': 3075.5, 'y': -50, 'z': 100.5}
+	"-1": {'x': 3075.5, 'y': -50, 'z': 100.5},
+	"-2": { 'x': 4101, 'y': -47, 'z': 131 }
 }
 
 const objectivesObjective = world.scoreboard.getObjective("objectives") ?? world.scoreboard.addObjective("objectives", "Objectives");
@@ -38,7 +39,7 @@ const allowedPlayers = [
 world.beforeEvents.chatSend.subscribe(event => {
 	const player = event.sender;
 	const msg = event.message;
-	if (!allowedPlayers.includes(player.name) || !msg.startsWith("!")) return;
+	if (allowedPlayers.includes(player.name) || !msg.startsWith("!")) return;
 	event.cancel = true;
 	const args = msg.slice(1).split(" ");
 	const cmd = args.shift();
@@ -46,7 +47,7 @@ world.beforeEvents.chatSend.subscribe(event => {
 		case "lvlTp":
 			if (levelLocations.hasOwnProperty(args[0]))
 				system.run(() => {
-					player.teleport(levelLocations[args[0]], { 'dimension': world.getDimension("overworld"), 'rotation': { 'x': 90, 'y': 0 } });
+					player.teleport(levelLocations[args[0]], { 'dimension': world.getDimension("overworld") });
 				});
 			else player.sendMessage(`§4The level ${args[0]} does not exist.`);
 			break;
@@ -120,7 +121,7 @@ world.beforeEvents.chatSend.subscribe(event => {
 		}
 		case "fillLarge": {
 			system.run(() => {
-				Utilities.dimensions.overworld.fillBlocks(new Vector(3028, parseInt(args[0]), 97), new Vector(3109, parseInt(args[0]), 161), args[1]);
+				Utilities.dimensions.overworld.fillBlocks(new Vector(4060, parseInt(args[0]), 91), new Vector(4133, parseInt(args[0]), 159), args[1]);
 			});
 			break;
 		}
@@ -142,19 +143,6 @@ world.beforeEvents.chatSend.subscribe(event => {
 			var block = Utilities.dimensions.overworld.getBlock(player.location)!;
 			console.log(block.typeId);
 			break;
-		}
-		case "startR": {
-			const overworld = Utilities.dimensions.overworld;
-			system.run(() => overworld.spawnEntity("theheist:camera_robot", new Vector(3086.5, -59.25, 92.5)));
-			break;
-		}
-		case "endR": {
-			const overworld = Utilities.dimensions.overworld;
-			system.run(() => overworld.getEntities({ "type": "theheist:camera_robot" }).forEach((x) => x.kill()));
-			break;
-		}
-		case "test": {
-			system.run(() => VoiceOverManager.play(player, "forgot_prototypes"));
 		}
 	}
 });

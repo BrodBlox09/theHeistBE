@@ -6,6 +6,15 @@ import Vector from "../Vector";
 const sensingRange = 14;
 const clearRange = 19;
 
+export function tryMap(player: Player, levelInformation: LevelInformation) {
+    // If sensor mode lvl. 2 or greater, the player can use the sensor mode to see a map of the level
+	const playerRotX = player.getRotation().x;
+	if (!(playerRotX < 90 && playerRotX > 80)) return; // Player is not looking down
+    var sensorModeSlot = levelInformation.information[2].inventory.filter((slot) => (slot.slot == 2 && parseInt(slot.typeId.charAt(slot.typeId.length - 1)) >= 2))[0];
+    if (!sensorModeSlot) return; // Player does not have a lvl 2 or greater sensor mode
+
+}
+
 export function toggleSensorMode(player: Player, lvl: number) {
     var levelInformation: LevelInformation = DataManager.getData(player, "levelInformation");
     var currentModes: ModeData[] = levelInformation.currentModes;
@@ -15,6 +24,7 @@ export function toggleSensorMode(player: Player, lvl: number) {
 
 function tryStartSensorMode(player: Player, lvl: number, levelInformation: LevelInformation) {
     levelInformation.currentModes.push({ "mode": "sensor", "level": lvl });
+    levelInformation.information[2].inventory = levelInformation.information[2].inventory.filter((s) => (s.slot != 2));
     levelInformation.information[2].inventory.push({ "slot": 2, "typeId": `theheist:sensor_mode_lvl_${lvl}_enchanted`, "lockMode": "slot" });
     DataManager.setData(player, levelInformation);
     Utilities.reloadPlayerInv(player, levelInformation);

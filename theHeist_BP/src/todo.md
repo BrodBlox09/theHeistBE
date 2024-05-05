@@ -13,22 +13,35 @@
 - [ ] rotate lvl 1 cameras to match the original
 - [x] fix camera FOV angle to match the original
 - [ ] add ticking sound whenever player is caught by the security system
-- [ ] add paintings and itemframe items <!-- What does this mean? Where are the paintings and itemframes supposed to be that are missing? -->
+- [ ] add paintings and itemframe items <!-- Found the underlying cause and fixed it, apparently paintings are entities that get killed on level load. Now the paintings need to be placed -->
 - [ ] fix the differences in the start van (missing models, missing driver, outside is different, command block textures are different, lighting is different)
 - [x] recharging is faster in java <!-- This was actually a Java bug, I think they might have put an extra 0 somewhere or forgot a decimal place so instead of 1.0 it was 10 -->
 - [x] when recharging, other gamebands are taken away
 - [ ] there should be a blindness effect in between cutscene scenes
-## Level -1
-- [x] Finish adding functionality to all keypads, computers, and keycard scanners (almost done!)
 ### Camera / Sensor
 - [x] Add functionality to sensor mode
 - [x] Fix camera sight (wall checks don't match Java, e.g. 2 high glass isn't seen through when it should be)
 ### UI
-- [ ] edit inventory ui
+- [ ] edit inventory UI
 ### Other
 - [ ] somehow make reach shorter to match the original
 - [ ] use the original models and textures for the gamebands (animated stuff  and laser thingy is missing), computers, drawers, signs, chairs, recharge stations, etc
 ### Backend
 - [ ] Rewrite the data management system (DataManager-rewrite branch)
 - [ ] Separate the functionality of each gameband into seperate files
+- [ ] Consider modualizing the level loading system, where each level gets its own file
 - [ ] Rewrite objective system to rely on IDs to update each objective's status?
+## Level -2
+### World
+- [ ] Import level from Java world
+- [ ] Replace retextured blocks with the correct blocks
+### Backend
+- [ ] Add functionality to all keypads
+- [ ] Add functionality to all computers
+- [ ] Add functionality to all keycard readers
+- [ ] Add X-Ray mode
+### RP
+- [ ] Create X-Ray mode texture
+- [ ] Create X-Ray mode model
+### BP
+- [ ] Create X-Ray BP files

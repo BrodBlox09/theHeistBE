@@ -1,8 +1,10 @@
-import { ItemStack, Player, system, world, DisplaySlotId, BlockInventoryComponent, BlockPermutation, Container, ItemLockMode } from "@minecraft/server";
+import { ItemStack, Player, system, world, DisplaySlotId, BlockInventoryComponent, BlockPermutation, Container, ItemLockMode, GameMode } from "@minecraft/server";
 import Vector from "./Vector";
+import Utilities from "./Utilities";
 import DataManager from "./DataManager";
 import VoiceOverManager from "./VoiceOverManager";
-import Utilities from "./Utilities";
+import LevelConstructor from "./levels/LevelConstructor";
+import LevelDefinitions from "./levels/levelDefinitions";
 import GameObjectiveManager from "./GameObjectiveManager";
 
 // Hack delay: 2 seconds or 40 ticks
@@ -92,7 +94,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 		case "theheist:load-level": {
 			const entities = overworld.getEntities();
 			for (const entity of entities) {
-				if (entity.typeId != "minecraft:player") entity.kill();
+				if (!["minecraft:player", "minecraft:painting"].includes(entity.typeId)) entity.kill();
 			}
 			const player = world.getPlayers().filter((x) => (x != undefined && x != null))[0];
 			if (player == undefined) {
@@ -218,7 +220,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 						// Kill all entities
 						const entities = overworld.getEntities();
 						for (const entity of entities) {
-							if (entity.typeId != "minecraft:player") entity.kill();
+							if (!["minecraft:player","minecraft:painting"].includes(entity.typeId)) entity.kill();
 						}
 						// Camera 0
 						const camera0 = overworld.spawnEntity("armor_stand", { "x": 2014.5, "y": cameraHeight, "z": 51.5 });
@@ -569,13 +571,12 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 					// Previous level made use of tags, clear them here
 					player.getTags().forEach((x) => { player.removeTag(x); });
 					// Add energyTracker data
-					const playerEnergyTrackerDataNode: EnergyTracker = { "name": "energyTracker", "energyUnits": 100.0, "recharging": false, "usingRechargerID": -1, "rechargeLevel": 2 };
+					const playerEnergyTrackerDataNode: EnergyTracker = { "name": "energyTracker", "energyUnits": 100.0, "recharging": false, "usingRechargerID": -1, "rechargeLevel": 1 };
 					DataManager.setData(player, playerEnergyTrackerDataNode);
 
 					if (!bustedCounterObjective.hasParticipant(player)) {
 						bustedCounterObjective.setScore(player, 0);
 					}
-					// Proper one is below
 					const playerLevelInformationDataNode = { "name": "levelInformation", "currentModes": [], "information": [{ "name": "alarmLevel", "level": 0 }, { "name": "gameLevel", "level": -1 }, { "name": "playerInv", "inventory": [{ "slot": 0, "typeId": 'theheist:recharge_mode_lvl_1', "lockMode": "slot" }, { "slot": 1, "typeId": 'theheist:hacking_mode_lvl_1', "lockMode": "slot" }] }] };
 					
 					DataManager.setData(player, playerLevelInformationDataNode);
@@ -606,7 +607,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 						// Kill all entities
 						const entities = overworld.getEntities();
 						for (const entity of entities) {
-							if (entity.typeId != "minecraft:player") entity.kill();
+							if (!["minecraft:player","minecraft:painting"].includes(entity.typeId)) entity.kill();
 						}
 						// Camera 0
 						const camera0 = overworld.spawnEntity("armor_stand", { "x": 3066.5, "y": cameraHeight, "z": 105.5 });
@@ -1204,7 +1205,63 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 						drawer1InventoryContainer.setItem(4, new ItemStack("minecraft:green_dye"));
 
 					}, SECOND * 7.5);
+					break;
 				}
+				default:
+					// Clear all data on player
+					DataManager.clearData(player);
+					player.getTags().forEach((x) => { player.removeTag(x); });
+					if (!bustedCounterObjective.hasParticipant(player)) {
+						bustedCounterObjective.setScore(player, 0);
+					}
+
+					// Ensure player is in correct game mode
+					player.setGameMode(GameMode.adventure);
+
+					// Get level definition
+					const levelDefinition: ILevel = LevelDefinitions.getLevelDefinitionByID(msg);
+					const levelNum = parseInt(levelDefinition.levelID.substring(0, levelDefinition.levelID.length - "-1".length));
+
+					// Add mandatory data
+					const maxEnergy = Utilities.gamebandInfo.rechargeMode[levelDefinition.rechargeLevel].max;
+					const playerEnergyTrackerDataNode: EnergyTracker = { "name": "energyTracker", "energyUnits": maxEnergy, "recharging": false, "usingRechargerID": -1, "rechargeLevel": levelDefinition.rechargeLevel };
+					DataManager.setData(player, playerEnergyTrackerDataNode);
+
+					const playerLevelInformationDataNode: LevelInformation = { "name": "levelInformation", "currentModes": [], "information": [{ "name": "alarmLevel", "level": 0 }, { "name": "gameLevel", "level": levelNum }, { "name": "playerInv", "inventory": [] }] };
+					levelDefinition.startingItems.forEach((item) => {
+						playerLevelInformationDataNode.information[2].inventory.push(item);
+					});
+					DataManager.setData(player, playerLevelInformationDataNode);
+					Utilities.reloadPlayerInv(player, playerLevelInformationDataNode);
+
+					clearObjectives();
+					levelDefinition.startObjectives.forEach((objData) => {
+						addUnfinishedObjective(objData.name, objData.sortOrder);
+					});
+					reloadSidebarDisplay();
+
+					player.onScreenDisplay.setTitle(`§o§7Level ${levelNum}`, { "fadeInDuration": 20, "fadeOutDuration": 20, "stayDuration": 160 });
+					player.teleport(Vector.v3ToVector(levelDefinition.loadElevatorLoc).add(new Vector(0, 4, 0)));
+					var elevatorInterval =  runElelevatorAnimation(Vector.v3ToVector(levelDefinition.loadElevatorLoc));
+
+					// Ensure parts far away are loaded
+					overworld.runCommand('tickingarea remove_all');
+					//overworld.runCommand('tickingarea add 3033 -60 129 3039 -69 132 "t1" true');
+
+					system.runTimeout(() => {
+						const entities = overworld.getEntities();
+						for (const entity of entities) {
+							//if (!["minecraft:player","minecraft:painting"].includes(entity.typeId)) entity.kill();
+						}
+						LevelConstructor.start();
+						levelDefinition.setup()
+					}, SECOND * 7.5); // After 7.5 seconds load level objects
+					system.runTimeout(() => { // After 10 seconds bring the player out of the elevator and end the interval
+						overworld.runCommand('tickingarea remove_all');
+						system.clearRun(elevatorInterval);
+						player.teleport(levelDefinition.startPlayerLoc);
+					}, SECOND * 10);
+					break;
 			}
 			break;
 		}
@@ -1235,7 +1292,14 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 			playerInvContainer.setItem(8, itemStack2);
 			Utilities.savePlayerInventory(player);
 
-			GameObjectiveManager.completeKeycardObjective(`Find ${colorInCase} Keycard`, sortOrder);
+			GameObjectiveManager.completeObjectiveNonStrict(`Find ${colorInCase} Keycard`, sortOrder);
+			break;
+		}
+		case "theheist:complete-objective": {
+			const valueArray = msg.split(/ /);
+			const objectiveName = valueArray[0];
+			const objectiveSortOrder = parseInt(valueArray[1]);
+			GameObjectiveManager.completeObjectiveNonStrict(objectiveName, objectiveSortOrder);
 			break;
 		}
 		case "theheist:attempt_end_level": {
@@ -1301,14 +1365,6 @@ function runElelevatorAnimation(middleBottomPos: Vector): number {
 		elevatorIndex = elevatorIndex % 3;
 	}, 10); // Every 0.5 seconds update the elevator
 	return elevatorInterval;
-}
-
-// Maybe
-function createRechargeStation(x: number, z: number, energyTracker: object, rotation: number) {
-	const recharge = overworld.spawnEntity("minecraft:armor_stand", new Vector(x, rechargeHeight, z));
-	DataManager.setData(recharge, energyTracker);
-	Utilities.setBlock({ x, y: rechargeHeight, z }, "theheist:recharge_station", { "theheist:rotation": rotation });
-	return recharge;
 }
 
 /**

@@ -19,7 +19,7 @@ export default class GameObjectiveManager {
 		this.reloadSidebar();
 	}
 
-	static completeKeycardObjective(objective: string, sortOrder: number) {
+	static completeObjectiveNonStrict(objective: string, sortOrder: number) {
 		if (!objectivesObjective.hasParticipant(`§c${objective}§r`)) this.addObjective(objective, sortOrder, false); // Ensure objective is made
 		objectivesObjective.removeParticipant(`§c${objective}§r`);
 		objectivesObjective.setScore(`§a${objective}§r`, sortOrder);

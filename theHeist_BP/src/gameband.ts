@@ -1,4 +1,4 @@
-import { MolangVariableMap, BlockPermutation, EffectTypes, Vector3, world, system, Player, EntityInventoryComponent, EffectType, DisplaySlotId, ScoreboardObjective, Container, ItemStack, ItemLockMode, Entity, Dimension, ItemUseAfterEvent } from "@minecraft/server";
+import { MolangVariableMap, BlockPermutation, EffectTypes, Vector3, world, system, Player, EntityInventoryComponent, EffectType, DisplaySlotId, ScoreboardObjective, Container, ItemStack, ItemLockMode, Entity, Dimension, ItemUseAfterEvent, BlockVolumeBase } from "@minecraft/server";
 import Vector from "./Vector";
 import DataManager from "./DataManager";
 import Utilities from "./Utilities";
@@ -40,15 +40,6 @@ const loreItems = [
 ]
 
 const bustedCounterObjective: ScoreboardObjective = world.scoreboard.getObjective("bustedCounter")!;
-
-/**
- * Layer information:
- * 20: Level map
- * 0: Hackable consoles
- * -5: Recharge stations
- * -10: Cameras, sonars, and robots
- * -15: Cameras and sonars mappout area
- */
 
 const levelMapHeight = 20;
 const consolesHeight = -15;
@@ -199,7 +190,7 @@ function hackingMode(lvl: number, player: Player) {
 				var blockSetter2 = {"type": "set_block", "do": { "x": block.x, "y": block.y, "z": block.z, "block": `theheist:${block.type}`, "permutations": {"theheist:rotation": block.rotation, "theheist:unlocked": 2} }, "delay": 40};
 				armorStandActionTracker.actions.unshift( blockSetter1, blockSetter2 );
 			}*/
-			armorStandActionTracker.actions.forEach((x: Action) => {
+			armorStandActionTracker.actions.forEach((x: IAction) => {
 				if (!x.delay) {
 					action(x, player);
 				} else {
@@ -239,7 +230,7 @@ function resetPlayerInventory(player: Player) {
 	});
 }
 
-function action(actionInfo: Action, player: Player) {
+function action(actionInfo: IAction, player: Player) {
 	switch (actionInfo.type) {
 		case "slideshow":
 			var slideshowID = actionInfo.do;
@@ -333,7 +324,7 @@ function action(actionInfo: Action, player: Player) {
 			};
 			var armorStand = overworld.getEntities(query)[0];
 			var actionTracker = DataManager.getData(armorStand, "actionTracker");
-			actionTracker.actions.forEach((x: Action) => {
+			actionTracker.actions.forEach((x: IAction) => {
 				if (x.type == "hack_console") return;
 				if (!x.delay) {
 					action(x, player);
@@ -455,7 +446,7 @@ function keycard(keycardType: string, player: Player) {
 			if (!Utilities.inventoryContainerHasItem(playerInvContainer, "minecraft:lapis_lazuli")) return;
 		}
 	}
-	actionTracker.actions.forEach((x: Action) => {
+	actionTracker.actions.forEach((x: IAction) => {
 		if (!x.delay) {
 			action(x, player);
 		} else {
@@ -673,7 +664,7 @@ system.runInterval(() => {
 					resetPlayerInventory(player);
 					if (armorStandEnergyTracker.actions) {
 						// Energy tracker has actions to run
-						armorStandEnergyTracker.actions.forEach((x: Action) => {
+						armorStandEnergyTracker.actions.forEach((x: IAction) => {
 							action(x, player);
 						});
 					}
@@ -684,17 +675,5 @@ system.runInterval(() => {
 		DataManager.setData(player, playerEnergyTracker);
 	}
 	//player.sendMessage(parseInt(playerEnergyTracker.energyUnits) + "||" + player.level);
-	// Set map if possible
-	const playerRotX = player.getRotation().x;
-	if (playerRotX < 90 && playerRotX > 80) {
-		// Player is looking down
-		// Only possible slot for the sensor mode to be in
-		const itemStack = playerInvContainer.getItem(2);
-	}
+	SensorModeFunc.tryMap(player, playerLevelInformation);
 });
-
-interface Action {
-	type: string;
-	do: any;
-	delay?: number;
-}

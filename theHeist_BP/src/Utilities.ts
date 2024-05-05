@@ -128,6 +128,14 @@ export default class Utilities {
 			"endZ": 161,
 			"mainFloorBlock": "minecraft:red_terracotta",
 			"prisonLoc": new Vector(3109.5, -59, 91.5)
+		},
+		"level_-2": {
+			"startX": 4060,
+			"startZ": 91,
+			"endX": 4133,
+			"endZ": 159,
+			"mainFloorBlock": "minecraft:orange_terracotta",
+			"prisonLoc": new Vector(4110.5, -60, 155.5)
 		}
 	}
 
