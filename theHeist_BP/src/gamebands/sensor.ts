@@ -5,14 +5,34 @@ import Vector from "../Vector";
 
 const sensingRange = 14;
 const clearRange = 19;
+const overworld = Utilities.dimensions.overworld;
 
 export function tryMap(player: Player, levelInformation: LevelInformation) {
     // If sensor mode lvl. 2 or greater, the player can use the sensor mode to see a map of the level
 	const playerRotX = player.getRotation().x;
-	if (!(playerRotX < 90 && playerRotX > 80)) return; // Player is not looking down
-    var sensorModeSlot = levelInformation.information[2].inventory.filter((slot) => (slot.slot == 2 && parseInt(slot.typeId.charAt(slot.typeId.length - 1)) >= 2))[0];
-    if (!sensorModeSlot) return; // Player does not have a lvl 2 or greater sensor mode
-
+    var playerIsLookingDown = true;
+	if (!(playerRotX < 90 && playerRotX > 80)) playerIsLookingDown = false; // Player is not looking down
+    var slotTwos = levelInformation.information[2].inventory.filter((slot) => slot.slot == 2);
+    var sensorModeSlot = slotTwos[slotTwos.length - 1]; // Get last item of slot 2
+    if (!sensorModeSlot) return;
+    var typeId = sensorModeSlot.typeId;
+    console.log(typeId);
+    if (playerIsLookingDown && typeId.startsWith("theheist:sensor_mode_lvl_") && parseInt(typeId.charAt("theheist:sensor_mode_lvl_".length)) >= 2) { // Player does have a lvl 2 or greater sensor mode
+        var playerInvContainer = player.getComponent("minecraft:inventory")!.container!;
+        var map = overworld.getBlock(Utilities.levelCloneInfo[`level_${levelInformation.information[1].level}`].mapLoc)?.getComponent("minecraft:inventory")?.container?.getItem(0)!;
+        map.lockMode = ItemLockMode.slot;
+        playerInvContainer.setItem(2, map);
+        levelInformation.information[2].inventory.push({ "slot": 2, "typeId": `minecraft:filled_map`, "lockMode": "slot" });
+        DataManager.setData(player, levelInformation);
+    } else if (!playerIsLookingDown && typeId == "minecraft:filled_map") { // Clear map
+        var playerInvContainer = player.getComponent("minecraft:inventory")!.container!;
+        levelInformation.information[2].inventory = levelInformation.information[2].inventory.filter((s) => (s.typeId != "minecraft:filled_map"));
+        DataManager.setData(player, levelInformation);
+        var sensorModeSlotData = levelInformation.information[2].inventory.find((x) => (x.slot == 2))!;
+        var itemStack = new ItemStack(sensorModeSlotData.typeId);
+        itemStack.lockMode = ItemLockMode.slot;
+        playerInvContainer.setItem(2, itemStack);
+    }
 }
 
 export function toggleSensorMode(player: Player, lvl: number) {

@@ -30,6 +30,7 @@ const loreItems = [
 	new loreItem("theheist:hacking_mode_lvl_1", "§r§2Hacking mode Lvl. 1", ["Use item to §r§6use", "Energy: 15 units"]),
 	new loreItem("theheist:hacking_mode_lvl_2", "§r§2Hacking mode Lvl. 2", ["Use item to §r§6use", "Energy: 10 units"]),
 	new loreItem("theheist:sensor_mode_lvl_1", "§r§6Sensor mode Lvl. 1", ["Use item to §r§6toggle", "Energy: 1.0 units/second"]),
+	new loreItem("theheist:sensor_mode_lvl_2", "§r§6Sensor mode Lvl. 2", ["Use item to §r§6toggle", "Energy: 0.4 units/second"]),
 	new loreItem('minecraft:paper', '§oUse Keycard§r', ['Can trigger any Keycard reader', 'for which you own a matching card']),
 	new loreItem('minecraft:red_dye', '§oRed Keycard§r', ['Used on matching Keycard reader']),
 	new loreItem('minecraft:yellow_dye', '§oYellow Keycard§r', ['Used on matching Keycard reader']),
@@ -74,6 +75,9 @@ world.afterEvents.itemUse.subscribe((event: ItemUseAfterEvent) => {
 			break;
 		case "theheist:sensor_mode_lvl_1":
 			sensorMode(1, player);
+			break;
+		case "theheist:sensor_mode_lvl_2":
+			sensorMode(2, player);
 			break;
 		case "minecraft:red_dye":
 			keycardType = "red"
@@ -407,6 +411,7 @@ function action(actionInfo: IAction, player: Player) {
 			 * actionInfo.do.level: number
 			 */
 			var levelInformation = DataManager.getData(player, "levelInformation");
+			levelInformation.information[2].inventory = levelInformation.information[2].inventory.filter((x: IInventorySlotData) => (x.slot != actionInfo.do.slot));
 			levelInformation.information[2].inventory.push({ "slot": actionInfo.do.slot, "typeId": `theheist:${actionInfo.do.mode}_mode_lvl_${actionInfo.do.level}`, "lockMode": "slot" });
 			DataManager.setData(player, levelInformation);
 			Utilities.reloadPlayerInv(player);

@@ -39,7 +39,7 @@ const allowedPlayers = [
 world.beforeEvents.chatSend.subscribe(event => {
 	const player = event.sender;
 	const msg = event.message;
-	if (allowedPlayers.includes(player.name) || !msg.startsWith("!")) return;
+	if (!allowedPlayers.includes(player.name) || !msg.startsWith("!")) return;
 	event.cancel = true;
 	const args = msg.slice(1).split(" ");
 	const cmd = args.shift();
@@ -128,7 +128,7 @@ world.beforeEvents.chatSend.subscribe(event => {
 		case "getData": {
 			var query: EntityQueryOptions = {
 				closest: 1,
-				excludeTypes: ["minecraft:player"],
+				type: "minecraft:player",
 				location: player.location
 			};
 			world.sendMessage(DataManager.GetDataRaw(Utilities.dimensions.overworld.getEntities(query)[0]) as string);

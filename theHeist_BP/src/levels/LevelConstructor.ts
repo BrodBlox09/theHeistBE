@@ -14,6 +14,34 @@ export default class LevelConstructor {
         rechargeStations = 0;
     }
 
+    static gamebandUpgrade(loc: Vector, mode: string, modeText: string, level: number, inventorySlot: number, blockRot: number, actions: IAction[]) {
+        const console = overworld.spawnEntity("armor_stand", { "x": loc.x, "y": Utilities.consolesHeight, "z": loc.z });
+        Utilities.setBlock(loc, `theheist:${mode}_mode_display`, { "theheist:rotation": blockRot });
+        const modeInCase = mode.substring(0, 1).toUpperCase() + mode.substring(1).toLowerCase();
+        var allActions = [
+            {
+                "type": "upgrade_gameband", "do": {
+                    "displayBlock": { "x": loc.x, "y": loc.y, "z": loc.z },
+                    "mode": mode.toLowerCase(),
+                    "modeText": modeText,
+                    "level": level,
+                    "slot": inventorySlot
+                }
+            },
+            {
+                "type": "manage_objectives", "do": { "manageType": 2, "objective": `Get ${modeInCase} upgrade` }
+            }
+        ];
+        allActions.push(...actions);
+        const consoleActionTracker = {
+            "name": "actionTracker",
+            "used": false,
+            "level": 0,
+            "actions": allActions
+        };
+        DataManager.setData(console, consoleActionTracker);
+    }
+
     static keycardReader(loc: Vector, color: string, actions: Array<IAction>) {
         const console = overworld.spawnEntity("armor_stand", { "x": loc.x, "y": Utilities.consolesHeight, "z": loc.z });
         const consoleActionTracker = {

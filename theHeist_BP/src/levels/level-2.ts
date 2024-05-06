@@ -65,6 +65,33 @@ setup: () => {
     ])
 } // Server Room
 
+{
+    LevelConstructor.computer(new Vector(4078.5, -59, 134.5), "Mail", 4, [
+        {
+            "type": "display_mail", "do": { "mailID": 201 }, "delay": 40
+        },
+        {
+            "type": "manage_objectives", "do": { "manageType": 1, "objective": "Read elevator code", "sortOrder": 0 }, "delay": 40
+        }
+    ]);
+    LevelConstructor.computer(new Vector(4076.5, -59, 132.5), "Mail", 5, [
+        {
+            "type": "display_mail", "do": { "mailID": 202 }, "delay": 40
+        }
+    ]);
+} // Web Development
+
+{
+    Utilities.setBlock(new Vector(4068,  -60, 138), "theheist:custom_door_2_bottom", { "theheist:rotation": 4, "theheist:unlocked": false });
+    LevelConstructor.keypad(new Vector(4069.5, -59, 137.5), 2, 4, [{
+        "type": "set_block", "do": { "x": 4068, "y": -60, "z": 138, "block": "theheist:custom_door_2_bottom", "permutations": { "theheist:rotation": 4, "theheist:unlocked": true } }, "delay": 40
+    }]);
+    LevelConstructor.computer(new Vector(4067.5, -59, 132.5), "Research info", 5, [{
+        "type": "display_research", "do": { "researchID": 204 }, "delay": 40
+    }]);
+    LevelConstructor.gamebandUpgrade(new Vector(4062.5, -59, 133.5), "sensor", "§6§lSensor Lvl. 2", 2, 2, 4, []);
+} // Sensor Lvl.2 Research
+
 }
 };
 
