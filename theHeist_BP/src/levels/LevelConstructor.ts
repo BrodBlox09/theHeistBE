@@ -42,6 +42,34 @@ export default class LevelConstructor {
         DataManager.setData(console, consoleActionTracker);
     }
 
+    static newGameband(loc: Vector, mode: string, modeText: string, inventorySlot: number, blockRot: number, actions: IAction[]) {
+        const console = overworld.spawnEntity("armor_stand", { "x": loc.x, "y": Utilities.consolesHeight, "z": loc.z });
+        Utilities.setBlock(loc, `theheist:${mode}_mode_display`, { "theheist:rotation": blockRot });
+        const modeInCase = mode.substring(0, 1).toUpperCase() + mode.substring(1).toLowerCase();
+        var allActions = [
+            {
+                "type": "upgrade_gameband", "do": {
+                    "displayBlock": { "x": loc.x, "y": loc.y, "z": loc.z },
+                    "mode": mode.toLowerCase(),
+                    "modeText": modeText,
+                    "level": 1,
+                    "slot": inventorySlot
+                }
+            },
+            {
+                "type": "manage_objectives", "do": { "manageType": 2, "objective": `Get ${modeInCase} mode` }
+            }
+        ];
+        allActions.push(...actions);
+        const consoleActionTracker = {
+            "name": "actionTracker",
+            "used": false,
+            "level": 0,
+            "actions": allActions
+        };
+        DataManager.setData(console, consoleActionTracker);
+    }
+
     static keycardReader(loc: Vector, color: string, actions: Array<IAction>) {
         const console = overworld.spawnEntity("armor_stand", { "x": loc.x, "y": Utilities.consolesHeight, "z": loc.z });
         const consoleActionTracker = {
@@ -70,6 +98,27 @@ export default class LevelConstructor {
             "used": false,
             "level": level,
             "actions": allActions
+        };
+        DataManager.setData(console, consoleActionTracker);
+    }
+
+    static keypadWithPrereq(loc: Vector, level: number, blockRot: number, actions: Array<IAction>, prereq: any, desc: string = "") {
+        const console = overworld.spawnEntity("armor_stand", { "x": loc.x, "y": Utilities.consolesHeight, "z": loc.z });
+        Utilities.setBlock(loc, "theheist:keypad", { "theheist:rotation": blockRot });
+        if (desc.length > 0) overworld.spawnEntity("theheist:hover_text", loc).nameTag = desc;
+        var allActions = actions;
+        allActions.push({
+            "type": "set_block", "do": { "x": loc.x, "y": loc.y, "z": loc.z, "block": "theheist:keypad", "permutations": { "theheist:rotation": blockRot, "theheist:unlocked": 1 } }
+        },
+            {
+                "type": "set_block", "do": { "x": loc.x, "y": loc.y, "z": loc.z, "block": "theheist:keypad", "permutations": { "theheist:rotation": blockRot, "theheist:unlocked": 2 } }, "delay": 40
+            });
+        const consoleActionTracker = {
+            "name": "actionTracker",
+            "used": false,
+            "level": level,
+            "actions": allActions,
+            "prereq": prereq
         };
         DataManager.setData(console, consoleActionTracker);
     }

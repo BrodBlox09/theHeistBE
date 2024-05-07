@@ -33,6 +33,15 @@ export default class GameObjectiveManager {
 		this.reloadSidebar();
 	}
 
+	static objectiveIsComplete(objective: string) {
+		var objectives = objectivesObjective.getParticipants().map(x => x.displayName);
+		var objComplete = false;
+		objectives.forEach((obj) => {
+			if (obj.startsWith("§a") && obj.slice(2, obj.length - 2) == objective) objComplete = true;
+		});
+		return objComplete;
+	}
+
 	static reloadSidebar() {
 		this.hideSidebar();
 		this.showSidebar();

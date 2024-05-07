@@ -1,0 +1,69 @@
+{
+    "format_version": "1.20.60",
+    "minecraft:block": {
+        "description": {
+            "identifier": "theheist:xray_mode_display",
+            "is_experimental": false,
+            "states": {
+                "theheist:rotation": [-1, 2, 3, 4, 5]
+            }
+        },
+        "components": {
+            "minecraft:geometry": "geometry.xray_mode",
+            "minecraft:material_instances": {
+                "icon": {
+                    "texture": "xray_icon"
+                },
+                "*": {
+                    "texture": "xray_mode"
+                }
+            },
+            "minecraft:selection_box": {
+                "origin": [ -6, 5, -2 ],
+                "size": [ 12, 11, 4 ]
+            }
+        },
+        "permutations": [
+            {
+                "condition": "query.block_state('theheist:rotation') == 5",
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [ 0, 180, 0],
+                        "scale": [ 0.45, 0.45, 0.45 ],
+                        "translation": [ 0, -0.5, 0 ]
+                    }
+                }
+            },
+            {
+                "condition": "query.block_state('theheist:rotation') == 4",
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [ 0, 0, 0],
+                        "scale": [ 0.45, 0.45, 0.45 ],
+                        "translation": [ 0, -0.5, 0 ]
+                    }
+                }
+            },
+            {
+                "condition": "query.block_state('theheist:rotation') == 2",
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [ 0, 270, 0],
+                        "scale": [ 0.45, 0.45, 0.45 ],
+                        "translation": [ 0, -0.5, 0 ]
+                    }
+                }
+            },
+            {
+                "condition": "query.block_state('theheist:rotation') == 3",
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [ 0, 90, 0],
+                        "scale": [ 0.45, 0.45, 0.45 ],
+                        "translation": [ 0, -0.5, 0 ]
+                    }
+                }
+            }
+        ]
+    }
+}

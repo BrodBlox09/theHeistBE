@@ -609,6 +609,13 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 						for (const entity of entities) {
 							if (!["minecraft:player","minecraft:painting"].includes(entity.typeId)) entity.kill();
 						}
+						// Clear sensor residue
+						const levelCloneInfo = Utilities.levelCloneInfo[`level_-1`];
+						overworld.fillBlocks(new Vector(levelCloneInfo.startX, Utilities.cameraMappingHeight - 4, levelCloneInfo.startZ), new Vector(levelCloneInfo.endX, Utilities.cameraMappingHeight - 4, levelCloneInfo.endZ), "air");
+						overworld.runCommandAsync(`fill ${levelCloneInfo.startX} ${Utilities.levelHeight} ${levelCloneInfo.startZ} ${levelCloneInfo.endX} ${Utilities.levelHeight} ${levelCloneInfo.endZ} air replace theheist:robot_path`);
+						overworld.fillBlocks(new Vector(levelCloneInfo.startX, Utilities.levelHeight - 1, levelCloneInfo.startZ), new Vector(levelCloneInfo.endX, Utilities.levelHeight - 1, levelCloneInfo.endZ), levelCloneInfo.mainFloorBlock, {
+							"matchingBlock": BlockPermutation.resolve("theheist:camera_sight")
+						});
 						// Camera 0
 						const camera0 = overworld.spawnEntity("armor_stand", { "x": 3066.5, "y": cameraHeight, "z": 105.5 });
 						camera0.setRotation({ "x": 0, "y": 180 });
@@ -691,6 +698,20 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 							"type": "camera"
 						};
 						DataManager.setData(camera5, camera5DataNode);
+						// Camera 6
+						const camera6 = overworld.spawnEntity("armor_stand", { "x": 3045.5, "y": cameraHeight, "z": 115.5 });
+						camera6.setRotation({ "x": 0, "y": -62 });
+						overworld.spawnEntity("theheist:camera", { "x": 3045.5, "y": -58, "z": 115.5 }).setRotation({ "x": 0, "y": -62 });
+						const camera6DataNode = {
+							"name": "cameraTracker",
+							"isRobot": false,
+							"rotation": -62,
+							"swivel": [1, -62, -16],
+							"disabled": false,
+							"cameraID": 6,
+							"type": "camera"
+						};
+						DataManager.setData(camera6, camera6DataNode);
 
 						// Robot 0
 						const robot0 = overworld.spawnEntity("armor_stand", { "x": 3088.5, "y": cameraHeight, "z": 134.5 });
@@ -1251,9 +1272,16 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 					system.runTimeout(() => {
 						const entities = overworld.getEntities();
 						for (const entity of entities) {
-							//if (!["minecraft:player","minecraft:painting"].includes(entity.typeId)) entity.kill();
+							if (!["minecraft:player","minecraft:painting"].includes(entity.typeId)) entity.kill();
 						}
-						LevelConstructor.start();
+						// Clear sensor mode residue
+						const levelCloneInfo = Utilities.levelCloneInfo[`level_${levelNum}`];
+						overworld.fillBlocks(new Vector(levelCloneInfo.startX, Utilities.cameraMappingHeight - 4, levelCloneInfo.startZ), new Vector(levelCloneInfo.endX, Utilities.cameraMappingHeight - 4, levelCloneInfo.endZ), "air");
+						overworld.runCommandAsync(`fill ${levelCloneInfo.startX} ${Utilities.levelHeight} ${levelCloneInfo.startZ} ${levelCloneInfo.endX} ${Utilities.levelHeight} ${levelCloneInfo.endZ} air replace theheist:robot_path`);
+						overworld.fillBlocks(new Vector(levelCloneInfo.startX, Utilities.levelHeight - 1, levelCloneInfo.startZ), new Vector(levelCloneInfo.endX, Utilities.levelHeight - 1, levelCloneInfo.endZ), levelCloneInfo.mainFloorBlock, {
+							"matchingBlock": BlockPermutation.resolve("theheist:camera_sight")
+						});
+
 						levelDefinition.setup()
 					}, SECOND * 7.5); // After 7.5 seconds load level objects
 					system.runTimeout(() => { // After 10 seconds bring the player out of the elevator and end the interval
@@ -1297,8 +1325,8 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 		}
 		case "theheist:complete-objective": {
 			const valueArray = msg.split(/ /);
-			const objectiveName = valueArray[0];
-			const objectiveSortOrder = parseInt(valueArray[1]);
+			const objectiveSortOrder = parseInt(valueArray.shift()!);
+			const objectiveName = valueArray.join(" ");
 			GameObjectiveManager.completeObjectiveNonStrict(objectiveName, objectiveSortOrder);
 			break;
 		}

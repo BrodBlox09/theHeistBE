@@ -92,6 +92,65 @@ setup: () => {
     LevelConstructor.gamebandUpgrade(new Vector(4062.5, -59, 133.5), "sensor", "§6§lSensor Lvl. 2", 2, 2, 4, []);
 } // Sensor Lvl.2 Research
 
+{
+    LevelConstructor.computer(new Vector(4091.5, -59, 158.5), "Mail", 3, [{
+        "type": "display_mail", "do": { "mailID": 206 }, "delay": 40
+    }]);
+    LevelConstructor.computer(new Vector(4103.5, -59, 145.5), "Mail", 2, [{
+        "type": "display_mail", "do": { "mailID": 205 }, "delay": 40
+    },
+    {
+        "type": "manage_objectives", "do": { "manageType": 1, "objective": "Find Green Keycard", "sortOrder": 1 }, "delay": 40
+    }]);
+    LevelConstructor.keycardDrawer(new Vector(4104, -60, 158), "red");
+} // Customer Service
+
+{
+    Utilities.setBlock(new Vector(4121, -60, 142), "theheist:custom_door_3_bottom", { "theheist:rotation": 5, "theheist:unlocked": false });
+    LevelConstructor.keycardReader(new Vector(4120, -59, 144), "green", [
+        {
+            "type": "set_block", "do": { "x": 4121, "y": -60, "z": 142, "block": "theheist:custom_door_3_bottom", "permutations": { "theheist:rotation": 5, "theheist:unlocked": true, "theheist:open": true  } }
+        },
+        {
+            "type": "play_sound", "do": { "soundID": "random.door_open" }
+        }
+    ]);
+    LevelConstructor.computer(new Vector(4123.5, -59, 150.5), "Research info", 3, [
+        {
+            "type": "display_research", "do": { "researchID": 203 }, "delay": 40
+        }
+    ]);
+    LevelConstructor.rechargeStation(new Vector(4122.5, -60, 146.5), 4);
+    LevelConstructor.newGameband(new Vector(4131.5, -59, 146.5), "xray", "§4§lXRay Lvl. 1", 3, 5, []);
+} // Xray Research
+
+{
+    LevelConstructor.staticCamera(new Vector(4100.5, -58, 114.5), 70);
+    LevelConstructor.staticCamera(new Vector(4102.5, -58, 140.5), 70);
+    LevelConstructor.dynamicCamera(new Vector(4079.5, -58, 118.5), [1, 115, 245]);
+    LevelConstructor.dynamicCamera(new Vector(4120.5, -58, 144.5), [1, 40, 160]);
+
+    LevelConstructor.cameraRobot(new Vector(4113.5, -59.25, 111.5), 0);
+    LevelConstructor.cameraRobot(new Vector(4084.5, -59.25, 150.5), 0);
+    LevelConstructor.cameraRobot(new Vector(4119.5, -59.25, 129.5), 0);
+} // Security Stuffs
+
+{
+    Utilities.setBlock(new Vector(4081, -60, 123), "theheist:custom_door_4_bottom_l", { "theheist:rotation": 4, "theheist:unlocked": false });
+    Utilities.setBlock(new Vector(4081, -60, 122), "theheist:custom_door_4_bottom_r", { "theheist:rotation": 4, "theheist:unlocked": false });
+    LevelConstructor.keypadWithPrereq(new Vector(4082.5, -59, 125.5), 0, 4, [
+        {
+            "type": "set_block", "do": { "x": 4081, "y": -60, "z": 123, "block": "theheist:custom_door_4_bottom_l", "permutations": { "theheist:rotation": 4, "theheist:open": true } }, "delay": 40
+        },
+        {
+            "type": "set_block", "do": { "x": 4081, "y": -60, "z": 122, "block": "theheist:custom_door_4_bottom_r", "permutations": { "theheist:rotation": 4, "theheist:open": true } }, "delay": 40
+        },
+        {
+            "type": "play_sound", "do": { "soundID": "random.door_open" }, "delay": 40
+        }
+    ], { "reqObj": "Read elevator code" });
+} // Elevator
+
 }
 };
 

@@ -112,6 +112,11 @@ export default class Utilities {
 			2: {
 				"cost": 0.4
 			}
+		},
+		"xrayMode": {
+			1: {
+				"cost": 1.33
+			}
 		}
 	}
 
@@ -140,7 +145,7 @@ export default class Utilities {
 			"endX": 4133,
 			"endZ": 159,
 			"mainFloorBlock": "minecraft:orange_terracotta",
-			"prisonLoc": new Vector(4110.5, -60, 155.5),
+			"prisonLoc": new Vector(4110.5, -55, 155.5),
 			"mapLoc": new Vector(4098, -55, 115)
 		}
 	}

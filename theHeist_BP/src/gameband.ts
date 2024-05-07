@@ -4,7 +4,7 @@ import DataManager from "./DataManager";
 import Utilities from "./Utilities";
 import GameObjectiveManager from "./GameObjectiveManager";
 import * as SensorModeFunc from "./gamebands/sensor";
-import { CountQueuingStrategy } from "stream/web";
+import * as XRayModeFunc from "./gamebands/xray";
 import VoiceOverManager from "./VoiceOverManager";
 
 /**
@@ -31,6 +31,7 @@ const loreItems = [
 	new loreItem("theheist:hacking_mode_lvl_2", "§r§2Hacking mode Lvl. 2", ["Use item to §r§6use", "Energy: 10 units"]),
 	new loreItem("theheist:sensor_mode_lvl_1", "§r§6Sensor mode Lvl. 1", ["Use item to §r§6toggle", "Energy: 1.0 units/second"]),
 	new loreItem("theheist:sensor_mode_lvl_2", "§r§6Sensor mode Lvl. 2", ["Use item to §r§6toggle", "Energy: 0.4 units/second"]),
+	new loreItem("theheist:xray_mode_lvl_1", "§r§4Xray mode Lvl. 1", ["Use item to §r§6toggle", "Energy: 1.33 units/second"]),
 	new loreItem('minecraft:paper', '§oUse Keycard§r', ['Can trigger any Keycard reader', 'for which you own a matching card']),
 	new loreItem('minecraft:red_dye', '§oRed Keycard§r', ['Used on matching Keycard reader']),
 	new loreItem('minecraft:yellow_dye', '§oYellow Keycard§r', ['Used on matching Keycard reader']),
@@ -79,6 +80,9 @@ world.afterEvents.itemUse.subscribe((event: ItemUseAfterEvent) => {
 		case "theheist:sensor_mode_lvl_2":
 			sensorMode(2, player);
 			break;
+		case "theheist:xray_mode_lvl_1":
+			xrayMode(1, player);
+			break;
 		case "minecraft:red_dye":
 			keycardType = "red"
 		case "minecraft:yellow_dye":
@@ -93,6 +97,18 @@ world.afterEvents.itemUse.subscribe((event: ItemUseAfterEvent) => {
 			break;
 	}
 });
+
+/**
+ * @description Mode Type: Loop
+ * @param lvl 
+ * @param player 
+ * @returns 
+ */
+function xrayMode(lvl: number, player: Player) {
+	/* NOTE: When a region is cloned, the region defined by the first 2 Vector3s will be cloned by the block which is the lowest and most NW (most negative in every direction xyz).
+	*  A copy of that block is then translated to the third Vector3 as well as a copy of the rest of the region and then cloned there. */
+	XRayModeFunc.toggleXRayMode(player, lvl);
+}
 
 /**
  * @description Mode Type: Loop
@@ -183,6 +199,12 @@ function hackingMode(lvl: number, player: Player) {
 			if (Utilities.gamebandInfo.hackingMode[lvl].cost > playerEnergyTracker.energyUnits) {
 				player.sendMessage("§cNot enough energy!");
 				return;
+			}
+			if (armorStandActionTracker.prereq) { // If there are any prerequisites, ensure they are true here
+				var prereq = armorStandActionTracker.prereq;
+				if (prereq.reqObj) { // An objective must be completed first
+					if (!GameObjectiveManager.objectiveIsComplete(prereq.reqObj)) return;
+				}
 			}
 			player.playSound('map.hack_use');
 			if (armorStandActionTracker.level != 0) playerEnergyTracker.energyUnits -= Utilities.gamebandInfo.hackingMode[lvl].cost;
@@ -602,6 +624,7 @@ system.runInterval(() => {
 	var playerLevelInformation: LevelInformation = DataManager.getData(player, "levelInformation");
 
 	if (playerEnergyTracker && playerLevelInformation) SensorModeFunc.sensorTick(player, playerLevelInformation, playerEnergyTracker);
+	if (playerEnergyTracker && playerLevelInformation) XRayModeFunc.xrayTick(player, playerLevelInformation, playerEnergyTracker);
 
 	if ((playerEnergyTracker && playerEnergyTracker.energyUnits != player.level) || (playerLevelInformation && player.xpEarnedAtCurrentLevel != ((((playerLevelInformation.information[0].level / 100) - 0.06) * 742) + 41))) {
 		player.resetLevel();

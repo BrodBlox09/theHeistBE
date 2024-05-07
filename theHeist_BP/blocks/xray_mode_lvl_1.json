@@ -1,0 +1,20 @@
+{
+    "format_version": "1.16.100",
+    "minecraft:block": {
+        "description": {
+            "identifier": "theheist:xray_mode_lvl_1",
+            "is_experimental": false
+        },
+        "components": {
+            "minecraft:geometry": "geometry.xray_mode",
+            "minecraft:material_instances": {
+                "icon": {
+                    "texture": "xray_icon"
+                },
+                "*": {
+                    "texture": "xray_mode"
+                }
+            }
+        }
+    }
+}

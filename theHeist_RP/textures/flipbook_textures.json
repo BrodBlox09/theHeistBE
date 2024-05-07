@@ -97,6 +97,18 @@
         "blend_frames": false
     },
     {
+        "flipbook_texture": "textures/blocks/xray_icon_enchanted",
+        "atlas_tile": "xray_icon_enchanted",
+        "ticks_per_frame": 1,
+        "blend_frames": true
+    },
+    {
+        "flipbook_texture": "textures/blocks/xray_mode_enchanted",
+        "atlas_tile": "xray_mode_enchanted",
+        "ticks_per_frame": 1,
+        "blend_frames": true
+    },
+    {
         "flipbook_texture": "textures/blocks/gameband-displays/power_green",
         "atlas_tile": "power_green",
         "ticks_per_frame": 40,
