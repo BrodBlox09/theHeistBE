@@ -1350,7 +1350,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 			}
 			bustedCounterObjective.setScore(player, 0);
 
-			if (currLevel != -1) overworld.runCommandAsync(`scriptevent theheist:load-level ${currLevel - 1}-1`);
+			if (currLevel != -2) overworld.runCommandAsync(`scriptevent theheist:load-level ${currLevel - 1}-1`);
 			else endDemo(player);
 			break;
 		}
