@@ -108,6 +108,14 @@ export default class Utilities {
 		"sensorMode": {
 			1: {
 				"cost": 1.0
+			},
+			2: {
+				"cost": 0.4
+			}
+		},
+		"xrayMode": {
+			1: {
+				"cost": 1.33
 			}
 		}
 	}
@@ -119,7 +127,8 @@ export default class Utilities {
 			"endX": 2022,
 			"endZ": 77,
 			"mainFloorBlock": "minecraft:brown_terracotta",
-			"prisonLoc": new Vector(0,0,0)
+			"prisonLoc": new Vector(0,0,0),
+			"mapLoc": new Vector(0,0,0)
 		},
 		"level_-1": {
 			"startX": 3028,
@@ -127,7 +136,17 @@ export default class Utilities {
 			"endX": 3109,
 			"endZ": 161,
 			"mainFloorBlock": "minecraft:red_terracotta",
-			"prisonLoc": new Vector(3109.5, -59, 91.5)
+			"prisonLoc": new Vector(3109.5, -59, 91.5),
+			"mapLoc": new Vector(0,0,0)
+		},
+		"level_-2": {
+			"startX": 4060,
+			"startZ": 91,
+			"endX": 4133,
+			"endZ": 159,
+			"mainFloorBlock": "minecraft:orange_terracotta",
+			"prisonLoc": new Vector(4110.5, -55, 155.5),
+			"mapLoc": new Vector(4098, -55, 115)
 		}
 	}
 

@@ -1,4 +1,5 @@
-import { world, system, GameMode, TicksPerDay, BlockPermutation, Player } from "@minecraft/server";
+import { world, system, GameMode, TicksPerDay, BlockPermutation, Player, EntityQueryOptions } from "@minecraft/server";
+import { solidToTransparent } from "./gamebands/xray";
 import * as SensorModeFunc from "./gamebands/sensor";
 import DataManager from "./DataManager";
 import Utilities from "./Utilities";
@@ -8,16 +9,14 @@ import Vector from "./Vector";
  * The alarm XP bar texture can sometimes, seemingly at random, break and use a strange default-looking one. Just reload the world until you get the custom xp bar.
  */
 
-const levelMapHeight = 20;
-const consolesHeight = -15;
-const rechargeHeight = -20;
-const cameraHeight = -25;
-const cameraMappingHeight = -30;
+const cameraHeight = Utilities.cameraHeight;
+const cameraMappingHeight = Utilities.cameraMappingHeight;
 const robotPathHeight = -49;
 const levelHeight = -59;
 
 const cameraFOV = 40;
-const rayDensity = 11;
+const rayDensity = 12;
+const xrayTransparentBlocks = solidToTransparent.map(x => x.transparent);
 
 const overworld = Utilities.dimensions.overworld;
 
@@ -28,12 +27,21 @@ function cameraCanSeeThrough(location: Vector): boolean {
 	var topBlock = Utilities.dimensions.overworld.getBlock(location);
 	var bottomBlock = Utilities.dimensions.overworld.getBlock(location.subtract(new Vector(0, 1, 0)));
 	if (!topBlock || !bottomBlock) return false;
+	var entityQueryOptions: EntityQueryOptions = {
+		"maxDistance": 1,
+		"type": "theheist:camera_robot",
+		"location": location
+	};
+	if (overworld.getEntities(entityQueryOptions).length > 0) return false;
 	var topBlockTID = topBlock.typeId;
 	var bottomBlockTID = bottomBlock.typeId;
+	if (xrayTransparentBlocks.includes(bottomBlockTID)) return false;
 	if (bottomBlockTID == "minecraft:air") return true;
 	if (topBlockTID == "minecraft:glass" && bottomBlockTID == "minecraft:glass") return true;
-	if (topBlockTID.endsWith("_stained_glass") && bottomBlockTID.endsWith("_stained_glass")) return true;
-	if (topBlockTID == "minecraft:air" && bottomBlockTID == "theheist:chair") return true;
+	if (topBlockTID.endsWith("_stained_glass") || bottomBlockTID.endsWith("_stained_glass")) return true;
+	if (topBlockTID.endsWith("_stained_glass_pane") || bottomBlockTID.endsWith("_stained_glass_pane")) return true;
+	//if (topBlockTID == "minecraft:air" && bottomBlockTID == "theheist:chair") return true;
+	if (topBlockTID == "minecraft:air") return true;
 	if (bottomBlockTID.startsWith("theheist:custom_door_") && bottomBlock.permutation.getState("theheist:open")) return true;
 	return false;
 }
@@ -98,6 +106,7 @@ function updateCameraRobots(player: Player, level: number, levelInformation: Lev
 		var cameraRobot = Utilities.dimensions.overworld.getEntities(cameraRobotQuery)[0];
 		cameraRobot.teleport(new Vector(cameraRobotArmorStand.location.x, -59.25, cameraRobotArmorStand.location.z));
 		cameraRobot.setRotation(cameraRobotArmorStand.getRotation());
+		Utilities.setBlock(new Vector(cameraRobotArmorStand.location.x, Utilities.cameraMappingHeight - 4, cameraRobotArmorStand.location.z), "theheist:robot_path");
 		if (system.currentTick % 100 == 0) overworld.playSound("map.robot", cameraRobot.location, { "volume": 2 }); // Every 5 seconds play robot ambience sound (100 = 20 * 5)
 	});
 }
@@ -203,7 +212,7 @@ function updateCameras(player: Player, level: number, playerLevelInformationData
 		system.runTimeout(()=>{SensorModeFunc.updateSensorDisplay(player, DataManager.getData(player, "levelInformation"));}, 2); // Ensure the new blocks load before we update sensor display
 	} else {
 		//X: sin(player.getRotation().x) * 0.7
-		const tpDistance = 0.7;
+		const tpDistance = 0.8;
 		const checkDistance = 0;
 		cameraMappingArmorStands.forEach((armorStand) => {
 			// x sin() needs to be inverted to work properly for some reason

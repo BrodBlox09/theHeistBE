@@ -19,7 +19,7 @@ export default class GameObjectiveManager {
 		this.reloadSidebar();
 	}
 
-	static completeKeycardObjective(objective: string, sortOrder: number) {
+	static completeObjectiveNonStrict(objective: string, sortOrder: number) {
 		if (!objectivesObjective.hasParticipant(`§c${objective}§r`)) this.addObjective(objective, sortOrder, false); // Ensure objective is made
 		objectivesObjective.removeParticipant(`§c${objective}§r`);
 		objectivesObjective.setScore(`§a${objective}§r`, sortOrder);
@@ -31,6 +31,15 @@ export default class GameObjectiveManager {
 		objectivesObjective.removeParticipant(`§c${objective}§r`);
 		objectivesObjective.removeParticipant(`§a${objective}§r`);
 		this.reloadSidebar();
+	}
+
+	static objectiveIsComplete(objective: string) {
+		var objectives = objectivesObjective.getParticipants().map(x => x.displayName);
+		var objComplete = false;
+		objectives.forEach((obj) => {
+			if (obj.startsWith("§a") && obj.slice(2, obj.length - 2) == objective) objComplete = true;
+		});
+		return objComplete;
 	}
 
 	static reloadSidebar() {

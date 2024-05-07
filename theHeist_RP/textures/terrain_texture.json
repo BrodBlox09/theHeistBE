@@ -123,6 +123,18 @@
         "camera_sight_enchanted": {
             "textures": "textures/blocks/camera_sight_enchanted"
         },
+        "xray_mode": {
+            "textures": "textures/blocks/xray_mode"
+        },
+        "xray_icon": {
+            "textures": "textures/blocks/xray_icon"
+        },
+        "xray_mode_enchanted": {
+            "textures": "textures/blocks/xray_mode_enchanted"
+        },
+        "xray_icon_enchanted": {
+            "textures": "textures/blocks/xray_icon_enchanted"
+        },
         "recharge_station_1": {
             "textures": "textures/blocks/recharge_station_1"
         },
@@ -185,6 +197,13 @@
         },
         "grate": {
             "textures": "textures/blocks/grate"
+        },
+        "robot_path_straight": {
+            "textures": "textures/blocks/robot_path_straight"
+        }
+        ,
+        "robot_path_crossed": {
+            "textures": "textures/blocks/robot_path_crossed"
         }
     }
 }

@@ -3,6 +3,12 @@ interface ModeData {
 	level: number
 }
 
+interface IAction {
+	type: string;
+	do: any;
+	delay?: number;
+}
+
 interface LevelInformation {
 	"name": "levelInformation",
 	"currentModes": ModeData[],
@@ -17,7 +23,7 @@ interface LevelInformation {
 		},
 		{
 			"name": "playerInv",
-			"inventory": { "slot": number, "typeId": string, "lockMode"?: "none"|"inventory"|"slot" }[]
+			"inventory": Array<IInventorySlotData>
 		}
 	]
 }
@@ -36,5 +42,39 @@ interface ILevelCloneInfo {
 	"endX": number,
 	"endZ": number,
 	"mainFloorBlock": string,
-	"prisonLoc": any
+	"prisonLoc": any,
+	"mapLoc": any
+}
+
+interface ILevel {
+	"loadElevatorLoc": IVector3,
+	"startPlayerLoc": IVector3,
+	"tickingAreas": Array<IBlockArea>
+	"levelID": string,
+	"startingItems": Array<IInventorySlotData>,
+	"rechargeLevel": number,
+	"startObjectives": Array<IObjectiveData>,
+	setup: Function
+}
+
+interface IBlockArea {
+	"start": IVector3,
+	"end": IVector3
+}
+
+interface IVector3 {
+	"x": number,
+	"y": number,
+	"z": number
+}
+
+interface IObjectiveData {
+	"name": string,
+	"sortOrder": number
+}
+
+interface IInventorySlotData {
+	"slot": number,
+	"typeId": string,
+	"lockMode"?: "none"|"inventory"|"slot"
 }

@@ -1,10 +1,10 @@
-import { MolangVariableMap, BlockPermutation, EffectTypes, Vector3, world, system, Player, EntityInventoryComponent, EffectType, DisplaySlotId, ScoreboardObjective, Container, ItemStack, ItemLockMode, Entity, Dimension, ItemUseAfterEvent } from "@minecraft/server";
+import { MolangVariableMap, BlockPermutation, EffectTypes, Vector3, world, system, Player, EntityInventoryComponent, EffectType, DisplaySlotId, ScoreboardObjective, Container, ItemStack, ItemLockMode, Entity, Dimension, ItemUseAfterEvent, BlockVolumeBase } from "@minecraft/server";
 import Vector from "./Vector";
 import DataManager from "./DataManager";
 import Utilities from "./Utilities";
 import GameObjectiveManager from "./GameObjectiveManager";
 import * as SensorModeFunc from "./gamebands/sensor";
-import { CountQueuingStrategy } from "stream/web";
+import * as XRayModeFunc from "./gamebands/xray";
 import VoiceOverManager from "./VoiceOverManager";
 
 /**
@@ -30,6 +30,8 @@ const loreItems = [
 	new loreItem("theheist:hacking_mode_lvl_1", "§r§2Hacking mode Lvl. 1", ["Use item to §r§6use", "Energy: 15 units"]),
 	new loreItem("theheist:hacking_mode_lvl_2", "§r§2Hacking mode Lvl. 2", ["Use item to §r§6use", "Energy: 10 units"]),
 	new loreItem("theheist:sensor_mode_lvl_1", "§r§6Sensor mode Lvl. 1", ["Use item to §r§6toggle", "Energy: 1.0 units/second"]),
+	new loreItem("theheist:sensor_mode_lvl_2", "§r§6Sensor mode Lvl. 2", ["Use item to §r§6toggle", "Energy: 0.4 units/second"]),
+	new loreItem("theheist:xray_mode_lvl_1", "§r§4Xray mode Lvl. 1", ["Use item to §r§6toggle", "Energy: 1.33 units/second"]),
 	new loreItem('minecraft:paper', '§oUse Keycard§r', ['Can trigger any Keycard reader', 'for which you own a matching card']),
 	new loreItem('minecraft:red_dye', '§oRed Keycard§r', ['Used on matching Keycard reader']),
 	new loreItem('minecraft:yellow_dye', '§oYellow Keycard§r', ['Used on matching Keycard reader']),
@@ -40,15 +42,6 @@ const loreItems = [
 ]
 
 const bustedCounterObjective: ScoreboardObjective = world.scoreboard.getObjective("bustedCounter")!;
-
-/**
- * Layer information:
- * 20: Level map
- * 0: Hackable consoles
- * -5: Recharge stations
- * -10: Cameras, sonars, and robots
- * -15: Cameras and sonars mappout area
- */
 
 const levelMapHeight = 20;
 const consolesHeight = -15;
@@ -84,6 +77,12 @@ world.afterEvents.itemUse.subscribe((event: ItemUseAfterEvent) => {
 		case "theheist:sensor_mode_lvl_1":
 			sensorMode(1, player);
 			break;
+		case "theheist:sensor_mode_lvl_2":
+			sensorMode(2, player);
+			break;
+		case "theheist:xray_mode_lvl_1":
+			xrayMode(1, player);
+			break;
 		case "minecraft:red_dye":
 			keycardType = "red"
 		case "minecraft:yellow_dye":
@@ -98,6 +97,18 @@ world.afterEvents.itemUse.subscribe((event: ItemUseAfterEvent) => {
 			break;
 	}
 });
+
+/**
+ * @description Mode Type: Loop
+ * @param lvl 
+ * @param player 
+ * @returns 
+ */
+function xrayMode(lvl: number, player: Player) {
+	/* NOTE: When a region is cloned, the region defined by the first 2 Vector3s will be cloned by the block which is the lowest and most NW (most negative in every direction xyz).
+	*  A copy of that block is then translated to the third Vector3 as well as a copy of the rest of the region and then cloned there. */
+	XRayModeFunc.toggleXRayMode(player, lvl);
+}
 
 /**
  * @description Mode Type: Loop
@@ -189,6 +200,12 @@ function hackingMode(lvl: number, player: Player) {
 				player.sendMessage("§cNot enough energy!");
 				return;
 			}
+			if (armorStandActionTracker.prereq) { // If there are any prerequisites, ensure they are true here
+				var prereq = armorStandActionTracker.prereq;
+				if (prereq.reqObj) { // An objective must be completed first
+					if (!GameObjectiveManager.objectiveIsComplete(prereq.reqObj)) return;
+				}
+			}
 			player.playSound('map.hack_use');
 			if (armorStandActionTracker.level != 0) playerEnergyTracker.energyUnits -= Utilities.gamebandInfo.hackingMode[lvl].cost;
 			DataManager.setData(player, playerEnergyTracker);
@@ -199,7 +216,7 @@ function hackingMode(lvl: number, player: Player) {
 				var blockSetter2 = {"type": "set_block", "do": { "x": block.x, "y": block.y, "z": block.z, "block": `theheist:${block.type}`, "permutations": {"theheist:rotation": block.rotation, "theheist:unlocked": 2} }, "delay": 40};
 				armorStandActionTracker.actions.unshift( blockSetter1, blockSetter2 );
 			}*/
-			armorStandActionTracker.actions.forEach((x: Action) => {
+			armorStandActionTracker.actions.forEach((x: IAction) => {
 				if (!x.delay) {
 					action(x, player);
 				} else {
@@ -239,7 +256,7 @@ function resetPlayerInventory(player: Player) {
 	});
 }
 
-function action(actionInfo: Action, player: Player) {
+function action(actionInfo: IAction, player: Player) {
 	switch (actionInfo.type) {
 		case "slideshow":
 			var slideshowID = actionInfo.do;
@@ -333,7 +350,7 @@ function action(actionInfo: Action, player: Player) {
 			};
 			var armorStand = overworld.getEntities(query)[0];
 			var actionTracker = DataManager.getData(armorStand, "actionTracker");
-			actionTracker.actions.forEach((x: Action) => {
+			actionTracker.actions.forEach((x: IAction) => {
 				if (x.type == "hack_console") return;
 				if (!x.delay) {
 					action(x, player);
@@ -416,6 +433,7 @@ function action(actionInfo: Action, player: Player) {
 			 * actionInfo.do.level: number
 			 */
 			var levelInformation = DataManager.getData(player, "levelInformation");
+			levelInformation.information[2].inventory = levelInformation.information[2].inventory.filter((x: IInventorySlotData) => (x.slot != actionInfo.do.slot));
 			levelInformation.information[2].inventory.push({ "slot": actionInfo.do.slot, "typeId": `theheist:${actionInfo.do.mode}_mode_lvl_${actionInfo.do.level}`, "lockMode": "slot" });
 			DataManager.setData(player, levelInformation);
 			Utilities.reloadPlayerInv(player);
@@ -455,7 +473,7 @@ function keycard(keycardType: string, player: Player) {
 			if (!Utilities.inventoryContainerHasItem(playerInvContainer, "minecraft:lapis_lazuli")) return;
 		}
 	}
-	actionTracker.actions.forEach((x: Action) => {
+	actionTracker.actions.forEach((x: IAction) => {
 		if (!x.delay) {
 			action(x, player);
 		} else {
@@ -606,6 +624,7 @@ system.runInterval(() => {
 	var playerLevelInformation: LevelInformation = DataManager.getData(player, "levelInformation");
 
 	if (playerEnergyTracker && playerLevelInformation) SensorModeFunc.sensorTick(player, playerLevelInformation, playerEnergyTracker);
+	if (playerEnergyTracker && playerLevelInformation) XRayModeFunc.xrayTick(player, playerLevelInformation, playerEnergyTracker);
 
 	if ((playerEnergyTracker && playerEnergyTracker.energyUnits != player.level) || (playerLevelInformation && player.xpEarnedAtCurrentLevel != ((((playerLevelInformation.information[0].level / 100) - 0.06) * 742) + 41))) {
 		player.resetLevel();
@@ -673,7 +692,7 @@ system.runInterval(() => {
 					resetPlayerInventory(player);
 					if (armorStandEnergyTracker.actions) {
 						// Energy tracker has actions to run
-						armorStandEnergyTracker.actions.forEach((x: Action) => {
+						armorStandEnergyTracker.actions.forEach((x: IAction) => {
 							action(x, player);
 						});
 					}
@@ -684,17 +703,5 @@ system.runInterval(() => {
 		DataManager.setData(player, playerEnergyTracker);
 	}
 	//player.sendMessage(parseInt(playerEnergyTracker.energyUnits) + "||" + player.level);
-	// Set map if possible
-	const playerRotX = player.getRotation().x;
-	if (playerRotX < 90 && playerRotX > 80) {
-		// Player is looking down
-		// Only possible slot for the sensor mode to be in
-		const itemStack = playerInvContainer.getItem(2);
-	}
+	SensorModeFunc.tryMap(player, playerLevelInformation);
 });
-
-interface Action {
-	type: string;
-	do: any;
-	delay?: number;
-}
