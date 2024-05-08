@@ -113,5 +113,11 @@
         "atlas_tile": "power_green",
         "ticks_per_frame": 40,
         "blend_frames": true
+    },
+    {
+        "flipbook_texture": "textures/blocks/laser",
+        "atlas_tile": "laser",
+        "ticks_per_frame": 3,
+        "blend_frames": true
     }
 ]

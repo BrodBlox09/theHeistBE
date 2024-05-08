@@ -126,7 +126,6 @@ export default class Utilities {
 			"startZ": 42,
 			"endX": 2022,
 			"endZ": 77,
-			"mainFloorBlock": "minecraft:brown_terracotta",
 			"prisonLoc": new Vector(0,0,0),
 			"mapLoc": new Vector(0,0,0)
 		},
@@ -135,7 +134,6 @@ export default class Utilities {
 			"startZ": 97,
 			"endX": 3109,
 			"endZ": 161,
-			"mainFloorBlock": "minecraft:red_terracotta",
 			"prisonLoc": new Vector(3109.5, -59, 91.5),
 			"mapLoc": new Vector(0,0,0)
 		},
@@ -144,16 +142,17 @@ export default class Utilities {
 			"startZ": 91,
 			"endX": 4133,
 			"endZ": 159,
-			"mainFloorBlock": "minecraft:orange_terracotta",
 			"prisonLoc": new Vector(4075.5, -59, 151.5),
 			"mapLoc": new Vector(4098, -55, 115)
 		}
 	}
 
 	static levelMapHeight = 20;
+	static floorCloneHeight = 18;
 	static consolesHeight = -15;
 	static rechargeHeight = -20;
 	static cameraHeight = -25;
 	static cameraMappingHeight = -30;
+	static magnetModeMagnetBlocksHeight = -51;
 	static levelHeight = -60;
 }

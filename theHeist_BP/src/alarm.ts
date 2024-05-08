@@ -20,12 +20,29 @@ const xrayTransparentBlocks = solidToTransparent.map(x => x.transparent);
 
 const overworld = Utilities.dimensions.overworld;
 
+function updatePlayerAlarmLevel(player: Player, levelInformation: LevelInformation) {
+	if (player.hasTag("BUSTED")) return;
+
+	// Sight block stuff
+	var playerCameraMappingHeightBlock = Utilities.dimensions.overworld.getBlock({ "x": player.location.x, "y": cameraMappingHeight - 3, "z": player.location.z });
+	if (playerCameraMappingHeightBlock && playerCameraMappingHeightBlock.typeId == "theheist:camera_sight" && player.location.y < -56)
+		levelInformation.information[0].level += 2;
+
+	// Laser block stuff
+	var bottomBlock = Utilities.dimensions.overworld.getBlock(player.location)!;
+	var topBlock = bottomBlock.above()!;
+	if (bottomBlock.hasTag("laser") || topBlock.hasTag("laser"))
+		levelInformation.information[0].level = 100;
+
+	DataManager.setData(player, levelInformation);
+}
+
 // Robots take exactly 1 second to turn 90 degrees
 // Robots move at a speed of 1 blocks per 20 ticks
 
 function cameraCanSeeThrough(location: Vector): boolean {
-	var topBlock = Utilities.dimensions.overworld.getBlock(location);
-	var bottomBlock = Utilities.dimensions.overworld.getBlock(location.subtract(new Vector(0, 1, 0)));
+	var bottomBlock = Utilities.dimensions.overworld.getBlock(location);
+	var topBlock = Utilities.dimensions.overworld.getBlock(location.add(new Vector(0, 1, 0)));
 	if (!topBlock || !bottomBlock) return false;
 	var entityQueryOptions: EntityQueryOptions = {
 		"maxDistance": 1,
@@ -36,12 +53,11 @@ function cameraCanSeeThrough(location: Vector): boolean {
 	var topBlockTID = topBlock.typeId;
 	var bottomBlockTID = bottomBlock.typeId;
 	if (xrayTransparentBlocks.includes(bottomBlockTID)) return false;
-	if (bottomBlockTID == "minecraft:air") return true;
+	if ((!bottomBlock.hasTag("plant") && bottomBlockTID != "minecraft:tallgrass") && topBlockTID == "minecraft:air") return true;
+	if (bottomBlockTID == "minecraft:air" && topBlock.hasTag("text_sign")) return true;
 	if (topBlockTID == "minecraft:glass" && bottomBlockTID == "minecraft:glass") return true;
 	if (topBlockTID.endsWith("_stained_glass") || bottomBlockTID.endsWith("_stained_glass")) return true;
 	if (topBlockTID.endsWith("_stained_glass_pane") || bottomBlockTID.endsWith("_stained_glass_pane")) return true;
-	//if (topBlockTID == "minecraft:air" && bottomBlockTID == "theheist:chair") return true;
-	if (topBlockTID == "minecraft:air") return true;
 	if (bottomBlockTID.startsWith("theheist:custom_door_") && bottomBlock.permutation.getState("theheist:open")) return true;
 	return false;
 }
@@ -58,7 +74,7 @@ system.runInterval(() => {
 	
 	updateCameras(player, level, playerLevelInformationDataNode);
 	updateCameraRobots(player, level, playerLevelInformationDataNode);
-
+	updatePlayerAlarmLevel(player, playerLevelInformationDataNode);
 });
 
 function updateCameraRobots(player: Player, level: number, levelInformation: LevelInformation) {
@@ -130,13 +146,6 @@ function getRotFromWeirdoDir(weirdoDir: number): number {
 }
 
 function updateCameras(player: Player, level: number, playerLevelInformationDataNode: LevelInformation) {
-	var playerCameraMappingHeightBlock = Utilities.dimensions.overworld.getBlock({ "x": player.location.x, "y": cameraMappingHeight - 3, "z": player.location.z });
-	
-	if (playerCameraMappingHeightBlock && playerCameraMappingHeightBlock.typeId == "theheist:camera_sight" && player.location.y < -56 && !player.hasTag("BUSTED")) {
-		playerLevelInformationDataNode.information[0].level += 2;
-		DataManager.setData(player, playerLevelInformationDataNode);
-	}
-
 	var cameraQuery = {
 		"type": "armor_stand",
 		"location": { 'x': player.location.x, 'y': cameraHeight, 'z': player.location.z },
