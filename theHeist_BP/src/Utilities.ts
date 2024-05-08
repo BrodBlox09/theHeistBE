@@ -145,7 +145,7 @@ export default class Utilities {
 			"endX": 4133,
 			"endZ": 159,
 			"mainFloorBlock": "minecraft:orange_terracotta",
-			"prisonLoc": new Vector(4110.5, -55, 155.5),
+			"prisonLoc": new Vector(4075.5, -59, 151.5),
 			"mapLoc": new Vector(4098, -55, 115)
 		}
 	}
