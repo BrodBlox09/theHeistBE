@@ -100,15 +100,16 @@ export function updateSensorDisplay(player: Player, levelInformation: LevelInfor
 
 function clearSensed(player: Player, levelInformation: LevelInformation) {
     var loc = Vector.v3ToVector(player.location);
-    loc.y = Utilities.levelHeight - 1; // To get to floor height
+    loc.y = Utilities.floorCloneHeight; // To get to floor height
     var corner1 = loc.subtract(new Vector(clearRange, 0, clearRange));
     var corner2 = loc.add(new Vector(clearRange, 0, clearRange));
-    var gameLevel = levelInformation.information[1].level;
-    var floorBlock = Utilities.levelCloneInfo["level_" + gameLevel].mainFloorBlock;
-    overworld.fillBlocks(corner1, corner2, floorBlock, {
+    var corner3 = loc.subtract(new Vector(clearRange, 0, clearRange));
+    corner3.y = Utilities.levelHeight - 1;
+    overworld.runCommandAsync(`clone ${corner1.x} ${corner1.y} ${corner1.z} ${corner2.x} ${corner2.y} ${corner2.z} ${corner3.x} ${corner3.y} ${corner3.z}`);
+    /*overworld.fillBlocks(corner1, corner2, floorBlock, {
         "matchingBlock": BlockPermutation.resolve("theheist:camera_sight")
-    });
-    overworld.runCommandAsync(`fill ${corner1.x} ${corner1.y + 1} ${corner1.z} ${corner2.x} ${corner2.y + 1} ${corner2.z} air replace theheist:robot_path`);
+    });*/
+    overworld.runCommandAsync(`fill ${corner1.x} ${Utilities.levelHeight} ${corner1.z} ${corner2.x} ${Utilities.levelHeight} ${corner2.z} air replace theheist:robot_path`);
 }
 
 export function playerIsInSensorMode(levelInformation: LevelInformation) {

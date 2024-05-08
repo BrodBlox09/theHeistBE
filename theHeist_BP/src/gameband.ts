@@ -586,9 +586,43 @@ function stopAllSound() {
 	overworld.getEntities({ "excludeTypes": [ "minecraft:armor_stand", "theheist:hover_text" ] }).forEach((e) => { try { e.runCommandAsync('stopsound @s'); } catch {} });
 }
 
+function cloneFloor(loc: Vector) {
+	var range = 10;
+	var corner1 = loc.subtract(new Vector(range, 0, range));
+	var corner2 = loc.add(new Vector(range, 0, range));
+	corner1.y = Utilities.levelHeight - 1;
+	corner2.y = Utilities.levelHeight - 1;
+	var corner3 = loc.subtract(new Vector(range, 0, range));
+	corner3.y = Utilities.floorCloneHeight;
+	overworld.runCommandAsync(`clone ${corner1.x} ${corner1.y} ${corner1.z} ${corner2.x} ${corner2.y} ${corner2.z} ${corner3.x} ${corner3.y} ${corner3.z}`);
+	overworld.runCommandAsync(`fill ${corner1.x} ${Utilities.floorCloneHeight + 1} ${corner1.z} ${corner2.x} ${Utilities.floorCloneHeight + 1} ${corner2.z} air`);
+}
+
+function flattenMap(loc: Vector) {
+	var range = 10;
+	var corner1 = loc.subtract(new Vector(range, 0, range));
+	var corner2 = loc.add(new Vector(range, 0, range));
+	corner1.y = Utilities.levelMapHeight + 1;
+	corner2.y = Utilities.levelMapHeight + 1;
+	var corner3 = loc.subtract(new Vector(range, 0, range));
+	corner3.y = Utilities.levelMapHeight;
+	overworld.runCommandAsync(`clone ${corner1.x} ${corner1.y} ${corner1.z} ${corner2.x} ${corner2.y} ${corner2.z} ${corner3.x} ${corner3.y} ${corner3.z} masked move`);
+}
+
+function clearGlass(loc: Vector) {
+	var range = 10;
+	loc.y = -50;
+	var corner1 = loc.subtract(new Vector(range, 0, range));
+	var corner2 = loc.add(new Vector(range, 0, range));
+	overworld.runCommandAsync(`fill ${corner1.x} ${corner1.y} ${corner1.z} ${corner2.x} ${corner2.y} ${corner2.z} air`);
+}
+
 system.runInterval(() => {
 	const player = world.getPlayers().filter((x: Player) => (x != undefined && x != null))[0];
 	if (player == undefined) return;
+	//cloneFloor(Vector.v3ToVector(player.location));
+	//flattenMap(Vector.v3ToVector(player.location));
+	//clearGlass(Vector.v3ToVector(player.location));
 	// Give player effects
 	const saturation = EffectTypes.get('saturation')!;
 	const nightVision = EffectTypes.get('night_vision')!;

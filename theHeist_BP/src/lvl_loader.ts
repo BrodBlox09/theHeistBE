@@ -613,9 +613,8 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 						const levelCloneInfo = Utilities.levelCloneInfo[`level_-1`];
 						overworld.fillBlocks(new Vector(levelCloneInfo.startX, Utilities.cameraMappingHeight - 4, levelCloneInfo.startZ), new Vector(levelCloneInfo.endX, Utilities.cameraMappingHeight - 4, levelCloneInfo.endZ), "air");
 						overworld.runCommandAsync(`fill ${levelCloneInfo.startX} ${Utilities.levelHeight} ${levelCloneInfo.startZ} ${levelCloneInfo.endX} ${Utilities.levelHeight} ${levelCloneInfo.endZ} air replace theheist:robot_path`);
-						overworld.fillBlocks(new Vector(levelCloneInfo.startX, Utilities.levelHeight - 1, levelCloneInfo.startZ), new Vector(levelCloneInfo.endX, Utilities.levelHeight - 1, levelCloneInfo.endZ), levelCloneInfo.mainFloorBlock, {
-							"matchingBlock": BlockPermutation.resolve("theheist:camera_sight")
-						});
+						overworld.runCommandAsync(`clone ${levelCloneInfo.startX} ${Utilities.floorCloneHeight} ${levelCloneInfo.startZ} ${levelCloneInfo.endX} ${Utilities.floorCloneHeight} ${levelCloneInfo.endZ} ${levelCloneInfo.startX} ${Utilities.levelHeight - 1} ${levelCloneInfo.startZ}`);
+
 						// Camera 0
 						const camera0 = overworld.spawnEntity("armor_stand", { "x": 3066.5, "y": cameraHeight, "z": 105.5 });
 						camera0.setRotation({ "x": 0, "y": 180 });
@@ -1278,9 +1277,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 						const levelCloneInfo = Utilities.levelCloneInfo[`level_${levelNum}`];
 						overworld.fillBlocks(new Vector(levelCloneInfo.startX, Utilities.cameraMappingHeight - 4, levelCloneInfo.startZ), new Vector(levelCloneInfo.endX, Utilities.cameraMappingHeight - 4, levelCloneInfo.endZ), "air");
 						overworld.runCommandAsync(`fill ${levelCloneInfo.startX} ${Utilities.levelHeight} ${levelCloneInfo.startZ} ${levelCloneInfo.endX} ${Utilities.levelHeight} ${levelCloneInfo.endZ} air replace theheist:robot_path`);
-						overworld.fillBlocks(new Vector(levelCloneInfo.startX, Utilities.levelHeight - 1, levelCloneInfo.startZ), new Vector(levelCloneInfo.endX, Utilities.levelHeight - 1, levelCloneInfo.endZ), levelCloneInfo.mainFloorBlock, {
-							"matchingBlock": BlockPermutation.resolve("theheist:camera_sight")
-						});
+						overworld.runCommandAsync(`clone ${levelCloneInfo.startX} ${Utilities.floorCloneHeight} ${levelCloneInfo.startZ} ${levelCloneInfo.endX} ${Utilities.floorCloneHeight} ${levelCloneInfo.endZ} ${levelCloneInfo.startX} ${Utilities.levelHeight - 1} ${levelCloneInfo.startZ}`);
 
 						levelDefinition.setup()
 					}, SECOND * 7.5); // After 7.5 seconds load level objects

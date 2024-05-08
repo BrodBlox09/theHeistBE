@@ -144,5 +144,8 @@ world.beforeEvents.chatSend.subscribe(event => {
 			console.log(block.typeId);
 			break;
 		}
+		case "testBlock": {
+			world.sendMessage(Utilities.dimensions.overworld.getBlock(player.location)!.typeId);
+		}
 	}
 });
