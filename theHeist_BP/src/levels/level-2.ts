@@ -133,6 +133,7 @@ setup: () => {
     LevelConstructor.cameraRobot(new Vector(4113.5, -59.25, 111.5), 0);
     LevelConstructor.cameraRobot(new Vector(4084.5, -59.25, 150.5), 0);
     LevelConstructor.cameraRobot(new Vector(4119.5, -59.25, 129.5), 0);
+    LevelConstructor.cameraRobot(new Vector(4072.5, -59.25, 116.5), 0);
 } // Security Stuffs
 
 {
