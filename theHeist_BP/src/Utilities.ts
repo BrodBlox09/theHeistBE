@@ -142,12 +142,7 @@ export default class Utilities {
 			"startZ": 91,
 			"endX": 4133,
 			"endZ": 159,
-<<<<<<< Updated upstream
-			"mainFloorBlock": "minecraft:orange_terracotta",
-			"prisonLoc": new Vector(4110.5, -55, 155.5),
-=======
 			"prisonLoc": new Vector(4075.5, -59, 151.5),
->>>>>>> Stashed changes
 			"mapLoc": new Vector(4098, -55, 115)
 		}
 	}
