@@ -416,7 +416,7 @@ function action(actionInfo: IAction, player: Player) {
 			 * actionInfo.do.modeText: string
 			 * actionInfo.do.level: number
 			 */
-			var levelInformation = DataManager.getData(player, "levelInformation");
+			var levelInformation: LevelInformation = DataManager.getData(player, "levelInformation");
 			levelInformation.information[2].inventory.push({ "slot": actionInfo.do.slot, "typeId": `theheist:${actionInfo.do.mode}_mode_lvl_${actionInfo.do.level}`, "lockMode": "slot" });
 			DataManager.setData(player, levelInformation);
 			Utilities.reloadPlayerInv(player);
@@ -432,9 +432,16 @@ function action(actionInfo: IAction, player: Player) {
 			 * actionInfo.do.modeText: string
 			 * actionInfo.do.level: number
 			 */
-			var levelInformation = DataManager.getData(player, "levelInformation");
+			var levelInformation: LevelInformation = DataManager.getData(player, "levelInformation");
+			var inUse = false;
+			levelInformation.currentModes.forEach((x, i) => {
+				if (x.mode == actionInfo.do.mode) {
+					levelInformation.currentModes[i].level += 1;
+					inUse = true;
+				}
+			});
 			levelInformation.information[2].inventory = levelInformation.information[2].inventory.filter((x: IInventorySlotData) => (x.slot != actionInfo.do.slot));
-			levelInformation.information[2].inventory.push({ "slot": actionInfo.do.slot, "typeId": `theheist:${actionInfo.do.mode}_mode_lvl_${actionInfo.do.level}`, "lockMode": "slot" });
+			levelInformation.information[2].inventory.push({ "slot": actionInfo.do.slot, "typeId": `theheist:${actionInfo.do.mode}_mode_lvl_${actionInfo.do.level}${inUse ? "_enchanted" : ""}`, "lockMode": "slot" });
 			DataManager.setData(player, levelInformation);
 			Utilities.reloadPlayerInv(player);
 			if (actionInfo.do.mode == "recharge") {
@@ -542,8 +549,8 @@ function startSlideshow(slideshowID: number, player: Player) {
 
 function playerBusted(player: Player, currentLevel: number) {
 	switch (currentLevel) {
-		case 0:
-			var playerLevelInformation = DataManager.getData(player, "levelInformation");
+		case 0: {
+			var playerLevelInformation: LevelInformation = DataManager.getData(player, "levelInformation");
 			bustedCounterObjective.setScore(player, (bustedCounterObjective.getScore(player) ?? 0) + 1);
 			playerLevelInformation.information[0].level = 0;
 			DataManager.setData(player, playerLevelInformation);
@@ -561,11 +568,16 @@ function playerBusted(player: Player, currentLevel: number) {
 				overworld.runCommandAsync('scriptevent theheist:load-level 0-2');
 			}, SECOND * (3 + 5));
 			break;
-		default:
-			var playerLevelInformation = DataManager.getData(player, "levelInformation");
+		}
+		default: {
+			var playerLevelInformation: LevelInformation = DataManager.getData(player, "levelInformation");
 			bustedCounterObjective.setScore(player, (bustedCounterObjective.getScore(player) ?? 0) + 1);
 			playerLevelInformation.information[0].level = 0;
+			playerLevelInformation.information[2].inventory = [];
 			DataManager.setData(player, playerLevelInformation);
+			var playerEnergyTracker: EnergyTracker = DataManager.getData(player, "energyTracker");
+			playerEnergyTracker.energyUnits = 0;
+			DataManager.setData(player, playerEnergyTracker);
 			player.playSound("map.alarm");
 			player.addTag("BUSTED");
 			(player.getComponent("inventory") as EntityInventoryComponent).container?.clearAll();
@@ -579,6 +591,7 @@ function playerBusted(player: Player, currentLevel: number) {
 				overworld.runCommandAsync(`scriptevent theheist:load-level ${currentLevel}-1`);
 			}, SECOND * (3 + 5));
 			break;
+		}
 	}
 }
 

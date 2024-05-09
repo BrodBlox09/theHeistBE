@@ -1239,9 +1239,10 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 					player.setGameMode(GameMode.adventure);
 
 					// Get level definition
-					const levelDefinition: ILevel = LevelDefinitions.getLevelDefinitionByID(msg);
+					const levelDefinition = LevelDefinitions.getLevelDefinitionByID(msg);
+					if (levelDefinition == undefined) return;
 					const levelNum = parseInt(levelDefinition.levelID.substring(0, levelDefinition.levelID.length - "-1".length));
-
+					
 					// Add mandatory data
 					const maxEnergy = Utilities.gamebandInfo.rechargeMode[levelDefinition.rechargeLevel].max;
 					const playerEnergyTrackerDataNode: EnergyTracker = { "name": "energyTracker", "energyUnits": maxEnergy, "recharging": false, "usingRechargerID": -1, "rechargeLevel": levelDefinition.rechargeLevel };
@@ -1347,7 +1348,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 			}
 			bustedCounterObjective.setScore(player, 0);
 
-			if (currLevel != -2) overworld.runCommandAsync(`scriptevent theheist:load-level ${currLevel - 1}-1`);
+			if (currLevel != -3) overworld.runCommandAsync(`scriptevent theheist:load-level ${currLevel - 1}-1`);
 			else endDemo(player);
 			break;
 		}
