@@ -23,15 +23,21 @@ const overworld = Utilities.dimensions.overworld;
 function updatePlayerAlarmLevel(player: Player, levelInformation: LevelInformation) {
 	if (player.hasTag("BUSTED")) return;
 
+	// Movement-based security
+	// None yet
+
+	var playerIsStealth = levelInformation.currentModes.some(x => (x.mode == "stealth"));
+	if (playerIsStealth) return;
+	// Vision-based security
 	// Sight block stuff
 	var playerCameraMappingHeightBlock = Utilities.dimensions.overworld.getBlock({ "x": player.location.x, "y": cameraMappingHeight - 3, "z": player.location.z });
-	if (playerCameraMappingHeightBlock && playerCameraMappingHeightBlock.typeId == "theheist:camera_sight" && player.location.y < -56)
+	if (playerCameraMappingHeightBlock && playerCameraMappingHeightBlock.typeId == "theheist:camera_sight" && player.location.y < -57)
 		levelInformation.information[0].level += 2;
 
 	// Laser block stuff
-	var bottomBlock = Utilities.dimensions.overworld.getBlock(player.location)!;
-	var topBlock = bottomBlock.above()!;
-	if (bottomBlock.hasTag("laser") || topBlock.hasTag("laser"))
+	var bottomBlock = Utilities.dimensions.overworld.getBlock(player.location);
+	var topBlock = bottomBlock?.above();
+	if (bottomBlock && topBlock && (bottomBlock.hasTag("laser") || topBlock.hasTag("laser")))
 		levelInformation.information[0].level = 100;
 
 	DataManager.setData(player, levelInformation);

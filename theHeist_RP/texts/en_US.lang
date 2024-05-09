@@ -11,6 +11,9 @@ tile.theheist:fake_iron_block.name=Fake Iron Block
 tile.theheist:vending_machine.name=Vending Machine
 tile.theheist:green_block.name=Green Block
 tile.theheist:dropper_block.name=Dropper Block
+tile.theheist:conveyor.name=Conveyor
+tile.theheist:laser.name=Laser
+tile.theheist:laser_end.name=Laser End
 ## I don't know if all three are needed, but just to be safe
 item.crimson_sign.name=White Sign
 tile.crimson_wall_sign.name=White Sign

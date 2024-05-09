@@ -206,6 +206,9 @@
         },
         "laser": {
             "textures": "textures/blocks/laser"
+        },
+        "conveyor": {
+            "textures": "textures/blocks/conveyor"
         }
     }
 }
