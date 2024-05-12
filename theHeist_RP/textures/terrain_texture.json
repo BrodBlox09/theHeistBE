@@ -123,6 +123,9 @@
         "camera_sight_enchanted": {
             "textures": "textures/blocks/camera_sight_enchanted"
         },
+        "sonar_sight_enchanted": {
+            "textures": "textures/blocks/sonar_sight_enchanted"
+        },
         "xray_mode": {
             "textures": "textures/blocks/xray_mode"
         },
@@ -134,6 +137,18 @@
         },
         "xray_icon_enchanted": {
             "textures": "textures/blocks/xray_icon_enchanted"
+        },
+        "stealth_mode": {
+            "textures": "textures/blocks/stealth_mode"
+        },
+        "stealth_icon": {
+            "textures": "textures/blocks/stealth_icon"
+        },
+        "stealth_mode_enchanted": {
+            "textures": "textures/blocks/stealth_mode_enchanted"
+        },
+        "stealth_icon_enchanted": {
+            "textures": "textures/blocks/stealth_icon_enchanted"
         },
         "recharge_station_1": {
             "textures": "textures/blocks/recharge_station_1"
@@ -206,6 +221,21 @@
         },
         "laser": {
             "textures": "textures/blocks/laser"
+        },
+        "conveyor": {
+            "textures": "textures/blocks/conveyor"
+        },
+        "magnet_mode": {
+            "textures": "textures/blocks/magnet_mode"
+        },
+        "magnet_icon": {
+            "textures": "textures/blocks/magnet_icon"
+        },
+        "magnet_mode_enchanted": {
+            "textures": "textures/blocks/magnet_mode_enchanted"
+        },
+        "magnet_icon_enchanted": {
+            "textures": "textures/blocks/magnet_icon_enchanted"
         }
     }
 }

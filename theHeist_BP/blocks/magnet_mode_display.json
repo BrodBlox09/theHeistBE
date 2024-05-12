@@ -2,20 +2,26 @@
     "format_version": "1.20.60",
     "minecraft:block": {
         "description": {
-            "identifier": "theheist:recharge_mode_display",
+            "identifier": "theheist:magnet_mode_display",
             "is_experimental": false,
             "states": {
                 "theheist:rotation": [-1, 2, 3, 4, 5]
             }
         },
         "components": {
-            "minecraft:geometry": "geometry.recharge_mode",
+            "minecraft:geometry": "geometry.magnet_mode",
             "minecraft:material_instances": {
+                "red_blink": {
+                    "texture": "camera_sight"
+                },
+                "blue_blink": {
+                    "texture": "sonar_sight"
+                },
                 "icon": {
-                    "texture": "recharge_icon"
+                    "texture": "magnet_icon"
                 },
                 "*": {
-                    "texture": "recharge_mode"
+                    "texture": "magnet_mode"
                 }
             },
             "minecraft:selection_box": {

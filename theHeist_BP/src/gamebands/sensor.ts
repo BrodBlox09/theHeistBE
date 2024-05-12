@@ -49,6 +49,7 @@ function tryStartSensorMode(player: Player, lvl: number, levelInformation: Level
     levelInformation.information[2].inventory.push({ "slot": 2, "typeId": `theheist:sensor_mode_lvl_${lvl}_enchanted`, "lockMode": "slot" });
     DataManager.setData(player, levelInformation);
     Utilities.reloadPlayerInv(player, levelInformation);
+    player.playSound("mob.irongolem.throw", { "pitch": 1 });
     updateSensorDisplay(player, levelInformation);
 }
 
@@ -61,6 +62,7 @@ function endSensorMode(player: Player, levelInformation: LevelInformation) {
     DataManager.setData(player, levelInformation);
     Utilities.reloadPlayerInv(player, levelInformation);
     clearSensed(player, levelInformation);
+    player.playSound("mob.irongolem.throw", { "pitch": 0.5 });
     system.runTimeout(() => clearSensed(player, levelInformation), 5); // Ensure everything actually gets cleared
 }
 

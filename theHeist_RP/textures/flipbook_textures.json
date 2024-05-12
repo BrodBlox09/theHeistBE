@@ -97,6 +97,12 @@
         "blend_frames": false
     },
     {
+        "flipbook_texture": "textures/blocks/sonar_sight_enchanted",
+        "atlas_tile": "sonar_sight_enchanted",
+        "ticks_per_frame": 1,
+        "blend_frames": false
+    },
+    {
         "flipbook_texture": "textures/blocks/xray_icon_enchanted",
         "atlas_tile": "xray_icon_enchanted",
         "ticks_per_frame": 1,
@@ -118,6 +124,42 @@
         "flipbook_texture": "textures/blocks/laser",
         "atlas_tile": "laser",
         "ticks_per_frame": 3,
+        "blend_frames": true
+    },
+    {
+        "flipbook_texture": "textures/blocks/conveyor",
+        "atlas_tile": "conveyor",
+        "ticks_per_frame": 2,
+        "blend_frames": false
+    },
+    {
+        "flipbook_texture": "textures/blocks/magnet_icon_enchanted",
+        "atlas_tile": "magnet_icon_enchanted",
+        "ticks_per_frame": 1,
+        "blend_frames": true
+    },
+    {
+        "flipbook_texture": "textures/blocks/magnet_mode_enchanted",
+        "atlas_tile": "magnet_mode_enchanted",
+        "ticks_per_frame": 1,
+        "blend_frames": true
+    },
+    {
+        "flipbook_texture": "textures/blocks/stealth_icon",
+        "atlas_tile": "stealth_icon",
+        "ticks_per_frame": 1,
+        "blend_frames": false
+    },
+    {
+        "flipbook_texture": "textures/blocks/stealth_icon_enchanted",
+        "atlas_tile": "stealth_icon_enchanted",
+        "ticks_per_frame": 1,
+        "blend_frames": false
+    },
+    {
+        "flipbook_texture": "textures/blocks/stealth_mode_enchanted",
+        "atlas_tile": "stealth_mode_enchanted",
+        "ticks_per_frame": 1,
         "blend_frames": true
     }
 ]

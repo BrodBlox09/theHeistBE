@@ -1,6 +1,7 @@
 import levelN2 from './level-2';
+import levelN3 from './level-3';
 
-const levels: ILevel[] = [ levelN2 ];
+const levels: ILevel[] = [ levelN2, levelN3 ];
 
 export default class LevelDefinitions {
     /**
@@ -8,8 +9,8 @@ export default class LevelDefinitions {
      * @param { string } id The ID of the level desired
      * @throws If the level definition is not found, throws Error
      */
-    static getLevelDefinitionByID(id: string): ILevel {
-        var selectedLevelDef = levels.find((levelDef) => levelDef.levelID = id);
+    static getLevelDefinitionByID(id: string): ILevel | undefined {
+        var selectedLevelDef = levels.find((levelDef) => levelDef.levelID == id);
         if (!selectedLevelDef) throw new LevelNotFoundError(`No level of such ID '${id}' exists.`);
         return selectedLevelDef;
     }

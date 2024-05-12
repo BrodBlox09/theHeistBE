@@ -39,24 +39,24 @@
 							"pivot": [0, 6.5, 5.875],
 							"rotation": [0, 45, 0],
 							"uv": {
-								"north": {"uv": [0, 0], "uv_size": [16, 16], "material_instance": "iron_block"},
-								"east": {"uv": [0, 0], "uv_size": [16, 16], "material_instance": "iron_block"},
-								"south": {"uv": [0, 0], "uv_size": [16, 16], "material_instance": "iron_block"},
-								"west": {"uv": [0, 0], "uv_size": [16, 16], "material_instance": "iron_block"},
-								"up": {"uv": [16, 16], "uv_size": [-16, -16], "material_instance": "iron_block"},
-								"down": {"uv": [0, 0], "uv_size": [16, 16], "material_instance": "iron_block"}
+								"north": {"uv": [0, 0], "uv_size": [32, 32], "material_instance": "iron_block"},
+								"east": {"uv": [0, 0], "uv_size": [32, 32], "material_instance": "iron_block"},
+								"south": {"uv": [0, 0], "uv_size": [32, 32], "material_instance": "iron_block"},
+								"west": {"uv": [0, 0], "uv_size": [32, 32], "material_instance": "iron_block"},
+								"up": {"uv": [32, 32], "uv_size": [-32, -32], "material_instance": "iron_block"},
+								"down": {"uv": [0, 0], "uv_size": [32, 32], "material_instance": "iron_block"}
 							}
 						},
 						{
 							"origin": [-1, 7, 5.5],
 							"size": [2, 2, 2.5],
 							"uv": {
-								"north": {"uv": [0, 0], "uv_size": [16, 16], "material_instance": "iron_block"},
-								"east": {"uv": [0, 0], "uv_size": [16, 16], "material_instance": "iron_block"},
-								"south": {"uv": [0, 0], "uv_size": [16, 16], "material_instance": "iron_block"},
-								"west": {"uv": [0, 0], "uv_size": [16, 16], "material_instance": "iron_block"},
-								"up": {"uv": [16, 16], "uv_size": [-16, -16], "material_instance": "iron_block"},
-								"down": {"uv": [0, 0], "uv_size": [16, 16], "material_instance": "iron_block"}
+								"north": {"uv": [0, 0], "uv_size": [32, 32], "material_instance": "iron_block"},
+								"east": {"uv": [0, 0], "uv_size": [32, 32], "material_instance": "iron_block"},
+								"south": {"uv": [0, 0], "uv_size": [32, 32], "material_instance": "iron_block"},
+								"west": {"uv": [0, 0], "uv_size": [32, 32], "material_instance": "iron_block"},
+								"up": {"uv": [32, 32], "uv_size": [-32, -32], "material_instance": "iron_block"},
+								"down": {"uv": [0, 0], "uv_size": [32, 32], "material_instance": "iron_block"}
 							}
 						},
 						{

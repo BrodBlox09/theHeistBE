@@ -25,7 +25,8 @@ const levelLocations: Record<string, Vector3> = {
 	"0.5": { 'x': 1000.5, 'y': -50, 'z': 56.5 },
 	"0": { 'x': 2000.5, 'y': -50, 'z': 56.5 },
 	"-1": {'x': 3075.5, 'y': -50, 'z': 100.5},
-	"-2": { 'x': 4101, 'y': -47, 'z': 131 }
+	"-2": { 'x': 4101, 'y': -47, 'z': 131 },
+	"-3": { 'x': 4996, 'y': -44, 'z': 126 }
 }
 
 const objectivesObjective = world.scoreboard.getObjective("objectives") ?? world.scoreboard.addObjective("objectives", "Objectives");
@@ -121,7 +122,8 @@ world.beforeEvents.chatSend.subscribe(event => {
 		}
 		case "fillLarge": {
 			system.run(() => {
-				Utilities.dimensions.overworld.fillBlocks(new Vector(4060, parseInt(args[0]), 91), new Vector(4133, parseInt(args[0]), 159), args[1]);
+				const lvlCI = Utilities.levelCloneInfo["level_-3"];
+				Utilities.dimensions.overworld.fillBlocks(new Vector(lvlCI.startX, parseInt(args[0]), lvlCI.startZ), new Vector(lvlCI.endX, parseInt(args[0]), lvlCI.endZ), args[1]);
 			});
 			break;
 		}

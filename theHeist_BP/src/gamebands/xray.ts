@@ -25,6 +25,7 @@ function tryStartXRayMode(player: Player, lvl: number, levelInformation: LevelIn
     levelInformation.information[2].inventory.push({ "slot": 3, "typeId": `theheist:xray_mode_lvl_${lvl}_enchanted`, "lockMode": "slot" });
     DataManager.setData(player, levelInformation);
     Utilities.reloadPlayerInv(player, levelInformation);
+    player.playSound("mob.spider.step", { "pitch": 1.5 });
     updateXRayDisplay(player, levelInformation);
 }
 
@@ -36,6 +37,7 @@ function endXRayMode(player: Player, levelInformation: LevelInformation) {
     levelInformation.information[2].inventory.push({ "slot": 3, "typeId": `theheist:xray_mode_lvl_${xrayModeData!.level}`, "lockMode": "slot" });
     DataManager.setData(player, levelInformation);
     Utilities.reloadPlayerInv(player, levelInformation);
+    player.playSound("mob.spider.step", { "pitch": 2 });
     clearXRayDisplay(player, levelInformation);
     system.runTimeout(() => clearXRayDisplay(player, levelInformation), 5); // Ensure everything actually gets cleared
 }

@@ -1,4 +1,4 @@
-import { world, system, GameMode, TicksPerDay, BlockPermutation, Player, EntityQueryOptions } from "@minecraft/server";
+import { world, system, GameMode, TicksPerDay, BlockPermutation, Player, EntityQueryOptions, MolangVariableMap } from "@minecraft/server";
 import { solidToTransparent } from "./gamebands/xray";
 import * as SensorModeFunc from "./gamebands/sensor";
 import DataManager from "./DataManager";
@@ -23,15 +23,21 @@ const overworld = Utilities.dimensions.overworld;
 function updatePlayerAlarmLevel(player: Player, levelInformation: LevelInformation) {
 	if (player.hasTag("BUSTED")) return;
 
+	// Movement-based security
+	// None yet
+
+	var playerIsStealth = levelInformation.currentModes.some(x => (x.mode == "stealth"));
+	if (playerIsStealth) return;
+	// Vision-based security
 	// Sight block stuff
 	var playerCameraMappingHeightBlock = Utilities.dimensions.overworld.getBlock({ "x": player.location.x, "y": cameraMappingHeight - 3, "z": player.location.z });
-	if (playerCameraMappingHeightBlock && playerCameraMappingHeightBlock.typeId == "theheist:camera_sight" && player.location.y < -56)
+	if (playerCameraMappingHeightBlock && playerCameraMappingHeightBlock.typeId == "theheist:camera_sight" && player.location.y < -57)
 		levelInformation.information[0].level += 2;
 
 	// Laser block stuff
-	var bottomBlock = Utilities.dimensions.overworld.getBlock(player.location)!;
-	var topBlock = bottomBlock.above()!;
-	if (bottomBlock.hasTag("laser") || topBlock.hasTag("laser"))
+	var bottomBlock = Utilities.dimensions.overworld.getBlock(player.location);
+	var topBlock = bottomBlock?.above();
+	if (bottomBlock && topBlock && (bottomBlock.hasTag("laser") || topBlock.hasTag("laser")))
 		levelInformation.information[0].level = 100;
 
 	DataManager.setData(player, levelInformation);
@@ -127,6 +133,13 @@ function updateCameraRobots(player: Player, level: number, levelInformation: Lev
 	});
 }
 
+function disabledSecurityDeviceEffect(loc: Vector) {
+	loc = loc.add(new Vector(0, 0.5, 0));
+	var molangVarMap = new MolangVariableMap();
+	molangVarMap.setSpeedAndDirection("direction", 1, new Vector(0, 0, 0));
+	overworld.spawnParticle("minecraft:explosion_particle", loc, molangVarMap);
+}
+
 function getRotFromWeirdoDir(weirdoDir: number): number {
 	switch (weirdoDir) {
 		case 0:
@@ -153,7 +166,19 @@ function updateCameras(player: Player, level: number, playerLevelInformationData
 	};
 	const cameraArmorStands = Utilities.dimensions.overworld.getEntities(cameraQuery).filter((x) => {
 		var cameraTrackerDataNode = DataManager.getData(x, "cameraTracker");
-		return (x.location.y == cameraHeight && cameraTrackerDataNode && cameraTrackerDataNode.disabled == false && cameraTrackerDataNode.type == "camera");
+		if (x.location.y != cameraHeight || !cameraTrackerDataNode || cameraTrackerDataNode.type != "camera") return false;
+		if (cameraTrackerDataNode.disabled == true) {
+			var displayCameraQuery = {
+				"type": "theheist:camera",
+				"location": { 'x': x.location.x, 'y': -57, 'z': x.location.z },
+				"maxDistance": 3,
+				"closest": 1
+			}
+			var displayCamera = Utilities.dimensions.overworld.getEntities(displayCameraQuery)[0];
+			if (system.currentTick % 3 == 0) disabledSecurityDeviceEffect(Vector.v3ToVector(displayCamera.location));
+			return false;
+		}
+		return true;
 	});
 
 	var cameraMappingQuery = {

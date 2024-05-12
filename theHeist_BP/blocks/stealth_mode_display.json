@@ -2,20 +2,20 @@
     "format_version": "1.20.60",
     "minecraft:block": {
         "description": {
-            "identifier": "theheist:recharge_mode_display",
+            "identifier": "theheist:stealth_mode_display",
             "is_experimental": false,
             "states": {
                 "theheist:rotation": [-1, 2, 3, 4, 5]
             }
         },
         "components": {
-            "minecraft:geometry": "geometry.recharge_mode",
+            "minecraft:geometry": "geometry.stealth_mode",
             "minecraft:material_instances": {
                 "icon": {
-                    "texture": "recharge_icon"
+                    "texture": "stealth_icon"
                 },
                 "*": {
-                    "texture": "recharge_mode"
+                    "texture": "stealth_mode"
                 }
             },
             "minecraft:selection_box": {

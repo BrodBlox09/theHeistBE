@@ -48,7 +48,7 @@ export default class LevelConstructor {
         const modeInCase = mode.substring(0, 1).toUpperCase() + mode.substring(1).toLowerCase();
         var allActions = [
             {
-                "type": "upgrade_gameband", "do": {
+                "type": "new_gameband", "do": {
                     "displayBlock": { "x": loc.x, "y": loc.y, "z": loc.z },
                     "mode": mode.toLowerCase(),
                     "modeText": modeText,

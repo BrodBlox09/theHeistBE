@@ -24,7 +24,8 @@
             "minecraft:selection_box": {
                 "origin": [ -6, 5, -2 ],
                 "size": [ 12, 11, 4 ]
-            }
+            },
+            "minecraft:collision_box": false
         },
         "permutations": [
             {
