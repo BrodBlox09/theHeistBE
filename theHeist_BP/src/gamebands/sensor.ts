@@ -19,14 +19,15 @@ export function tryMap(player: Player, levelInformation: LevelInformation) {
     if (!sensorModeSlot) return;
     var typeId = sensorModeSlot.typeId;
     if (playerIsLookingDown && typeId.startsWith("theheist:sensor_mode_lvl_") && parseInt(typeId.charAt("theheist:sensor_mode_lvl_".length)) >= 2) { // Player does have a lvl 2 or greater sensor mode
-        var playerInvContainer = player.getComponent("minecraft:inventory")!.container!;
-        var map = overworld.getBlock(Utilities.levelCloneInfo[`level_${levelInformation.information[1].level}`].mapLoc)?.getComponent("minecraft:inventory")?.container?.getItem(0)!;
+        var playerInvContainer = player.getComponent("minecraft:inventory")?.container!;
+        var map = overworld.getBlock(Utilities.levelCloneInfo[`level_${levelInformation.information[1].level}`].mapLoc)?.getComponent("minecraft:inventory")?.container?.getItem(0);
+        if (!map) return;
         map.lockMode = ItemLockMode.slot;
         playerInvContainer.setItem(2, map);
         levelInformation.information[2].inventory.push({ "slot": 2, "typeId": `minecraft:filled_map`, "lockMode": "slot" });
         DataManager.setData(player, levelInformation);
     } else if (!playerIsLookingDown && typeId == "minecraft:filled_map") { // Clear map
-        var playerInvContainer = player.getComponent("minecraft:inventory")!.container!;
+        var playerInvContainer = player.getComponent("minecraft:inventory")?.container!;
         levelInformation.information[2].inventory = levelInformation.information[2].inventory.filter((s) => (s.typeId != "minecraft:filled_map"));
         DataManager.setData(player, levelInformation);
         var sensorModeSlotData = levelInformation.information[2].inventory.find((x) => (x.slot == 2))!;
@@ -44,11 +45,20 @@ export function toggleSensorMode(player: Player, lvl: number) {
 }
 
 function tryStartSensorMode(player: Player, lvl: number, levelInformation: LevelInformation) {
+    var costPerSecond = Utilities.gamebandInfo.sensorMode[lvl].cost;
+    var costPerTick = costPerSecond / 20;
+    var energyTracker = DataManager.getData(player, "energyTracker");
+    if (energyTracker.energyUnits < costPerTick) {
+        player.sendMessage("§cNot enough energy!");
+        return;
+    }
+
     levelInformation.currentModes.push({ "mode": "sensor", "level": lvl });
     levelInformation.information[2].inventory = levelInformation.information[2].inventory.filter((s) => (s.slot != 2));
     levelInformation.information[2].inventory.push({ "slot": 2, "typeId": `theheist:sensor_mode_lvl_${lvl}_enchanted`, "lockMode": "slot" });
     DataManager.setData(player, levelInformation);
     Utilities.reloadPlayerInv(player, levelInformation);
+    player.playSound("mob.irongolem.throw", { "pitch": 1 });
     updateSensorDisplay(player, levelInformation);
 }
 
@@ -61,6 +71,7 @@ function endSensorMode(player: Player, levelInformation: LevelInformation) {
     DataManager.setData(player, levelInformation);
     Utilities.reloadPlayerInv(player, levelInformation);
     clearSensed(player, levelInformation);
+    player.playSound("mob.irongolem.throw", { "pitch": 0.5 });
     system.runTimeout(() => clearSensed(player, levelInformation), 5); // Ensure everything actually gets cleared
 }
 

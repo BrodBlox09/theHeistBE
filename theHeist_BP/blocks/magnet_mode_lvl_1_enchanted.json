@@ -1,0 +1,26 @@
+{
+    "format_version": "1.16.100",
+    "minecraft:block": {
+        "description": {
+            "identifier": "theheist:magnet_mode_lvl_1_enchanted",
+            "is_experimental": false
+        },
+        "components": {
+            "minecraft:geometry": "geometry.magnet_mode",
+            "minecraft:material_instances": {
+                "red_blink": {
+                    "texture": "camera_sight_enchanted"
+                },
+                "blue_blink": {
+                    "texture": "sonar_sight_enchanted"
+                },
+                "icon": {
+                    "texture": "magnet_icon_enchanted"
+                },
+                "*": {
+                    "texture": "magnet_mode_enchanted"
+                }
+            }
+        }
+    }
+}

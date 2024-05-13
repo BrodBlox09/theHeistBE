@@ -5,6 +5,8 @@ import Utilities from "./Utilities";
 import GameObjectiveManager from "./GameObjectiveManager";
 import * as SensorModeFunc from "./gamebands/sensor";
 import * as XRayModeFunc from "./gamebands/xray";
+import * as MagnetModeFunc from "./gamebands/magnet";
+import * as StealthModeFunc from "./gamebands/stealth";
 import VoiceOverManager from "./VoiceOverManager";
 
 /**
@@ -32,6 +34,8 @@ const loreItems = [
 	new loreItem("theheist:sensor_mode_lvl_1", "§r§6Sensor mode Lvl. 1", ["Use item to §r§6toggle", "Energy: 1.0 units/second"]),
 	new loreItem("theheist:sensor_mode_lvl_2", "§r§6Sensor mode Lvl. 2", ["Use item to §r§6toggle", "Energy: 0.4 units/second"]),
 	new loreItem("theheist:xray_mode_lvl_1", "§r§4Xray mode Lvl. 1", ["Use item to §r§6toggle", "Energy: 1.33 units/second"]),
+	new loreItem("theheist:magnet_mode_lvl_1", "§r§5Magnet mode Lvl. 1", ["Use item to §r§6toggle", "Energy: 1.6 units/second"]),
+	new loreItem("theheist:stealth_mode_lvl_1", "§r§fStealth mode Lvl. 1", ["Use item to §r§6toggle", "Energy: 40 units/second"]),
 	new loreItem('minecraft:paper', '§oUse Keycard§r', ['Can trigger any Keycard reader', 'for which you own a matching card']),
 	new loreItem('minecraft:red_dye', '§oRed Keycard§r', ['Used on matching Keycard reader']),
 	new loreItem('minecraft:yellow_dye', '§oYellow Keycard§r', ['Used on matching Keycard reader']),
@@ -83,6 +87,12 @@ world.afterEvents.itemUse.subscribe((event: ItemUseAfterEvent) => {
 		case "theheist:xray_mode_lvl_1":
 			xrayMode(1, player);
 			break;
+		case "theheist:magnet_mode_lvl_1":
+			magnetMode(1, player);
+			break;
+		case "theheist:stealth_mode_lvl_1":
+			stealthMode(1, player);
+			break;
 		case "minecraft:red_dye":
 			keycardType = "red"
 		case "minecraft:yellow_dye":
@@ -97,6 +107,26 @@ world.afterEvents.itemUse.subscribe((event: ItemUseAfterEvent) => {
 			break;
 	}
 });
+
+/**
+ * @description Mode Type: Loop
+ * @param lvl 
+ * @param player 
+ * @returns 
+ */
+function stealthMode(lvl: number, player: Player) {
+	StealthModeFunc.toggleStealthMode(player, lvl);
+}
+
+/**
+ * @description Mode Type: Loop
+ * @param lvl 
+ * @param player 
+ * @returns 
+ */
+function magnetMode(lvl: number, player: Player) {
+	MagnetModeFunc.toggleMagnetMode(player, lvl);
+}
 
 /**
  * @description Mode Type: Loop
@@ -672,6 +702,8 @@ system.runInterval(() => {
 
 	if (playerEnergyTracker && playerLevelInformation) SensorModeFunc.sensorTick(player, playerLevelInformation, playerEnergyTracker);
 	if (playerEnergyTracker && playerLevelInformation) XRayModeFunc.xrayTick(player, playerLevelInformation, playerEnergyTracker);
+	if (playerEnergyTracker && playerLevelInformation) MagnetModeFunc.magnetTick(player, playerLevelInformation, playerEnergyTracker);
+	if (playerEnergyTracker && playerLevelInformation) StealthModeFunc.stealthTick(player, playerLevelInformation, playerEnergyTracker);
 
 	if ((playerEnergyTracker && playerEnergyTracker.energyUnits != player.level) || (playerLevelInformation && player.xpEarnedAtCurrentLevel != ((((playerLevelInformation.information[0].level / 100) - 0.06) * 742) + 41))) {
 		player.resetLevel();

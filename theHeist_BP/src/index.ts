@@ -130,7 +130,7 @@ world.beforeEvents.chatSend.subscribe(event => {
 		case "getData": {
 			var query: EntityQueryOptions = {
 				closest: 1,
-				type: "minecraft:player",
+				excludeTypes: ["minecraft:player"],
 				location: player.location
 			};
 			world.sendMessage(DataManager.GetDataRaw(Utilities.dimensions.overworld.getEntities(query)[0]) as string);
