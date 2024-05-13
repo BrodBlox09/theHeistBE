@@ -63,8 +63,8 @@ function cameraCanSeeThrough(location: Vector): boolean {
 	if (bottomBlockTID == "minecraft:air" && topBlock.hasTag("text_sign")) return true;
 	if (topBlockTID == "minecraft:glass" && bottomBlockTID == "minecraft:glass") return true;
 	if (topBlockTID.startsWith("theheist:laser") && bottomBlockTID.startsWith("theheist:laser")) return true;
-	if (topBlockTID.endsWith("_stained_glass") || bottomBlockTID.endsWith("_stained_glass")) return true;
-	if (topBlockTID.endsWith("_stained_glass_pane") || bottomBlockTID.endsWith("_stained_glass_pane")) return true;
+	if (topBlockTID.endsWith("_stained_glass") && bottomBlockTID.endsWith("_stained_glass")) return true;
+	if (topBlockTID.endsWith("_stained_glass_pane") && bottomBlockTID.endsWith("_stained_glass_pane")) return true;
 	if (bottomBlockTID.startsWith("theheist:custom_door_") && bottomBlock.permutation.getState("theheist:open")) return true;
 	return false;
 }
