@@ -1202,6 +1202,16 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 							"block": { "x": 3077, "y": -60, "z": 119, "rotation": 3 }
 						};
 						DataManager.setData(recharge3, recharge3DataNode);
+						// Recharge Station 4
+						const recharge4 = overworld.spawnEntity("minecraft:armor_stand", new Vector(3091.5, rechargeHeight, 128.5));
+						Utilities.setBlock({ x: 3091, y: -60, z: 128 }, "theheist:recharge_station", { "theheist:rotation": 5 });
+						const recharge4DataNode = {
+							"name": "energyTracker",
+							"rechargerID": 4,
+							"energyUnits": 100.0,
+							"block": { "x": 3091, "y": -60, "z": 128, "rotation": 5 }
+						};
+						DataManager.setData(recharge4, recharge4DataNode);
 
 						// Decorations & Miscellaneous
 						Utilities.dimensions.overworld.setBlockType(new Vector(3073, -55, 127), "minecraft:redstone_block");

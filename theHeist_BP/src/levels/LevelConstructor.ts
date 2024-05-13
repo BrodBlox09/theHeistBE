@@ -166,7 +166,7 @@ export default class LevelConstructor {
             "isRobot": false,
             "rotation": rot,
             "disabled": false,
-            "cameraId": cameras,
+            "cameraID": cameras,
             "type": "camera"
         }
         DataManager.setData(camera, cameraDataNode);
@@ -184,7 +184,7 @@ export default class LevelConstructor {
             "rotation": swivel[1],
             "swivel": swivel,
             "disabled": false,
-            "cameraId": cameras,
+            "cameraID": cameras,
             "type": "camera"
         }
         DataManager.setData(camera, cameraDataNode);
@@ -198,6 +198,24 @@ export default class LevelConstructor {
         const robotDataNode = {
             "name": "cameraTracker",
             "isRobot": true,
+            "isStunned": false,
+            "rotation": rot,
+            "disabled": false,
+            "cameraID": cameras,
+            "type": "camera"
+        };
+        DataManager.setData(robot, robotDataNode);
+        cameras++;
+    }
+
+    static staticCameraRobot(loc: Vector, rot: number) {
+        const robot = overworld.spawnEntity("armor_stand", { "x": loc.x, "y": Utilities.cameraHeight, "z": loc.z });
+        robot.setRotation({ "x": 0, "y": rot });
+        overworld.spawnEntity("theheist:camera_robot", loc).setRotation({ "x": 0, "y": rot });
+        const robotDataNode = {
+            "name": "cameraTracker",
+            "isRobot": true,
+            "isStatic": true,
             "isStunned": false,
             "rotation": rot,
             "disabled": false,

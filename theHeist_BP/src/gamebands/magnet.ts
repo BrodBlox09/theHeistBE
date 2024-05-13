@@ -13,10 +13,18 @@ export function toggleMagnetMode(player: Player, lvl: number) {
 }
 
 function tryStartMagnetMode(player: Player, lvl: number, levelInformation: LevelInformation) {
+    var costPerSecond = Utilities.gamebandInfo.magnetMode[lvl].cost;
+    var costPerTick = costPerSecond / 20;
+    var energyTracker = DataManager.getData(player, "energyTracker");
+    if (energyTracker.energyUnits < costPerTick) {
+        player.sendMessage("§cNot enough energy!");
+        return;
+    }
+
     var magnetBlock = overworld.getBlock(new Vector(player.location.x, Utilities.magnetModeMagnetBlocksHeight, player.location.z));
     if (!magnetBlock) return;
     if (magnetBlock.typeId == "minecraft:air") {
-        player.sendMessage("§4Nothing to grab onto!");
+        player.sendMessage("§cNothing to grab onto!");
         return;
     }
     levelInformation.currentModes.push({ "mode": "magnet", "level": lvl });

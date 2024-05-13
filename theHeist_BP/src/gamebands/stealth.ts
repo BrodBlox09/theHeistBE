@@ -13,6 +13,14 @@ export function toggleStealthMode(player: Player, lvl: number) {
 }
 
 function tryStartStealthMode(player: Player, lvl: number, levelInformation: LevelInformation) {
+    var costPerSecond = Utilities.gamebandInfo.stealthMode[lvl].cost;
+    var costPerTick = costPerSecond / 20;
+    var energyTracker = DataManager.getData(player, "energyTracker");
+    if (energyTracker.energyUnits < costPerTick) {
+        player.sendMessage("§cNot enough energy!");
+        return;
+    }
+
     levelInformation.currentModes.push({ "mode": "stealth", "level": lvl });
     levelInformation.information[2].inventory = levelInformation.information[2].inventory.filter((s) => (s.slot != 5));
     levelInformation.information[2].inventory.push({ "slot": 5, "typeId": `theheist:stealth_mode_lvl_${lvl}_enchanted`, "lockMode": "slot" });
