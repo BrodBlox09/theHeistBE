@@ -1,4 +1,4 @@
-import { world, system, GameMode, TicksPerDay, BlockPermutation, Player, EntityQueryOptions, MolangVariableMap } from "@minecraft/server";
+import { world, system, GameMode, TicksPerDay, BlockPermutation, Player, EntityQueryOptions, MolangVariableMap, EntityLifetimeState } from "@minecraft/server";
 import { solidToTransparent } from "./gamebands/xray";
 import * as SensorModeFunc from "./gamebands/sensor";
 import DataManager from "./DataManager";
@@ -46,7 +46,7 @@ function updatePlayerAlarmLevel(player: Player, levelInformation: LevelInformati
 // Robots take exactly 1 second to turn 90 degrees
 // Robots move at a speed of 1 blocks per 20 ticks
 
-function cameraCanSeeThrough(location: Vector): boolean {
+export function cameraCanSeeThrough(location: Vector): boolean {
 	var bottomBlock = Utilities.dimensions.overworld.getBlock(location);
 	var topBlock = Utilities.dimensions.overworld.getBlock(location.add(new Vector(0, 1, 0)));
 	if (!topBlock || !bottomBlock) return false;
@@ -71,7 +71,7 @@ function cameraCanSeeThrough(location: Vector): boolean {
 
 system.runInterval(() => {
 	// Only include adventure mode players
-	var player = world.getPlayers({"gameMode": GameMode.adventure}).filter((x) => (x != undefined && x != null))[0];
+	var player = world.getPlayers(/*{"gameMode": GameMode.adventure}*/).filter((x) => (x != undefined && x != null))[0];
 	if (player == undefined) return;
 
 	var playerLevelInformationDataNode = DataManager.getData(player, "levelInformation");
@@ -190,7 +190,7 @@ function updateCameras(player: Player, level: number, playerLevelInformationData
 	const cameraMappingArmorStands = Utilities.dimensions.overworld.getEntities(cameraMappingQuery).filter((x) => (x.location.y == cameraMappingHeight));
 
 	if ((system.currentTick % 20 == 0)) {
-		// 15 tick interval elapsed
+		// 20 tick interval elapsed
 		cameraMappingArmorStands.forEach((armorStand) => {
 			armorStand.kill();
 		});
@@ -246,15 +246,13 @@ function updateCameras(player: Player, level: number, playerLevelInformationData
 		Utilities.dimensions.overworld.runCommandAsync(`fill ${Utilities.levelCloneInfo["level_" + level].startX} ${cameraMappingHeight - 2} ${Utilities.levelCloneInfo["level_" + level].startZ} ${Utilities.levelCloneInfo["level_" + level].endX} ${cameraMappingHeight - 2} ${Utilities.levelCloneInfo["level_" + level].endZ} air`);
 		system.runTimeout(()=>{SensorModeFunc.updateSensorDisplay(player, DataManager.getData(player, "levelInformation"));}, 2); // Ensure the new blocks load before we update sensor display
 	} else {
-		//X: sin(player.getRotation().x) * 0.7
 		const tpDistance = 0.6;
-		const checkDistance = 0;
 		cameraMappingArmorStands.forEach((armorStand) => {
 			// x sin() needs to be inverted to work properly for some reason
 			var belowBlock = { "x": armorStand.location.x, "y": armorStand.location.y - 2, "z": armorStand.location.z };
 			armorStand.teleport({ "x": armorStand.location.x + -(Utilities.sin(armorStand.getRotation().y) * tpDistance), "y": cameraMappingHeight, "z": armorStand.location.z + (Utilities.cos(armorStand.getRotation().y) * tpDistance) }, { 'dimension': Utilities.dimensions.overworld });
-			if (cameraCanSeeThrough(Vector.v3ToVector({ "x": armorStand.location.x + -(Utilities.sin(armorStand.getRotation().y) * checkDistance), "y": levelHeight, "z": armorStand.location.z + (Utilities.cos(armorStand.getRotation().y) * checkDistance) })))
-				Utilities.setBlock(belowBlock, "theheist:camera_sight");
+			let armorStandLocation = Vector.v3ToVector({ "x": armorStand.location.x, "y": Utilities.levelHeight, "z": armorStand.location.z });
+			if (cameraCanSeeThrough(armorStandLocation)) Utilities.setBlock(belowBlock, "theheist:camera_sight");
 			else armorStand.kill();
 		});
 	}

@@ -4,7 +4,7 @@
         "name": "pack.name",
         "description": "pack.description",
         "uuid": "a6b350d9-0110-4031-9912-8e59b16ff0bc",
-        "version": [1, 3, 0],
+        "version": [1, 3, 1],
         "min_engine_version": [1, 16, 0]
     },
     "modules": [
@@ -12,7 +12,7 @@
             "description": "Behavior Pack Module",
             "type": "data",
             "uuid": "15bd151a-07ad-4336-b2d1-5335abc28e4a",
-            "version": [1, 3, 0]
+            "version": [1, 3, 1]
         },
 		{
 			"description": "Gametest Module",
@@ -20,7 +20,7 @@
 			"language": "javascript",
 			"entry": "scripts/index.js",
 			"uuid": "b7f7f6ef-dcfa-4db6-9f0b-11667e1a6925",
-			"version": [1, 3, 0]
+			"version": [1, 3, 1]
 		}
     ],
     "dependencies": [
