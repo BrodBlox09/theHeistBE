@@ -298,7 +298,6 @@ function action(actionInfo: IAction, player: Player) {
 			var z = actionInfo.do.z;
 			var block = actionInfo.do.block;
 			var permutations = actionInfo.do.permutations;
-			//overworld.runCommandAsync(`setBlock ${x} ${y} ${z} ${block} ${permutations}`)
 			Utilities.setBlock({"x": x, "y": y, "z": z}, block, permutations);
 			var query: Record<any, any> = {
 				"type": "theheist:hover_text",

@@ -6,7 +6,6 @@ import "./gameband";
 import "./alarm";
 import Utilities from "./Utilities";
 import VoiceOverManager from "./VoiceOverManager";
-import { cameraCanSeeThrough } from "./alarm";
 
 /*world.afterEvents.worldInitialize.subscribe(event => {
 	const def = new DynamicPropertiesDefinition();
@@ -146,10 +145,6 @@ world.beforeEvents.chatSend.subscribe(event => {
 			var block = Utilities.dimensions.overworld.getBlock(player.location)!;
 			console.log(block.typeId);
 			break;
-		}
-		case "testBlock": {
-			//var loc = player.getBlockFromViewDirection()?.block.location!;
-			world.sendMessage(cameraCanSeeThrough(Vector.v3ToVector({'x': 3057.9, 'y': Utilities.levelHeight, 'z': 151.9})).toString());
 		}
 	}
 });

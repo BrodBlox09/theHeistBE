@@ -43,15 +43,12 @@ function updatePlayerAlarmLevel(player: Player, levelInformation: LevelInformati
 	DataManager.setData(player, levelInformation);
 }
 
-// Robots take exactly 1 second to turn 90 degrees
-// Robots move at a speed of 1 blocks per 20 ticks
-
-export function cameraCanSeeThrough(location: Vector): boolean {
+function cameraCanSeeThrough(location: Vector): boolean {
 	var bottomBlock = Utilities.dimensions.overworld.getBlock(location);
 	var topBlock = Utilities.dimensions.overworld.getBlock(location.add(new Vector(0, 1, 0)));
 	if (!topBlock || !bottomBlock) return false;
 	var entityQueryOptions: EntityQueryOptions = {
-		"maxDistance": 1,
+		"maxDistance": 1.125,
 		"type": "theheist:camera_robot",
 		"location": location
 	};
@@ -71,7 +68,7 @@ export function cameraCanSeeThrough(location: Vector): boolean {
 
 system.runInterval(() => {
 	// Only include adventure mode players
-	var player = world.getPlayers(/*{"gameMode": GameMode.adventure}*/).filter((x) => (x != undefined && x != null))[0];
+	var player = world.getPlayers({"gameMode": GameMode.adventure}).filter((x) => (x != undefined && x != null))[0];
 	if (player == undefined) return;
 
 	var playerLevelInformationDataNode = DataManager.getData(player, "levelInformation");
@@ -85,6 +82,8 @@ system.runInterval(() => {
 });
 
 function updateCameraRobots(player: Player, level: number, levelInformation: LevelInformation) {
+	// Robots take exactly 1 second to turn 90 degrees
+	// Robots move at a speed of 1 blocks per 20 ticks
 	const tpDistance = 0.05;
 
 	var cameraRobotArmorStandsQuery = {

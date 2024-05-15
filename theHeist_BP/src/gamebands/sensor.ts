@@ -19,21 +19,21 @@ export function tryMap(player: Player, levelInformation: LevelInformation) {
     if (!sensorModeSlot) return;
     var typeId = sensorModeSlot.typeId;
     if (playerIsLookingDown && typeId.startsWith("theheist:sensor_mode_lvl_") && parseInt(typeId.charAt("theheist:sensor_mode_lvl_".length)) >= 2) { // Player does have a lvl 2 or greater sensor mode
-        var playerInvContainer = player.getComponent("minecraft:inventory")?.container!;
+        var playerInvContainer = player.getComponent("minecraft:inventory")?.container;
         var map = overworld.getBlock(Utilities.levelCloneInfo[`level_${levelInformation.information[1].level}`].mapLoc)?.getComponent("minecraft:inventory")?.container?.getItem(0);
         if (!map) return;
         map.lockMode = ItemLockMode.slot;
-        playerInvContainer.setItem(2, map);
+        playerInvContainer?.setItem(2, map);
         levelInformation.information[2].inventory.push({ "slot": 2, "typeId": `minecraft:filled_map`, "lockMode": "slot" });
         DataManager.setData(player, levelInformation);
     } else if (!playerIsLookingDown && typeId == "minecraft:filled_map") { // Clear map
-        var playerInvContainer = player.getComponent("minecraft:inventory")?.container!;
+        var playerInvContainer = player.getComponent("minecraft:inventory")?.container;
         levelInformation.information[2].inventory = levelInformation.information[2].inventory.filter((s) => (s.typeId != "minecraft:filled_map"));
         DataManager.setData(player, levelInformation);
         var sensorModeSlotData = levelInformation.information[2].inventory.find((x) => (x.slot == 2))!;
         var itemStack = new ItemStack(sensorModeSlotData.typeId);
         itemStack.lockMode = ItemLockMode.slot;
-        playerInvContainer.setItem(2, itemStack);
+        playerInvContainer?.setItem(2, itemStack);
     }
 }
 

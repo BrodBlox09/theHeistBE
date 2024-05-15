@@ -19,9 +19,6 @@
 - [x] when recharging, other gamebands are taken away
 - [ ] there should be a blindness effect in between cutscene scenes
 - [ ] Add elevator recharge station to level -1
-### Camera / Sensor
-- [x] Add functionality to sensor mode
-- [x] Fix camera sight (wall checks don't match Java, e.g. 2 high glass isn't seen through when it should be)
 ### UI
 - [ ] edit inventory UI
 ### Other
@@ -29,20 +26,17 @@
 - [ ] use the original models and textures for the gamebands (animated stuff  and laser thingy is missing), computers, drawers, signs, chairs, recharge stations, etc
 ### Backend
 - [ ] Rewrite the data management system (DataManager-rewrite branch)
-- [ ] Separate the functionality of each gameband into seperate files
-- [ ] Consider modualizing the level loading system, where each level gets its own file
+- [x] Separate the functionality of each gameband into seperate files
+- [x] Consider modualizing the level loading system, where each level gets its own file
 - [ ] Rewrite objective system to rely on IDs to update each objective's status?
-## Level -2
+- [ ] Create a system to handle a player leaving during an alarm scene or level load
+## Level -4
 ### World
-- [ ] Import level from Java world
-- [ ] Replace retextured blocks with the correct blocks
+- [ ] 
 ### Backend
-- [ ] Add functionality to all keypads
-- [ ] Add functionality to all computers
-- [ ] Add functionality to all keycard readers
-- [ ] Add X-Ray mode
+- [ ] 
 ### RP
-- [ ] Create X-Ray mode texture
-- [ ] Create X-Ray mode model
+- [ ] Create sonar models
+- [ ] Create sonar textures
 ### BP
-- [ ] Create X-Ray BP files
+- [ ] Implement sonar alarm system
