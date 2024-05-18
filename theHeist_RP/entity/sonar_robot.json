@@ -2,12 +2,12 @@
     "format_version": "1.10.0",
     "minecraft:client_entity": {
         "description": {
-            "identifier": "theheist:camera_robot",
+            "identifier": "theheist:sonar_robot",
             "materials": {
                 "default": "robot_animated"
             },
             "textures": {
-                "default": "textures/entity/camera_robot"
+                "default": "textures/entity/sonar_robot"
             },
             "geometry": {
                 "default": "geometry.robot"
