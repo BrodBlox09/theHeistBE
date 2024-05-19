@@ -101,6 +101,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 				world.sendMessage("Could not find player");
 				return;
 			}
+			player.addTag('loadingLevel');
 			if (!bustedCounterObjective.hasParticipant(player)) {
 				bustedCounterObjective.setScore(player, 0);
 			}
@@ -109,7 +110,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 					// Load level 1 (The van tutorial level)
 					// Clear all data on player
 					DataManager.clearData(player);
-					player.getTags().forEach((x) => { player.removeTag(x); });
+					player.getTags().forEach((x) => { if (x != 'loadingLevel') player.removeTag(x); });
 					// Add energyTracker data node
 					const playerEnergyTrackerDataNode: EnergyTracker = { "name": "energyTracker", "energyUnits": 0.0, "recharging": false, "usingRechargerID": -1, "rechargeLevel": 1 };
 					DataManager.setData(player, playerEnergyTrackerDataNode);
@@ -167,7 +168,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 					// Load level 0.5 (The vent intro level)
 					// Clear all data on player
 					DataManager.clearData(player);
-					player.getTags().forEach((x) => { player.removeTag(x); });
+					player.getTags().forEach((x) => { if (x != 'loadingLevel') player.removeTag(x); });
 					// Add energyTracker data
 					const playerEnergyTrackerDataNode: EnergyTracker = { "name": "energyTracker", "energyUnits": 0.0, "recharging": false, "usingRechargerID": -1, "rechargeLevel": 1 };
 					DataManager.setData(player, playerEnergyTrackerDataNode);
@@ -192,7 +193,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 					// Clear all data on player
 					DataManager.clearData(player);
 					// Previous level made use of tags, clear them here
-					player.getTags().forEach((x) => { player.removeTag(x); });
+					player.getTags().forEach((x) => { if (x != 'loadingLevel') player.removeTag(x); });
 					// Add energyTracker data
 					const playerEnergyTrackerDataNode: EnergyTracker = { "name": "energyTracker", "energyUnits": 100.0, "recharging": false, "usingRechargerID": -1, "rechargeLevel": 1 };
 					DataManager.setData(player, playerEnergyTrackerDataNode);
@@ -559,8 +560,8 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 						overworld.fillBlocks({ x: 2029.50, y: -59.00, z: 56.50 }, { x: 2029.50, y: -59.00, z: 61.50 }, BlockPermutation.resolve('minecraft:redstone_block'));
 						// Teleport player from pre-hatch to post-hatch
 						player.teleport({ x: 2013.5, y: -52, z: 56.5 }, { dimension: overworld, rotation: { x: 0, y: 90 } });
-						VoiceOverManager.play(player, '004')
-
+						VoiceOverManager.play(player, '004');
+						player.removeTag('loadingLevel');
 					}, SECOND * 7.5);
 					break;
 				}
@@ -569,7 +570,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 					// Clear all data on player
 					DataManager.clearData(player);
 					// Previous level made use of tags, clear them here
-					player.getTags().forEach((x) => { player.removeTag(x); });
+					player.getTags().forEach((x) => { if (x != 'loadingLevel') player.removeTag(x); });
 					// Add energyTracker data
 					const playerEnergyTrackerDataNode: EnergyTracker = { "name": "energyTracker", "energyUnits": 100.0, "recharging": false, "usingRechargerID": -1, "rechargeLevel": 1 };
 					DataManager.setData(player, playerEnergyTrackerDataNode);
@@ -595,13 +596,14 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 					var elevatorInterval =  runElelevatorAnimation(new Vector(3099.0, -60, 109.0));
 
 					// Ensure parts far away are loaded
-					overworld.runCommand('tickingarea remove_all');
-					overworld.runCommand('tickingarea add 3033 -60 129 3039 -69 132 "t1" true');
+					overworld.runCommandAsync('tickingarea remove_all');
+					overworld.runCommandAsync('tickingarea add 3032 -61 128 3040 -14 133 "t1" true');
 
 					system.runTimeout(() => { // After 10 seconds bring the player out of the elevator and end the interval
 						overworld.runCommand('tickingarea remove_all');
 						system.clearRun(elevatorInterval);
 						player.teleport({ "x": 3086.0, "y": -60, "z": 110.0 }, { 'dimension': overworld, 'rotation': { 'x': 0, 'y': 90 } });
+						player.removeTag('loadingLevel');
 					}, SECOND * 10);
 					system.runTimeout(() => { // After 7.5 seconds load the level objects
 						// Kill all entities
@@ -1240,7 +1242,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 				default:
 					// Clear all data on player
 					DataManager.clearData(player);
-					player.getTags().forEach((x) => { player.removeTag(x); });
+					player.getTags().forEach((x) => { if (x != 'loadingLevel') player.removeTag(x); });
 					if (!bustedCounterObjective.hasParticipant(player)) {
 						bustedCounterObjective.setScore(player, 0);
 					}
@@ -1296,6 +1298,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 						overworld.runCommand('tickingarea remove_all');
 						system.clearRun(elevatorInterval);
 						player.teleport(levelDefinition.startPlayerLoc);
+						player.removeTag('loadingLevel');
 					}, SECOND * 10);
 					break;
 			}

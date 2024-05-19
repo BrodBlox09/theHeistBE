@@ -15,6 +15,16 @@ import VoiceOverManager from "./VoiceOverManager";
 	}
 });*/
 
+world.afterEvents.playerSpawn.subscribe(eventData => {
+	if (!eventData.initialSpawn || !eventData.player.hasTag('loadingLevel')) return;
+	var levelInfo: LevelInformation = DataManager.getData(eventData.player, "levelInformation");
+	var gameLevel = levelInfo.information[1].level;
+	if (gameLevel == 0.5) Utilities.dimensions.overworld.runCommandAsync(`scriptevent theheist:load-level 0-1`);
+	if (gameLevel == 0) Utilities.dimensions.overworld.runCommandAsync(`scriptevent theheist:load-level 0-2`);
+	else Utilities.dimensions.overworld.runCommandAsync(`scriptevent theheist:load-level ${gameLevel}-1`);
+	eventData.player.sendMessage("RUNNING LOADING OF LEVEL");
+});
+
 system.beforeEvents.watchdogTerminate.subscribe((event) => {
 	event.cancel = true;
 });

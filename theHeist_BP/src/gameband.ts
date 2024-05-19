@@ -577,6 +577,7 @@ function startSlideshow(slideshowID: number, player: Player) {
 }
 
 function playerBusted(player: Player, currentLevel: number) {
+	player.addTag('loadingLevel');
 	switch (currentLevel) {
 		case 0: {
 			var playerLevelInformation: LevelInformation = DataManager.getData(player, "levelInformation");
