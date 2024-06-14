@@ -15,6 +15,16 @@ import VoiceOverManager from "./VoiceOverManager";
 	}
 });*/
 
+world.afterEvents.playerSpawn.subscribe(eventData => {
+	if (!eventData.initialSpawn || !eventData.player.hasTag('loadingLevel')) return;
+	var levelInfo: LevelInformation = DataManager.getData(eventData.player, "levelInformation");
+	var gameLevel = levelInfo.information[1].level;
+	if (gameLevel == 0.5) Utilities.dimensions.overworld.runCommandAsync(`scriptevent theheist:load-level 0-1`);
+	if (gameLevel == 0) Utilities.dimensions.overworld.runCommandAsync(`scriptevent theheist:load-level 0-2`);
+	else Utilities.dimensions.overworld.runCommandAsync(`scriptevent theheist:load-level ${gameLevel}-1`);
+	eventData.player.sendMessage("RUNNING LOADING OF LEVEL");
+});
+
 system.beforeEvents.watchdogTerminate.subscribe((event) => {
 	event.cancel = true;
 });
@@ -123,7 +133,7 @@ world.beforeEvents.chatSend.subscribe(event => {
 		case "fillLarge": {
 			system.run(() => {
 				const lvlCI = Utilities.levelCloneInfo["level_-3"];
-				Utilities.dimensions.overworld.fillBlocks(new Vector(lvlCI.startX, parseInt(args[0]), lvlCI.startZ), new Vector(lvlCI.endX, parseInt(args[0]), lvlCI.endZ), args[1]);
+				Utilities.fillBlocks(new Vector(lvlCI.startX, parseInt(args[0]), lvlCI.startZ), new Vector(lvlCI.endX, parseInt(args[0]), lvlCI.endZ), args[1]);
 			});
 			break;
 		}

@@ -449,7 +449,7 @@ function action(actionInfo: IAction, player: Player) {
 			levelInformation.information[2].inventory.push({ "slot": actionInfo.do.slot, "typeId": `theheist:${actionInfo.do.mode}_mode_lvl_${actionInfo.do.level}`, "lockMode": "slot" });
 			DataManager.setData(player, levelInformation);
 			Utilities.reloadPlayerInv(player);
-			Utilities.dimensions.overworld.setBlockType(actionInfo.do.displayBlock, "minecraft:air");
+			Utilities.dimensions.overworld.getBlock(actionInfo.do.displayBlock)?.setType("minecraft:air");
 			world.sendMessage([{ "text": "§7New Mode Available: §r" + actionInfo.do.modeText }]);
 			break;
 		}
@@ -478,7 +478,7 @@ function action(actionInfo: IAction, player: Player) {
 				playerEnergyTracker.rechargeLevel = actionInfo.do.level;
 				DataManager.setData(player, playerEnergyTracker);
 			}
-			Utilities.dimensions.overworld.setBlockType(actionInfo.do.displayBlock, "minecraft:air");
+			Utilities.dimensions.overworld.getBlock(actionInfo.do.displayBlock)?.setType("minecraft:air");
 			world.sendMessage([{ "text": "§7Upgrade Recieved: §r" + actionInfo.do.modeText }]);
 			break;
 		}
@@ -502,7 +502,7 @@ function keycard(keycardType: string, player: Player) {
 	var actionTracker = DataManager.getData(armorStand, "actionTracker");
 	if (!actionTracker || !actionTracker.isKeycardReader || actionTracker.used == true || (actionTracker.keycardType != keycardType && keycardType != "all")) return;
 	if (keycardType == "all") {
-		var playerInvContainer = player.getComponent("inventory")!.container as Container;
+		var playerInvContainer = (player.getComponent("inventory") as EntityInventoryComponent).container as Container;
 		if (actionTracker.keycardType != "blue") {
 			if (!Utilities.inventoryContainerHasItem(playerInvContainer, `minecraft:${actionTracker.keycardType}_dye`)) return;
 		} else {
@@ -577,6 +577,7 @@ function startSlideshow(slideshowID: number, player: Player) {
 }
 
 function playerBusted(player: Player, currentLevel: number) {
+	player.addTag('loadingLevel');
 	switch (currentLevel) {
 		case 0: {
 			var playerLevelInformation: LevelInformation = DataManager.getData(player, "levelInformation");
@@ -586,7 +587,9 @@ function playerBusted(player: Player, currentLevel: number) {
 			player.playSound("map.alarm");
 			player.addTag("BUSTED");
 			(player.getComponent("inventory") as EntityInventoryComponent).container?.clearAll();
-			overworld.fillBlocks({ "x": 2029.50, "y": -59.00, "z": 56.50 }, { "x": 2029.50, "y": -59.00, "z": 61.50 }, BlockPermutation.resolve("minecraft:air"));
+
+			// @ts-ignore
+			overworld.fillBlocks(new BlockVolume({ "x": 2029.50, "y": -59.00, "z": 56.50 }, { "x": 2029.50, "y": -59.00, "z": 61.50 }), BlockPermutation.resolve("minecraft:air"));
 			system.runTimeout(() => {
 				stopAllSound();
 				player.teleport({ "x": 2037.5, "y": -59, "z": 59.5 });
@@ -688,7 +691,7 @@ system.runInterval(() => {
 		}
 		playerInvContainer.setItem(i, item);
 	}
-	var selectedItemStack = playerInvContainer.getItem(player.selectedSlot);
+	var selectedItemStack = playerInvContainer.getItem(player.selectedSlotIndex);
 	if (selectedItemStack != undefined && selectedItemStack.typeId.startsWith("theheist:recharge_mode_lvl_")) {
 		GameObjectiveManager.showSidebar();
 	} else {
