@@ -42,14 +42,19 @@ export default class Utilities {
 	}
 
 	static fillBlocks(location1: Vector3, location2: Vector3, block: string, permutations: Record<string, string | number | boolean> | undefined = undefined) {
-		this.dimensions.overworld.fillBlocks(new BlockVolume(location1, location2), BlockPermutation.resolve(block, permutations));
+		this.dimensions.overworld.fillBlocks(new BlockVolume(location1, location2), BlockPermutation.resolve(block, permutations), {
+			"ignoreChunkBoundErrors": true
+		});
 	}
 
 	static fillBlocksWithPermutation(location1: Vector3, location2: Vector3, permutation: BlockPermutation) {
-		this.dimensions.overworld.fillBlocks(new BlockVolume(location1, location2), permutation);
+		this.dimensions.overworld.fillBlocks(new BlockVolume(location1, location2), permutation, {
+			"ignoreChunkBoundErrors": true
+		});
 	}
 
 	static fillBlocksWithOptions(location1: Vector3, location2: Vector3, block: string, options: BlockFillOptions, permutations: Record<string, string | number | boolean> | undefined = undefined) {
+		if (!options.ignoreChunkBoundErrors) options.ignoreChunkBoundErrors = true;
 		this.dimensions.overworld.fillBlocks(new BlockVolume(location1, location2), BlockPermutation.resolve(block, permutations), options);
 	}
 
