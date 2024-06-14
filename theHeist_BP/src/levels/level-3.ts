@@ -18,7 +18,7 @@ const level: ILevel = {
 setup: () => {
 
 {
-    Utilities.dimensions.overworld.fillBlocks(new Vector(5010, -60, 139), new Vector(5010, -60, 142), "minecraft:iron_block");
+    Utilities.fillBlocks(new Vector(5010, -60, 139), new Vector(5010, -60, 142), "minecraft:iron_block");
     Utilities.setBlock(new Vector(5010, -60, 142), "minecraft:redstone_block");
     Utilities.setBlock(new Vector(5009, -60, 127), "theheist:custom_door_2_bottom", { "theheist:rotation": 2, "theheist:unlocked": false });
     LevelConstructor.keypad(new Vector(5008.5, -59, 128.5), 2, 2, [{

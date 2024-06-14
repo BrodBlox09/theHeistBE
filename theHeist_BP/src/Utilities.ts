@@ -1,4 +1,4 @@
-import { BlockPermutation, Vector3, world, Player, Container, EntityEquippableComponent, EntityInventoryComponent, ItemStack, EquipmentSlot, ItemLockMode } from "@minecraft/server";
+import { BlockPermutation, Vector3, world, Player, Container, EntityEquippableComponent, EntityInventoryComponent, ItemStack, EquipmentSlot, ItemLockMode, BlockVolume, BlockType, BlockFillOptions, Dimension } from "@minecraft/server";
 import DataManager from "./DataManager";
 import Vector from "./Vector";
 
@@ -34,7 +34,23 @@ export default class Utilities {
 	}
 
 	static setBlock(location: Vector3, block: string, permutations: Record<string, string | number | boolean> | undefined = undefined) {
-		this.dimensions.overworld.fillBlocks(location, location, BlockPermutation.resolve(block, permutations));
+		this.dimensions.overworld.getBlock(location)?.setPermutation(BlockPermutation.resolve(block, permutations));
+	}
+
+	static fillBlocks2(location1: Vector3, location2: Vector3, block: BlockPermutation | BlockType | string, options?: BlockFillOptions) {
+		this.dimensions.overworld.fillBlocks(new BlockVolume(location1, location2), block, options);
+	}
+
+	static fillBlocks(location1: Vector3, location2: Vector3, block: string, permutations: Record<string, string | number | boolean> | undefined = undefined) {
+		this.dimensions.overworld.fillBlocks(new BlockVolume(location1, location2), BlockPermutation.resolve(block, permutations));
+	}
+
+	static fillBlocksWithPermutation(location1: Vector3, location2: Vector3, permutation: BlockPermutation) {
+		this.dimensions.overworld.fillBlocks(new BlockVolume(location1, location2), permutation);
+	}
+
+	static fillBlocksWithOptions(location1: Vector3, location2: Vector3, block: string, options: BlockFillOptions, permutations: Record<string, string | number | boolean> | undefined = undefined) {
+		this.dimensions.overworld.fillBlocks(new BlockVolume(location1, location2), BlockPermutation.resolve(block, permutations), options);
 	}
 
 	static reloadPlayerInv(player: Player, levelData: any = null) {

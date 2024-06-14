@@ -557,7 +557,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 						Utilities.setBlock(new Vector(1987, -60, 68), "theheist:custom_door_4_bottom_r", { "theheist:rotation": 3, "theheist:unlocked": false });
 						Utilities.setBlock(new Vector(1987, -59, 73), "minecraft:lever", { "lever_direction": "north" });
 						// Turn on command blocks
-						overworld.fillBlocks({ x: 2029.50, y: -59.00, z: 56.50 }, { x: 2029.50, y: -59.00, z: 61.50 }, BlockPermutation.resolve('minecraft:redstone_block'));
+						Utilities.fillBlocks({ x: 2029.50, y: -59.00, z: 56.50 }, { x: 2029.50, y: -59.00, z: 61.50 }, 'minecraft:redstone_block');
 						// Teleport player from pre-hatch to post-hatch
 						player.teleport({ x: 2013.5, y: -52, z: 56.5 }, { dimension: overworld, rotation: { x: 0, y: 90 } });
 						VoiceOverManager.play(player, '004');
@@ -613,7 +613,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 						}
 						// Clear sensor residue
 						const levelCloneInfo = Utilities.levelCloneInfo[`level_-1`];
-						overworld.fillBlocks(new Vector(levelCloneInfo.startX, Utilities.cameraMappingHeight - 4, levelCloneInfo.startZ), new Vector(levelCloneInfo.endX, Utilities.cameraMappingHeight - 4, levelCloneInfo.endZ), "air");
+						Utilities.fillBlocks(new Vector(levelCloneInfo.startX, Utilities.cameraMappingHeight - 4, levelCloneInfo.startZ), new Vector(levelCloneInfo.endX, Utilities.cameraMappingHeight - 4, levelCloneInfo.endZ), "air");
 						overworld.runCommandAsync(`fill ${levelCloneInfo.startX} ${Utilities.levelHeight} ${levelCloneInfo.startZ} ${levelCloneInfo.endX} ${Utilities.levelHeight} ${levelCloneInfo.endZ} air replace theheist:robot_path`);
 						overworld.runCommandAsync(`clone ${levelCloneInfo.startX} ${Utilities.floorCloneHeight} ${levelCloneInfo.startZ} ${levelCloneInfo.endX} ${Utilities.floorCloneHeight} ${levelCloneInfo.endZ} ${levelCloneInfo.startX} ${Utilities.levelHeight - 1} ${levelCloneInfo.startZ}`);
 
@@ -1288,7 +1288,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 						}
 						// Clear sensor mode residue
 						const levelCloneInfo = Utilities.levelCloneInfo[`level_${levelNum}`];
-						overworld.fillBlocks(new Vector(levelCloneInfo.startX, Utilities.cameraMappingHeight - 4, levelCloneInfo.startZ), new Vector(levelCloneInfo.endX, Utilities.cameraMappingHeight - 4, levelCloneInfo.endZ), "air");
+						Utilities.fillBlocks(new Vector(levelCloneInfo.startX, Utilities.cameraMappingHeight - 4, levelCloneInfo.startZ), new Vector(levelCloneInfo.endX, Utilities.cameraMappingHeight - 4, levelCloneInfo.endZ), "air");
 						overworld.runCommandAsync(`fill ${levelCloneInfo.startX} ${Utilities.levelHeight} ${levelCloneInfo.startZ} ${levelCloneInfo.endX} ${Utilities.levelHeight} ${levelCloneInfo.endZ} air replace theheist:robot_path`);
 						overworld.runCommandAsync(`clone ${levelCloneInfo.startX} ${Utilities.floorCloneHeight} ${levelCloneInfo.startZ} ${levelCloneInfo.endX} ${Utilities.floorCloneHeight} ${levelCloneInfo.endZ} ${levelCloneInfo.startX} ${Utilities.levelHeight - 1} ${levelCloneInfo.startZ}`);
 
@@ -1392,7 +1392,7 @@ function runElelevatorAnimation(middleBottomPos: Vector): number {
 	});
 	var elevatorInterval = system.runInterval(() => {
 		elevatorEdgesBottom.forEach((pos, i) => {
-			overworld.fillBlocks(pos, elevatorEdgesTop[i], BlockPermutation.resolve("minecraft:polished_andesite"));
+			Utilities.fillBlocksWithPermutation(pos, elevatorEdgesTop[i], BlockPermutation.resolve("minecraft:polished_andesite"));
 		});
 		for (var i = 0; i < 4; i++) {
 			var currY = elevatorEdgesBottom[0].y + 3 * i;

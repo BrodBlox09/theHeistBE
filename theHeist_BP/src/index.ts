@@ -133,7 +133,7 @@ world.beforeEvents.chatSend.subscribe(event => {
 		case "fillLarge": {
 			system.run(() => {
 				const lvlCI = Utilities.levelCloneInfo["level_-3"];
-				Utilities.dimensions.overworld.fillBlocks(new Vector(lvlCI.startX, parseInt(args[0]), lvlCI.startZ), new Vector(lvlCI.endX, parseInt(args[0]), lvlCI.endZ), args[1]);
+				Utilities.fillBlocks(new Vector(lvlCI.startX, parseInt(args[0]), lvlCI.startZ), new Vector(lvlCI.endX, parseInt(args[0]), lvlCI.endZ), args[1]);
 			});
 			break;
 		}

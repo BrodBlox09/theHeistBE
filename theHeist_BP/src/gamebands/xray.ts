@@ -77,8 +77,10 @@ export function updateXRayDisplay(player: Player, levelInformation: LevelInforma
     var corner1 = loc.subtract(new Vector(viewRange, viewRange, viewRange));
     var corner2 = loc.add(new Vector(viewRange, viewRange, viewRange));
     solidToTransparent.forEach((x) => {
-        overworld.fillBlocks(corner1, corner2, x.transparent, {
-            "matchingBlock": BlockPermutation.resolve(x.solid)
+        Utilities.fillBlocksWithOptions(corner1, corner2, x.transparent, {
+            "blockFilter": {
+                "includePermutations": [BlockPermutation.resolve(x.solid)]
+            }
         });
     });
 }
@@ -89,8 +91,10 @@ function clearXRayDisplay(player: Player, levelInformation: LevelInformation) {
     var corner1 = loc.subtract(new Vector(clearRange, clearRange, clearRange));
     var corner2 = loc.add(new Vector(clearRange, clearRange, clearRange));
     solidToTransparent.forEach((x) => {
-        overworld.fillBlocks(corner1, corner2, x.solid, {
-            "matchingBlock": BlockPermutation.resolve(x.transparent)
+        Utilities.fillBlocksWithOptions(corner1, corner2, x.solid, {
+            "blockFilter": {
+                "includePermutations": [BlockPermutation.resolve(x.transparent)]
+            }
         });
     });
 }
