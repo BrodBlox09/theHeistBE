@@ -20,8 +20,8 @@ setup: () => {
 {
     LevelConstructor.staticCamera(new Vector(5891.5, -58, 118.5), 142);
     LevelConstructor.dynamicCamera(new Vector(5889.5, -58, 133.5), [1, 100, 250]);
-    // Sonar camera here
-    // Sonar camera here
+    LevelConstructor.sonar(new Vector(5923.5, -58, 130.5), 80);
+    LevelConstructor.sonar(new Vector(5925.5, -58, 132.5), 15);
     LevelConstructor.cameraRobot(new Vector(5922.5, -59.25, 131.5), 90);
 } // Entry Hallway
 

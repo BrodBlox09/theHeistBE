@@ -6,6 +6,7 @@ import DataManager from "../DataManager";
 const overworld = Utilities.dimensions.overworld;
 
 let cameras = 0;
+let sonars = 0;
 let rechargeStations = 0;
 
 export default class LevelConstructor {
@@ -189,6 +190,23 @@ export default class LevelConstructor {
         }
         DataManager.setData(camera, cameraDataNode);
         cameras++;
+    }
+
+    static sonar(loc: Vector, rot: number) {
+        const sonar = overworld.spawnEntity("armor_stand", new Vector(loc.x, Utilities.cameraHeight, loc.z));
+        var rotationVector = { 'x': 0, 'y': rot };
+        sonar.setRotation(rotationVector);
+        overworld.spawnEntity("theheist:sonar", loc).setRotation(rotationVector);
+        const sonarDataNode = {
+            "name": "cameraTracker",
+            "isRobot": false,
+            "rotation": rot,
+            "disabled": false,
+            "cameraID": sonars,
+            "type": "sonar"
+        }
+        DataManager.setData(sonar, sonarDataNode);
+        sonars++;
     }
 
     static cameraRobot(loc: Vector, rot: number) {
