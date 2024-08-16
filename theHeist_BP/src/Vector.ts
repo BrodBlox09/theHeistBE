@@ -1,6 +1,6 @@
 import { Vector3 } from "@minecraft/server";
 
-export default class Vector implements Vector3 {
+export default class Vector implements Vector3, IVector3 {
     x: number;
     y: number;
     z: number;

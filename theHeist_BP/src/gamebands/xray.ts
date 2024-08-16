@@ -7,7 +7,8 @@ const viewRange = 2;
 const clearRange = 4;
 export const solidToTransparent = [
     { "solid": "minecraft:cyan_terracotta", "transparent": "minecraft:gray_stained_glass" },
-    { "solid": "minecraft:hardened_clay", "transparent": "minecraft:brown_stained_glass" }
+    { "solid": "minecraft:hardened_clay", "transparent": "minecraft:brown_stained_glass" },
+    { "solid": "minecraft:polished_andesite", "transparent": "minecraft:light_gray_stained_glass", "minLevel": 2 }
 ];
 
 const overworld = Utilities.dimensions.overworld;
@@ -34,7 +35,7 @@ function tryStartXRayMode(player: Player, lvl: number, levelInformation: LevelIn
     DataManager.setData(player, levelInformation);
     Utilities.reloadPlayerInv(player, levelInformation);
     player.playSound("mob.spider.step", { "pitch": 1.5 });
-    updateXRayDisplay(player, levelInformation);
+    updateXRayDisplay(player, levelInformation, lvl);
 }
 
 function endXRayMode(player: Player, levelInformation: LevelInformation) {
@@ -66,10 +67,10 @@ export function xrayTick(player: Player, levelInformation: LevelInformation, ene
         return;
     }
     DataManager.setData(player, energyTracker);
-    updateXRayDisplay(player, levelInformation);
+    updateXRayDisplay(player, levelInformation, xrayModeData.level);
 }
 
-export function updateXRayDisplay(player: Player, levelInformation: LevelInformation) {
+export function updateXRayDisplay(player: Player, levelInformation: LevelInformation, lvl: number) {
     // Update ground to show where the camera sight blocks are
     if (!playerIsInXRayMode(levelInformation)) return; // Player is not in xray mode
     clearXRayDisplay(player, levelInformation);
@@ -77,6 +78,7 @@ export function updateXRayDisplay(player: Player, levelInformation: LevelInforma
     var corner1 = loc.subtract(new Vector(viewRange, viewRange, viewRange));
     var corner2 = loc.add(new Vector(viewRange, viewRange, viewRange));
     solidToTransparent.forEach((x) => {
+        if (x.minLevel && x.minLevel > lvl) return;
         Utilities.fillBlocksWithOptions(corner1, corner2, x.transparent, {
             "blockFilter": {
                 "includePermutations": [BlockPermutation.resolve(x.solid)]

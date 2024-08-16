@@ -133,7 +133,7 @@ map.mail.404=Re: Hey Adam, what do you mean there is a major flaw with the sonar
 map.mail.405=Dear Roger, I know it is not really my place to say this, but I have been thinking about the way you guys use sound to detect movement. It sends out pulses at very low intervals. Wouldn't standing still every now and then allow you to sneak past it unnoticed? Kind regards, Adam
 map.mail.406=X-ray lvl. 2 (Energy consumption 0.67 units/sec): This mode is twice as energy efficient as before. In addition to this the user can now use it to see through Andesite walls.
 
-map.mail.500=Re: Re: Don't get me wrong I am very grateful for the Office I have been given. It is very spacious. I just wish it was a bit closer to the Drill Research lab. I mean it is all the way across the hall. You guys sent me two keycards by the way. Is it ok if I keep one as a spare?
+map.mail.500=Re: Re: Don't get me wrong I am very grateful for the office I have been given. It is very spacious. I just wish it was a bit closer to the Drill Research lab. I mean it is all the way across the hall. You guys sent me two keycards by the way. Is it ok if I keep one as a spare?
 map.mail.501=Drill lvl. 1 (Energy consumption 30.0 units per use): This mode allows the user to disintegrate brown hardened clay walls and create mansize holes.
 map.mail.502=Hacking lvl. 3: (Energy consumption 5 units per use): This mode allows the user to hack up to level 3 consoles at a lower energy cost.
 map.mail.503=Stealth lvl 2. (Energy consumption 10.0 units/sec): This improved version of stealth mode is 4x more energy efficient than the previous model. This means it can be used for longer periods of time.
@@ -142,7 +142,7 @@ map.mail.505=Re: Hey Naomi, I know you are curious about the secret prototype. Y
 map.mail.506.A=Dear Zed, I have been picking up a lot of negative comments on your job performance. Watching Youtube videos during work hours. I heard they are considering not extending your contract. That would be very unfortunate.
 map.mail.506.B=I could possibly throw in a good word for you. That is, if you could do me a favor. I need you to find someone to test the security of this complex using our Gamebands. I need it to be an unbiased test. Do you think you can handle this? Regards, Walter
 map.mail.507=Re: I am well aware the security systems in this place are lackluster. I will have someone do a little experiment for me this weekend. Let's see how it goes. Maybe it will change the old mans mind. Kind regards, Walter
-map.mail.508=Hey Emma, Any idea when the new assistant will arrive? Please tell me he is competent this time. If I have to spend my time explaining every little thing, then what is the point of having an assistant in the first place? Anyways, I still have the old ones keys and stuff. Should I just keep it in my drawer and give it to the next guy?.
+map.mail.508=Hey Emma, Any idea when the new assistant will arrive? Please tell me he is competent this time. If I have to spend my time explaining every little thing, then what is the point of having an assistant in the first place? Anyways, I still have the old ones keys and stuff. Should I just keep it in my drawer and give it to the next guy?
 
 ## Cu
 beginnerTips.1=If you have Minecraft Java, check out the original version: https://www.planetminecraft.com/project/the-heist-3372054/

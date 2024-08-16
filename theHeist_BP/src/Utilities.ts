@@ -116,6 +116,10 @@ export default class Utilities {
 			2: {
 				"speed": 20.0,
 				"max": 150.0
+			},
+			3: {
+				"speed": 20.0,
+				"max": 200.0
 			}
 		},
 		"hackingMode": {
@@ -137,6 +141,9 @@ export default class Utilities {
 		"xrayMode": {
 			1: {
 				"cost": 1.33
+			},
+			2: {
+				"cost": 0.67
 			}
 		},
 		"magnetMode": {
@@ -147,6 +154,11 @@ export default class Utilities {
 		"stealthMode": {
 			1: {
 				"cost": 40
+			}
+		},
+		"stunMode": {
+			1: {
+				"cost": 10
 			}
 		}
 	}
@@ -183,6 +195,14 @@ export default class Utilities {
 			"endZ": 182,
 			"prisonLoc": new Vector(5011.5, -59, 151.5),
 			"mapLoc": new Vector(4986, -55, 131)
+		},
+		"level_-4": {
+			"startX": 5843,
+			"startZ": 99,
+			"endX": 5928,
+			"endZ": 183,
+			"prisonLoc": new Vector(5916.5, -59, 99.5),
+			"mapLoc": new Vector(5906, -55, 141)
 		}
 	}
 

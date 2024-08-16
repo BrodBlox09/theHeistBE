@@ -4,7 +4,7 @@
         "description": {
             "identifier": "theheist:camera_robot",
             "materials": {
-                "default": "robot_animated"
+                "default": "animated_entity"
             },
             "textures": {
                 "default": "textures/entity/camera_robot"

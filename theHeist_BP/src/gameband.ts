@@ -1,4 +1,4 @@
-import { MolangVariableMap, BlockPermutation, EffectTypes, Vector3, world, system, Player, EntityInventoryComponent, EffectType, DisplaySlotId, ScoreboardObjective, Container, ItemStack, ItemLockMode, Entity, Dimension, ItemUseAfterEvent, BlockVolumeBase } from "@minecraft/server";
+import { MolangVariableMap, BlockPermutation, EffectTypes, Vector3, world, system, Player, EntityInventoryComponent, EffectType, DisplaySlotId, ScoreboardObjective, Container, ItemStack, ItemLockMode, Entity, Dimension, ItemUseAfterEvent, BlockVolume } from "@minecraft/server";
 import Vector from "./Vector";
 import DataManager from "./DataManager";
 import Utilities from "./Utilities";
@@ -7,6 +7,7 @@ import * as SensorModeFunc from "./gamebands/sensor";
 import * as XRayModeFunc from "./gamebands/xray";
 import * as MagnetModeFunc from "./gamebands/magnet";
 import * as StealthModeFunc from "./gamebands/stealth";
+import * as StunModeFunc from "./gamebands/stun";
 import VoiceOverManager from "./VoiceOverManager";
 
 /**
@@ -29,13 +30,16 @@ class loreItem {
 const loreItems = [
 	new loreItem("theheist:recharge_mode_lvl_1", "§r§9Recharge mode Lvl. 1", ["Use item to §r§6toggle", "Energy: 1.0 units/second", "Select to show objectives"]),
 	new loreItem("theheist:recharge_mode_lvl_2", "§r§9Recharge mode Lvl. 2", ["Use item to §r§6toggle", "Energy: 1.0 units/second", "Select to show objectives"]),
+	new loreItem("theheist:recharge_mode_lvl_3", "§r§9Recharge mode Lvl. 3", ["Use item to §r§6toggle", "Energy: 1.0 units/second", "Select to show objectives"]),
 	new loreItem("theheist:hacking_mode_lvl_1", "§r§2Hacking mode Lvl. 1", ["Use item to §r§6use", "Energy: 15 units"]),
 	new loreItem("theheist:hacking_mode_lvl_2", "§r§2Hacking mode Lvl. 2", ["Use item to §r§6use", "Energy: 10 units"]),
 	new loreItem("theheist:sensor_mode_lvl_1", "§r§6Sensor mode Lvl. 1", ["Use item to §r§6toggle", "Energy: 1.0 units/second"]),
 	new loreItem("theheist:sensor_mode_lvl_2", "§r§6Sensor mode Lvl. 2", ["Use item to §r§6toggle", "Energy: 0.4 units/second"]),
 	new loreItem("theheist:xray_mode_lvl_1", "§r§4Xray mode Lvl. 1", ["Use item to §r§6toggle", "Energy: 1.33 units/second"]),
+	new loreItem("theheist:xray_mode_lvl_2", "§r§4Xray mode Lvl. 2", ["Use item to §r§6toggle", "Energy: 0.67 units/second"]),
 	new loreItem("theheist:magnet_mode_lvl_1", "§r§5Magnet mode Lvl. 1", ["Use item to §r§6toggle", "Energy: 1.6 units/second"]),
-	new loreItem("theheist:stealth_mode_lvl_1", "§r§fStealth mode Lvl. 1", ["Use item to §r§6toggle", "Energy: 40 units/second"]),
+	new loreItem("theheist:stealth_mode_lvl_1", "§r§fStealth mode Lvl. 1", ["Use item to §r§6toggle", "Energy: 10 units/second"]),
+	new loreItem("theheist:stun_mode_lvl_1", "§r§eStun mode Lvl. 1", ["Use item to §r§6use", "Energy: 10 units"]),
 	new loreItem('minecraft:paper', '§oUse Keycard§r', ['Can trigger any Keycard reader', 'for which you own a matching card']),
 	new loreItem('minecraft:red_dye', '§oRed Keycard§r', ['Used on matching Keycard reader']),
 	new loreItem('minecraft:yellow_dye', '§oYellow Keycard§r', ['Used on matching Keycard reader']),
@@ -72,6 +76,9 @@ world.afterEvents.itemUse.subscribe((event: ItemUseAfterEvent) => {
 		case "theheist:recharge_mode_lvl_2":
 			rechargeMode(2, player);
 			break;
+		case "theheist:recharge_mode_lvl_3":
+			rechargeMode(3, player);
+			break;
 		case "theheist:hacking_mode_lvl_1":
 			hackingMode(1, player);
 			break;
@@ -87,11 +94,17 @@ world.afterEvents.itemUse.subscribe((event: ItemUseAfterEvent) => {
 		case "theheist:xray_mode_lvl_1":
 			xrayMode(1, player);
 			break;
+		case "theheist:xray_mode_lvl_2":
+			xrayMode(2, player);
+			break;
 		case "theheist:magnet_mode_lvl_1":
 			magnetMode(1, player);
 			break;
 		case "theheist:stealth_mode_lvl_1":
 			stealthMode(1, player);
+			break;
+		case "theheist:stun_mode_lvl_1":
+			stunMode(1, player);
 			break;
 		case "minecraft:red_dye":
 			keycardType = "red"
@@ -107,6 +120,16 @@ world.afterEvents.itemUse.subscribe((event: ItemUseAfterEvent) => {
 			break;
 	}
 });
+
+/**
+ * @description Mode Type: Loop
+ * @param lvl 
+ * @param player 
+ * @returns 
+ */
+function stunMode(lvl: number, player: Player) {
+	StunModeFunc.tryStunMode(player, lvl);
+}
 
 /**
  * @description Mode Type: Loop
@@ -172,12 +195,11 @@ function rechargeMode(lvl: number, player: Player) {
 		var armorStandEnergyTrackerDataNode = DataManager.getData(armorStand, "energyTracker");
 		var playerEnergyTrackerDataNode: EnergyTracker = DataManager.getData(player, "energyTracker");
 		playerEnergyTrackerDataNode.rechargeLevel = lvl;
-		//DataManager.setData(player, playerEnergyTrackerDataNode);
 		var blockLocation = { "x": armorStandEnergyTrackerDataNode.block.x, "y": armorStandEnergyTrackerDataNode.block.y, "z": armorStandEnergyTrackerDataNode.block.z };
 		if (playerEnergyTrackerDataNode.recharging == false) {
 			if (armorStandEnergyTrackerDataNode.energyUnits == 0.0) return;
-			playerEnergyTrackerDataNode.recharging = true;//${armorStandEnergyTrackerDataNode.block.rotation}
-			player.playSound('map.recharge_use', { "volume": 0.25 });
+			playerEnergyTrackerDataNode.recharging = true;
+			player.playSound("portal.travel", { "volume": 0.1, "pitch": 2 });
 			Utilities.setBlock(blockLocation, "theheist:recharge_station", { "theheist:rotation": armorStandEnergyTrackerDataNode.block.rotation, "theheist:state": 2 });
 			playerEnergyTrackerDataNode.usingRechargerID = armorStandEnergyTrackerDataNode.rechargerID;
 			// Enter "1 mode only" state
@@ -407,6 +429,7 @@ function action(actionInfo: IAction, player: Player) {
 			DataManager.setData(player, lvlInfo);
 			if (actionInfo.do.value == 0) {
 				player.sendMessage([{ "translate": "map.console.alarm" }]);
+				player.playSound("note.snare", { "pitch": 1.8, "volume": 0.5 });
 			}
 			//console.warn(actionInfo.do.value.toString());
 			//console.warn(DataManager.getData(player, "levelInformation").information[0].level.toString());
@@ -588,7 +611,6 @@ function playerBusted(player: Player, currentLevel: number) {
 			player.addTag("BUSTED");
 			(player.getComponent("inventory") as EntityInventoryComponent).container?.clearAll();
 
-			// @ts-ignore
 			overworld.fillBlocks(new BlockVolume({ "x": 2029.50, "y": -59.00, "z": 56.50 }, { "x": 2029.50, "y": -59.00, "z": 61.50 }), BlockPermutation.resolve("minecraft:air"));
 			system.runTimeout(() => {
 				stopAllSound();
@@ -640,7 +662,7 @@ function cloneFloor(loc: Vector) {
 	var corner3 = loc.subtract(new Vector(range, 0, range));
 	corner3.y = Utilities.floorCloneHeight;
 	overworld.runCommandAsync(`clone ${corner1.x} ${corner1.y} ${corner1.z} ${corner2.x} ${corner2.y} ${corner2.z} ${corner3.x} ${corner3.y} ${corner3.z}`);
-	overworld.runCommandAsync(`fill ${corner1.x} ${Utilities.floorCloneHeight + 1} ${corner1.z} ${corner2.x} ${Utilities.floorCloneHeight + 1} ${corner2.z} air`);
+	//overworld.runCommandAsync(`fill ${corner1.x} ${Utilities.floorCloneHeight + 1} ${corner1.z} ${corner2.x} ${Utilities.floorCloneHeight + 1} ${corner2.z} air`);
 }
 
 function flattenMap(loc: Vector) {

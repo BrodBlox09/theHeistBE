@@ -9,6 +9,8 @@ import Vector from "./Vector";
  * The alarm XP bar texture can sometimes, seemingly at random, break and use a strange default-looking one. Just reload the world until you get the custom xp bar.
  */
 
+// ALARM NOTIFICATION SOUND: /playsound note.snare @s ~~~ 0.5 2
+
 const cameraHeight = Utilities.cameraHeight;
 const cameraMappingHeight = Utilities.cameraMappingHeight;
 const robotPathHeight = -49;
@@ -31,8 +33,10 @@ function updatePlayerAlarmLevel(player: Player, levelInformation: LevelInformati
 	// Vision-based security
 	// Sight block stuff
 	var playerCameraMappingHeightBlock = Utilities.dimensions.overworld.getBlock({ "x": player.location.x, "y": cameraMappingHeight - 3, "z": player.location.z });
-	if (playerCameraMappingHeightBlock && playerCameraMappingHeightBlock.typeId == "theheist:camera_sight" && player.location.y < -57)
+	if (playerCameraMappingHeightBlock && playerCameraMappingHeightBlock.typeId == "theheist:camera_sight" && player.location.y < -57) {
 		levelInformation.information[0].level += 2;
+		player.playSound("note.snare", { "pitch": 1.75, "volume": 0.5 });
+	}
 
 	// Laser block stuff
 	var bottomBlock = Utilities.dimensions.overworld.getBlock(player.location);
@@ -98,6 +102,21 @@ function updateCameraRobots(player: Player, level: number, levelInformation: Lev
 
 	cameraRobotArmorStands.forEach((cameraRobotArmorStand) => {
 		var cameraDataNode = DataManager.getData(cameraRobotArmorStand, "cameraTracker");
+		if (cameraDataNode.isStunned) {
+			cameraDataNode.stunTimer -= 1;
+			if (cameraDataNode.stunTimer <= 0) cameraDataNode.isStunned = false;
+			DataManager.setData(cameraRobotArmorStand, cameraDataNode);
+
+			var cameraRobotQuery = {
+				"type": "theheist:camera_robot",
+				"location": { 'x': cameraRobotArmorStand.location.x, 'y': levelHeight, 'z': cameraRobotArmorStand.location.z },
+				"maxDistance": 5,
+				"closest": 1
+			};
+			var cameraRobot = Utilities.dimensions.overworld.getEntities(cameraRobotQuery)[0];
+			if (system.currentTick % 3 == 0) disabledSecurityDeviceEffect(Vector.v3ToVector(cameraRobot.location));
+			return;
+		}
 		var move = (!cameraDataNode.isStatic);
 		var tryRotate = true;
 		var pathLevelBlock = overworld.getBlock(new Vector(cameraRobotArmorStand.location.x, robotPathHeight, cameraRobotArmorStand.location.z))!;
@@ -167,7 +186,7 @@ function updateCameras(player: Player, level: number, playerLevelInformationData
 	const cameraArmorStands = Utilities.dimensions.overworld.getEntities(cameraQuery).filter((x) => {
 		var cameraTrackerDataNode = DataManager.getData(x, "cameraTracker");
 		if (x.location.y != cameraHeight || !cameraTrackerDataNode || cameraTrackerDataNode.type != "camera") return false;
-		if (cameraTrackerDataNode.disabled == true) {
+		if (cameraTrackerDataNode.disabled) {
 			var displayCameraQuery = {
 				"type": "theheist:camera",
 				"location": { 'x': x.location.x, 'y': -57, 'z': x.location.z },
@@ -176,6 +195,9 @@ function updateCameras(player: Player, level: number, playerLevelInformationData
 			}
 			var displayCamera = Utilities.dimensions.overworld.getEntities(displayCameraQuery)[0];
 			if (system.currentTick % 3 == 0) disabledSecurityDeviceEffect(Vector.v3ToVector(displayCamera.location));
+			return false;
+		}
+		if (cameraTrackerDataNode.isStunned) {
 			return false;
 		}
 		return true;
@@ -251,8 +273,10 @@ function updateCameras(player: Player, level: number, playerLevelInformationData
 			var belowBlock = { "x": armorStand.location.x, "y": armorStand.location.y - 2, "z": armorStand.location.z };
 			armorStand.teleport({ "x": armorStand.location.x + -(Utilities.sin(armorStand.getRotation().y) * tpDistance), "y": cameraMappingHeight, "z": armorStand.location.z + (Utilities.cos(armorStand.getRotation().y) * tpDistance) }, { 'dimension': Utilities.dimensions.overworld });
 			let armorStandLocation = Vector.v3ToVector({ "x": armorStand.location.x, "y": Utilities.levelHeight, "z": armorStand.location.z });
-			if (cameraCanSeeThrough(armorStandLocation)) Utilities.setBlock(belowBlock, "theheist:camera_sight");
-			else armorStand.kill();
+			if (cameraCanSeeThrough(armorStandLocation)) {
+				if (overworld.getBlock({ "x": armorStand.location.x, "y": Utilities.levelHeight - 1, "z": armorStand.location.z })?.typeId != "minecraft:air")
+					Utilities.setBlock(belowBlock, "theheist:camera_sight");
+			} else armorStand.kill();
 		});
 	}
 }

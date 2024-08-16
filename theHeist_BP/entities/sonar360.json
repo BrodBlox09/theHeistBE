@@ -1,0 +1,55 @@
+{
+	"format_version": "1.16.0",
+	"minecraft:entity": {
+		"description": {
+            "identifier": "theheist:sonar360",
+            "is_summonable": true,
+            "is_spawnable": false,
+            "is_experimental": false
+        },
+		"components": {
+            "minecraft:pushable": {
+                "is_pushable": false,
+                "is_pushable_by_piston": false
+            },
+            "minecraft:damage_sensor": {
+                "triggers": {
+                    "deals_damage": false
+                }
+            }
+        },
+        "component_groups": {
+            "theheist:disabled": {
+                "minecraft:variant": {
+                    "value": 2
+                }
+            },
+            "theheist:enabled": {
+                "minecraft:variant": {
+                    "value": 1
+                }
+            }
+        },
+        "events": {
+            "minecraft:entity_spawned": {
+                "add": {
+                    "component_groups": [
+                        "theheist:enabled"
+                    ]
+                }
+            },
+            "theheist:disable": {
+                "remove": {
+                    "component_groups": [
+                        "theheist:enabled"
+                    ]
+                },
+                "add": {
+                    "component_groups": [
+                        "theheist:disabled"
+                    ]
+                }
+            }
+        }
+	}
+}

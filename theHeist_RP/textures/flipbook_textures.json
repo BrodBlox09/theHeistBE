@@ -161,5 +161,11 @@
         "atlas_tile": "stealth_mode_enchanted",
         "ticks_per_frame": 1,
         "blend_frames": true
+    },
+    {
+        "flipbook_texture": "textures/blocks/lightning",
+        "atlas_tile": "lightning",
+        "ticks_per_frame": 1,
+        "blend_frames": false
     }
 ]

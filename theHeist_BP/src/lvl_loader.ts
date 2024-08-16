@@ -1382,7 +1382,6 @@ function endDemo(player: Player) {
 /**
  * Assumes elevator height of 12 blocks
  * @param middleBottomPos The position of the bottom-most middle of the elevator.
- * @param elevatorHeight The number of blocks tall the elevator is.
  * @returns An opaque identifier that can be used with the clearRun function to cancel the execution of this animation.
  */
 function runElelevatorAnimation(middleBottomPos: Vector): number {

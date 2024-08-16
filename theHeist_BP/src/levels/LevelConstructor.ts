@@ -194,6 +194,7 @@ export default class LevelConstructor {
     static cameraRobot(loc: Vector, rot: number) {
         const robot = overworld.spawnEntity("armor_stand", { "x": loc.x, "y": Utilities.cameraHeight, "z": loc.z });
         robot.setRotation({ "x": 0, "y": rot });
+        robot.addTag("robot");
         overworld.spawnEntity("theheist:camera_robot", loc).setRotation({ "x": 0, "y": rot });
         const robotDataNode = {
             "name": "cameraTracker",

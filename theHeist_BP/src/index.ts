@@ -36,7 +36,8 @@ const levelLocations: Record<string, Vector3> = {
 	"0": { 'x': 2000.5, 'y': -50, 'z': 56.5 },
 	"-1": {'x': 3075.5, 'y': -50, 'z': 100.5},
 	"-2": { 'x': 4101, 'y': -47, 'z': 131 },
-	"-3": { 'x': 4996, 'y': -44, 'z': 126 }
+	"-3": { 'x': 4996, 'y': -44, 'z': 126 },
+	"-4": { 'x': 5893, 'y': -44, 'z': 129 }
 }
 
 const objectivesObjective = world.scoreboard.getObjective("objectives") ?? world.scoreboard.addObjective("objectives", "Objectives");
@@ -44,7 +45,8 @@ const objectivesObjective = world.scoreboard.getObjective("objectives") ?? world
 const allowedPlayers = [
 	"BrodBlox09",
 	"BrodBloxRox",
-	"McMelonTV"
+	"McMelonTV",
+	"Steve"
 ];
 
 world.beforeEvents.chatSend.subscribe(event => {
@@ -132,7 +134,7 @@ world.beforeEvents.chatSend.subscribe(event => {
 		}
 		case "fillLarge": {
 			system.run(() => {
-				const lvlCI = Utilities.levelCloneInfo["level_-3"];
+				const lvlCI = Utilities.levelCloneInfo["level_-4"];
 				Utilities.fillBlocks(new Vector(lvlCI.startX, parseInt(args[0]), lvlCI.startZ), new Vector(lvlCI.endX, parseInt(args[0]), lvlCI.endZ), args[1]);
 			});
 			break;
@@ -153,7 +155,7 @@ world.beforeEvents.chatSend.subscribe(event => {
 		}
 		case "getBlockPermutation": {
 			var block = Utilities.dimensions.overworld.getBlock(player.location)!;
-			console.log(block.typeId);
+			console.warn(block.typeId);
 			break;
 		}
 	}

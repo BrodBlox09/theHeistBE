@@ -1,6 +1,10 @@
 {
     "format_version": "1.14.0",
     "sound_definitions": {
+      "portal.travel" : {
+         "category" : "ui",
+         "sounds" : [ "sounds/portal/travel" ]
+      },
         "map.alarm": {
             "category": "ui",
             "sounds": [

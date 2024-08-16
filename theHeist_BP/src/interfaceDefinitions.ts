@@ -41,8 +41,8 @@ interface ILevelCloneInfo {
 	"startZ": number,
 	"endX": number,
 	"endZ": number,
-	"prisonLoc": any,
-	"mapLoc": any
+	"prisonLoc": IVector3,
+	"mapLoc": IVector3
 }
 
 interface ILevel {

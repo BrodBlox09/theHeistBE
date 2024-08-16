@@ -1,7 +1,7 @@
 {
     "materials": {
         "version": "1.0.0",
-        "robot_animated:entity_alphablend": {
+        "animated_entity:entity_alphablend": {
             "+defines": [ "USE_UV_ANIM" ],
             "+states": [ "Blending" ]
         }

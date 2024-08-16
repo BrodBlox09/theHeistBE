@@ -56,6 +56,7 @@ export function stealthTick(player: Player, levelInformation: LevelInformation, 
         return;
     }
     DataManager.setData(player, energyTracker);
+    player.addEffect("invisibility", 5, { "showParticles": false });
 }
 
 export function playerIsInStealthMode(levelInformation: LevelInformation) {
