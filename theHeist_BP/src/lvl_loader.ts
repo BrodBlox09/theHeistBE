@@ -1,4 +1,4 @@
-import { ItemStack, Player, system, world, DisplaySlotId, BlockInventoryComponent, BlockPermutation, Container, ItemLockMode, GameMode } from "@minecraft/server";
+import { ItemStack, Player, system, world, DisplaySlotId, BlockInventoryComponent, BlockPermutation, Container, ItemLockMode, GameMode, HudVisibility } from "@minecraft/server";
 import Vector from "./Vector";
 import Utilities from "./Utilities";
 import DataManager from "./DataManager";
@@ -1368,17 +1368,27 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 			else endDemo(player);
 			break;
 		}
+		case "theheist:end_demo": {
+			const player = world.getPlayers().filter((player) => (player != undefined && player != null))[0];
+			endDemo(player);
+			break;
+		}
 	}
 });
 
 function endDemo(player: Player) {
-	player.teleport(new Vector(-22.5, -59, 67.5));
+	Utilities.clearPlayerInventory(player);
+	DataManager.clearData(player);
+	player.onScreenDisplay.setHudVisibility(HudVisibility.Hide);
+	player.camera.fade({"fadeTime":{"holdTime": 5,"fadeInTime":0.5,"fadeOutTime":0.5}});
 	player.onScreenDisplay.setTitle("Thanks for playing!", {
-		"fadeInDuration": 20,
-		"fadeOutDuration": 20,
-		"stayDuration": 160,
+		"fadeInDuration": 10,
+		"fadeOutDuration": 10,
+		"stayDuration": 100,
 		"subtitle": "More levels coming soon"
 	});
+	system.runTimeout(() => player.teleport(new Vector(0.5, -59, 61.5), {"rotation":{"x":0,"y":90}}), 20);
+	system.runTimeout(() => player.onScreenDisplay.setHudVisibility(HudVisibility.Reset), 120);
 }
 
 /**

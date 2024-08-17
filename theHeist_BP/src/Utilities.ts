@@ -93,6 +93,11 @@ export default class Utilities {
 		DataManager.setData(player, playerLevelData);
 	}
 
+	static clearPlayerInventory(player: Player) {
+		var playerInvContainer = (player.getComponent("inventory") as EntityInventoryComponent).container as Container;
+		playerInvContainer.clearAll();
+	}
+
 	static inventoryContainerHasItem(container: Container, item: string): boolean {
 		for (var i = 0; i < container.size; i++) {
 			if (container.getItem(i)?.typeId == item) return true;
