@@ -48,7 +48,6 @@ interface ILevelCloneInfo {
 interface ILevel {
 	"loadElevatorLoc": IVector3,
 	"startPlayerLoc": IVector3,
-	"tickingAreas": Array<IBlockArea>
 	"levelID": string,
 	"startingItems": Array<IInventorySlotData>,
 	"rechargeLevel": number,

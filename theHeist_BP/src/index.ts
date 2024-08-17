@@ -92,6 +92,7 @@ world.beforeEvents.chatSend.subscribe(event => {
 			system.run(() => {
 				player.getTags().forEach((x) => { player.removeTag(x); });
 			});
+			system.run(() => Utilities.dimensions.overworld.runCommand('tickingarea remove_all'));
 			break;
 		case "rotateCam":
 			system.run(() => {

@@ -5,15 +5,15 @@
 - [x] add NV Goggles item {name:'§oNV Goggles§r', lore:['Drop to regain items']}
 	- [x] create armor model
 	- [x] create attachable
-- [ ] make enchanted textures for all gamebands
+- [x] make enchanted textures for all gamebands
 ### Map
 - [ ] reset level on restart (doors, levers (elevator), etc)
 - [ ] redo the level 1 map to match the original
 - [x] add texts to interactable blocks through armor stands or other entities
 - [ ] rotate lvl 1 cameras to match the original
 - [x] fix camera FOV angle to match the original
-- [ ] add ticking sound whenever player is caught by the security system
-- [ ] add paintings and itemframe items <!-- Found the underlying cause and fixed it, apparently paintings are entities that get killed on level load. Now the paintings need to be placed -->
+- [x] add ticking sound whenever player is caught by the security system
+- [x] add paintings and itemframe items <!-- Found the underlying cause and fixed it, apparently paintings are entities that get killed on level load. Now the paintings need to be placed -->
 - [ ] fix the differences in the start van (missing models, missing driver, outside is different, command block textures are different, lighting is different)
 - [x] recharging is faster in java <!-- This was actually a Java bug, I think they might have put an extra 0 somewhere or forgot a decimal place so instead of 1.0 it was 10 -->
 - [x] when recharging, other gamebands are taken away
@@ -28,15 +28,15 @@
 - [ ] Rewrite the data management system (DataManager-rewrite branch)
 - [x] Separate the functionality of each gameband into seperate files
 - [x] Consider modualizing the level loading system, where each level gets its own file
-- [ ] Rewrite objective system to rely on IDs to update each objective's status?
-- [ ] Create a system to handle a player leaving during an alarm scene or level load
+- [x] Rewrite objective system to rely on IDs to update each objective's status?
+- [x] Create a system to handle a player leaving during an alarm scene or level load
 ## Level -4
 ### World
-- [ ] 
+- [x] Port level -4's build to Bedrock and replace blocks that have special models/textures
 ### Backend
-- [ ] 
+- [x] Ensure entire level is loaded so all robots are synchronized
 ### RP
-- [ ] Create sonar models
-- [ ] Create sonar textures
+- [x] Create sonar models
+- [x] Create sonar textures
 ### BP
-- [ ] Implement sonar alarm system
+- [x] Implement sonar alarm system

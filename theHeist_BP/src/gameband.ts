@@ -351,13 +351,13 @@ function action(actionInfo: IAction, player: Player) {
 			DataManager.setData(cameraArmorStand, cameraTrackerDataNode);
 			var displayCameraLocation = { "x": cameraArmorStand.location.x, "y": -57, "z": cameraArmorStand.location.z };
 			var displayCameraQuery = {
-				"type": "theheist:camera",
+				"type": `theheist:${cameraTrackerDataNode.type}`,
 				"location": displayCameraLocation,
 				"maxDistance": 1
 			};
 			var displayCamera = overworld.getEntities(displayCameraQuery)[0];
 			displayCamera.triggerEvent("theheist:disable");
-			player.sendMessage([{ "translate": `map.console.camera` }]);
+			if (!actionInfo.do.noMessage) player.sendMessage([{ "translate": `map.console.${cameraTrackerDataNode.type != "sonar360" ? cameraTrackerDataNode.type : "sonar"}` }]);
 			var maxParticles = 10;
 			var radius = 0.4;
 			for (var i = 0; i < maxParticles; i++) {

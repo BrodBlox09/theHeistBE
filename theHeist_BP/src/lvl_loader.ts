@@ -1277,10 +1277,13 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 					player.teleport(Vector.v3ToVector(levelDefinition.loadElevatorLoc).add(new Vector(0, 4, 0)));
 					var elevatorInterval =  runElelevatorAnimation(Vector.v3ToVector(levelDefinition.loadElevatorLoc));
 
+					const levelCloneInfo = Utilities.levelCloneInfo[`level_${levelNum}`];
 					// Ensure parts far away are loaded
-					overworld.runCommand('tickingarea remove_all');
-					//overworld.runCommand('tickingarea add 3033 -60 129 3039 -69 132 "t1" true');
-
+					overworld.runCommandAsync('tickingarea remove_all');
+					system.runTimeout(() => {
+						overworld.runCommandAsync(`tickingarea add ${levelCloneInfo.startX} ${Utilities.levelHeight} ${levelCloneInfo.startZ} ${levelCloneInfo.endX} ${Utilities.consolesHeight + 1} ${levelCloneInfo.endZ} level-wide`);
+					}, 2); // Ensure this ticking area isn't removed
+					
 					system.runTimeout(() => {
 						const entities = overworld.getEntities();
 						for (const entity of entities) {
@@ -1296,7 +1299,6 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 						levelDefinition.setup()
 					}, SECOND * 7.5); // After 7.5 seconds load level objects
 					system.runTimeout(() => { // After 10 seconds bring the player out of the elevator and end the interval
-						overworld.runCommand('tickingarea remove_all');
 						system.clearRun(elevatorInterval);
 						player.teleport(levelDefinition.startPlayerLoc);
 						player.removeTag('loadingLevel');
@@ -1362,7 +1364,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 			}
 			bustedCounterObjective.setScore(player, 0);
 
-			if (currLevel != -3) overworld.runCommandAsync(`scriptevent theheist:load-level ${currLevel - 1}-1`);
+			if (currLevel != -4) overworld.runCommandAsync(`scriptevent theheist:load-level ${currLevel - 1}-1`);
 			else endDemo(player);
 			break;
 		}

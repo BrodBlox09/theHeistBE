@@ -9,9 +9,8 @@ import VoiceOverManager from "../VoiceOverManager";
 
 const level: ILevel = {
 "levelID": "-4-1",
-"loadElevatorLoc": new Vector(5896, -50, 143),
+"loadElevatorLoc": new Vector(5887, -50, 105),
 "startPlayerLoc": new Vector(5887, -60, 105),
-"tickingAreas": [],
 "startingItems": [{ "slot": 0, "typeId": 'theheist:recharge_mode_lvl_2', "lockMode": "slot" }, { "slot": 1, "typeId": 'theheist:hacking_mode_lvl_2', "lockMode": "slot" }, { "slot": 2, "typeId": 'theheist:sensor_mode_lvl_2', "lockMode": "slot" }, { "slot": 3, "typeId": 'theheist:xray_mode_lvl_1', "lockMode": "slot" }, { "slot": 4, "typeId": 'theheist:magnet_mode_lvl_1', "lockMode": "slot" }, { "slot": 5, "typeId": 'theheist:stealth_mode_lvl_1', "lockMode": "slot" }],
 "rechargeLevel": 2,
 "startObjectives": [{ "name": "Access next level", "sortOrder": 4 }, { "name": "Get Stun mode", "sortOrder": 3 }, { "name": "Get Recharge upgrade", "sortOrder": 2 }, { "name": "Get Xray upgrade", "sortOrder": 1 }],
@@ -34,6 +33,9 @@ setup: () => {
         }
     ]);
     LevelConstructor.rechargeStation(new Vector(5914.5, -60, 124.5), 5);
+
+    Utilities.setBlock(new Vector(5911, -57, 131), "theheist:white_trapdoor", {"theheist:rotation":2});
+    Utilities.setBlock(new Vector(5911, -57, 124), "theheist:white_trapdoor", {"theheist:rotation":5});
 } // Security Office
 
 {
@@ -49,7 +51,7 @@ setup: () => {
         }
     ]);
 
-    // Sonar camera here
+    LevelConstructor.sonar(new Vector(5905.5, -58, 144.5), 90);
 } // Sonar Camera Development
 
 {
@@ -82,12 +84,21 @@ setup: () => {
         "type": "display_research", "do": { "researchID": 401 }, "delay": 40
     }]);
     LevelConstructor.computer(new Vector(5918.5, -59, 135.5), "Disable all sonars", 2, [{
-        "type": "run_command", "do": { "command": "say NOOOOOT REEEADDYY" }
+        "type": "disable_camera", "do": { "cameraID": 6 }, "delay": 40
+    },
+    {
+        "type": "disable_camera", "do": { "cameraID": 3, "noMessage": true }, "delay": 40
+    },
+    {
+        "type": "disable_camera", "do": { "cameraID": 2, "noMessage": true }, "delay": 40
     }]);
     LevelConstructor.rechargeStation(new Vector(5910.5, -60, 140.5), 4);
     LevelConstructor.gamebandUpgrade(new Vector(5912.5, -59, 143.5), "recharge", "§l§1recharge", 3, 0, 3, []);
 
-    // 360 sonar here
+    LevelConstructor.sonar360(new Vector(5916.5, -58, 140.5));
+
+    Utilities.setBlock(new Vector(5924, -57, 141), "theheist:white_trapdoor", {"theheist:rotation":4});
+    Utilities.setBlock(new Vector(5914, -57, 141), "theheist:white_trapdoor", {"theheist:rotation":2});
 } // Recharge Lvl. 3 Research
 
 {
@@ -116,17 +127,22 @@ setup: () => {
     LevelConstructor.cameraRobot(new Vector(5925.5, -59.25, 160.5), 0);
     LevelConstructor.cameraRobot(new Vector(5920.5, -59.25, 164.5), 0);
     LevelConstructor.cameraRobot(new Vector(5916.5, -59.25, 171.5), 180);
-    // +2 SONAR ROBOTS
+    LevelConstructor.sonarRobot(new Vector(5899.5, -59.25, 163.5), 90);
+    LevelConstructor.sonarRobot(new Vector(5897.5, -59.25, 171.5), 270);
 } // Stun Research
 
 {
     LevelConstructor.computer(new Vector(5894.5, -59, 122.5), "Mail", 5, [{
         "type": "display_mail", "do": { "mailID": 404 }, "delay": 40
     }]);
+
+    Utilities.setBlock(new Vector(5889, -57, 124), "theheist:white_trapdoor", {"theheist:rotation":2});
 } // Accounting
 
 {
-    // Rotating camera here
+    LevelConstructor.dynamicCamera(new Vector(5896.5, -58, 146.5), [1, 105, 155]);
+
+    Utilities.setBlock(new Vector(5889, -57, 144), "theheist:white_trapdoor", {"theheist:rotation":5});
 } // Public Relations Department
 
 {
@@ -174,32 +190,28 @@ setup: () => {
     LevelConstructor.keypad(new Vector(5875.5, -59, 145.5), 3, 3, []);
 
     LevelConstructor.staticCamera(new Vector(5863.5, -58, 141.5), -75);
-    // Sonar robot here
-    // Sonar robot here
+    LevelConstructor.sonarRobot(new Vector(5858.5, -59.25, 142.5), 0);
+    LevelConstructor.sonarRobot(new Vector(5874.5, -59.25, 144.5), 180);
 } // End Level Hallway
 
 {
-    /**
-    LevelConstructor.keypad(new Vector(0, 0, 0), 0, 0, []);
-    LevelConstructor.keypad(new Vector(0, 0, 0), 0, 0, []);
-    Utilities.setBlock(new Vector(0, 0, 0), "theheist:custom_door_4_bottom_l", { "theheist:rotation": 0, "theheist:unlocked": false });
-    Utilities.setBlock(new Vector(0, 0, 0), "theheist:custom_door_4_bottom_r", { "theheist:rotation": 0, "theheist:unlocked": false });
-    LevelConstructor.keycardReader(new Vector(0, 0, 0), "COLOR", [
+    Utilities.setBlock(new Vector(5853, -60, 143), "theheist:custom_door_4_bottom_l", { "theheist:rotation": 4, "theheist:unlocked": false });
+    Utilities.setBlock(new Vector(5853, -60, 142), "theheist:custom_door_4_bottom_r", { "theheist:rotation": 4, "theheist:unlocked": false });
+    LevelConstructor.keycardReader(new Vector(5854.5, -59, 145.5), "yellow", [
         {
-            "type": "set_block", "do": { "x": 0, "y": 0, "z": 0, "block": "theheist:custom_door_4_bottom_l", "permutations": { "theheist:rotation": 0, "theheist:open": true } }, "delay": 40
+            "type": "set_block", "do": { "x": 5853, "y": -60, "z": 143, "block": "theheist:custom_door_4_bottom_l", "permutations": { "theheist:rotation": 4, "theheist:open": true } }
         },
         {
-            "type": "set_block", "do": { "x": 0, "y": 0, "z": 0, "block": "theheist:custom_door_4_bottom_r", "permutations": { "theheist:rotation": 0, "theheist:open": true } }, "delay": 40
+            "type": "set_block", "do": { "x": 5853, "y": -60, "z": 142, "block": "theheist:custom_door_4_bottom_r", "permutations": { "theheist:rotation": 4, "theheist:open": true } }
         },
         {
-            "type": "play_sound", "do": { "soundID": "random.door_open" }, "delay": 40
+            "type": "play_sound", "do": { "soundID": "random.door_open" }
         },
         {
-            "type": "manage_objectives", "do": { "manageType": 2, "objective": "Access next level" }, "delay": 40
+            "type": "manage_objectives", "do": { "manageType": 2, "objective": "Access next level" }
         }
     ]);
-    Utilities.setBlock(new Vector(0, 0, 0), "minecraft:lever", { "lever_direction": "north" });
-    */
+    Utilities.setBlock(new Vector(5847, -59, 142), "minecraft:lever", { "lever_direction": "east" });
     LevelConstructor.rechargeStation(new Vector(5851.5, -60, 141.5), 2);
 } // End Level Elevator
 

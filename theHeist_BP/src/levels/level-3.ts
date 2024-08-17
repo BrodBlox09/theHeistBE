@@ -11,7 +11,6 @@ const level: ILevel = {
 "levelID": "-3-1",
 "loadElevatorLoc": new Vector(5022, -49, 130),
 "startPlayerLoc": new Vector(5022, -60, 130),
-"tickingAreas": [],
 "startingItems": [{ "slot": 0, "typeId": 'theheist:recharge_mode_lvl_2', "lockMode": "slot" }, { "slot": 1, "typeId": 'theheist:hacking_mode_lvl_2', "lockMode": "slot" }, { "slot": 2, "typeId": 'theheist:sensor_mode_lvl_2', "lockMode": "slot" }, { "slot": 3, "typeId": 'theheist:xray_mode_lvl_1', "lockMode": "slot" }],
 "rechargeLevel": 2,
 "startObjectives": [{ "name": "Access next level", "sortOrder": 3 }, { "name": "Get Magnet mode", "sortOrder": 2 }, { "name": "Get Stealth mode", "sortOrder": 1 }],
