@@ -23,7 +23,7 @@ function tryStartMagnetMode(player: Player, lvl: number, levelInformation: Level
 
     var magnetBlock = overworld.getBlock(new Vector(player.location.x, Utilities.magnetModeMagnetBlocksHeight, player.location.z));
     if (!magnetBlock) return;
-    if (magnetBlock.typeId == "minecraft:air") {
+    if (magnetBlock.typeId != "minecraft:iron_block") {
         player.sendMessage("§cNothing to grab onto!");
         return;
     }

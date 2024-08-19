@@ -3,8 +3,17 @@
         "power_green": {
             "textures": "textures/blocks/gameband-displays/power_green"
         },
-        "quartz_theme_side": {
+        "power_blue": {
+            "textures": "textures/blocks/gameband-displays/power_blue"
+        },
+        "power_blank": {
+            "textures": "textures/blocks/gameband-displays/power_blank"
+        },
+            "quartz_theme_side": {
             "textures": "textures/blocks/gameband-displays/quartz_theme_side"
+        },
+        "forcefield": {
+            "textures": "textures/blocks/forcefield_texture"
         },
         "quartz_theme_top": {
             "textures": "textures/blocks/gameband-displays/quartz_theme_top"
@@ -35,6 +44,9 @@
         },
         "unlocked_screen": {
             "textures": "textures/blocks/hack_done"
+        },
+        "redstone_block_old": {
+            "textures": "textures/blocks/redstone_block_old"
         },
         "computer_screensaver_1": {
             "textures": "textures/blocks/computer_screensaver_1"
@@ -159,14 +171,8 @@
         "lightning": {
             "textures": "textures/blocks/lightning"
         },
-        "recharge_station_1": {
-            "textures": "textures/blocks/recharge_station_1"
-        },
         "recharge_station_2": {
             "textures": "textures/blocks/recharge_station_2"
-        },
-        "recharge_station_3": {
-            "textures": "textures/blocks/recharge_station_3"
         },
         "server_screen": {
             "textures": "textures/blocks/server_screen"
@@ -245,6 +251,15 @@
         },
         "magnet_icon_enchanted": {
             "textures": "textures/blocks/magnet_icon_enchanted"
+        },
+        "mushroom_insides": {
+            "textures": "textures/blocks/mushroom_insides"
+        },
+        "bridge_end_side": {
+            "textures": "textures/blocks/bridge_end_side"
+        },
+        "bridge_end_front": {
+            "textures": "textures/blocks/bridge_end_front"
         }
     }
 }

@@ -28,25 +28,25 @@
             {
                 "condition": "query.block_property('theheist:rotation') == 2",
                 "components": {
-                    "minecraft:rotation": [0, 180, 0]
+                    "minecraft:rotation": [0, 90, 0]
                 }
             },
             {
                 "condition": "query.block_property('theheist:rotation') == 3",
                 "components": {
-                    "minecraft:rotation": [0, 0, 0]
+                    "minecraft:rotation": [0, 270, 0]
                 }
             },
             {
                 "condition": "query.block_property('theheist:rotation') == 4",
                 "components": {
-                    "minecraft:rotation": [0, 270, 0]
+                    "minecraft:rotation": [0, 180, 0]
                 }
             },
             {
                 "condition": "query.block_property('theheist:rotation') == 5",
                 "components": {
-                    "minecraft:rotation": [0, 90, 0]
+                    "minecraft:rotation": [0, 0, 0]
                 }
             },
             {
@@ -58,8 +58,14 @@
                     },
                     "minecraft:geometry": "geometry.chair",
                     "minecraft:material_instances": {
+                        "coal": {
+                            "texture": "coal_block"
+                        },
+                        "wool": {
+                            "texture": "black_wool"
+                        },
                         "*": {
-                            "texture": "chair",
+                            "texture": "anvil_base",
                             "ambient_occlusion": false
                         }
                     }

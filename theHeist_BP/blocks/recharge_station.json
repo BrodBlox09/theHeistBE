@@ -63,8 +63,20 @@
                 "components": {
                     "minecraft:geometry": "geometry.recharge_station_base",
                     "minecraft:material_instances": {
+                        "command_block": {
+                            "texture": "command_block"
+                        },
+                        "power": {
+                            "texture": "power_blue"
+                        },
+                        "anvil_base": {
+                            "texture": "anvil_base"
+                        },
+                        "color_indicator": {
+                            "texture": "unlocked_screen"
+                        },
                         "*": {
-                            "texture": "recharge_station_1"
+                            "texture": "iron_block"
                         }
                     }
                 }
@@ -74,8 +86,23 @@
                 "components": {
                     "minecraft:geometry": "geometry.recharge_station_gameband",
                     "minecraft:material_instances": {
-                        "*": {
+                        "gameband": {
                             "texture": "recharge_station_2"
+                        },
+                        "command_block": {
+                            "texture": "command_block"
+                        },
+                        "power": {
+                            "texture": "power_blue"
+                        },
+                        "anvil_base": {
+                            "texture": "anvil_base"
+                        },
+                        "color_indicator": {
+                            "texture": "unlocked_screen"
+                        },
+                        "*": {
+                            "texture": "iron_block"
                         }
                     }
                 }
@@ -85,8 +112,20 @@
                 "components": {
                     "minecraft:geometry": "geometry.recharge_station_base",
                     "minecraft:material_instances": {
+                        "command_block": {
+                            "texture": "command_block"
+                        },
+                        "power": {
+                            "texture": "power_blank"
+                        },
+                        "anvil_base": {
+                            "texture": "anvil_base"
+                        },
+                        "color_indicator": {
+                            "texture": "redstone_block_old"
+                        },
                         "*": {
-                            "texture": "recharge_station_3"
+                            "texture": "iron_block"
                         }
                     }
                 }

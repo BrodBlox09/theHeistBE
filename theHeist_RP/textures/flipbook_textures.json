@@ -121,6 +121,12 @@
         "blend_frames": true
     },
     {
+        "flipbook_texture": "textures/blocks/gameband-displays/power_blue",
+        "atlas_tile": "power_blue",
+        "ticks_per_frame": 40,
+        "blend_frames": true
+    },
+    {
         "flipbook_texture": "textures/blocks/laser",
         "atlas_tile": "laser",
         "ticks_per_frame": 3,
@@ -166,6 +172,12 @@
         "flipbook_texture": "textures/blocks/lightning",
         "atlas_tile": "lightning",
         "ticks_per_frame": 1,
+        "blend_frames": false
+    },
+    {
+        "flipbook_texture": "textures/blocks/forcefield_texture",
+        "atlas_tile": "forcefield",
+        "ticks_per_frame": 2,
         "blend_frames": false
     }
 ]

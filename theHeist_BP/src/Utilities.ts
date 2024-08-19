@@ -133,6 +133,9 @@ export default class Utilities {
 			},
 			2: {
 				"cost": 10.0
+			},
+			3: {
+				"cost": 5.0
 			}
 		},
 		"sensorMode": {
@@ -208,6 +211,14 @@ export default class Utilities {
 			"endZ": 183,
 			"prisonLoc": new Vector(5916.5, -59, 99.5),
 			"mapLoc": new Vector(5906, -55, 141)
+		},
+		"level_-5": {
+			"startX": 6864,
+			"startZ": 69,
+			"endX": 6948,
+			"endZ": 166,
+			"prisonLoc": new Vector(6966.5, -59, 82.5),
+			"mapLoc": new Vector(6911, -55, 131)
 		}
 	}
 

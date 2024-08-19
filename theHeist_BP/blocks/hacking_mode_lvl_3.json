@@ -1,0 +1,20 @@
+{
+    "format_version": "1.16.100",
+    "minecraft:block": {
+        "description": {
+            "identifier": "theheist:hacking_mode_lvl_3",
+            "is_experimental": false
+        },
+        "components": {
+            "minecraft:geometry": "geometry.hacking_mode",
+            "minecraft:material_instances": {
+                "icon": {
+                    "texture": "hack_icon"
+                },
+                "*": {
+                    "texture": "hacking_mode"
+                }
+            }
+        }
+    }
+}

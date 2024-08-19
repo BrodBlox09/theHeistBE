@@ -5,8 +5,6 @@ import Utilities from "../Utilities";
 import LevelConstructor from "./LevelConstructor";
 import VoiceOverManager from "../VoiceOverManager";
 
-// SONAR PING SOUND: /playsound note.pling @s ~~~ 0.4 2
-
 const level: ILevel = {
 "levelID": "-4-1",
 "loadElevatorLoc": new Vector(5887, -50, 105),
@@ -180,6 +178,7 @@ setup: () => {
     LevelConstructor.computer(new Vector(5871.5, -59, 173.5), "Research info", 3, [{
         "type": "display_research", "do": { "researchID": 406 }, "delay": 40
     }]);
+    LevelConstructor.rechargeStation(new Vector(5877.5, -60, 171.5), 5)
     LevelConstructor.gamebandUpgrade(new Vector(5871.5, -59, 175.5), "xray", "§4§lXRay", 2, 3, 4, [{
         "type": "voice_says", "do": { "soundID": 503 }
     }]);

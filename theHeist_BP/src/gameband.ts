@@ -33,6 +33,7 @@ const loreItems = [
 	new loreItem("theheist:recharge_mode_lvl_3", "§r§9Recharge mode Lvl. 3", ["Use item to §r§6toggle", "Energy: 1.0 units/second", "Select to show objectives"]),
 	new loreItem("theheist:hacking_mode_lvl_1", "§r§2Hacking mode Lvl. 1", ["Use item to §r§6use", "Energy: 15 units"]),
 	new loreItem("theheist:hacking_mode_lvl_2", "§r§2Hacking mode Lvl. 2", ["Use item to §r§6use", "Energy: 10 units"]),
+	new loreItem("theheist:hacking_mode_lvl_3", "§r§2Hacking mode Lvl. 3", ["Use item to §r§6use", "Energy: 5 units"]),
 	new loreItem("theheist:sensor_mode_lvl_1", "§r§6Sensor mode Lvl. 1", ["Use item to §r§6toggle", "Energy: 1.0 units/second"]),
 	new loreItem("theheist:sensor_mode_lvl_2", "§r§6Sensor mode Lvl. 2", ["Use item to §r§6toggle", "Energy: 0.4 units/second"]),
 	new loreItem("theheist:xray_mode_lvl_1", "§r§4Xray mode Lvl. 1", ["Use item to §r§6toggle", "Energy: 1.33 units/second"]),
@@ -85,6 +86,9 @@ world.afterEvents.itemUse.subscribe((event: ItemUseAfterEvent) => {
 		case "theheist:hacking_mode_lvl_2":
 			hackingMode(2, player);
 			break;
+		case "theheist:hacking_mode_lvl_3":
+			hackingMode(3, player);
+			break;
 		case "theheist:sensor_mode_lvl_1":
 			sensorMode(1, player);
 			break;
@@ -122,7 +126,7 @@ world.afterEvents.itemUse.subscribe((event: ItemUseAfterEvent) => {
 });
 
 /**
- * @description Mode Type: Loop
+ * @description Mode Type: Instant
  * @param lvl 
  * @param player 
  * @returns 
@@ -610,7 +614,7 @@ function playerBusted(player: Player, currentLevel: number) {
 			player.playSound("map.alarm");
 			player.addTag("BUSTED");
 			(player.getComponent("inventory") as EntityInventoryComponent).container?.clearAll();
-
+			player.onScreenDisplay.setTitle("§r§e§lBusted", { "subtitle":"You got detected. Try again!", "fadeInDuration": 20, "fadeOutDuration": 20, "stayDuration": 160 });
 			overworld.fillBlocks(new BlockVolume({ "x": 2029.50, "y": -59.00, "z": 56.50 }, { "x": 2029.50, "y": -59.00, "z": 61.50 }), BlockPermutation.resolve("minecraft:air"));
 			system.runTimeout(() => {
 				stopAllSound();
@@ -634,6 +638,7 @@ function playerBusted(player: Player, currentLevel: number) {
 			DataManager.setData(player, playerEnergyTracker);
 			player.playSound("map.alarm");
 			player.addTag("BUSTED");
+			player.onScreenDisplay.setTitle("§r§e§lBusted", { "subtitle":"You got detected. Try again!", "fadeInDuration": 20, "fadeOutDuration": 20, "stayDuration": 160 });
 			(player.getComponent("inventory") as EntityInventoryComponent).container?.clearAll();
 			system.runTimeout(() => {
 				stopAllSound();
@@ -681,7 +686,7 @@ function clearGlass(loc: Vector) {
 	loc.y = -50;
 	var corner1 = loc.subtract(new Vector(range, 0, range));
 	var corner2 = loc.add(new Vector(range, 0, range));
-	overworld.runCommandAsync(`fill ${corner1.x} ${corner1.y} ${corner1.z} ${corner2.x} ${corner2.y} ${corner2.z} air`);
+	overworld.runCommandAsync(`fill ${corner1.x} ${corner1.y} ${corner1.z} ${corner2.x} ${corner2.y} ${corner2.z} air replace glass`);
 }
 
 system.runInterval(() => {

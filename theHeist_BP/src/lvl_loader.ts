@@ -1281,7 +1281,8 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 					// Ensure parts far away are loaded
 					overworld.runCommandAsync('tickingarea remove_all');
 					system.runTimeout(() => {
-						overworld.runCommandAsync(`tickingarea add ${levelCloneInfo.startX} ${Utilities.levelHeight} ${levelCloneInfo.startZ} ${levelCloneInfo.endX} ${Utilities.consolesHeight + 1} ${levelCloneInfo.endZ} level-wide`);
+						// Ticking area doesn't depend on Y level and it uses rounded X and Z coordinates
+						overworld.runCommandAsync(`tickingarea add ${levelCloneInfo.startX} 0 ${levelCloneInfo.startZ} ${levelCloneInfo.endX} 0 ${levelCloneInfo.endZ} level-wide`);
 					}, 2); // Ensure this ticking area isn't removed
 					
 					system.runTimeout(() => {

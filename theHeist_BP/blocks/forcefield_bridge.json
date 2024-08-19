@@ -1,0 +1,32 @@
+{
+    "format_version": "1.16.100",
+    "minecraft:block": {
+        "description": {
+            "identifier": "theheist:forcefield_bridge",
+            "is_experimental": false,
+            "menu_category": {
+                "category": "construction"
+            }
+        },
+        "components": {
+            "minecraft:material_instances": {
+                "*": {
+                    "texture": "forcefield",
+                    "ambient_occlusion": false,
+                    "render_method": "blend"
+                }
+            },
+            "minecraft:on_player_placing": {
+                "event": "theheist:set_rotation"
+            },
+            "minecraft:geometry": "geometry.forcefield_bridge",
+            "minecraft:collision_box": {
+                "origin": [-8, 13, -8],
+                "size": [16, 3, 16]
+            },"minecraft:selection_box": {
+                "origin": [-8, 13, -8],
+                "size": [16, 3, 16]
+            }
+        }
+    }
+}
