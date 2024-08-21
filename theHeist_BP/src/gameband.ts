@@ -207,7 +207,6 @@ function rechargeMode(lvl: number, player: Player) {
 			Utilities.setBlock(blockLocation, "theheist:recharge_station", { "theheist:rotation": armorStandEnergyTrackerDataNode.block.rotation, "theheist:state": 2 });
 			playerEnergyTrackerDataNode.usingRechargerID = armorStandEnergyTrackerDataNode.rechargerID;
 			// Enter "1 mode only" state
-			Utilities.savePlayerInventory(player);
 			var playerInvContainer = (player.getComponent("inventory") as EntityInventoryComponent).container as Container;
 			playerInvContainer.clearAll();
 			var rechargeModeItemStack = new ItemStack(`theheist:recharge_mode_lvl_${lvl}_enchanted`);
@@ -222,7 +221,6 @@ function rechargeMode(lvl: number, player: Player) {
 			resetPlayerInventory(player);
 		}
 		DataManager.setData(player, playerEnergyTrackerDataNode);
-		//console.warn(JSON.stringify(DataManager.getData(player, "energyTracker")));
 	}
 }
 
@@ -310,6 +308,25 @@ function resetPlayerInventory(player: Player) {
 		itemStack.lockMode = ItemLockMode[invSlotData.lockMode as keyof typeof ItemLockMode];
 		playerInvContainer.setItem(invSlotData.slot, itemStack);
 	});
+}
+
+function cancelAllModes(player: Player, lvlInfo: LevelInformation) {
+	lvlInfo.currentModes.forEach((mode) => {
+		switch (mode.mode) {
+			case "sensor":
+				SensorModeFunc.toggleSensorMode(player, 0);
+				break;
+			case "magnet":
+				MagnetModeFunc.toggleMagnetMode(player, 0);
+				break;
+			case "stealth":
+				StealthModeFunc.toggleStealthMode(player, 0);
+				break;
+			case "xray":
+				XRayModeFunc.toggleXRayMode(player, 0);
+				break;
+		}
+	})
 }
 
 function action(actionInfo: IAction, player: Player) {
@@ -435,8 +452,6 @@ function action(actionInfo: IAction, player: Player) {
 				player.sendMessage([{ "translate": "map.console.alarm" }]);
 				player.playSound("note.snare", { "pitch": 1.8, "volume": 0.5 });
 			}
-			//console.warn(actionInfo.do.value.toString());
-			//console.warn(DataManager.getData(player, "levelInformation").information[0].level.toString());
 			break;
 		case "manage_objectives":
 			var manageType = actionInfo.do.manageType;
@@ -810,6 +825,6 @@ system.runInterval(() => {
 		}
 		DataManager.setData(player, playerEnergyTracker);
 	}
-	//player.sendMessage(parseInt(playerEnergyTracker.energyUnits) + "||" + player.level);
-	SensorModeFunc.tryMap(player, playerLevelInformation);
+
+	if (playerEnergyTracker && playerLevelInformation) SensorModeFunc.tryMap(player, playerLevelInformation, playerEnergyTracker);
 });

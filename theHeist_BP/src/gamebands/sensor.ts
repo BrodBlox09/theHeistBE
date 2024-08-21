@@ -7,8 +7,9 @@ const sensingRange = 14;
 const clearRange = 19;
 const overworld = Utilities.dimensions.overworld;
 
-export function tryMap(player: Player, levelInformation: LevelInformation) {
+export function tryMap(player: Player, levelInformation: LevelInformation, playerEnergyTracker: EnergyTracker) {
     if (!levelInformation) return;
+    if (playerEnergyTracker.recharging) return;
     // If sensor mode lvl. 2 or greater, the player can use the sensor mode to see a map of the level
 	const playerRotX = player.getRotation().x;
     var playerIsLookingDown = true;

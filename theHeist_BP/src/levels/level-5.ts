@@ -57,6 +57,17 @@ setup: () => {
     {
         "type": "hack_console", "do": { "x": 6923, "z": 122 }
     }]);
+    LevelConstructor.computer(new Vector(6925.5, -59, 115.5), "Disable 360 sonar", 5, [{
+        "type": "disable_camera", "do": { "cameraID": 0 }, "delay": 40
+    }]);
+    LevelConstructor.computer(new Vector(6921.5, -59, 113.5), "Mail", 4, [{
+        "type": "display_mail", "do": { "mailID": 506 }, "delay": 40
+    }]);
+    LevelConstructor.computer(new Vector(6916.5, -59, 113.5), "Clear alarm status", 4, [{
+        "type": "set_alarm_level", "do": { "value": 0 }, "delay": 40
+    }]);
+    LevelConstructor.rechargeStation(new Vector(6920.5, -60, 119.5), 3);
+    LevelConstructor.rechargeStation(new Vector(6919.5, -60, 118.5), 4);
 } // Security Office
 
 {

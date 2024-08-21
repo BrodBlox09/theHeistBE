@@ -74,23 +74,29 @@ export default class Utilities {
 	/**
 	 * @description Saves player's inventory. Ensure this function is run BEFORE whenever you want to enter into a "1 mode only" state.
 	 * @param player 
+	 * @param stripEnchants Whether or not to remove enchants from all items in the player's inventory
 	 * @returns 
 	 */
-	static savePlayerInventory(player: Player) {
+	static savePlayerInventory(player: Player, stripEnchants: Boolean = false): LevelInformation {
 		var playerInvContainer = (player.getComponent("inventory") as EntityInventoryComponent).container as Container;
-		var playerLevelData = DataManager.getData(player, "levelInformation");
+		var playerLevelData: LevelInformation = DataManager.getData(player, "levelInformation");
 		var newPlayerInvData = [];
 		for (var i = 0; i < playerInvContainer.size; i++) {
 			var itemStack = playerInvContainer.getItem(i);
-			if (itemStack) newPlayerInvData.push({
-				"slot": i,
-				"typeId": itemStack.typeId,
-				"lockMode": itemStack.lockMode
-			});
+			if (itemStack) {
+				let typeId = itemStack.typeId;
+				if (stripEnchants && typeId.endsWith("_enchanted")) typeId = typeId.substring(0, typeId.length - "_enchanted".length);
+				newPlayerInvData.push({
+					"slot": i,
+					"typeId": typeId,
+					"lockMode": itemStack.lockMode
+				});
+			}
 		}
 		playerLevelData.information[2].inventory = newPlayerInvData;
 		// Update player information
 		DataManager.setData(player, playerLevelData);
+		return playerLevelData;
 	}
 
 	static clearPlayerInventory(player: Player) {

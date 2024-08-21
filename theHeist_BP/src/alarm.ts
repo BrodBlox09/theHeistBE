@@ -18,7 +18,7 @@ const cameraFOV = 40;
 const sonar360FOV = 70;
 const rayDensity = 12;
 const movingSecurityDeviceLoadingRange = 256;
-const staticSecurityDeviceLoadingRange = 50; // To reduce lag, only map the areas & place camera mapping entities that might actually get the player seen
+const staticSecurityDeviceLoadingRange = 25; // To reduce lag, only map the areas & place camera mapping entities that might actually get the player seen
 const xrayTransparentBlocks = solidToTransparent.map(x => x.transparent);
 
 const overworld = Utilities.dimensions.overworld;
@@ -237,7 +237,7 @@ function updateCameras(player: Player, level: number, playerLevelInformationData
 	var cameraMappingQuery: EntityQueryOptions = {
 		"type": "armor_stand",
 		"location": { 'x': player.location.x, 'y': cameraMappingHeight, 'z': player.location.z },
-		"maxDistance": staticSecurityDeviceLoadingRange,
+		"maxDistance": movingSecurityDeviceLoadingRange,
 		"tags": ["camera"]
 	};
 	const cameraMappingArmorStands = Utilities.dimensions.overworld.getEntities(cameraMappingQuery).filter((x) => (x.location.y == cameraMappingHeight));
@@ -347,7 +347,7 @@ function updateSonars(player: Player, level: number, playerLevelInformationDataN
 	var sonarMappingQuery: EntityQueryOptions = {
 		"type": "armor_stand",
 		"location": { 'x': player.location.x, 'y': cameraMappingHeight, 'z': player.location.z },
-		"maxDistance": staticSecurityDeviceLoadingRange,
+		"maxDistance": movingSecurityDeviceLoadingRange,
 		"tags": ["sonar"]
 	};
 	const sonarMappingArmorStands = Utilities.dimensions.overworld.getEntities(sonarMappingQuery).filter((x) => (x.location.y == cameraMappingHeight));
