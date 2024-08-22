@@ -21,6 +21,7 @@
 - [ ] Add elevator recharge station to level -1
 ### UI
 - [ ] edit inventory UI
+- [ ] Create background panorama
 ### Other
 - [ ] somehow make reach shorter to match the original
 - [ ] use the original models and textures for the gamebands (animated stuff  and laser thingy is missing), computers, drawers, signs, chairs, recharge stations, etc
@@ -30,13 +31,6 @@
 - [x] Consider modualizing the level loading system, where each level gets its own file
 - [x] Rewrite objective system to rely on IDs to update each objective's status?
 - [x] Create a system to handle a player leaving during an alarm scene or level load
-## Level -4
+## Level -5
 ### World
-- [x] Port level -4's build to Bedrock and replace blocks that have special models/textures
-### Backend
-- [x] Ensure entire level is loaded so all robots are synchronized
-### RP
-- [x] Create sonar models
-- [x] Create sonar textures
-### BP
-- [x] Implement sonar alarm system
+- [ ] Port level -5's build to Bedrock and replace blocks that have special models/textures

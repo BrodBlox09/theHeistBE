@@ -318,6 +318,7 @@ function updateCameras(player: Player, level: number, playerLevelInformationData
 	}
 }
 
+// Consider splitting sonar 360 off so it can be delayed longer than the normal sonar like in the original game (5 ticks isn't long enough lol)
 function updateSonars(player: Player, level: number, playerLevelInformationDataNode: LevelInformation) {
 	var sonarQuery: EntityQueryOptions = {
 		"type": "armor_stand",
