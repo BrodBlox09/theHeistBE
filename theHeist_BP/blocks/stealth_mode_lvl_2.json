@@ -1,0 +1,20 @@
+{
+    "format_version": "1.16.100",
+    "minecraft:block": {
+        "description": {
+            "identifier": "theheist:stealth_mode_lvl_2",
+            "is_experimental": false
+        },
+        "components": {
+            "minecraft:geometry": "geometry.stealth_mode",
+            "minecraft:material_instances": {
+                "icon": {
+                    "texture": "stealth_icon"
+                },
+                "*": {
+                    "texture": "stealth_mode"
+                }
+            }
+        }
+    }
+}

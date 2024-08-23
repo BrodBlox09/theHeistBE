@@ -171,6 +171,15 @@
         "lightning": {
             "textures": "textures/blocks/lightning"
         },
+        "drill_mode": {
+            "textures": "textures/blocks/drill_mode"
+        },
+        "drill_icon": {
+            "textures": "textures/blocks/drill_icon"
+        },
+        "laserscanner": {
+            "textures": "textures/blocks/laserscanner"
+        },
         "recharge_station_2": {
             "textures": "textures/blocks/recharge_station_2"
         },

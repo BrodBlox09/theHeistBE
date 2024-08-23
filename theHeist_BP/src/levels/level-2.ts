@@ -120,7 +120,7 @@ setup: () => {
         }
     ]);
     LevelConstructor.rechargeStation(new Vector(4122.5, -60, 146.5), 4);
-    LevelConstructor.newGameband(new Vector(4131.5, -59, 146.5), "xray", "§4§lXRay Lvl. 1", 3, 5, []);
+    LevelConstructor.newGameband(new Vector(4131.5, -59, 146.5), "xray", "§4§lXRay", 3, 5, []);
 } // Xray Research
 
 {

@@ -37,7 +37,7 @@ setup: () => {
         "type": "display_research", "do": { "researchID": 302 }, "delay": 40
     }]);
     LevelConstructor.rechargeStation(new Vector(4990.5, -60, 123.5), 3);
-    LevelConstructor.newGameband(new Vector(4994.5, -59, 121.5), "magnet", "§5§lMagnet Lvl. 1", 4, 5, []);
+    LevelConstructor.newGameband(new Vector(4994.5, -59, 121.5), "magnet", "§5§lMagnet", 4, 5, []);
 } // Magnet Research
 
 {
@@ -61,7 +61,7 @@ setup: () => {
 {
     LevelConstructor.keypad(new Vector(5004.5, -59, 95.5), 3, 3, []);
     LevelConstructor.keypad(new Vector(5005.5, -59, 103.5), 3, 3, []);
-    LevelConstructor.newGameband(new Vector(5004.5, -59, 108.5), "stealth", "§f§lStealth Lvl. 1", 5, 3, []);
+    LevelConstructor.newGameband(new Vector(5004.5, -59, 108.5), "stealth", "§f§lStealth", 5, 3, []);
     LevelConstructor.computer(new Vector(5001.5, -59, 100.5), "Research info", 4, [{
         "type": "display_research", "do": { "researchID": 301 }, "delay": 40
     }]);

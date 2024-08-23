@@ -41,6 +41,11 @@ function updatePlayerAlarmLevel(player: Player, levelInformation: LevelInformati
 		} else player.playSound("note.pling", { "pitch": 2, "volume": 0.4 });
 	}
 
+	// Presure-based security
+	var playerBlock = Utilities.dimensions.overworld.getBlock(player.location);
+	if (playerBlock && playerBlock.typeId == "minecraft:stone_pressure_plate")
+		levelInformation.information[0].level = 100;
+
 	var playerIsStealth = levelInformation.currentModes.some(x => (x.mode == "stealth"));
 	if (playerIsStealth) return;
 	// Vision-based security
@@ -52,9 +57,8 @@ function updatePlayerAlarmLevel(player: Player, levelInformation: LevelInformati
 	}
 
 	// Laser block stuff
-	var bottomBlock = Utilities.dimensions.overworld.getBlock(player.location);
-	var topBlock = bottomBlock?.above();
-	if (bottomBlock && topBlock && (bottomBlock.hasTag("laser") || topBlock.hasTag("laser")))
+	var topBlock = playerBlock?.above();
+	if (playerBlock && topBlock && (playerBlock.hasTag("laser") || topBlock.hasTag("laser")))
 		levelInformation.information[0].level = 100;
 
 	DataManager.setData(player, levelInformation);
@@ -95,7 +99,7 @@ system.runInterval(() => {
 	// Only include adventure mode players
 	var player = world.getPlayers({ "gameMode": GameMode.adventure }).filter((x) => (x != undefined && x != null))[0];
 	if (player == undefined) return;
-
+	
 	var playerLevelInformationDataNode = DataManager.getData(player, "levelInformation");
 	var level = undefined;
 	if (playerLevelInformationDataNode) level = playerLevelInformationDataNode.information[1].level;
@@ -105,7 +109,7 @@ system.runInterval(() => {
 	updateCameras(player, level, playerLevelInformationDataNode);
 	updateSonars(player, level, playerLevelInformationDataNode);
 	//updatePlayerAlarmLevel(player, playerLevelInformationDataNode);
-
+	
 	// Toggle below to see your velocity at all times, very useful when testing sonars
 	// let playerVelocityV3 = player.getVelocity();
 	// let playerVelocity: any = Math.abs(playerVelocityV3.x) + Math.abs(playerVelocityV3.y) + Math.abs(playerVelocityV3.z);

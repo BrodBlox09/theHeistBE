@@ -175,6 +175,12 @@
         "blend_frames": false
     },
     {
+        "flipbook_texture": "textures/blocks/laserscanner",
+        "atlas_tile": "laserscanner",
+        "ticks_per_frame": 4,
+        "blend_frames": false
+    },
+    {
         "flipbook_texture": "textures/blocks/forcefield_texture",
         "atlas_tile": "forcefield",
         "ticks_per_frame": 2,

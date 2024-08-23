@@ -1,0 +1,27 @@
+{
+    "format_version": "1.10.0",
+    "minecraft:client_entity": {
+        "description": {
+            "identifier": "theheist:driver",
+            "materials": {
+                "default": "entity"
+            },
+            "textures": {
+                "default": "textures/entity/driver"
+            },
+            "geometry": {
+                "default": "geometry.zombie"
+            },
+            "render_controllers": [
+                "controller.render.default"
+            ],
+			"scripts": {
+				"animate": ["base_animation_controller"]
+			},
+            "animations": {
+                "base_animation_controller": "controller.animation.driver.base",
+                "default": "animation.zombie.attack_bare_hand"
+            }
+        }
+    }
+}

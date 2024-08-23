@@ -8,6 +8,7 @@ import * as XRayModeFunc from "./gamebands/xray";
 import * as MagnetModeFunc from "./gamebands/magnet";
 import * as StealthModeFunc from "./gamebands/stealth";
 import * as StunModeFunc from "./gamebands/stun";
+import * as DrillModeFunc from "./gamebands/drill";
 import VoiceOverManager from "./VoiceOverManager";
 
 /**
@@ -41,6 +42,7 @@ const loreItems = [
 	new loreItem("theheist:magnet_mode_lvl_1", "§r§5Magnet mode Lvl. 1", ["Use item to §r§6toggle", "Energy: 1.6 units/second"]),
 	new loreItem("theheist:stealth_mode_lvl_1", "§r§fStealth mode Lvl. 1", ["Use item to §r§6toggle", "Energy: 10 units/second"]),
 	new loreItem("theheist:stun_mode_lvl_1", "§r§eStun mode Lvl. 1", ["Use item to §r§6use", "Energy: 10 units"]),
+	new loreItem("theheist:drill_mode_lvl_1", "§r§3Drill mode Lvl. 1", ["Use item to §r§6use", "Energy: 30 units"]),
 	new loreItem('minecraft:paper', '§oUse Keycard§r', ['Can trigger any Keycard reader', 'for which you own a matching card']),
 	new loreItem('minecraft:red_dye', '§oRed Keycard§r', ['Used on matching Keycard reader']),
 	new loreItem('minecraft:yellow_dye', '§oYellow Keycard§r', ['Used on matching Keycard reader']),
@@ -65,9 +67,8 @@ const overworld = world.getDimension("overworld");
 
 world.afterEvents.itemUse.subscribe((event: ItemUseAfterEvent) => {
 	const player = event.source;
-	//const inv = player.getComponent("minecraft:inventory").container;
-	//const text = inv.getSlot(0).typeId;
 	var text = event.itemStack.typeId;
+	
 	if (text.endsWith("_enchanted")) text = text.substring(0, text.length - "_enchanted".length);
 	let keycardType;
 	switch (text) {
@@ -110,6 +111,9 @@ world.afterEvents.itemUse.subscribe((event: ItemUseAfterEvent) => {
 		case "theheist:stun_mode_lvl_1":
 			stunMode(1, player);
 			break;
+		case "theheist:drill_mode_lvl_1":
+			drillMode(1, player);
+			break;
 		case "minecraft:red_dye":
 			keycardType = "red"
 		case "minecraft:yellow_dye":
@@ -124,6 +128,16 @@ world.afterEvents.itemUse.subscribe((event: ItemUseAfterEvent) => {
 			break;
 	}
 });
+
+/**
+ * @description Mode Type: Instant
+ * @param lvl 
+ * @param player 
+ * @returns 
+ */
+function drillMode(lvl: number, player: Player) {
+	DrillModeFunc.tryDrillMode(player, lvl);
+}
 
 /**
  * @description Mode Type: Instant
@@ -350,8 +364,19 @@ function action(actionInfo: IAction, player: Player) {
 			};
 			var hoverText = overworld.getEntities(query)[0];
 			// To not show the death particles
-			hoverText?.teleport({"x": x, "y": y + 10, "z": z});
-			hoverText?.kill();
+			hoverText?.remove();
+			break;
+		}
+		case "fill_blocks": {
+			var x1 = actionInfo.do.x1;
+			var y1 = actionInfo.do.y1;
+			var z1 = actionInfo.do.z1;
+			var x2 = actionInfo.do.x2;
+			var y2 = actionInfo.do.y2;
+			var z2 = actionInfo.do.z2;
+			var block = actionInfo.do.block;
+			var permutations = actionInfo.do.permutations;
+			Utilities.fillBlocks(new Vector(x1, y1, z1), new Vector(x2, y2, z2), block, permutations);
 			break;
 		}
 		case "disable_camera":
@@ -443,6 +468,10 @@ function action(actionInfo: IAction, player: Player) {
 		case "display_research":
 			var researchID = actionInfo.do.researchID;
 			player.sendMessage([{ "text": "§9Research Report:§r §o" }, { "translate": `map.mail.${researchID}` }]);
+			break;
+		case "display_text":
+			var text = actionInfo.do.text;
+			player.sendMessage(text);
 			break;
 		case "set_alarm_level":
 			var lvlInfo = DataManager.getData(player, "levelInformation");

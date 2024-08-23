@@ -88,8 +88,8 @@
 							}
 						},
 						{
-							"origin": [-0.5, 13, -4.0625],
-							"size": [3, 1, 0.5],
+							"origin": [-0.5, 13, -4.125],
+							"size": [3, 1, 1],
 							"uv": {
 								"north": {"uv": [10, 5], "uv_size": [3, 1], "material_instance": "color_indicator"},
 								"east": {"uv": [11.5625, 2], "uv_size": [0.5, 1], "material_instance": "color_indicator"},

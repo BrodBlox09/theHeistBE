@@ -91,7 +91,7 @@ setup: () => {
         "type": "disable_camera", "do": { "cameraID": 2, "noMessage": true }, "delay": 40
     }]);
     LevelConstructor.rechargeStation(new Vector(5910.5, -60, 140.5), 4);
-    LevelConstructor.gamebandUpgrade(new Vector(5912.5, -59, 143.5), "recharge", "§l§1recharge", 3, 0, 3, []);
+    LevelConstructor.gamebandUpgrade(new Vector(5912.5, -59, 143.5), "recharge", "§l§1Recharge Lvl. 3", 3, 0, 3, []);
 
     LevelConstructor.sonar360(new Vector(5916.5, -58, 140.5));
 
@@ -179,7 +179,7 @@ setup: () => {
         "type": "display_research", "do": { "researchID": 406 }, "delay": 40
     }]);
     LevelConstructor.rechargeStation(new Vector(5877.5, -60, 171.5), 5)
-    LevelConstructor.gamebandUpgrade(new Vector(5871.5, -59, 175.5), "xray", "§4§lXRay", 2, 3, 4, [{
+    LevelConstructor.gamebandUpgrade(new Vector(5871.5, -59, 175.5), "xray", "§4§lXRay Lvl. 2", 2, 3, 4, [{
         "type": "voice_says", "do": { "soundID": 503 }
     }]);
 } // X-Ray Lvl. 2 Research

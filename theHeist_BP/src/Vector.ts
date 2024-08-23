@@ -30,4 +30,7 @@ export default class Vector implements Vector3, IVector3 {
     static v3ToVector(v3: Vector3) {
         return new Vector(v3.x, v3.y, v3.z);
     }
+
+    static up = new Vector(0, 1, 0);
+    static down = new Vector(0, -1, 0);
 }

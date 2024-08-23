@@ -1,4 +1,4 @@
-import { BlockPermutation, Vector3, world, Player, Container, EntityEquippableComponent, EntityInventoryComponent, ItemStack, EquipmentSlot, ItemLockMode, BlockVolume, BlockType, BlockFillOptions, Dimension } from "@minecraft/server";
+import { BlockPermutation, Vector3, world, Player, Container, EntityInventoryComponent, ItemStack, ItemLockMode, BlockVolume, BlockType, BlockFillOptions, SpawnEntityOptions } from "@minecraft/server";
 import DataManager from "./DataManager";
 import Vector from "./Vector";
 
@@ -31,6 +31,10 @@ export default class Utilities {
 
 	static cos(d: number) {
 		return Math.cos(d * Math.PI / 180);
+	}
+
+	static spawnEntity(location: Vector3, identitifier: string, options: SpawnEntityOptions | undefined = undefined) {
+		return this.dimensions.overworld.spawnEntity(identitifier, location, options);
 	}
 
 	static setBlock(location: Vector3, block: string, permutations: Record<string, string | number | boolean> | undefined = undefined) {
@@ -174,6 +178,11 @@ export default class Utilities {
 			1: {
 				"cost": 10
 			}
+		},
+		"drillMode": {
+			1: {
+				"cost": 30
+			}
 		}
 	}
 
@@ -230,6 +239,7 @@ export default class Utilities {
 
 	static levelMapHeight = 20;
 	static floorCloneHeight = 18;
+	static drilledBlocksHeight = 15;
 	static consolesHeight = -15;
 	static rechargeHeight = -20;
 	static cameraHeight = -25;

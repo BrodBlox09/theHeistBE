@@ -87,6 +87,8 @@ const bustedCounterObjective = world.scoreboard.getObjective("bustedCounter")!;
 
 const overworld = Utilities.dimensions.overworld;
 
+const persistentEntities = ["minecraft:player","minecraft:painting","theheist:driver"];
+
 system.afterEvents.scriptEventReceive.subscribe((event) => {
 	const id = event.id;
 	const msg = event.message;
@@ -94,7 +96,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 		case "theheist:load-level": {
 			const entities = overworld.getEntities();
 			for (const entity of entities) {
-				if (!["minecraft:player", "minecraft:painting"].includes(entity.typeId)) entity.kill();
+				if (!persistentEntities.includes(entity.typeId)) entity.kill();
 			}
 			const player = world.getPlayers().filter((x) => (x != undefined && x != null))[0];
 			if (player == undefined) {
@@ -221,7 +223,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 						// Kill all entities
 						const entities = overworld.getEntities();
 						for (const entity of entities) {
-							if (!["minecraft:player","minecraft:painting"].includes(entity.typeId)) entity.kill();
+							if (!persistentEntities.includes(entity.typeId)) entity.kill();
 						}
 						// Camera 0
 						const camera0 = overworld.spawnEntity("armor_stand", { "x": 2014.5, "y": cameraHeight, "z": 51.5 });
@@ -609,7 +611,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 						// Kill all entities
 						const entities = overworld.getEntities();
 						for (const entity of entities) {
-							if (!["minecraft:player","minecraft:painting"].includes(entity.typeId)) entity.kill();
+							if (!persistentEntities.includes(entity.typeId)) entity.kill();
 						}
 						// Clear sensor residue
 						const levelCloneInfo = Utilities.levelCloneInfo[`level_-1`];
@@ -1288,16 +1290,18 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 					system.runTimeout(() => {
 						const entities = overworld.getEntities();
 						for (const entity of entities) {
-							if (!["minecraft:player","minecraft:painting"].includes(entity.typeId)) entity.kill();
+							if (!persistentEntities.includes(entity.typeId)) entity.kill();
 						}
 						// Clear sensor mode residue
 						const levelCloneInfo = Utilities.levelCloneInfo[`level_${levelNum}`];
 						Utilities.fillBlocks(new Vector(levelCloneInfo.startX, Utilities.cameraMappingHeight - 4, levelCloneInfo.startZ), new Vector(levelCloneInfo.endX, Utilities.cameraMappingHeight - 4, levelCloneInfo.endZ), "air");
 						overworld.runCommandAsync(`fill ${levelCloneInfo.startX} ${Utilities.levelHeight} ${levelCloneInfo.startZ} ${levelCloneInfo.endX} ${Utilities.levelHeight} ${levelCloneInfo.endZ} air replace theheist:robot_path`);
 						overworld.runCommandAsync(`clone ${levelCloneInfo.startX} ${Utilities.floorCloneHeight} ${levelCloneInfo.startZ} ${levelCloneInfo.endX} ${Utilities.floorCloneHeight} ${levelCloneInfo.endZ} ${levelCloneInfo.startX} ${Utilities.levelHeight - 1} ${levelCloneInfo.startZ}`);
+						// Move drilled areas back into position
+						overworld.runCommandAsync(`clone ${levelCloneInfo.startX} ${Utilities.drilledBlocksHeight} ${levelCloneInfo.startZ} ${levelCloneInfo.endX} ${Utilities.drilledBlocksHeight + 1} ${levelCloneInfo.endZ} ${levelCloneInfo.startX} ${Utilities.levelHeight} ${levelCloneInfo.startZ} filtered move minecraft:hardened_clay`);
 						
 						LevelConstructor.start();
-						levelDefinition.setup()
+						levelDefinition.setup();
 					}, SECOND * 7.5); // After 7.5 seconds load level objects
 					system.runTimeout(() => { // After 10 seconds bring the player out of the elevator and end the interval
 						system.clearRun(elevatorInterval);
