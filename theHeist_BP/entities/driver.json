@@ -1,13 +1,13 @@
 {
-	"format_version": "1.16.0",
-	"minecraft:entity": {
-		"description": {
+    "format_version": "1.16.0",
+    "minecraft:entity": {
+        "description": {
             "identifier": "theheist:driver",
             "is_summonable": true,
             "is_spawnable": false,
             "is_experimental": false
         },
-		"components": {
+        "components": {
             "minecraft:pushable": {
                 "is_pushable": false,
                 "is_pushable_by_piston": false
@@ -17,11 +17,28 @@
                     "deals_damage": false
                 }
             },
-            "minecraft:nameable": {
-            },
+            "minecraft:nameable": {},
             "minecraft:physics": {
                 "has_gravity": true
+            },
+            "minecraft:equippable": {
+                "slots": [
+                    {
+                        "slot": 0,
+                        "item": "minecraft:skull"
+                    }
+                ]
+            },
+            "minecraft:equip_item": {
+                "excluded_items": [
+                    {
+                        "item": "minecraft:banner:15"
+                    }
+                ]
+            },
+            "minecraft:behavior.equip_item": {
+                "priority": 2
             }
         }
-	}
+    }
 }

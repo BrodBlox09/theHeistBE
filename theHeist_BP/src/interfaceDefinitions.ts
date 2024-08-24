@@ -15,7 +15,8 @@ interface LevelInformation {
 	"information": [
 		{
 			"name": "alarmLevel",
-			"level": number
+			"level": number,
+			"sonarTimeout": number
 		},
 		{
 			"name": "gameLevel",

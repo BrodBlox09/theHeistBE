@@ -19,6 +19,7 @@ const sonar360FOV = 70;
 const rayDensity = 12;
 const movingSecurityDeviceLoadingRange = 256;
 const staticSecurityDeviceLoadingRange = 25; // To reduce lag, only map the areas & place camera mapping entities that might actually get the player seen
+const sonarTimeoutTime = 3; // Time in ticks that the player is invulnerable to sonar after being seen (to stop double ticking)
 const xrayTransparentBlocks = solidToTransparent.map(x => x.transparent);
 
 const overworld = Utilities.dimensions.overworld;
@@ -27,18 +28,22 @@ function updatePlayerAlarmLevel(player: Player, levelInformation: LevelInformati
 	if (player.hasTag("BUSTED")) return;
 
 	// Movement-based security
+	if (!levelInformation.information[0].sonarTimeout) levelInformation.information[0].sonarTimeout = 0;
+	if (levelInformation.information[0].sonarTimeout > 0) levelInformation.information[0].sonarTimeout -= 1;
+
 	var playerSonarMappingHeightBlock = Utilities.dimensions.overworld.getBlock({ "x": player.location.x, "y": cameraMappingHeight - 5, "z": player.location.z });
-	if (playerSonarMappingHeightBlock && playerSonarMappingHeightBlock.typeId == "theheist:sonar_sight" && player.location.y < -57) {
+	if (playerSonarMappingHeightBlock && playerSonarMappingHeightBlock.typeId == "theheist:sonar_sight" && player.location.y < -57 && levelInformation.information[0].sonarTimeout == 0) {
 		// Check if player is moving and if so add to awareness based on speed
 		let playerVelocityV3 = player.getVelocity();
 		let playerVelocity = Math.abs(playerVelocityV3.x) + Math.abs(playerVelocityV3.y) + Math.abs(playerVelocityV3.z);
 		playerVelocity *= 100; // Because the player's velocity is a small number, raise it
 		if (playerVelocity > 5) {
 			player.playSound("note.snare", { "pitch": 1.75, "volume": 0.5 });
+			if (playerVelocity > 40) playerVelocity = 40;
 			levelInformation.information[0].level += playerVelocity;
 			DataManager.setData(player, levelInformation);
-			console.warn(playerVelocity);
 		} else player.playSound("note.pling", { "pitch": 2, "volume": 0.4 });
+		levelInformation.information[0].sonarTimeout = sonarTimeoutTime;
 	}
 
 	// Presure-based security
@@ -99,7 +104,7 @@ system.runInterval(() => {
 	// Only include adventure mode players
 	var player = world.getPlayers({ "gameMode": GameMode.adventure }).filter((x) => (x != undefined && x != null))[0];
 	if (player == undefined) return;
-	
+
 	var playerLevelInformationDataNode = DataManager.getData(player, "levelInformation");
 	var level = undefined;
 	if (playerLevelInformationDataNode) level = playerLevelInformationDataNode.information[1].level;
@@ -107,9 +112,12 @@ system.runInterval(() => {
 
 	updateRobots(player, level, playerLevelInformationDataNode);
 	updateCameras(player, level, playerLevelInformationDataNode);
+	Utilities.fillBlocks(new Vector(Utilities.levelCloneInfo["level_" + level].startX, Utilities.cameraMappingHeight - 5, Utilities.levelCloneInfo["level_" + level].startZ), new Vector(Utilities.levelCloneInfo["level_" + level].endX, Utilities.cameraMappingHeight - 5, Utilities.levelCloneInfo["level_" + level].endZ), "air");
 	updateSonars(player, level, playerLevelInformationDataNode);
-	//updatePlayerAlarmLevel(player, playerLevelInformationDataNode);
-	
+	updateSonar360s(player, level, playerLevelInformationDataNode);
+	SensorModeFunc.updateSensorDisplay(player, DataManager.getData(player, "levelInformation"));
+	updatePlayerAlarmLevel(player, playerLevelInformationDataNode);
+
 	// Toggle below to see your velocity at all times, very useful when testing sonars
 	// let playerVelocityV3 = player.getVelocity();
 	// let playerVelocity: any = Math.abs(playerVelocityV3.x) + Math.abs(playerVelocityV3.y) + Math.abs(playerVelocityV3.z);
@@ -322,7 +330,6 @@ function updateCameras(player: Player, level: number, playerLevelInformationData
 	}
 }
 
-// Consider splitting sonar 360 off so it can be delayed longer than the normal sonar like in the original game (5 ticks isn't long enough lol)
 function updateSonars(player: Player, level: number, playerLevelInformationDataNode: LevelInformation) {
 	var sonarQuery: EntityQueryOptions = {
 		"type": "armor_stand",
@@ -331,10 +338,10 @@ function updateSonars(player: Player, level: number, playerLevelInformationDataN
 	};
 	const sonarArmorStands = Utilities.dimensions.overworld.getEntities(sonarQuery).filter((x) => {
 		var cameraTrackerDataNode = DataManager.getData(x, "cameraTracker");
-		if (x.location.y != cameraHeight || !cameraTrackerDataNode || (cameraTrackerDataNode.type != "sonar" && cameraTrackerDataNode.type != "sonar360")) return false;
+		if (x.location.y != cameraHeight || !cameraTrackerDataNode || cameraTrackerDataNode.type != "sonar") return false;
 		if (cameraTrackerDataNode.disabled) {
 			var displayCameraQuery = {
-				"type": `theheist:${cameraTrackerDataNode.type}`,
+				"type": `theheist:sonar`,
 				"location": { 'x': x.location.x, 'y': -57, 'z': x.location.z },
 				"maxDistance": 3,
 				"closest": 1
@@ -363,46 +370,15 @@ function updateSonars(player: Player, level: number, playerLevelInformationDataN
 			armorStand.kill();
 		});
 		sonarArmorStands.forEach((armorStand) => {
-			var cameraTrackerDataNode = DataManager.getData(armorStand, "cameraTracker");
 			var yRot = armorStand.getRotation().y;
 			var maxCount = rayDensity;
-			if (cameraTrackerDataNode.type == "sonar") {
-				for (var i = 0; i < maxCount; i++) {
-					var rayArmorStand = Utilities.dimensions.overworld.spawnEntity("armor_stand", { "x": armorStand.location.x, "y": cameraMappingHeight, "z": armorStand.location.z });
-					rayArmorStand.addTag("sonar");
-					rayArmorStand.setRotation({ "x": 0, "y": (yRot - cameraFOV / 2) + (cameraFOV * i / (maxCount - 1)) });
-					if (cameraTrackerDataNode.isRobot) {
-						//rayArmorStand.teleport({ "x": armorStand.location.x + -(Utilities.sin(armorStand.getRotation().y) * 0.7), "y": cameraMappingHeight, "z": armorStand.location.z + (Utilities.cos(armorStand.getRotation().y) * 0.7) });
-					}
-				}
-			} else {
-				// Sonar is a 360 sonar
-				system.runTimeout(() => {
-					for (var i = 0; i < maxCount; i++) {
-						var rayArmorStand = Utilities.dimensions.overworld.spawnEntity("armor_stand", { "x": armorStand.location.x + 0.6, "y": cameraMappingHeight, "z": armorStand.location.z });
-						rayArmorStand.addTag("sonar");
-						rayArmorStand.setRotation({ "x": 0, "y": (270 - sonar360FOV / 2) + (sonar360FOV * i / (maxCount - 1)) });
-					}
-					for (var i = 0; i < maxCount; i++) {
-						var rayArmorStand = Utilities.dimensions.overworld.spawnEntity("armor_stand", { "x": armorStand.location.x - 0.6, "y": cameraMappingHeight, "z": armorStand.location.z });
-						rayArmorStand.addTag("sonar");
-						rayArmorStand.setRotation({ "x": 0, "y": (90 - sonar360FOV / 2) + (sonar360FOV * i / (maxCount - 1)) });
-					}
-					for (var i = 0; i < maxCount; i++) {
-						var rayArmorStand = Utilities.dimensions.overworld.spawnEntity("armor_stand", { "x": armorStand.location.x, "y": cameraMappingHeight, "z": armorStand.location.z + 0.6 });
-						rayArmorStand.addTag("sonar");
-						rayArmorStand.setRotation({ "x": 0, "y": (0 - sonar360FOV / 2) + (sonar360FOV * i / (maxCount - 1)) });
-					}
-					for (var i = 0; i < maxCount; i++) {
-						var rayArmorStand = Utilities.dimensions.overworld.spawnEntity("armor_stand", { "x": armorStand.location.x, "y": cameraMappingHeight, "z": armorStand.location.z - 0.6 });
-						rayArmorStand.addTag("sonar");
-						rayArmorStand.setRotation({ "x": 0, "y": (180 - sonar360FOV / 2) + (sonar360FOV * i / (maxCount - 1)) });
-					}
-				}, 5);
+			for (var i = 0; i < maxCount; i++) {
+				var rayArmorStand = Utilities.dimensions.overworld.spawnEntity("armor_stand", { "x": armorStand.location.x, "y": cameraMappingHeight, "z": armorStand.location.z });
+				rayArmorStand.addTag("sonar");
+				rayArmorStand.setRotation({ "x": 0, "y": (yRot - cameraFOV / 2) + (cameraFOV * i / (maxCount - 1)) });
 			}
 		});
 	} else {
-		Utilities.fillBlocks(new Vector(Utilities.levelCloneInfo["level_" + level].startX, Utilities.cameraMappingHeight - 5, Utilities.levelCloneInfo["level_" + level].startZ), new Vector(Utilities.levelCloneInfo["level_" + level].endX, Utilities.cameraMappingHeight - 5, Utilities.levelCloneInfo["level_" + level].endZ), "air");
 		const tpDistance = 0.75;
 		sonarMappingArmorStands.forEach((armorStand) => {
 			// x sin() needs to be inverted to work properly for some reason
@@ -413,8 +389,88 @@ function updateSonars(player: Player, level: number, playerLevelInformationDataN
 				let floorBlock = overworld.getBlock({ "x": armorStand.location.x, "y": Utilities.floorCloneHeight, "z": armorStand.location.z })!.typeId;
 				if ("minecraft:air" != floorBlock && floorBlock != "theheist:forcefield_bridge")
 					Utilities.setBlock(armorStandLocationBelow, "theheist:sonar_sight");
-			} else armorStand.kill();
+			} else armorStand.remove();
 		});
 	}
-	SensorModeFunc.updateSensorDisplay(player, DataManager.getData(player, "levelInformation"));
+}
+
+function updateSonar360s(player: Player, level: number, playerLevelInformationDataNode: LevelInformation) {
+	var sonarQuery: EntityQueryOptions = {
+		"type": "armor_stand",
+		"location": { 'x': player.location.x, 'y': cameraHeight, 'z': player.location.z },
+		"maxDistance": staticSecurityDeviceLoadingRange
+	};
+	const sonarArmorStands = Utilities.dimensions.overworld.getEntities(sonarQuery).filter((x) => {
+		var cameraTrackerDataNode = DataManager.getData(x, "cameraTracker");
+		if (x.location.y != cameraHeight || !cameraTrackerDataNode || cameraTrackerDataNode.type != "sonar360") return false;
+		if (cameraTrackerDataNode.disabled) {
+			var displayCameraQuery = {
+				"type": `theheist:sonar360`,
+				"location": { 'x': x.location.x, 'y': -57, 'z': x.location.z },
+				"maxDistance": 3,
+				"closest": 1
+			}
+			var displayCamera = Utilities.dimensions.overworld.getEntities(displayCameraQuery)[0];
+			if (system.currentTick % 3 == 0) disabledSecurityDeviceEffect(Vector.v3ToVector(displayCamera.location));
+			return false;
+		}
+		if (cameraTrackerDataNode.isStunned) {
+			return false;
+		}
+		return true;
+	});
+
+	var sonarMappingQuery: EntityQueryOptions = {
+		"type": "armor_stand",
+		"location": { 'x': player.location.x, 'y': cameraMappingHeight, 'z': player.location.z },
+		"maxDistance": movingSecurityDeviceLoadingRange,
+		"tags": ["sonar360"]
+	};
+	const sonarMappingArmorStands = Utilities.dimensions.overworld.getEntities(sonarMappingQuery).filter((x) => (x.location.y == cameraMappingHeight));
+
+	if ((system.currentTick % 15 == 0)) {
+		// 15 tick interval elapsed
+		sonarMappingArmorStands.forEach((armorStand) => {
+			armorStand.kill();
+		});
+		sonarArmorStands.forEach((armorStand) => {
+			var yRot = armorStand.getRotation().y;
+			var maxCount = rayDensity;
+			//system.runTimeout(() => {
+				for (var i = 0; i < maxCount; i++) {
+					var rayArmorStand = Utilities.dimensions.overworld.spawnEntity("armor_stand", { "x": armorStand.location.x + 0.6, "y": cameraMappingHeight, "z": armorStand.location.z });
+					rayArmorStand.addTag("sonar360");
+					rayArmorStand.setRotation({ "x": 0, "y": (270 - sonar360FOV / 2) + (sonar360FOV * i / (maxCount - 1)) });
+				}
+				for (var i = 0; i < maxCount; i++) {
+					var rayArmorStand = Utilities.dimensions.overworld.spawnEntity("armor_stand", { "x": armorStand.location.x - 0.6, "y": cameraMappingHeight, "z": armorStand.location.z });
+					rayArmorStand.addTag("sonar360");
+					rayArmorStand.setRotation({ "x": 0, "y": (90 - sonar360FOV / 2) + (sonar360FOV * i / (maxCount - 1)) });
+				}
+				for (var i = 0; i < maxCount; i++) {
+					var rayArmorStand = Utilities.dimensions.overworld.spawnEntity("armor_stand", { "x": armorStand.location.x, "y": cameraMappingHeight, "z": armorStand.location.z + 0.6 });
+					rayArmorStand.addTag("sonar360");
+					rayArmorStand.setRotation({ "x": 0, "y": (0 - sonar360FOV / 2) + (sonar360FOV * i / (maxCount - 1)) });
+				}
+				for (var i = 0; i < maxCount; i++) {
+					var rayArmorStand = Utilities.dimensions.overworld.spawnEntity("armor_stand", { "x": armorStand.location.x, "y": cameraMappingHeight, "z": armorStand.location.z - 0.6 });
+					rayArmorStand.addTag("sonar360");
+					rayArmorStand.setRotation({ "x": 0, "y": (180 - sonar360FOV / 2) + (sonar360FOV * i / (maxCount - 1)) });
+				}
+			//}, 5);
+		});
+	} else {
+		const tpDistance = 0.55;
+		sonarMappingArmorStands.forEach((armorStand) => {
+			// x sin() needs to be inverted to work properly for some reason
+			armorStand.teleport({ "x": armorStand.location.x + -(Utilities.sin(armorStand.getRotation().y) * tpDistance), "y": cameraMappingHeight, "z": armorStand.location.z + (Utilities.cos(armorStand.getRotation().y) * tpDistance) }, { 'dimension': Utilities.dimensions.overworld });
+			let armorStandLocationAbove = Vector.v3ToVector({ "x": armorStand.location.x, "y": Utilities.levelHeight + 1, "z": armorStand.location.z });
+			let armorStandLocationBelow = Vector.v3ToVector({ "x": armorStand.location.x, "y": Utilities.cameraMappingHeight - 5, "z": armorStand.location.z });
+			if (sonarCanSeeThrough(armorStandLocationAbove)) {
+				let floorBlock = overworld.getBlock({ "x": armorStand.location.x, "y": Utilities.floorCloneHeight, "z": armorStand.location.z })!.typeId;
+				if ("minecraft:air" != floorBlock && floorBlock != "theheist:forcefield_bridge")
+					Utilities.setBlock(armorStandLocationBelow, "theheist:sonar_sight");
+			} else armorStand.remove();
+		});
+	}
 }

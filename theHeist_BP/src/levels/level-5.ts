@@ -321,6 +321,27 @@ setup: () => {
     LevelConstructor.gamebandUpgrade(new Vector(6912.5, -59, 71.5), "hacking", "§2§lHacking Lvl. 3", 3, 1, 2, []);
 } // Advanced Cryptography
 
+{
+    Utilities.setBlock(new Vector(6878, -60, 156), "theheist:custom_door_4_bottom_l", { "theheist:rotation": 4, "theheist:unlocked": false });
+    Utilities.setBlock(new Vector(6878, -60, 155), "theheist:custom_door_4_bottom_r", { "theheist:rotation": 4, "theheist:unlocked": false });
+    LevelConstructor.keycardReader(new Vector(6879.5, -59, 153.5), "green", [
+        {
+            "type": "set_block", "do": { "x": 6878, "y": -60, "z": 156, "block": "theheist:custom_door_4_bottom_l", "permutations": { "theheist:rotation": 4, "theheist:open": true } }
+        },
+        {
+            "type": "set_block", "do": { "x": 6878, "y": -60, "z": 155, "block": "theheist:custom_door_4_bottom_r", "permutations": { "theheist:rotation": 4, "theheist:open": true } }
+        },
+        {
+            "type": "play_sound", "do": { "soundID": "random.door_open" }
+        },
+        {
+            "type": "manage_objectives", "do": { "manageType": 2, "objective": "Access next level" }
+        }
+    ]);
+    Utilities.setBlock(new Vector(6873, -59, 155), "minecraft:lever", { "lever_direction": "east" });
+    LevelConstructor.rechargeStation(new Vector(6876.5, -60, 154.5), 2);
+} // End Level Elevator
+
 }
 };
 

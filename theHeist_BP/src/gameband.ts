@@ -209,13 +209,13 @@ function rechargeMode(lvl: number, player: Player) {
 	//{"type":"set_block", "do":{"x":-22, "y":-58, "z":58, "block":"theheist:computer", "permutations":"[\"theheist:rotation\":5, \"theheist:unlocked\":true]"}}
 	const armorStands = overworld.getEntities(query);
 	for (const armorStand of armorStands) {
-
 		var armorStandEnergyTrackerDataNode = DataManager.getData(armorStand, "energyTracker");
 		var playerEnergyTrackerDataNode: EnergyTracker = DataManager.getData(player, "energyTracker");
 		playerEnergyTrackerDataNode.rechargeLevel = lvl;
 		var blockLocation = { "x": armorStandEnergyTrackerDataNode.block.x, "y": armorStandEnergyTrackerDataNode.block.y, "z": armorStandEnergyTrackerDataNode.block.z };
 		if (playerEnergyTrackerDataNode.recharging == false) {
 			if (armorStandEnergyTrackerDataNode.energyUnits == 0.0) return;
+			if (armorStandEnergyTrackerDataNode.block.y - 1 > player.location.y) return;
 			playerEnergyTrackerDataNode.recharging = true;
 			player.playSound("portal.travel", { "volume": 0.1, "pitch": 2 });
 			Utilities.setBlock(blockLocation, "theheist:recharge_station", { "theheist:rotation": armorStandEnergyTrackerDataNode.block.rotation, "theheist:state": 2 });
@@ -805,6 +805,7 @@ system.runInterval(() => {
 		for (const armorStand of armorStands) {
 			var armorStandEnergyTracker = DataManager.getData(armorStand, "energyTracker");
 			if (armorStandEnergyTracker.rechargerID != playerEnergyTracker.usingRechargerID) continue;
+			if (armorStandEnergyTracker.block.y - 1 > player.location.y) continue;
 			i++;
 		}
 		if (i == 0) {

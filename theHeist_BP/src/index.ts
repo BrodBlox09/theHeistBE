@@ -150,6 +150,10 @@ world.beforeEvents.chatSend.subscribe(event => {
 			world.sendMessage(DataManager.GetDataRaw(Utilities.dimensions.overworld.getEntities(query)[0]) as string);
 			break;
 		}
+		case "myData": {
+			world.sendMessage(DataManager.GetDataRaw(player) as string);
+			break;
+		}
 		case "lvlData": {
 			var data = DataManager.getData(player, "levelInformation");
 			world.sendMessage(JSON.stringify(data));

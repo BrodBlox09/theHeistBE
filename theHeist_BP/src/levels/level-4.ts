@@ -111,6 +111,7 @@ setup: () => {
             "type": "display_mail", "do": { "mailID": 402 }, "delay": 40
         }
     ]);
+    Utilities.setBlock(new Vector(5925, -60, 158), "minecraft:wooden_door", {"direction":1});
 
     LevelConstructor.rechargeStation(new Vector(5893.5, -60, 175.5), 4);
     LevelConstructor.rechargeStation(new Vector(5899.5, -60, 179.5), 2);

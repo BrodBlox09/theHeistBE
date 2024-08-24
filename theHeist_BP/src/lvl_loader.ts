@@ -87,7 +87,7 @@ const bustedCounterObjective = world.scoreboard.getObjective("bustedCounter")!;
 
 const overworld = Utilities.dimensions.overworld;
 
-const persistentEntities = ["minecraft:player","minecraft:painting","theheist:driver"];
+const persistentEntities = ["minecraft:player","minecraft:painting","minecraft:chicken","theheist:driver"];
 
 system.afterEvents.scriptEventReceive.subscribe((event) => {
 	const id = event.id;
@@ -120,7 +120,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 					if (!bustedCounterObjective.hasParticipant(player)) {
 						bustedCounterObjective.setScore(player, 0);
 					}
-					const playerLevelInformationDataNode = { "name": "levelInformation", "currentModes": [], "information": [{ "name": "alarmLevel", "level": 0 }, { "name": "gameLevel", "level": 1 }, { "name": "playerInv", "inventory": [{ "slot": 0, "typeId": 'theheist:recharge_mode_lvl_1', "lockMode": "slot" }, { "slot": 1, "typeId": 'theheist:hacking_mode_lvl_1', "lockMode": "slot" }] }] };
+					const playerLevelInformationDataNode: LevelInformation = { "name": "levelInformation", "currentModes": [], "information": [{ "name": "alarmLevel", "level": 0, "sonarTimeout": 0 }, { "name": "gameLevel", "level": 1 }, { "name": "playerInv", "inventory": [{ "slot": 0, "typeId": 'theheist:recharge_mode_lvl_1', "lockMode": "slot" }, { "slot": 1, "typeId": 'theheist:hacking_mode_lvl_1', "lockMode": "slot" }] }] };
 					DataManager.setData(player, playerLevelInformationDataNode);
 					
 					Utilities.reloadPlayerInv(player, playerLevelInformationDataNode);
@@ -177,7 +177,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 					if (!bustedCounterObjective.hasParticipant(player)) {
 						bustedCounterObjective.setScore(player, 0);
 					}
-					const playerLevelInformationDataNode = { "name": "levelInformation", "currentModes": [], "information": [{ "name": "alarmLevel", "level": 0 }, { "name": "gameLevel", "level": 0.5 }, { "name": "playerInv", "inventory": [{ "slot": 0, "typeId": 'theheist:recharge_mode_lvl_1', "lockMode": "slot" }, { "slot": 1, "typeId": 'theheist:hacking_mode_lvl_1', "lockMode": "slot" }] }] };
+					const playerLevelInformationDataNode: LevelInformation = { "name": "levelInformation", "currentModes": [], "information": [{ "name": "alarmLevel", "level": 0, "sonarTimeout": 0 }, { "name": "gameLevel", "level": 0.5 }, { "name": "playerInv", "inventory": [{ "slot": 0, "typeId": 'theheist:recharge_mode_lvl_1', "lockMode": "slot" }, { "slot": 1, "typeId": 'theheist:hacking_mode_lvl_1', "lockMode": "slot" }] }] };
 					DataManager.setData(player, playerLevelInformationDataNode);
 
 					Utilities.reloadPlayerInv(player, playerLevelInformationDataNode);
@@ -203,7 +203,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 					if (!bustedCounterObjective.hasParticipant(player)) {
 						bustedCounterObjective.setScore(player, 0);
 					}
-					const playerLevelInformationDataNode = { "name": "levelInformation", "currentModes": [], "information": [{ "name": "alarmLevel", "level": 0 }, { "name": "gameLevel", "level": 0 }, { "name": "playerInv", "inventory": [{ "slot": 0, "typeId": 'theheist:recharge_mode_lvl_1', "lockMode": "slot" }, { "slot": 1, "typeId": 'theheist:hacking_mode_lvl_1', "lockMode": "slot" }] }] };
+					const playerLevelInformationDataNode: LevelInformation = { "name": "levelInformation", "currentModes": [], "information": [{ "name": "alarmLevel", "level": 0, "sonarTimeout": 0 }, { "name": "gameLevel", "level": 0 }, { "name": "playerInv", "inventory": [{ "slot": 0, "typeId": 'theheist:recharge_mode_lvl_1', "lockMode": "slot" }, { "slot": 1, "typeId": 'theheist:hacking_mode_lvl_1', "lockMode": "slot" }] }] };
 
 					DataManager.setData(player, playerLevelInformationDataNode);
 
@@ -223,7 +223,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 						// Kill all entities
 						const entities = overworld.getEntities();
 						for (const entity of entities) {
-							if (!persistentEntities.includes(entity.typeId)) entity.kill();
+							if (!persistentEntities.includes(entity.typeId)) entity.remove();
 						}
 						// Camera 0
 						const camera0 = overworld.spawnEntity("armor_stand", { "x": 2014.5, "y": cameraHeight, "z": 51.5 });
@@ -580,7 +580,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 					if (!bustedCounterObjective.hasParticipant(player)) {
 						bustedCounterObjective.setScore(player, 0);
 					}
-					const playerLevelInformationDataNode = { "name": "levelInformation", "currentModes": [], "information": [{ "name": "alarmLevel", "level": 0 }, { "name": "gameLevel", "level": -1 }, { "name": "playerInv", "inventory": [{ "slot": 0, "typeId": 'theheist:recharge_mode_lvl_1', "lockMode": "slot" }, { "slot": 1, "typeId": 'theheist:hacking_mode_lvl_1', "lockMode": "slot" }] }] };
+					const playerLevelInformationDataNode: LevelInformation = { "name": "levelInformation", "currentModes": [], "information": [{ "name": "alarmLevel", "level": 0, "sonarTimeout": 0 }, { "name": "gameLevel", "level": -1 }, { "name": "playerInv", "inventory": [{ "slot": 0, "typeId": 'theheist:recharge_mode_lvl_1', "lockMode": "slot" }, { "slot": 1, "typeId": 'theheist:hacking_mode_lvl_1', "lockMode": "slot" }] }] };
 					
 					DataManager.setData(player, playerLevelInformationDataNode);
 
@@ -611,7 +611,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 						// Kill all entities
 						const entities = overworld.getEntities();
 						for (const entity of entities) {
-							if (!persistentEntities.includes(entity.typeId)) entity.kill();
+							if (!persistentEntities.includes(entity.typeId)) entity.remove();
 						}
 						// Clear sensor residue
 						const levelCloneInfo = Utilities.levelCloneInfo[`level_-1`];
@@ -1262,7 +1262,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 					const playerEnergyTrackerDataNode: EnergyTracker = { "name": "energyTracker", "energyUnits": maxEnergy, "recharging": false, "usingRechargerID": -1, "rechargeLevel": levelDefinition.rechargeLevel };
 					DataManager.setData(player, playerEnergyTrackerDataNode);
 
-					const playerLevelInformationDataNode: LevelInformation = { "name": "levelInformation", "currentModes": [], "information": [{ "name": "alarmLevel", "level": 0 }, { "name": "gameLevel", "level": levelNum }, { "name": "playerInv", "inventory": [] }] };
+					const playerLevelInformationDataNode: LevelInformation = { "name": "levelInformation", "currentModes": [], "information": [{ "name": "alarmLevel", "level": 0, "sonarTimeout": 0 }, { "name": "gameLevel", "level": levelNum }, { "name": "playerInv", "inventory": [] }] };
 					levelDefinition.startingItems.forEach((item) => {
 						playerLevelInformationDataNode.information[2].inventory.push(item);
 					});
@@ -1290,7 +1290,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 					system.runTimeout(() => {
 						const entities = overworld.getEntities();
 						for (const entity of entities) {
-							if (!persistentEntities.includes(entity.typeId)) entity.kill();
+							if (!persistentEntities.includes(entity.typeId)) entity.remove();
 						}
 						// Clear sensor mode residue
 						const levelCloneInfo = Utilities.levelCloneInfo[`level_${levelNum}`];
@@ -1298,7 +1298,8 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 						overworld.runCommandAsync(`fill ${levelCloneInfo.startX} ${Utilities.levelHeight} ${levelCloneInfo.startZ} ${levelCloneInfo.endX} ${Utilities.levelHeight} ${levelCloneInfo.endZ} air replace theheist:robot_path`);
 						overworld.runCommandAsync(`clone ${levelCloneInfo.startX} ${Utilities.floorCloneHeight} ${levelCloneInfo.startZ} ${levelCloneInfo.endX} ${Utilities.floorCloneHeight} ${levelCloneInfo.endZ} ${levelCloneInfo.startX} ${Utilities.levelHeight - 1} ${levelCloneInfo.startZ}`);
 						// Move drilled areas back into position
-						overworld.runCommandAsync(`clone ${levelCloneInfo.startX} ${Utilities.drilledBlocksHeight} ${levelCloneInfo.startZ} ${levelCloneInfo.endX} ${Utilities.drilledBlocksHeight + 1} ${levelCloneInfo.endZ} ${levelCloneInfo.startX} ${Utilities.levelHeight} ${levelCloneInfo.startZ} filtered move minecraft:hardened_clay`);
+						overworld.runCommandAsync(`clone ${levelCloneInfo.startX} ${Utilities.drilledBlocksHeight} ${levelCloneInfo.startZ} ${levelCloneInfo.endX} ${Utilities.drilledBlocksHeight + 1} ${levelCloneInfo.endZ} ${levelCloneInfo.startX} ${Utilities.levelHeight} ${levelCloneInfo.startZ} filtered normal minecraft:hardened_clay`);
+						overworld.runCommandAsync(`clone ${levelCloneInfo.startX} ${Utilities.drilledBlocksHeight} ${levelCloneInfo.startZ} ${levelCloneInfo.endX} ${Utilities.drilledBlocksHeight + 1} ${levelCloneInfo.endZ} ${levelCloneInfo.startX} ${Utilities.levelHeight + 1} ${levelCloneInfo.startZ} filtered move minecraft:hardened_clay`);
 						
 						LevelConstructor.start();
 						levelDefinition.setup();
@@ -1369,7 +1370,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 			}
 			bustedCounterObjective.setScore(player, 0);
 
-			if (currLevel != -4) overworld.runCommandAsync(`scriptevent theheist:load-level ${currLevel - 1}-1`);
+			if (currLevel != -5) overworld.runCommandAsync(`scriptevent theheist:load-level ${currLevel - 1}-1`);
 			else endDemo(player);
 			break;
 		}
