@@ -104,7 +104,7 @@ map.console.sonar=§o§7破坏声纳
 map.console.alarm=§o§7消除警戒层级
 
 map.mail.001=嘿Tom，我又找到你的电梯钥匙卡了...在支援部门办公室的木头抽屉里。
-map.mail.002=哈哈，你真的该看看这个视频：点这里。 Greetz、Zed
+map.mail.002=哈哈，你真的该看看这个视频：点这里。 Greetz、Zed (https://www.youtube.com/watch?v=Hb7w-dIjNHI)
 map.mail.003=Sally，请你打电话给那些投资者，下周我要带他们参观地下室，样品已经完成了。 Donovan 谨启
 
 map.mail.100=Sensor lvl. 1 (每秒消耗1.0单位能量)： 这个模式会显示哪些区域被监视器和巡逻机器人监测，另外它还会显示出机器人的巡逻路线。

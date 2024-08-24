@@ -104,7 +104,7 @@ map.console.sonar=§o§7破壞聲納
 map.console.alarm=§o§7消除警戒層級
 
 map.mail.001=嘿Tom，我又找到你的電梯鑰匙卡了...在支援部門辦公室的木頭抽屜裡。
-map.mail.002=哈哈，你真的該看看這個影片：點這裡。 Greetz、Zed
+map.mail.002=哈哈，你真的該看看這個影片：點這裡。 Greetz、Zed (https://www.youtube.com/watch?v=Hb7w-dIjNHI)
 map.mail.003=Sally，請你打電話給那些投資者，下周我要帶他們參觀地下室，樣品已經完成了。 Donovan 謹啟
 
 map.mail.100=Sensor lvl. 1 (每秒消耗1.0單位能量)： 這個模式會顯示哪些區域被監視器和巡邏機器人監測，另外它還會顯示出機器人的巡邏路線。
