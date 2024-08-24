@@ -1,0 +1,260 @@
+pack.name=The Heist RP
+pack.description=The Heist resource pack transferred to PE by BrodBlox09
+tile.theheist:keypad.name=Keypad
+tile.theheist:computer.name=Computer
+tile.theheist:custom_door_1_bottom.name=Custom Door 1
+tile.theheist:custom_door_2_bottom.name=Custom Door 2
+tile.theheist:custom_door_3_bottom.name=Custom Door 3
+tile.theheist:custom_door_4_bottom_l.name=Custom Door 4 Left
+tile.theheist:custom_door_4_bottom_r.name=Custom Door 4 Right
+tile.theheist:fake_iron_block.name=Fake Iron Block
+tile.theheist:vending_machine.name=Vending Machine
+tile.theheist:green_block.name=Green Block
+tile.theheist:dropper_block.name=Dropper Block
+tile.theheist:conveyor.name=Conveyor
+tile.theheist:laser.name=Laser
+tile.theheist:laser_end.name=Laser End
+## I don't know if all three are needed, but just to be safe
+item.crimson_sign.name=White Sign
+tile.crimson_wall_sign.name=White Sign
+tile.crimson_standing_sign.name=White Sign
+tile.theheist:camera_sight.name=Camera Sight Block
+tile.theheist:sonar_sight.name=Sonar Sight Block
+tile.theheist:white_trapdoor.name=White Trapdoor
+tile.theheist:reinforced_iron_block.name=Reinforced Iron Block
+tile.theheist:file_cabinet.name=File Cabinet
+tile.theheist:recharge_mode_lvl_1=Recharge Mode Lvl. 1
+tile.theheist:recharge_mode_lvl_2=Recharge Mode Lvl. 2
+tile.theheist:hacking_mode_lvl_1=Hacking Mode Lvl. 1
+tile.theheist:hacking_mode_lvl_2=Hacking Mode Lvl. 2
+tile.theheist:sensor_mode_lvl_1=Sensor Mode Lvl. 1
+tile.theheist:sensor_mode_lvl_2=Sensor Mode Lvl. 2
+tile.theheist:xray_mode_lvl_1=X-Ray Mode Lvl. 1
+tile.theheist:chair.name=Chair
+tile.theheist:server.name=Server
+tile.theheist:recharge_station.name=Recharge Station
+tile.theheist:projector.name=Projector
+tile.theheist:drawer_decoration.name=Drawer Decoration
+tile.theheist:keycard_reader.name=Keycard Reader
+tile.theheist:chemistry_decoration.name=Chemistry Decoration
+item.theheist:nv_glasses.name=NV Goggles
+tile.theheist:gameband_display.name=Gameband Display Stand
+tile.theheist:sensor_mode_display.name=Sensor Mode Display
+
+## Rename vanilla items
+item.dye.red.name=Red Keycard
+item.dye.yellow.name=Yellow Keycard
+item.dye.green.name=Green Keycard
+item.dye.blue.name=Blue Keycard
+
+map.sub.forgot_prototypes=Hey dumb dumb, you forgot some of the prototypes!
+
+## All lang files have this in English annoyingly
+map.sub.107=Whatever you do, don't click that link. Trust me, it'll scar you for life.
+
+map.sub.001.A=Ok, voleur. Répétons encore ceci pour que tu ne te mélanges pas les pinceaux. Ton travail consiste à voler des prototypes et des recherches de valeur. Pour y parvenir, tu dois entrer dans le bâtiment. C'est assez simple au premier abord. Monte les escaliers jusqu'au toit. Entre ensuite dans le système de ventilation. À partir de là, tu devras descendre au rez-de-chaussée.
+map.sub.001.B=À ce moment-là, tu devras sortir et commencer à chercher. Fais attention aux systèmes de sécurité. Si tu te fais attraper, toute la place sera verrouillée. En supposant que cela n'arrive pas et que tu parviennes à te faufiler hors du bâtiment, retrouve-moi ici. On se barre et tu reçois ta part de 70 pour cent. Alors, qu'attends-tu ? Mets-toi en route.
+map.sub.002=Alors quoi exactement t'as attiré dans ce secteur d'activité? Silence embarrassant... T'es là ? Est-ce que ton micro fonctionne même ? C'est super, belle façon de commencer un hold-up... Je suppose que ton micro est en panne. Continue juste. Ça n'a pas d'importance.
+map.sub.003=Pourquoi tu ne bouges pas ? T'es coincé ou quoi ? C'est juste une trappe. Essaie de sauter.
+map.sub.004=Et voilà.
+
+map.sub.101=Ok maintenant, arrête-toi ici ! Je suis sérieux, ne bouge pas ! Avant de te rendre n'importe où. Il y a un appareil photo dans le coin. Voici donc la chose au sujet de la caméra. S'ils te repèrent, ils élèveront le niveau de l'alarme. Une fois que le alarm level atteint un certain point, l'alarme se déclenchera. Et cela signifie que je vais devoir trouver quelqu'un d'autre pour le faire. Ce qui serait regrettable. Donc ce que j'ai besoin que tu fasses, c'est courir aussi vite que tu le peux de la salle de bain des femmes au bureau de la sécurité dans le hall.
+map.sub.102=Vois si tu peux faire quelque chose pour la caméra.
+map.sub.103=Lorsque tu finis, pénètre dans le bureau voisin. Dépêche-toi cependant. Nous n'avons pas toute la nuit.
+
+map.sub.104=Là ! C'est ce pour quoi nous sommes ici! Tu dois entrer dans le sous-sol.
+map.sub.105=Qu'est-ce que t'attends? Embrasse juste le mur et déplace-toi vers le bureau de la réceptionniste.
+map.sub.106=Tu vois cette porte qui dit : Authorized Personnel Only ? C'est là que tu dois aller. Ça nécessite une keycard. Tu ne l'as pas cependant.
+map.sub.108=Vraiment ? Il te manque déjà de l'énergie ? Tu en as trop utilisé. Utilise la recharge station dans la salle de réunion. Tu devras passer en mode bleu.
+map.sub.109=Waouh, Je ne pensais vraiment pas que tu te rendrais si loin.
+
+
+map.sub.200=Ne reste pas juste là. Pirate le prototype.
+map.sub.201=Attends, tu vas l'utiliser ? Assure-toi juste de ne pas le casser.
+map.sub.202=Oh ouais, j'ai oublié de mentionner les robots. Il est préférable de les éviter.
+map.sub.204=Tu te débrouilles pas mal pour un escroc.
+
+map.sub.300=Cet étage est grand. Ne te perds pas.
+map.sub.301=Pas de keycard cette fois. Je suppose que tu vas devoir trouver le code.
+map.sub.302=C'est pourquoi ils ne peuvent pas avoir de belles choses. T'as eu le code, va dans l'ascenseur. Nous n'avons pas encore fini.
+
+map.sub.400=Ai-je aussi mentionné qu'il y a des lasers ?
+map.sub.401=Oh, regarde-toi. Genre Mission Impossible.
+map.sub.402=Alors, quoi maintenant ?
+map.sub.403=Hmm, intelligent.
+map.sub.404=Qui l'eût cru, tu es vraiment un voleur compétent.
+
+map.sub.500=Attends, as-tu vraiment fais ça ?! T'aurais pu mourir là-bas. Tu dois vraiment avoir besoin de cet argent.
+map.sub.501=Il est choquant de penser qu'ils laissent ces trucs à la vue de tous, tu ne penses pas ? Oublie que j'ai dit ça. C'était horrible.
+map.sub.502=Hein, qui l'aurait cru.
+map.sub.503=Donc, qu'est-ce qu'un délinquant comme toi fait pour le plaisir. Des loisirs ? Oh ouais attends, ton micro...
+map.sub.504=Je dois dire. Ça fait un peu bizarre de parler à quelqu'un qui ne peut pas répondre.
+
+map.sub.600=Plus qu'un autre étage après celui-ci.
+map.sub.601=Je pense que quiconque travaille ici va être très surpris lundi matin.
+map.sub.602=Tu vas devoir passer d'une manière ou d'une autre. Autrement dit, si tu veux ton argent bien sûr.
+
+map.sub.700=Hé bien shugs, c'est un peu maladroit. Il y a quelque chose que je dois te dire. Je n'ai pas été tout à fait honnête avec toi. Je ne m'attendais vraiment pas à ce que ça donne ça. Tu me mets dans une situation gênante. D'une part tu es un voleur habile, je suppose. En revanche, je ne veux vraiment pas perdre mon emploi. Je travaille un peu pour ces gars. Tout cela a été une mise en scène. Il n'y a pas d'argent. Ils voulaient juste quelqu'un de l'extérieur pour tester la sécurité. Je ne pense pas qu'ils apprécieront que tu quittes le bâtiment avec les vrais prototypes. Afin d'éviter que ça ne se produise. Je vais activer l'alarme de l'extérieur. Ça va prendre environ 5 minutes. Donc il te suffit de rester là. Ou peut-être que tu peux, tu sais, marcher devant une caméra ? Ça devrait accélérer les choses.
+map.sub.701=Hey, où vas-tu ? Il n'y a pas de sortie à cet étage. Tu es trop loin sous terre et l'ascenseur ne remontera pas. Il n'y a rien ici qui t'aidera. Ou du moins, pas que je le sache.
+map.sub.702=Arrête-toi tout de suite, tu ne t'en sortiras pas d'ici.
+map.sub.703=Vraiment ?!! Téléportation ? Tu tu moques de moi ? Tu te rends compte que je vais me faire virer pour ça. Tu devras vivre le restant de ta vie en sachant que tu as fait virer un homme. T'es ok avec ça?
+map.sub.704=S'il te plaît, ne fais pas ça.
+
+
+map.console.camera=§o§7Disabled camera
+map.console.sonar=§o§7Disabled sonar
+map.console.alarm=§o§7Removed security warnings
+
+map.mail.001=Hé Tom, j'ai retrouvé ta keycard pour l'ascenseur... Tu la trouveras dans le tiroir du bureau en bois au Support Office.
+map.mail.002=Lol, tu devrais trop jeter un œil à cette vidéo : CLIQUE ICI, Greetz, Zed
+map.mail.003=Hé Sally, j'ai besoin que tu appele les investisseurs. Je tiens à leur faire visiter le sous-sol la semaine prochaine. Les prototypes sont prêts. Cordialement, Donovan
+
+map.mail.100=Sensor lvl. 1 (Consommation d'énergie 1,0 unité/sec) : Ce mode permet à l'utilisateur d'afficher quelles zones sont surveillées par des caméras et des robots gardes. En plus de cela, il est capable de tracer des routes pour les patrouilles de robots lorsqu'actif.
+map.mail.101=Hacking lvl. 2 : (Consommation d'énergie 10 unités par utilisation) : Ce mode permet à l'utilisateur de pirater jusqu'aux consoles de niveau 2 à un coût énergétique plus faible.
+map.mail.102=Recharge lvl. 2 : Le Gameband peut désormais stocker jusqu'à 150 unités d'énergie tout en étant en mesure de montrer aux utilisateurs leurs objectifs actuels 
+map.mail.103=Ola Sandro, si tu veux voir les nouveaux designs de robot, tu devras rendre visite à Hank au camera maintenance. Il a un tas de keycards de rechange pour l'ascenseur.
+map.mail.104=Re: Comment ça la mauvaise carte magnétique ? Recharge Research était censé récupérer la carte verte et Camera Maintenance la jaune Je demande pas grand chose... je peux pas croire que Richard aie raté un truc aussi simple. Mes excuses. Tout sera en ordre lundi matin.
+
+map.mail.200=Hé Sam, si l'air conditionné te gêne tant, va voir Dani. J'ai entendu qu'il arraché une keycard pour pouvoir entrer dans la ventilation maintenance room. Cherche-le au Customer Support, son PC a un poulet qui marche pour économiseur d'écran. C'est difficile de le louper.
+map.mail.201=Se rendent-ils compte à qui ils parlent !? Je suis le Head of Research ! Pourquoi bon sang devrais-je me rappeler d'un code à 10 chiffres juste pour être en mesure de monter dans un ascenseur ? Tant pis, je collerai juste une note sur mon bureau avec le code. Je vous le dis, ces gars de la sécurité sont allés trop loin. Cordialement, Head of Research.
+map.mail.202=Chère Stephanie, étant donné que tu es nouvelle, je recommande que tu rendes visite aux gars/filles chez Sensor Research. Ils peuvent te refiler des cartes de tous les étages à l'intérieur de l'installation. Ils les téléchargent juste directement sur ton Gameband.
+map.mail.203=X-ray lvl. 1 (Energy consumption 1.33 units/sec): Activating this mode allows the user to see through clay walls. This effect works like a one way mirror so camera's and robots wont be able to see you through a wall while active.
+map.mail.204=Sensor lvl. 2 (Consummation d'énergie 0,4 unités/sec) : Sensor mode a désormais une plus faible consommation d'énergie. En outre, Sensor mode permet maintenant à l'utilisateur d'afficher une carte de l'étage où ils sont. Ils peuvent faire cela quand Sensor mode est sélectionné et que l'utilisateur regarde directement vers le bas.
+map.mail.205=Important : Message d'intérêt public. Tout article perdu comme les keycards peut être récupéré au Lost and Found qui est situé à l'étage -2 au Security Office. Merci d'avoir lu ceci.
+map.mail.206=Hé Howard, le Head of Research m'a demandé de l'aider avec son pc l'autre jour. Je ne savais pas que sa vue était si mauvaise. Tu aurais dû voir la taille des icônes sur son bureau. Elles sont énormes. Il a aussi un post-it jaune sur son bureau. C'est littéralement le plus grand post-it dans l'histoire de l'humanité. 
+
+map.mail.300=Hé Freya, nous avons besoin qu'un mécanicien vienne lundi. Un robot défectueux s'est écrasé dans le système de sécurité laser dans le coin. Les gens doivent passer en sautant maintenant, pour éviter de déclencher les alarmes. C'est pas mal drôle à regarder cependant.
+map.mail.301=Stealth lvl 1. (Consommation d'énergie 40,0 unités/sec) : Ce mode permet à l'utilisateur de brièvement devenir invisible. Alors qu'il est invisible, l'utilisateur ne peut pas être vu par des caméras à vision, robots et lasers.
+map.mail.302=Magnet lvl. 1 (Consommation d'énergie 1,6 unités/sec) : Ce mode permet à l'utilisateur de coller aux Cast Iron Blocks au plafond. La force émise lorsqu'active tire toujours l'utilisateur vers le haut. Pendant qu'il est attaché, l'utilisateur peut glisser le long du plafond.
+map.mail.303=Re: J'ai à nouveau consulté le flux d'informations et je peux te dire qu'à n'importe quel moment un de ces robots se déplace devant une caméra, ça crée un géant angle mort. La caméra ne sera pas en mesure de détecter quoi que ce soit plus loin que le robot. Je te le dis à nouveau : ces caméras ont besoin d'une mise à jour logicielle. Les gens peuvent facilement l'exploiter et contourner la sécurité.
+map.mail.304=Hé Lauren, si tu dois prendre l'ascenseur pour descendre à la comptabilité, emprunte juste ma keycard. Sois juste sûr de la ramener à la salle de contrôle lorsque tu as terminé, je laisserai mon tiroir déverrouillé pour que tu puisses la ramasser lundi matin.
+
+map.mail.400=En réponse à l'évolution de la situation dans les laboratoires Stealth Research, nous avons conçu un système de surveillance capable de détecter les utilisateurs même lorsqu'ils utilisent Stealth. Au lieu de compter sur la vision, notre design détecte les mouvements.
+map.mail.401=Recharge lvl. 3 : Le Gameband peut désormais stocker jusqu'à 200 unités d'énergie. 
+map.mail.402=Hé Bob, que dirais-tu que nous rendions les tests du lundi matin intéressants ? Si tu veux récupérer ta keycard, tu vas devoir passer la zone d'entraînement sans déclencher les alarmes. Considère ça comme une revanche pour cette petite blague avec la tasse de café. Sans rancune. 
+map.mail.403=Stun lvl. 1 (Consommation d'énergie 10,0 unités par utilisation) : Ce mode peut être utilisé pour choquer n'importe quel robot à une portée de 2 blocs pendant 10 secondes. 
+map.mail.404=Re : Hé Adam, que veux-tu dire il y a un défaut majeur avec le design du sonar. Tu travailles en comptabilité, comment diable pourrais-tu même connaître ce genre de choses ? Cordialement, Roger. 
+map.mail.405=Cher Roger, je sais que ce n'est pas vraiment à moi de dire cela, mais j'ai pensé à la façon dont vous les gars utilisez le son pour détecter les mouvements. Il envoie des impulsions à des intervalles très faibles. Rester immobile de temps en temps ne permettrait-il pas de passer inaperçu ? Cordialement, Adam. 
+map.mail.406=X-ray lvl. 2 (Consommation d'énergie 0,67 unités/sec) : Ce mode est deux fois plus éconergétique qu'avant. De plus l'utilisateur peut l'utiliser maintenant pour voir à travers les murs d'andésite.
+
+map.mail.500=Re : Re : Ne t'y méprends pas, je suis très reconnaissant pour le bureau que j'ai reçu. Il est très spacieux. J'aurai juste souhaité qu'il soit un peu plus proche du laboratoire Drill Research . Je veux dire il est tout au bout du hall. Vous les gars m'avez envoyé deux keycards soit dit en passant. Est-ce ok que j'en garde une de rechange? 
+map.mail.501=Drill lvl. 1 (Consommation d'énergie 30,0 unités par utilisation) : Ce mode permet à l'utilisateur de désintégrer les murs d'argile durcie brun et de créer des trous de taille humaine. 
+map.mail.502=Hacking lvl. 3 (Consommation d'énergie 5 unités par utilisation) : Ce mode permet à l'utilisateur de pirater des consoles jusqu'au niveau 3 à un coût énergétique plus faible. 
+map.mail.503=Stealth lvl 2. (Consummation d'énergie 10,0 unités/sec) : Cette version améliorée du mode furtif est 4x plus éconergétique que le modèle précédent. Autrement dit, elle peut être utilisé pour de longues périodes de temps. 
+map.mail.504=Re : Cher Donovan, j'ai prévu une visite avec les investisseurs la semaine prochaine. Seul problème, c'est que le Chief of Staff sera en vacances. Il a laissé sa keycard dans son bureau mais il ne sera pas de retour pour la visite. Cordialement, Sally. 
+map.mail.505=Re : Hé Naomi, je sais que tu es curieuse de connaître le prototype secret. Tu sais que le seul moyen de l'obtenir, c'est avec l'approbation du chef de cabinet de la recherche, de la technologie et de l'ingénierie. Crois-moi, ça n'arrivera pas. 
+map.mail.506=Cher Zed, j'ai reçu beaucoup de commentaires négatifs sur ton rendement au travail. Regarder des vidéos Youtube pendant les heures de travail. J'ai entendu dire qu'ils envisagent de ne pas prolonger ton contrat. Ce serait très malheureux. Je pourrais éventuellement dire du bien de toi. Seulement si tu peux me faire une faveur. J'ai besoin que tu trouves quelqu'un pour tester la sécurité de ce complexe à l'aide de notre Gamebands. Je veux que ce soit un test impartial. Penses-tu que tu peux gérer cela ? Cordialement, Walter. 
+map.mail.507=Re : Je suis bien conscient que les systèmes de sécurité à cet endroit laissent à désirer. J'ai quelqu'un qui fera une petite expérience pour moi ce week-end. Nous allons voir comment ça se passe. Peut-être que cela changera l'esprit du vieil homme. Cordialement, Walter. 
+map.mail.508=Hé Emma, as-tu une idée de quand arrivera le nouvel assistant ? S'il te plaît, dis-moi qu'il est compétent cette fois-ci. Si je dois passer mon temps à expliquer chaque petite chose, alors à quoi ça sert d'avoir un assistant en premier lieu ? En tout cas, j'ai toujours la vieille keycard et des trucs. Devrais-je la garder dans mon tiroir et la donnez au prochain gars? 
+
+## Cu
+beginnerTips.1=If you have Minecraft Java, check out the original version: https://www.planetminecraft.com/project/the-heist-3372054/
+beginnerTips.2=Standing in front of cameras increases the alarm level.
+beginnerTips.3=Cameras and sonars can't see you if you are farther than 10 blocks away.
+beginnerTips.4=Upgrading gamebands can make them cheaper or faster.
+beginnerTips.5=The last gameband you unlock is really cool.
+beginnerTips.6=Select recharge mode to view your objectives.
+beginnerTips.7=Robots are like moving cameras.
+beginnerTips.8=Levels get more and more difficult the lower you go.
+beginnerTips.9=Wow, this place has really tight security.
+beginnerTips.10=Didn't think you'd make it this far.
+beginnerTips.11=CHICKEN
+beginnerTips.12=This project took over a month to create!
+
+midgameTips.1=If you have Minecraft Java, check out the original version: https://www.planetminecraft.com/project/the-heist-3372054/
+midgameTips.2=Standing in front of cameras increases the alarm level.
+midgameTips.3=Cameras and sonars can't see you if you are farther than 10 blocks away.
+midgameTips.4=Upgrading gamebands can make them cheaper or faster.
+midgameTips.5=The last gameband you unlock is really cool.
+midgameTips.6=Select recharge mode to view your objectives.
+midgameTips.7=Robots are like moving cameras.
+midgameTips.8=Levels get more and more difficult the lower you go.
+midgameTips.9=Wow, this place has really tight security.
+midgameTips.10=Didn't think you'd make it this far.
+midgameTips.11=CHICKEN
+midgameTips.12=This project took over a month to create!
+midgameTips.13=Make sure to recharge your gamebands whenever you can.
+midgameTips.14=Sonars only see you if you are moving and in their LINE of sight.
+midgameTips.15=If you have Minecraft Java, check out the original version: https://www.planetminecraft.com/project/the-heist-3372054/
+midgameTips.16=Standing in front of cameras increases the alarm level.
+midgameTips.17=Cameras and sonars can't see you if you are farther than 10 blocks away.
+midgameTips.18=Upgrading gamebands can make them cheaper or faster.
+midgameTips.19=The last gameband you unlock is really cool.
+midgameTips.20=Select recharge mode to view your objectives.
+midgameTips.21=Robots are like moving cameras.
+midgameTips.22=Levels get more and more difficult the lower you go.
+midgameTips.23=Wow, this place has really tight security.
+midgameTips.24=Didn't think you'd make it this far.
+midgameTips.25=CHICKEN
+midgameTips.26=This project took over a month to create!
+midgameTips.27=Make sure to recharge your gamebands whenever you can.
+midgameTips.28=Sonars only see you if you are moving and in their LINE of sight.
+midgameTips.29=If you have Minecraft Java, check out the original version: https://www.planetminecraft.com/project/the-heist-3372054/
+midgameTips.30=Standing in front of cameras increases the alarm level.
+midgameTips.31=Cameras and sonars can't see you if you are farther than 10 blocks away.
+midgameTips.32=Upgrading gamebands can make them cheaper or faster.
+midgameTips.33=The last gameband you unlock is really cool.
+midgameTips.34=Select recharge mode to view your objectives.
+midgameTips.35=Robots are like moving cameras.
+midgameTips.36=Levels get more and more difficult the lower you go.
+midgameTips.37=Wow, this place has really tight security.
+midgameTips.38=Didn't think you'd make it this far.
+midgameTips.39=CHICKEN
+midgameTips.40=This project took over a month to create!
+midgameTips.41=Make sure to recharge your gamebands whenever you can.
+midgameTips.42=Sonars only see you if you are moving and in their LINE of sight.
+midgameTips.43=If you have Minecraft Java, check out the original version: https://www.planetminecraft.com/project/the-heist-3372054/
+midgameTips.44=Standing in front of cameras increases the alarm level.
+midgameTips.45=Cameras and sonars can't see you if you are farther than 10 blocks away.
+midgameTips.46=Upgrading gamebands can make them cheaper or faster.
+midgameTips.47=The last gameband you unlock is really cool.
+midgameTips.48=Select recharge mode to view your objectives.
+midgameTips.49=Robots are like moving cameras.
+midgameTips.50=Levels get more and more difficult the lower you go.
+midgameTips.51=Wow, this place has really tight security.
+midgameTips.52=Didn't think you'd make it this far.
+midgameTips.53=CHICKEN
+midgameTips.54=This project took over a month to create!
+midgameTips.55=Make sure to recharge your gamebands whenever you can.
+midgameTips.56=Sonars only see you if you are moving and in their LINE of sight.
+midgameTips.57=If you have Minecraft Java, check out the original version: https://www.planetminecraft.com/project/the-heist-3372054/
+midgameTips.58=Standing in front of cameras increases the alarm level.
+midgameTips.59=Cameras and sonars can't see you if you are farther than 10 blocks away.
+midgameTips.60=Upgrading gamebands can make them cheaper or faster.
+midgameTips.61=The last gameband you unlock is really cool.
+midgameTips.62=Select recharge mode to view your objectives.
+midgameTips.63=Robots are like moving cameras.
+midgameTips.64=Levels get more and more difficult the lower you go.
+midgameTips.65=Wow, this place has really tight security.
+midgameTips.66=Didn't think you'd make it this far.
+midgameTips.67=CHICKEN
+midgameTips.68=This project took over a month to create!
+midgameTips.69=Make sure to recharge your gamebands whenever you can.
+
+lategameTips.1=If you have Minecraft Java, check out the original version: https://www.planetminecraft.com/project/the-heist-3372054/
+lategameTips.2=Standing in front of cameras increases the alarm level.
+lategameTips.3=Cameras and sonars can't see you if you are farther than 10 blocks away.
+lategameTips.4=Upgrading gamebands can make them cheaper or faster.
+lategameTips.5=The last gameband you unlock is really cool.
+lategameTips.6=Select recharge mode to view your objectives.
+lategameTips.7=Robots are like moving cameras.
+lategameTips.8=Levels get more and more difficult the lower you go.
+lategameTips.9=Wow, this place has really tight security.
+lategameTips.10=Didn't think you'd make it this far.
+lategameTips.11=CHICKEN
+lategameTips.12=This project took over a month to create!
+lategameTips.13=Make sure to recharge your gamebands whenever you can.
+lategameTips.14=Sonars only see you if you are moving and in their LINE of sight.
+lategameTips.15=If you have Minecraft Java, check out the original version: https://www.planetminecraft.com/project/the-heist-3372054/
+lategameTips.16=Standing in front of cameras increases the alarm level.
+lategameTips.17=Cameras and sonars can't see you if you are farther than 10 blocks away.
+lategameTips.18=Upgrading gamebands can make them cheaper or faster.
+lategameTips.19=The last gameband you unlock is really cool.
+lategameTips.20=Select recharge mode to view your objectives.
+lategameTips.21=Robots are like moving cameras.
+lategameTips.22=Levels get more and more difficult the lower you go.
+lategameTips.23=Wow, this place has really tight security.
+lategameTips.24=Didn't think you'd make it this far.
+lategameTips.25=CHICKEN
+lategameTips.26=This project took over a month to create!
+lategameTips.27=Make sure to recharge your gamebands whenever you can.

@@ -1,0 +1,257 @@
+pack.name=The Heist RP
+pack.description=The Heist resource pack transferred to PE by BrodBlox09
+tile.theheist:keypad.name=Keypad
+tile.theheist:computer.name=Computer
+tile.theheist:custom_door_1_bottom.name=Custom Door 1
+tile.theheist:custom_door_2_bottom.name=Custom Door 2
+tile.theheist:custom_door_3_bottom.name=Custom Door 3
+tile.theheist:custom_door_4_bottom_l.name=Custom Door 4 Left
+tile.theheist:custom_door_4_bottom_r.name=Custom Door 4 Right
+tile.theheist:fake_iron_block.name=Fake Iron Block
+tile.theheist:vending_machine.name=Vending Machine
+tile.theheist:green_block.name=Green Block
+tile.theheist:dropper_block.name=Dropper Block
+tile.theheist:conveyor.name=Conveyor
+tile.theheist:laser.name=Laser
+tile.theheist:laser_end.name=Laser End
+## I don't know if all three are needed, but just to be safe
+item.crimson_sign.name=White Sign
+tile.crimson_wall_sign.name=White Sign
+tile.crimson_standing_sign.name=White Sign
+tile.theheist:camera_sight.name=Camera Sight Block
+tile.theheist:sonar_sight.name=Sonar Sight Block
+tile.theheist:white_trapdoor.name=White Trapdoor
+tile.theheist:reinforced_iron_block.name=Reinforced Iron Block
+tile.theheist:file_cabinet.name=File Cabinet
+tile.theheist:recharge_mode_lvl_1=Recharge Mode Lvl. 1
+tile.theheist:recharge_mode_lvl_2=Recharge Mode Lvl. 2
+tile.theheist:hacking_mode_lvl_1=Hacking Mode Lvl. 1
+tile.theheist:hacking_mode_lvl_2=Hacking Mode Lvl. 2
+tile.theheist:sensor_mode_lvl_1=Sensor Mode Lvl. 1
+tile.theheist:sensor_mode_lvl_2=Sensor Mode Lvl. 2
+tile.theheist:xray_mode_lvl_1=X-Ray Mode Lvl. 1
+tile.theheist:chair.name=Chair
+tile.theheist:server.name=Server
+tile.theheist:recharge_station.name=Recharge Station
+tile.theheist:projector.name=Projector
+tile.theheist:drawer_decoration.name=Drawer Decoration
+tile.theheist:keycard_reader.name=Keycard Reader
+tile.theheist:chemistry_decoration.name=Chemistry Decoration
+item.theheist:nv_glasses.name=NV Goggles
+tile.theheist:gameband_display.name=Gameband Display Stand
+tile.theheist:sensor_mode_display.name=Sensor Mode Display
+
+## Rename vanilla items
+item.dye.red.name=Red Keycard
+item.dye.yellow.name=Yellow Keycard
+item.dye.green.name=Green Keycard
+item.dye.blue.name=Blue Keycard
+
+map.sub.forgot_prototypes=Hey dumb dumb, you forgot some of the prototypes!
+
+## All lang files have this in English annoyingly
+map.sub.107=Whatever you do, don't click that link. Trust me, it'll scar you for life.
+
+map.sub.001.A=Ok varas. Kerrataan tämä vielä kerran ettet vaan epäonnistu. Tehtäväsi on varastaa hyödyllinen tutkimus ja prototyypit. Tehdäksesi tämän sinun täytyy mennä rakennukseen. Se on aika yksinkertaista aluksi. Kävele portaita ylös kunnes pääset katolle. Sitten mene ilmastointikanaviin. Sieltä sinun pitäisi laskeutua alemmalle tasolle.
+map.sub.001.B=Silloin sinun pitäisi poistua sieltä ja aloittaa etsiminen. Pidä varasi turvalaitteiden varalta. Jos jäät kiinni, koko paikka lukittuu. Olettaen ettei näin tapahdu, ja onnistut lähtemään rakennuksesta, tapaa minut siellä. Me ajamme pois ja sinä saat 70 prosentin leikkauksesi. No, mitä odottelemme? Mennään.
+map.sub.002=Mikä tarkalleen sai sinut tähän vaiheeseen? Sinä siellä? Toimiiko mikrofonisi edes? Mahtavaa, mahtava tapa aloittaa keikka. Oletan että mikrofonisi hajosi. Jatka vain siitä huolimatta.
+
+map.sub.003=Miksi et liiku? Oletko jumissa? Se on vain luukku, kokeile hypätä.
+map.sub.004=Noin sitä pitää.
+map.sub.101=Ok, nyt, pysähdy siihen! Olen tosissani, älä liiku! Ennen kun menet minnekkään, kulman takana on kamera! Se juttu kameroissa on: Jos ne huomaavat sinut, ne korottavat hälytyksen tasoa. Kun hälytystaso saavuttaa tietyn kohdan, hälytys käynnistyy. Ja siinä tapauksessa minun pitää löytää joku toinen tähän hommaan. Mikä olisi epäonnista. Mitä sinun pitää tehdä, on juosta niin nopeasti kuin pystyt naisten vessasta vartiohuoneeseen huoneen läpi.
+map.sub.102=Katsotaanpa voitko tehdä mitään kameralle.
+map.sub.103=Kun olet valmis murtaudu huoneeseen. Pidä silti kiirettä, meillä ei ole koko yötä aikaa. 
+map.sub.104=Siinä! Tuota varten olemme täällä! Sinun pitää päästä bunkkeriin.
+map.sub.105=Mitä me odotamme? Pysy kiinni seinässä ja liiku kohti vastaanottopöytää.
+map.sub.106=Näetkö tuon oven joka sanoo: Authorized Personnel Only? Sinne meidän pitää mennä. Se tarvitsee avainkortin. Sinulla ei kuitenkaan ole sitä.
+map.sub.108=Oikeasti? Sinulta loppui energia jo nyt? Käytit sitä aivan liikaa. Käytä Recharge Stationia tapaamaamishuoneessa. Sinun täytyy vaihtaa siniseen tilaan.
+map.sub.109=Wow, en itseasiassa uskonut sinun pääsevän näin pitkälle.
+
+map.sub.200=Älä vain seiso siinä. Hakkeroi prototyyppi!
+map.sub.201=Hei, aiotko käyttää sitä? Pidä vain huoli ettet riko sitä.
+map.sub.202=Ai niin, unohdin mainita robotit. Sinä todennäköisesti haluat välttää niitä.
+map.sub.204=Sinullahan menee aika hyvin, ollaksesi aloittelija.
+
+map.sub.300=Tämä kerros on suuri. Älä eksy.
+map.sub.301=Ei avainkorttia tällä kertaa. Ilmeisesti sinun täytyy löytää koodi.
+map.sub.302=Tämän takia meillä ei ole hauskoja asioita. Sait koodin, Mene hissiin. Emme ole vielä valmiita.
+
+map.sub.400=Muistinko mainita että täälä on lasereita?
+map.sub.401=Katso nyt sinua. Menossa  Mission Impossible tyyliin.
+map.sub.402=No, mitä nyt?
+map.sub.403=Hmm. Fiksua.
+map.sub.404=Kuka tiesi, oletkin kohtalainen varas.
+
+map.sub.500=Hei, teitkö oikeasti tuon?! Olisit voinut kuolla tuossa! Taidat tarvita tätä rahaa pahasti.
+map.sub.501=Eikö olekin hätkähdyttävää kun he jättivät nämä vain lojumaan tähän? Unohdin sanoa sen. Se oli kauheaa.
+map.sub.502=Huh, Kuka olisi tiennyt tämän.
+map.sub.503=Mitä teet yleensä huvin vuoksi? Mitään harrastuksia? Ai niin joo, sinun mikrofonisi...
+map.sub.504=Pakko sanoa, se tuntuu aika typerältä puhua jollekin joka ei voi vastata.
+
+map.sub.600=Vain yksi kerros jäljellä tämän jälkeen.
+map.sub.601=Uskoisimpa että kuka tahansa tekeekin töitä täällä Tulee olemaan aika yllättynyt maanantai-aamunta.
+map.sub.602=Sinun täytyy päästä huoneen poikki jotenkin. Jos siis haluat ne rahat.
+
+map.sub.700=Tämä on aika noloa. Minulla on jotain mitä minun pitää sanoa sinulle. En ole puhunut sinulle aivan totta. En oikein arvannut sinun pääsevän näin pitkälle. Laitoit minut aika noloon paikkaan. Toisaalta olet aika hyvä varas. Toisaalta en oikein halua menettää työtäni. Minä vähän niinkuin teen töitä näille tyypeille. Tämä koko homma on järjestetty. Mitään rahoja ei ollutkaan. He vain halusivat jonkun ulkopuolisen testaamaan turvallisuusjärjestelmiä. En usko että he arvostavat sinun lähtevän rakennuksesta oikeiden prototyyppien kanssa. Joten estän sitä tapahtumasta. Käyn laukaisemassa hälytyksen ulkopuolelta. Siinä kestää noin 5 minuuttia. Joten odota tässä. Tai ehkä sinä voisit, tiedäthän, kävellä kameroiden eteen? Se nopeuttaisi asioita.
+map.sub.701=Hei, minne sinä olet menossa? Tästä kerroksesta ei pääse pois. Olet reilusti maan alla ja hissi ei mene takaisin ylös. Täällä ei ole mitään mikä auttaisi sinua. Tai ainakaan ei mitään mistä minä tietäisin.
+map.sub.702=Lopeta jo, mikään ei auta sinua.
+map.sub.703=Oikeasti?! Teleportaatio? Et voi olla tosissasi? Tajuatko, että sinun takiasi saan potkut. Sinun tulee elää koko loppuelämäsi tietäen, että sinun takiasi mies sai potkut. Onko tämä sinulle OK?
+map.sub.704=Älä tee sitä!
+
+map.console.camera=§o§7Sammutettu kamera
+map.console.sonar=§o§7Sammutettu ääni
+map.console.alarm=§o§7Poistettu hälytys
+
+map.mail.001=Hei, Tom, löysin avainkorttisi hissiin taas... Löydät sen puisesta pöytälaatikosta Support Office:ssa.
+map.mail.002=Lol, sinun on pakko katsoa tämä video KLIKKAA TÄSTÄ, hei, Zed
+map.mail.003=Hei, Sally, soita tutkijoille. Haluan antaa heille kierroksen tästä paikasta ensi viikolla. Prototyypit ovat valmiina. Terveisin, Donovan
+
+map.mail.100=Sensor lvl. 1 (Energiankulutus 1.0 yksikköä/sekunti): Tämä antaa käyttäjän nähdä mitkä alueet ovat kameroiden ja robottien nähtävissä. Sen lisäksi se pystyy näyttämään robottien reitin ollessaan käynnissä.
+map.mail.101=Hakkerointi lvl. 2: (Energiankulutus 10 yksikköä per käyttö): Tämä tila antaa käyttäjän hakkeroida maksimissaan lvl 2 konsoleita pienemmällä energiankulutuksella.
+map.mail.102=Lataus lvl. 2: Gameband Voi nyt varastoida jopa 150 yksikköä energiaa pystyen silti näyttämään käyttäjälle heidän senhetkiset tehtävät.
+map.mail.103=Ola Sandro, Jos haluat nähdä uudet robottimallit sinun täytyy vierailla Hankin luona kamerahuollossa. Hänellä on muutamia ylimääräsiä avainkortteja hissiin.
+map.mail.104=Re: Miten niin sinulla on väärä avainkortti? Recharge Tutkimusryhmän oli puhe ottaa vihreä avainkortti ja kamerahuollon keltainen. Pyydä yhtä yksinkertaista asiaa... En voi uskoa että Richard munasi jotain niin helppoa. Olen pahoillani. Me hoidamme asian maanantaiaamuna.
+
+map.mail.200=Hei Sam, Jos ilmastointi vaivaa sinua niin paljon mene tapaamaan Dania. Kuulin että hän varastoi avainkortin päästäkseen ilmastoinninhuoltohuoneeseen. Etsi häntä Customer Supportista, hänen koneessaan on kävelevä kana näytönsäästäjä. Se on aika vaikea olla huomaamatta.
+map.mail.201=Tajuavatko he kenelle he puhuvat? Olen tutkimuksen pää! Miksi ihmeessä minun pitäisi pystyä muistamaan kymmenen numeroinen koodin vai päästäkseni hissiin? Unohda koko juttu, minä liimaan lapun missä koodi on. Sanon sinulle että turvallisuusvastaavat ovat menneet liian pitkälle. Terveisin, Tutkimuksen pää
+map.mail.202=Hyvä Stephanie, Uusi kun olet, suosittelisin sinua vierailemaan tyyppien Sensorikehityksessä luona. He voivat auttaa sinua kaikkien kerrosten pohjapiirrosten kanssa. He voivat ladata sen suoraan sinun Gamebandiin.
+map.mail.203=X-ray lvl. 1 (Energiankulutus 1,33 yksikköä/sekunti): Tämän tilan aktivoiminen mahdollistaa käyttäjän nähdä saviseinien läpi. Tämä toimii kuten toispuoleinen peili joten kamerat ja robotit eivät näe sinua seinien läpi ollessaan aktiivinen.
+map.mail.204=Sensori lvl. 2 (Energiankulutus 0,4 yksikköä/sekunti): Sensorilla on nyt pienempi energiankulutus. Sen lisäksi tämä sensori antaa käytäjän näyttää kartan siitä kerroksesta missä he ovat. He voivat tehdä sen katsomalla suoraan alas pitäessään sensoria kädessä.
+map.mail.205=Tärkeää: Julkinen tiedotus. Kaikki kadotetut tavarat kuten avainkortit ovat haettavissa kadotettujen tavaroiden hakupaikasta, mikä löytyy 2-kerroksen Security Officesta. Kiitos kun luitte.
+map.mail.206=Hei, Howard, Tutkimuksen pää pyydi minua auttamaan hänen koneensa kanssa yhtenä päivänä. En tajunnut että hänen näkönsä oli näin huono. Sinun olisi pitänyt nähdä sen ikkunan koko hänen näytöllään. Ne ovat valtavia. Hänellä on myös muistilappu pöydällään. Se on oikeasti suurin näkemäni muistilappu miesmuistiin.
+
+map.mail.300=Moi Freya, me tarvitsemme teknikon tulevan maanantain aikana. Väärin toimiva robotti on törmännyt laserturvajärjestelmään kulman takana. Porukan pitää hyppiä läpi nyt jotta eivät laukaise hälytystä. Mutta onhan sitä hauska katsoa.
+map.mail.301=Näkymättömyys lvl 1. (Energiankulutus 40,0 yksikköä/sekunti): Tämä antaa käyttäjän muuttua näkymättömäksi. Ollessan näkymätön pelaajaa ei voi huomata näköön perustuvat kamerat, robotit tai laserit.
+map.mail.302=Magneetti lvl. 1 (Energiankulutus 1,6 yksikköä/sekunti): Tämä antaa käyttäjän tarttua rautablockeihin katossa. Voima vetää käyttäjää ylöspäin ollessaan aktiivinen. Ollessaan kiinni katossa käyttäjä voi liukua kattoa pitkin.
+map.mail.303=Re: Katsoin informaatioa uudestaan ja voin kertoa että joka kerta kun yksi näistä roboteista kävelee kameran edestä se tuottaa valtavan sokean pisteen. Kamera ei voi huomata mitään botin luota. Kerron sinulle vielä kerran että nämä kamerat tarvitsevat ohjelmistonpäivityksen. Joku voisi huomata sen ja helposti ohittaa turvajärjestelämät.
+map.mail.304=Hey Lauren, jos sinun täytyy mennä hissillä alas lainaa caan minun avainkorttiani. Pidä vain huoli että tuot sen takaisin Control Roomiin kun olet valmis, jätän laatikkoni auki niin voit hakea sen maanantaiaamuna.
+
+map.mail.400=Vastauksena Näkymättömyysyksikön kehitykseen olemme kehittäneet järhestelmän joka voi huomata ihmisen jopa ollessaan näkymätön. Sen sijaan että se huomaisi ihmiset visuaalisesti se huomaa heidät liikkeen perusteella.
+map.mail.401=Lataus lvl. 3: Gameband voi nyt varastoida jopa 200 yksikköä energiaa.
+map.mail.402=Hei Bob, miten olisi jos tekisimme maanantaiaamun testistä mielenkiintoisen. Jos haluat avainkorttisi takaisin sinun täytyy läpäistä harjoittelualue laukaisematta hälytystä. Katso se kostona siitä pienestä kahvikuppivitsistä. Ei kanneta kaunaa.
+map.mail.403=Pysäytys lvl. 1 (Energiankulutus 10,00 yksikköä/sekunti): Tätä voi käyttää pysäyttääkseen kaikki robotit kahden blockin alueella kymmeneksi sekunniksi.
+map.mail.404=Re: Moi Adam, mitä tarkoitat että sonar designissä olisi suuri vika. Tämä on sinun alaasi, eikös sinun pitäisi tietää nämä asiat? Terveisin, Roger
+map.mail.405=Hyvä Roger, tiedän ettei minulla ole oikein varaa sanoa, mutta olen miettinyt tapaa jolla käytätte ääntä huomataksenne liikkeen. Se lähettää pulsseja erittäin matalalla intervallilla. Eikös välillä pysähtyminen antaisi sinun liikkua ohi huomaamatta? Terveisin, Adam
+map.mail.406=X-ray lvl. 2 (Energiankulutus 0,67 yksikköä/sekunti): Tämä on tuplasti niin energiatehokas kuin ennen. Sen lisäksi käyttäjä voi nyt nähdä Andesiittiseinien läpi.
+
+map.mail.500=Re: Re: Älä ymmärrä minua väörin, olen erittäin tyytyväinen työpisteeseen mikä minulle on annettu. Se on hyvin tilava. Toivoisin sen vaan olevan hieman lähempänä Poran kehityslaboratoriota. Tarkoitan että se on aivan tuolla hallin toisella puolella. Te muuten lähetitte minulle kaksi avainkorttia yhden sijaan. Onko se OK jos pidän toisen varalla?
+map.mail.501=Pora lvl. 1 (Energiankulutus 10,0 yksikkoä/käyttö): Tämä antaa käyttäjän heikentää ruskeita saviseinä ja tehdä ihmusenmentäviä koloja.
+map.mail.502=Hakkerointi lvl. 3: (Energiankulutus 5 yksikköä/käyttö): Tämä antaa käyttäjän hakkeroida maksimissaan lvl 3 konsoleita halvemmalla.
+map.mail.503=Näkymättömyys lvl 2. (Energiankulutus 10,0 yksikköä/sekunti): Tämä parannettu versio Näkymättömyysyksiköstä on neljä keraa energiatehokkaampi kun edellinen malli. Tämä tarkoittaa että sitä voidaan käyttää pidrmpiä aikoja kerrallaan.
+map.mail.504=Re: Hyvä Donovan, Minä järjestin kierroksen tutkijoiden kanssa ensi viikolle. Ainoa ongelma on että päätyöntekijät ovat lomalla silloin. Hän jätti avainkorttinsa laatikkoon, mutta hän ei ole mukana kierroksella. Terveisin, Sally
+map.mail.505=Re: Moi Naomi, Tiedän että olet utelias uudesta prototyypistä. Tiedät ainoan keinon tietää siitä, se on pyytämällä päätutkihoilta, teknologiatiimiltä ja teknikoilta. Luota minuun, se ei tule tapahtumaan.
+map.mail.506=Hyvä Zed, Olen lukenut paljon negatiivisia kommentteja sinun työn laadusta. Katsot Youtubea työaikana. Olen kuullut etteivät he ehkä jatka sinun työsopimustasi. Se olisi epäonnista. Voisin ehkä sanoa sinulle jotain. Voisin sanoa sen jos tekisit minulle palveluksen. Haluan sinun löytävän jonkun testaamaan turvajärjestemiä käyttäen meidän Gamebands. Haluan sen olevan tekijän tiedostamaton, osaatko tehdä seb? Terveisin, Walter
+map.mail.507=Re: Epäilen että tämän paikan turvajärjestelät ovat heikkoja. Saan jonkun tekemään pikku testin tänä viikonloppuna. Katsotaan miten se menee. Ehkä se muuttaa vanhan miehen mielen. Terveisin, Walter
+map.mail.508=Hei Emma, Mitään tietoa milloin uusi apulainen tulee? Kerro minulle että hän osaa hommansa. Jos minun pitää käyttää koko aikani selittääkseni joka asian, Mikä on apulaisen idea? Miten vaan, minulla on vielä ne vanhat avaimet ja jutut. Kannattaisiko minun vain pitää ne laatikossani odottamassa seuraavaa tyyppiä?.
+
+## Cu
+beginnerTips.1=If you have Minecraft Java, check out the original version: https://www.planetminecraft.com/project/the-heist-3372054/
+beginnerTips.2=Standing in front of cameras increases the alarm level.
+beginnerTips.3=Cameras and sonars can't see you if you are farther than 10 blocks away.
+beginnerTips.4=Upgrading gamebands can make them cheaper or faster.
+beginnerTips.5=The last gameband you unlock is really cool.
+beginnerTips.6=Select recharge mode to view your objectives.
+beginnerTips.7=Robots are like moving cameras.
+beginnerTips.8=Levels get more and more difficult the lower you go.
+beginnerTips.9=Wow, this place has really tight security.
+beginnerTips.10=Didn't think you'd make it this far.
+beginnerTips.11=CHICKEN
+beginnerTips.12=This project took over a month to create!
+
+midgameTips.1=If you have Minecraft Java, check out the original version: https://www.planetminecraft.com/project/the-heist-3372054/
+midgameTips.2=Standing in front of cameras increases the alarm level.
+midgameTips.3=Cameras and sonars can't see you if you are farther than 10 blocks away.
+midgameTips.4=Upgrading gamebands can make them cheaper or faster.
+midgameTips.5=The last gameband you unlock is really cool.
+midgameTips.6=Select recharge mode to view your objectives.
+midgameTips.7=Robots are like moving cameras.
+midgameTips.8=Levels get more and more difficult the lower you go.
+midgameTips.9=Wow, this place has really tight security.
+midgameTips.10=Didn't think you'd make it this far.
+midgameTips.11=CHICKEN
+midgameTips.12=This project took over a month to create!
+midgameTips.13=Make sure to recharge your gamebands whenever you can.
+midgameTips.14=Sonars only see you if you are moving and in their LINE of sight.
+midgameTips.15=If you have Minecraft Java, check out the original version: https://www.planetminecraft.com/project/the-heist-3372054/
+midgameTips.16=Standing in front of cameras increases the alarm level.
+midgameTips.17=Cameras and sonars can't see you if you are farther than 10 blocks away.
+midgameTips.18=Upgrading gamebands can make them cheaper or faster.
+midgameTips.19=The last gameband you unlock is really cool.
+midgameTips.20=Select recharge mode to view your objectives.
+midgameTips.21=Robots are like moving cameras.
+midgameTips.22=Levels get more and more difficult the lower you go.
+midgameTips.23=Wow, this place has really tight security.
+midgameTips.24=Didn't think you'd make it this far.
+midgameTips.25=CHICKEN
+midgameTips.26=This project took over a month to create!
+midgameTips.27=Make sure to recharge your gamebands whenever you can.
+midgameTips.28=Sonars only see you if you are moving and in their LINE of sight.
+midgameTips.29=If you have Minecraft Java, check out the original version: https://www.planetminecraft.com/project/the-heist-3372054/
+midgameTips.30=Standing in front of cameras increases the alarm level.
+midgameTips.31=Cameras and sonars can't see you if you are farther than 10 blocks away.
+midgameTips.32=Upgrading gamebands can make them cheaper or faster.
+midgameTips.33=The last gameband you unlock is really cool.
+midgameTips.34=Select recharge mode to view your objectives.
+midgameTips.35=Robots are like moving cameras.
+midgameTips.36=Levels get more and more difficult the lower you go.
+midgameTips.37=Wow, this place has really tight security.
+midgameTips.38=Didn't think you'd make it this far.
+midgameTips.39=CHICKEN
+midgameTips.40=This project took over a month to create!
+midgameTips.41=Make sure to recharge your gamebands whenever you can.
+midgameTips.42=Sonars only see you if you are moving and in their LINE of sight.
+midgameTips.43=If you have Minecraft Java, check out the original version: https://www.planetminecraft.com/project/the-heist-3372054/
+midgameTips.44=Standing in front of cameras increases the alarm level.
+midgameTips.45=Cameras and sonars can't see you if you are farther than 10 blocks away.
+midgameTips.46=Upgrading gamebands can make them cheaper or faster.
+midgameTips.47=The last gameband you unlock is really cool.
+midgameTips.48=Select recharge mode to view your objectives.
+midgameTips.49=Robots are like moving cameras.
+midgameTips.50=Levels get more and more difficult the lower you go.
+midgameTips.51=Wow, this place has really tight security.
+midgameTips.52=Didn't think you'd make it this far.
+midgameTips.53=CHICKEN
+midgameTips.54=This project took over a month to create!
+midgameTips.55=Make sure to recharge your gamebands whenever you can.
+midgameTips.56=Sonars only see you if you are moving and in their LINE of sight.
+midgameTips.57=If you have Minecraft Java, check out the original version: https://www.planetminecraft.com/project/the-heist-3372054/
+midgameTips.58=Standing in front of cameras increases the alarm level.
+midgameTips.59=Cameras and sonars can't see you if you are farther than 10 blocks away.
+midgameTips.60=Upgrading gamebands can make them cheaper or faster.
+midgameTips.61=The last gameband you unlock is really cool.
+midgameTips.62=Select recharge mode to view your objectives.
+midgameTips.63=Robots are like moving cameras.
+midgameTips.64=Levels get more and more difficult the lower you go.
+midgameTips.65=Wow, this place has really tight security.
+midgameTips.66=Didn't think you'd make it this far.
+midgameTips.67=CHICKEN
+midgameTips.68=This project took over a month to create!
+midgameTips.69=Make sure to recharge your gamebands whenever you can.
+
+lategameTips.1=If you have Minecraft Java, check out the original version: https://www.planetminecraft.com/project/the-heist-3372054/
+lategameTips.2=Standing in front of cameras increases the alarm level.
+lategameTips.3=Cameras and sonars can't see you if you are farther than 10 blocks away.
+lategameTips.4=Upgrading gamebands can make them cheaper or faster.
+lategameTips.5=The last gameband you unlock is really cool.
+lategameTips.6=Select recharge mode to view your objectives.
+lategameTips.7=Robots are like moving cameras.
+lategameTips.8=Levels get more and more difficult the lower you go.
+lategameTips.9=Wow, this place has really tight security.
+lategameTips.10=Didn't think you'd make it this far.
+lategameTips.11=CHICKEN
+lategameTips.12=This project took over a month to create!
+lategameTips.13=Make sure to recharge your gamebands whenever you can.
+lategameTips.14=Sonars only see you if you are moving and in their LINE of sight.
+lategameTips.15=If you have Minecraft Java, check out the original version: https://www.planetminecraft.com/project/the-heist-3372054/
+lategameTips.16=Standing in front of cameras increases the alarm level.
+lategameTips.17=Cameras and sonars can't see you if you are farther than 10 blocks away.
+lategameTips.18=Upgrading gamebands can make them cheaper or faster.
+lategameTips.19=The last gameband you unlock is really cool.
+lategameTips.20=Select recharge mode to view your objectives.
+lategameTips.21=Robots are like moving cameras.
+lategameTips.22=Levels get more and more difficult the lower you go.
+lategameTips.23=Wow, this place has really tight security.
+lategameTips.24=Didn't think you'd make it this far.
+lategameTips.25=CHICKEN
+lategameTips.26=This project took over a month to create!
+lategameTips.27=Make sure to recharge your gamebands whenever you can.

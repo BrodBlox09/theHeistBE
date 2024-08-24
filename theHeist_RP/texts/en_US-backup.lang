@@ -47,11 +47,6 @@ item.dye.yellow.name=Yellow Keycard
 item.dye.green.name=Green Keycard
 item.dye.blue.name=Blue Keycard
 
-map.sub.forgot_prototypes=Hey dumb dumb, you forgot some of the prototypes!
-
-## All lang files have this in English annoyingly
-map.sub.107=Whatever you do, don't click that link. Trust me, it'll scar you for life.
-
 map.sub.001.A=Ok thief. Let's go over this one more time so you don't mess up. Your job is to steal valuable research and prototypes. To do this, you must enter the building. It's pretty simple at first. Walk up the stairs until you get to the roof. Then enter the ventilation system. From there you should decent to the ground floor.
 map.sub.001.B=At which point you should get out and begin searching. Be careful of the security systems. If you get caught, the whole place will go on lockdown. Assuming that doesn't happen, and you manage to work your way out of the building, meet me here. We drive off and you get your 70 percent cut. So, what are you waiting for? Get going.
 map.sub.002=So what exactly got you in this line of work? You there? Is your mic even working? That's great, nice way to start a heist. I guess your mic is busted. Just keep going. It doesn't matter.
@@ -64,6 +59,7 @@ map.sub.103=When you are done break into to the office next door. Hurry up thoug
 map.sub.104=There! That's what we are here for! You need to get into the basement.
 map.sub.105=What are you waiting for? Just hug the wall and move towards the receptionist desk.
 map.sub.106=You see that door that says: Authorized Personnel Only? That's where you have to go. It needs a keycard. You don't have it though.
+map.sub.107=Whatever you do, don't click that link. Trust me, it'll scar you for life.
 map.sub.108=Really? You ran out of power already? You used it to much. Use the recharge station in the meeting room. You will have to switch to the blue mode.
 map.sub.109=Wow, i didn't think you would actually make it this far.
 
@@ -90,7 +86,7 @@ map.sub.504=I have to say, it does feel kind of awkward talking to someone that 
 
 map.sub.600=Only one more floor after this one.
 map.sub.601=I think who ever works here is going to be very surprised monday morning.
-map.sub.602=You are going to have to get across somehow. That is, if your want your money of course.
+map.sub.602=You are going to have to get across somehow. That is, if you want your money of course.
 
 map.sub.700=Well shugs, this is kinda of awkward. There is something I have to tell you. I haven't been completely honest with you. I didn't really expect it to come down to this. You put me in an awkward spot. On the one hand you are a skilled thief, I guess. On the other hand I don't really want to lose my job. I kinda work for these guys. This whole thing has been a setup. There is no money. They just wanted someone from the outside to test the security. I don't think they will appreciate you leaving the building with the actual prototypes. So to prevent that from happening, I'm going to activate the alarm from the outside. It's going to take about 5 mins. So just stay right there. Or maybe you could, you know, walk in front of a camera? That would speed things up.
 map.sub.701=Hey, where you are going? There is no exit on this floor. You are far below ground and the elevator won't go back up. There is nothing here that will help you. Or at least, not that I know of.
@@ -98,6 +94,7 @@ map.sub.702=Just stop already, you are not going to get out of here.
 map.sub.703=Really?! Teleportation? You got to be kidding me? You do realize you are going to get me fired for this. You will have to life the rest of your life knowing you got man fired. Are you ok with that?
 map.sub.704=Please don't!
 
+map.sub.forgot_prototypes=Hey dumb dumb, you forgot some of the prototypes!
 
 map.console.camera=§o§7Disabled camera
 map.console.sonar=§o§7Disabled sonar
