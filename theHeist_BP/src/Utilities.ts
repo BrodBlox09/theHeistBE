@@ -1,4 +1,4 @@
-import { BlockPermutation, Vector3, world, Player, Container, EntityInventoryComponent, ItemStack, ItemLockMode, BlockVolume, BlockType, BlockFillOptions, SpawnEntityOptions } from "@minecraft/server";
+import { BlockPermutation, Vector3, world, Player, Container, EntityInventoryComponent, ItemStack, ItemLockMode, BlockVolume, BlockType, BlockFillOptions, SpawnEntityOptions, EntityEquippableComponent, EquipmentSlot } from "@minecraft/server";
 import DataManager from "./DataManager";
 import Vector from "./Vector";
 
@@ -70,9 +70,10 @@ export default class Utilities {
 		playerInvData.forEach((invSlotData: any) => {
 			var itemStack: ItemStack = new ItemStack(invSlotData.typeId);
 			itemStack.keepOnDeath = true;
-			itemStack.lockMode = ItemLockMode[invSlotData.lockMode as keyof typeof ItemLockMode];
+			if (invSlotData.lockMode) itemStack.lockMode = ItemLockMode[invSlotData.lockMode as keyof typeof ItemLockMode];
 			playerInvContainer.setItem(invSlotData.slot, itemStack);
 		});
+		(player.getComponent("equippable") as EntityEquippableComponent).setEquipment(EquipmentSlot.Head, new ItemStack("theheist:nv_glasses"));
 	}
 
 	/**

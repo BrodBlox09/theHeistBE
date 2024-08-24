@@ -1,4 +1,4 @@
-import { MolangVariableMap, BlockPermutation, EffectTypes, Vector3, world, system, Player, EntityInventoryComponent, EffectType, DisplaySlotId, ScoreboardObjective, Container, ItemStack, ItemLockMode, Entity, Dimension, ItemUseAfterEvent, BlockVolume } from "@minecraft/server";
+import { MolangVariableMap, BlockPermutation, EffectTypes, Vector3, world, system, Player, EntityInventoryComponent, EffectType, DisplaySlotId, ScoreboardObjective, Container, ItemStack, ItemLockMode, Entity, Dimension, ItemUseAfterEvent, BlockVolume, EntityEquippableComponent, EquipmentSlot, EntityItemComponent } from "@minecraft/server";
 import Vector from "./Vector";
 import DataManager from "./DataManager";
 import Utilities from "./Utilities";
@@ -48,8 +48,8 @@ const loreItems = [
 	new loreItem('minecraft:yellow_dye', '§oYellow Keycard§r', ['Used on matching Keycard reader']),
 	new loreItem('minecraft:green_dye', '§oGreen Keycard§r', ['Used on matching Keycard reader']),
 	new loreItem('minecraft:lapis_lazuli', '§oBlue Keycard§r', ['Used on matching Keycard reader']),
-	new loreItem('minecraft:leather_helmet', '§oCall the authorities§r', ['Drop to restart level']),
-	new loreItem('theheist:nv_glasses', '§oNV Goggles§r', ['Drop to regain items']),
+	new loreItem('theheist:phone', '§oCall the authorities§r', ['Drop to restart level']),
+	new loreItem('theheist:nv_glasses', '§oNV Goggles§r', ['Drop to regain items'])
 ]
 
 const bustedCounterObjective: ScoreboardObjective = world.scoreboard.getObjective("bustedCounter")!;
@@ -68,7 +68,7 @@ const overworld = world.getDimension("overworld");
 world.afterEvents.itemUse.subscribe((event: ItemUseAfterEvent) => {
 	const player = event.source;
 	var text = event.itemStack.typeId;
-	
+
 	if (text.endsWith("_enchanted")) text = text.substring(0, text.length - "_enchanted".length);
 	let keycardType;
 	switch (text) {
@@ -355,10 +355,10 @@ function action(actionInfo: IAction, player: Player) {
 			var z = actionInfo.do.z;
 			var block = actionInfo.do.block;
 			var permutations = actionInfo.do.permutations;
-			Utilities.setBlock({"x": x, "y": y, "z": z}, block, permutations);
+			Utilities.setBlock({ "x": x, "y": y, "z": z }, block, permutations);
 			var query: Record<any, any> = {
 				"type": "theheist:hover_text",
-				"location": {"x": x, "y": y, "z": z},
+				"location": { "x": x, "y": y, "z": z },
 				"maxDistance": 1,
 				"closest": 1
 			};
@@ -658,7 +658,7 @@ function playerBusted(player: Player, currentLevel: number) {
 			player.playSound("map.alarm");
 			player.addTag("BUSTED");
 			(player.getComponent("inventory") as EntityInventoryComponent).container?.clearAll();
-			player.onScreenDisplay.setTitle("§r§e§lBusted", { "subtitle":"You got detected. Try again!", "fadeInDuration": 20, "fadeOutDuration": 20, "stayDuration": 160 });
+			player.onScreenDisplay.setTitle("§r§e§lBusted", { "subtitle": "You got detected. Try again!", "fadeInDuration": 20, "fadeOutDuration": 20, "stayDuration": 160 });
 			overworld.fillBlocks(new BlockVolume({ "x": 2029.50, "y": -59.00, "z": 56.50 }, { "x": 2029.50, "y": -59.00, "z": 61.50 }), BlockPermutation.resolve("minecraft:air"));
 			system.runTimeout(() => {
 				stopAllSound();
@@ -682,7 +682,7 @@ function playerBusted(player: Player, currentLevel: number) {
 			DataManager.setData(player, playerEnergyTracker);
 			player.playSound("map.alarm");
 			player.addTag("BUSTED");
-			player.onScreenDisplay.setTitle("§r§e§lBusted", { "subtitle":"You got detected. Try again!", "fadeInDuration": 20, "fadeOutDuration": 20, "stayDuration": 160 });
+			player.onScreenDisplay.setTitle("§r§e§lBusted", { "subtitle": "You got detected. Try again!", "fadeInDuration": 20, "fadeOutDuration": 20, "stayDuration": 160 });
 			(player.getComponent("inventory") as EntityInventoryComponent).container?.clearAll();
 			system.runTimeout(() => {
 				stopAllSound();
@@ -699,7 +699,7 @@ function playerBusted(player: Player, currentLevel: number) {
 }
 
 function stopAllSound() {
-	overworld.getEntities({ "excludeTypes": [ "minecraft:armor_stand", "theheist:hover_text" ] }).forEach((e) => { try { e.runCommandAsync('stopsound @s'); } catch {} });
+	overworld.getEntities({ "excludeTypes": ["minecraft:armor_stand", "theheist:hover_text"] }).forEach((e) => { try { e.runCommandAsync('stopsound @s'); } catch { } });
 }
 
 function cloneFloor(loc: Vector) {
@@ -736,6 +736,28 @@ function clearGlass(loc: Vector) {
 system.runInterval(() => {
 	const player = world.getPlayers().filter((x: Player) => (x != undefined && x != null))[0];
 	if (player == undefined) return;
+
+	
+	var playerLevelInformation: LevelInformation = DataManager.getData(player, "levelInformation");
+	
+	{
+		var itemEntity = overworld.getEntities({
+			"type": "minecraft:item",
+			"location": player.location,
+			"closest": 1,
+			"maxDistance": 3
+		})[0];
+		if (itemEntity) {
+			var droppedItemTID = (itemEntity.getComponent("item") as EntityItemComponent).itemStack.typeId;
+			itemEntity.remove();
+			if (droppedItemTID == "theheist:phone") {
+				playerBusted(player, playerLevelInformation.information[1].level);
+			} else if (droppedItemTID == "theheist:nv_glasses") {
+				Utilities.reloadPlayerInv(player, playerLevelInformation);
+			}
+		}
+	}
+
 	//cloneFloor(Vector.v3ToVector(player.location));
 	//flattenMap(Vector.v3ToVector(player.location));
 	//clearGlass(Vector.v3ToVector(player.location));
@@ -748,6 +770,7 @@ system.runInterval(() => {
 	player.addEffect(resistance, 2000, { 'amplifier': 1, 'showParticles': false });
 	// Set lore for items
 	const playerInvContainer = (player.getComponent('inventory') as EntityInventoryComponent).container as Container;
+	const playerEquippable = (player.getComponent('equippable') as EntityEquippableComponent);
 	for (let i = 0; i < playerInvContainer.size; i++) {
 		const item = playerInvContainer.getItem(i);
 		if (!item || !item.getLore()) continue;
@@ -762,6 +785,15 @@ system.runInterval(() => {
 		}
 		playerInvContainer.setItem(i, item);
 	}
+	let headItem = playerEquippable.getEquipment(EquipmentSlot.Head);
+	if (headItem) {
+		let foundItem = loreItems.find(x => x.id == headItem?.typeId)!;
+		try {
+			headItem.setLore(foundItem.lore);
+			headItem.nameTag = foundItem.nameTag;
+		} catch (err) { }
+	}
+	playerEquippable.setEquipment(EquipmentSlot.Head, headItem);
 	var selectedItemStack = playerInvContainer.getItem(player.selectedSlotIndex);
 	if (selectedItemStack != undefined && selectedItemStack.typeId.startsWith("theheist:recharge_mode_lvl_")) {
 		GameObjectiveManager.showSidebar();
@@ -771,7 +803,6 @@ system.runInterval(() => {
 
 	// Set player level to player energy level
 	var playerEnergyTracker: EnergyTracker = DataManager.getData(player, "energyTracker");
-	var playerLevelInformation: LevelInformation = DataManager.getData(player, "levelInformation");
 
 	if (playerEnergyTracker && playerLevelInformation) SensorModeFunc.sensorTick(player, playerLevelInformation, playerEnergyTracker);
 	if (playerEnergyTracker && playerLevelInformation) XRayModeFunc.xrayTick(player, playerLevelInformation, playerEnergyTracker);

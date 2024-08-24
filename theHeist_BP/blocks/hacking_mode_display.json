@@ -21,7 +21,8 @@
             "minecraft:selection_box": {
                 "origin": [ -6, 5, -2 ],
                 "size": [ 12, 11, 4 ]
-            }
+            },
+            "minecraft:collision_box": false
         },
         "permutations": [
             {
@@ -61,6 +62,16 @@
                         "rotation": [ 0, 90, 0],
                         "scale": [ 0.45, 0.45, 0.45 ],
                         "translation": [ 0, -0.5, 0 ]
+                    }
+                }
+            },
+            {
+                "condition": "query.block_state('theheist:rotation') == -1",
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [ 90, 0, 0],
+                        "scale": [ 0.45, 0.45, 0.45 ],
+                        "translation": [ 0, -0.45, 0 ]
                     }
                 }
             }

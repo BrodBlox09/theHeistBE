@@ -6,6 +6,9 @@
 		},
         "player_inventory_cover": {
             "textures": "textures/items/player_inventory_cover"
+        },
+        "phone": {
+            "textures": "textures/items/phone"
         }
     }
 }

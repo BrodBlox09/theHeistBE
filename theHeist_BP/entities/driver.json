@@ -8,10 +8,6 @@
             "is_experimental": false
         },
         "components": {
-            "minecraft:pushable": {
-                "is_pushable": false,
-                "is_pushable_by_piston": false
-            },
             "minecraft:damage_sensor": {
                 "triggers": {
                     "deals_damage": false
@@ -20,6 +16,10 @@
             "minecraft:nameable": {},
             "minecraft:physics": {
                 "has_gravity": true
+            },
+            "minecraft:pushable": {
+                "is_pushable": false,
+                "is_pushable_by_piston": false
             },
             "minecraft:equippable": {
                 "slots": [
@@ -38,6 +38,11 @@
             },
             "minecraft:behavior.equip_item": {
                 "priority": 2
+            },
+            "minecraft:type_family": {
+                "family": [
+                    "driver"
+                ]
             }
         }
     }

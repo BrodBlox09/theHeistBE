@@ -43,18 +43,15 @@ const levelLocations: Record<string, Vector3> = {
 
 const objectivesObjective = world.scoreboard.getObjective("objectives") ?? world.scoreboard.addObjective("objectives", "Objectives");
 
-const allowedPlayers = [
-	"BrodBlox09",
-	"BrodBloxRox",
-	"McMelonTV",
-	"Steve"
-];
-
 world.beforeEvents.chatSend.subscribe(event => {
 	const player = event.sender;
 	const msg = event.message;
-	if (!allowedPlayers.includes(player.name) || !msg.startsWith("!")) return;
+	if (!msg.startsWith("!")) return;
 	event.cancel = true;
+	if (!player.hasTag("developer")) {
+		player.sendMessage("§4You must have the §6'developer'§4 tag to use developer commands.");
+		return;
+	}
 	const args = msg.slice(1).split(" ");
 	const cmd = args.shift();
 	switch (cmd) {
@@ -91,7 +88,7 @@ world.beforeEvents.chatSend.subscribe(event => {
 		case "clearData":
 			DataManager.clearData(player);
 			system.run(() => {
-				player.getTags().forEach((x) => { player.removeTag(x); });
+				player.getTags().forEach((x) => { if (x != "developer") player.removeTag(x); });
 			});
 			system.run(() => Utilities.dimensions.overworld.runCommand('tickingarea remove_all'));
 			break;
