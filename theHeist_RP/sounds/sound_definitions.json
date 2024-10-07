@@ -372,14 +372,6 @@
                     "name": "sounds/map/hack_use",
                     "stream": false
                 }]
-        },
-        "map.recharge_use": {
-            "category": "ui",
-            "sounds": [
-                {
-                    "name": "sounds/map/recharge_use",
-                    "stream": false
-                }]
         }
     }
 }

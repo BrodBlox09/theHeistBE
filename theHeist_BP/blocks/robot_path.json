@@ -1,5 +1,5 @@
 {
-    "format_version": "1.20.10",
+    "format_version": "1.21.30",
     "minecraft:block": {
         "description": {
             "identifier": "theheist:robot_path",
@@ -7,65 +7,11 @@
             "menu_category": {
                 "category": "construction"
             },
-            "properties": {
+            "states": {
                 "theheist:north": [1, 0],
                 "theheist:south": [1, 0],
                 "theheist:east": [1, 0],
                 "theheist:west": [1, 0]
-            }
-        },
-        "events": {
-            "theheist:update": {
-                "sequence": [
-                    {
-                        "condition": "query.block_neighbor_has_any_tag(0, 0, -1, 'robot_path')",
-                        "set_block_property": {
-                            "theheist:north": 1
-                        }
-                    },
-                    {
-                        "condition": "!query.block_neighbor_has_any_tag(0, 0, -1, 'robot_path')",
-                        "set_block_property": {
-                            "theheist:north": 0
-                        }
-                    },
-                    {
-                        "condition": "query.block_neighbor_has_any_tag(0, 0, 1, 'robot_path')",
-                        "set_block_property": {
-                            "theheist:south": 1
-                        }
-                    },
-                    {
-                        "condition": "!query.block_neighbor_has_any_tag(0, 0, 1, 'robot_path')",
-                        "set_block_property": {
-                            "theheist:south": 0
-                        }
-                    }, //
-                    {
-                        "condition": "query.block_neighbor_has_any_tag(-1, 0, 0, 'robot_path')",
-                        "set_block_property": {
-                            "theheist:west": 1
-                        }
-                    },
-                    {
-                        "condition": "!query.block_neighbor_has_any_tag(-1, 0, 0, 'robot_path')",
-                        "set_block_property": {
-                            "theheist:west": 0
-                        }
-                    },
-                    {
-                        "condition": "query.block_neighbor_has_any_tag(1, 0, 0, 'robot_path')",
-                        "set_block_property": {
-                            "theheist:east": 1
-                        }
-                    },
-                    {
-                        "condition": "!query.block_neighbor_has_any_tag(1, 0, 0, 'robot_path')",
-                        "set_block_property": {
-                            "theheist:east": 0
-                        }
-                    }
-                ]
             }
         },
         "components": {
@@ -91,21 +37,21 @@
             "minecraft:geometry": {
                 "identifier": "geometry.robot_path",
                 "bone_visibility": {
-                    "north": "q.block_property('theheist:north')",
-                    "west": "q.block_property('theheist:west')",
-                    "east": "q.block_property('theheist:east')",
-                    "south": "q.block_property('theheist:south')",
-                    "center": "(q.block_property('theheist:north') + q.block_property('theheist:west') + q.block_property('theheist:east') + q.block_property('theheist:south') == 0) || ((q.block_property('theheist:north') || q.block_property('theheist:south')) && (q.block_property('theheist:east') || q.block_property('theheist:west')))"
+                    "north": "q.block_state('theheist:north')",
+                    "west": "q.block_state('theheist:west')",
+                    "east": "q.block_state('theheist:east')",
+                    "south": "q.block_state('theheist:south')",
+                    "center": "(q.block_state('theheist:north') + q.block_state('theheist:west') + q.block_state('theheist:east') + q.block_state('theheist:south') == 0) || ((q.block_state('theheist:north') || q.block_state('theheist:south')) && (q.block_state('theheist:east') || q.block_state('theheist:west')))"
                 }
             },
-            "minecraft:queued_ticking": {
-                "looping": true,
+            "tag:robot_path": {},
+            "minecraft:custom_components": [
+                "theheist:robot_path"
+            ],
+            "minecraft:tick": {
                 "interval_range": [1,1],
-                "on_tick": {
-                    "event": "theheist:update"
-                }
-            },
-            "tag:robot_path": {}
+                "looping": true
+            }
         }
     }
 }

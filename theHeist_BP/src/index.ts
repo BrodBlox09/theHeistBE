@@ -1,11 +1,12 @@
 import { EntityTypes, system, world, Vector3, EntityInventoryComponent, GameMode, EntityQueryOptions } from "@minecraft/server";
-import Vector from "./Vector";
+import VoiceOverManager from "./VoiceOverManager";
 import DataManager from "./DataManager";
+import Utilities from "./Utilities";
+import Vector from "./Vector";
+import "./customComponents";
 import "./lvl_loader";
 import "./gameband";
 import "./alarm";
-import Utilities from "./Utilities";
-import VoiceOverManager from "./VoiceOverManager";
 
 /*world.afterEvents.worldInitialize.subscribe(event => {
 	const def = new DynamicPropertiesDefinition();

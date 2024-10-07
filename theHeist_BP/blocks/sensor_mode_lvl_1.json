@@ -1,5 +1,5 @@
 {
-    "format_version": "1.16.100",
+    "format_version": "1.21.30",
     "minecraft:block": {
         "description": {
             "identifier": "theheist:sensor_mode_lvl_1",
@@ -7,9 +7,6 @@
         },
         "components": {
             "minecraft:geometry": "geometry.sensor_mode",
-            "minecraft:on_player_placing": {
-                "event": "theheist:set_rotation"
-            },
             "minecraft:material_instances": {
                 "icon": {
                     "texture": "sensor_icon"

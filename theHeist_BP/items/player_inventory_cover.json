@@ -1,5 +1,5 @@
 {
-	"format_version": "1.20.10",
+	"format_version": "1.20.20",
 	"minecraft:item": {
 		"description": {
 			"identifier": "theheist:player_inventory_cover",
@@ -7,7 +7,7 @@
 		},
 		"components": {
 			"minecraft:max_stack_size": 1,
-			"minecraft:foil": false,
+			"minecraft:glint": false,
 			"minecraft:icon": "player_inventory_cover",
 			"minecraft:should_despawn": true,
 			"minecraft:allow_off_hand": false

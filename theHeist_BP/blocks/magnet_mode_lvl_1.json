@@ -1,5 +1,5 @@
 {
-    "format_version": "1.16.100",
+    "format_version": "1.21.30",
     "minecraft:block": {
         "description": {
             "identifier": "theheist:magnet_mode_lvl_1",

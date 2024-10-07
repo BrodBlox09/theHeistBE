@@ -1,4 +1,4 @@
-import { world, system, GameMode, TicksPerDay, BlockPermutation, Player, EntityQueryOptions, MolangVariableMap, EntityLifetimeState } from "@minecraft/server";
+import { world, system, GameMode, Player, EntityQueryOptions, MolangVariableMap } from "@minecraft/server";
 import { solidToTransparent } from "./gamebands/xray";
 import * as SensorModeFunc from "./gamebands/sensor";
 import DataManager from "./DataManager";

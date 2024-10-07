@@ -1,5 +1,5 @@
 {
-    "format_version": "1.16.100",
+    "format_version": "1.21.30",
     "minecraft:block": {
         "description": {
             "identifier": "theheist:computer",
@@ -8,17 +8,10 @@
             "menu_category": {
                 "category": "equipment"
             },
-            "properties": {
+            "states": {
                 "theheist:rotation": [2, 3, 4, 5],
                 "theheist:unlocked": [0, 1, 2],
                 "theheist:screensaver": [0, 1, 2, 3, 4, 5, 6]
-            }
-        },
-        "events": {
-            "theheist:set_rotation": {
-                "set_block_property": {
-                    "theheist:rotation": "(query.cardinal_facing_2d)"
-                }
             }
         },
         "components": {
@@ -27,50 +20,50 @@
                 "origin": [-7, 0, 7],
                 "size": [14, 13, -3]
             },
-            "minecraft:on_player_placing": {
-                "event": "theheist:set_rotation"
-            },
-            "minecraft:light_dampening": 0
+            "minecraft:light_dampening": 0,
+            "minecraft:custom_components": [
+                "theheist:directional_block"
+            ]
         },
         "permutations": [
             {
-                "condition": "query.block_property('theheist:rotation') == 2",
+                "condition": "query.block_state('theheist:rotation') == 2",
                 "components": {
-                    "minecraft:rotation": [0, 180, 0]
+                    "minecraft:transformation": { "rotation": [0, 180, 0] }
                 }
             },
             {
-                "condition": "query.block_property('theheist:rotation') == 3",
+                "condition": "query.block_state('theheist:rotation') == 3",
                 "components": {
-                    "minecraft:rotation": [0, 0, 0]
+                    "minecraft:transformation": { "rotation": [0, 0, 0] }
                 }
             },
             {
-                "condition": "query.block_property('theheist:rotation') == 4",
+                "condition": "query.block_state('theheist:rotation') == 4",
                 "components": {
-                    "minecraft:rotation": [0, 270, 0]
+                    "minecraft:transformation": { "rotation": [0, 270, 0] }
                 }
             },
             {
-                "condition": "query.block_property('theheist:rotation') == 5",
+                "condition": "query.block_state('theheist:rotation') == 5",
                 "components": {
-                    "minecraft:rotation": [0, 90, 0]
+                    "minecraft:transformation": { "rotation": [0, 90, 0] }
                 }
             },
             {
-                "condition": "query.block_property('theheist:screensaver') == 0",
+                "condition": "query.block_state('theheist:screensaver') == 0",
                 "components": {
                     "minecraft:geometry": "geometry.computer_hackable"
                 }
             },
             {
-                "condition": "query.block_property('theheist:screensaver') != 0",
+                "condition": "query.block_state('theheist:screensaver') != 0",
                 "components": {
                     "minecraft:geometry": "geometry.computer_screensaver"
                 }
             },
             {
-                "condition": "query.block_property('theheist:unlocked') == 0 && query.block_property('theheist:screensaver') == 0",
+                "condition": "query.block_state('theheist:unlocked') == 0 && query.block_state('theheist:screensaver') == 0",
                 "components": {
                     "minecraft:material_instances": {
                         "screen": {
@@ -83,7 +76,7 @@
                 }
             },
             {
-                "condition": "query.block_property('theheist:unlocked') == 1 && query.block_property('theheist:screensaver') == 0",
+                "condition": "query.block_state('theheist:unlocked') == 1 && query.block_state('theheist:screensaver') == 0",
                 "components": {
                     "minecraft:material_instances": {
                         "screen": {
@@ -96,7 +89,7 @@
                 }
             },
             {
-                "condition": "query.block_property('theheist:unlocked') == 2 && query.block_property('theheist:screensaver') == 0",
+                "condition": "query.block_state('theheist:unlocked') == 2 && query.block_state('theheist:screensaver') == 0",
                 "components": {
                     "minecraft:material_instances": {
                         "screen": {
@@ -109,7 +102,7 @@
                 }
             },
             {
-                "condition": "query.block_property('theheist:screensaver') == 1",
+                "condition": "query.block_state('theheist:screensaver') == 1",
                 "components": {
                     "minecraft:material_instances": {
                         "screen": {
@@ -123,7 +116,7 @@
                 }
             },
             {
-                "condition": "query.block_property('theheist:screensaver') == 2",
+                "condition": "query.block_state('theheist:screensaver') == 2",
                 "components": {
                     "minecraft:material_instances": {
                         "screen": {
@@ -137,7 +130,7 @@
                 }
             },
             {
-                "condition": "query.block_property('theheist:screensaver') == 3",
+                "condition": "query.block_state('theheist:screensaver') == 3",
                 "components": {
                     "minecraft:material_instances": {
                         "screen": {
@@ -151,7 +144,7 @@
                 }
             },
             {
-                "condition": "query.block_property('theheist:screensaver') == 4",
+                "condition": "query.block_state('theheist:screensaver') == 4",
                 "components": {
                     "minecraft:material_instances": {
                         "screen": {
@@ -165,7 +158,7 @@
                 }
             },
             {
-                "condition": "query.block_property('theheist:screensaver') == 5",
+                "condition": "query.block_state('theheist:screensaver') == 5",
                 "components": {
                     "minecraft:material_instances": {
                         "screen": {
@@ -179,7 +172,7 @@
                 }
             },
             {
-                "condition": "query.block_property('theheist:screensaver') == 6",
+                "condition": "query.block_state('theheist:screensaver') == 6",
                 "components": {
                     "minecraft:material_instances": {
                         "screen": {

@@ -1,4 +1,4 @@
-import { BlockPermutation, Vector3, world, Player, Container, EntityInventoryComponent, ItemStack, ItemLockMode, BlockVolume, BlockType, BlockFillOptions, SpawnEntityOptions, EntityEquippableComponent, EquipmentSlot } from "@minecraft/server";
+import { BlockPermutation, Vector3, Block, world, Player, Container, EntityInventoryComponent, ItemStack, ItemLockMode, BlockVolume, BlockType, BlockFillOptions, SpawnEntityOptions, Entity, EntityEquippableComponent, EquipmentSlot } from "@minecraft/server";
 import DataManager from "./DataManager";
 import Vector from "./Vector";
 
@@ -25,20 +25,29 @@ export default class Utilities {
 
 	static levelIDToLevel: Record<string, number> = this.swapKVPs(this.levelToLevelID);
 
-	static sin(d: number) {
+	static sin(d: number): number {
 		return Math.sin(d * Math.PI / 180);
 	}
 
-	static cos(d: number) {
+	static cos(d: number): number {
 		return Math.cos(d * Math.PI / 180);
 	}
 
-	static spawnEntity(location: Vector3, identitifier: string, options: SpawnEntityOptions | undefined = undefined) {
+	// Inclusive min, exclusive max
+	static getRandInt(min: number, max: number): number {
+		return Math.floor(Math.random() * (max - min) + min);
+	}
+
+	static spawnEntity(location: Vector3, identitifier: string, options: SpawnEntityOptions | undefined = undefined): Entity {
 		return this.dimensions.overworld.spawnEntity(identitifier, location, options);
 	}
 
 	static setBlock(location: Vector3, block: string, permutations: Record<string, string | number | boolean> | undefined = undefined) {
 		this.dimensions.overworld.getBlock(location)?.setPermutation(BlockPermutation.resolve(block, permutations));
+	}
+
+	static setBlockState(block: Block, stateName: string, stateValue: boolean | number | string) {
+		block.setPermutation(block.permutation.withState(stateName, stateValue));
 	}
 
 	static fillBlocks2(location1: Vector3, location2: Vector3, block: BlockPermutation | BlockType | string, options?: BlockFillOptions) {

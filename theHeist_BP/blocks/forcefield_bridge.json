@@ -1,5 +1,5 @@
 {
-    "format_version": "1.16.100",
+    "format_version": "1.21.30",
     "minecraft:block": {
         "description": {
             "identifier": "theheist:forcefield_bridge",
@@ -15,9 +15,6 @@
                     "ambient_occlusion": false,
                     "render_method": "blend"
                 }
-            },
-            "minecraft:on_player_placing": {
-                "event": "theheist:set_rotation"
             },
             "minecraft:geometry": "geometry.forcefield_bridge",
             "minecraft:collision_box": {
