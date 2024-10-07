@@ -5,6 +5,7 @@ const objectivesObjective = world.scoreboard.getObjective('objectives') ?? world
 export default class GameObjectiveManager {
 	static addObjective(objective: string, sortOrder: number, sendMessage: boolean = true) {
 		if (objectivesObjective.hasParticipant(`§a${objective}§r`)) return; // Ensure no duplicate objectives are made
+		if (objectivesObjective.hasParticipant(`§c${objective}§r`)) return;
 		objectivesObjective.setScore(`§c${objective}§r`, sortOrder);
 		if (sendMessage) world.sendMessage([{ "text": `§o§7New objective: §r§c${objective}§r` }]);
 		this.reloadSidebar();

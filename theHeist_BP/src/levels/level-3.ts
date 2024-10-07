@@ -11,7 +11,6 @@ const level: ILevel = {
 "levelID": "-3-1",
 "loadElevatorLoc": new Vector(5022, -49, 130),
 "startPlayerLoc": new Vector(5022, -60, 130),
-"tickingAreas": [],
 "startingItems": [{ "slot": 0, "typeId": 'theheist:recharge_mode_lvl_2', "lockMode": "slot" }, { "slot": 1, "typeId": 'theheist:hacking_mode_lvl_2', "lockMode": "slot" }, { "slot": 2, "typeId": 'theheist:sensor_mode_lvl_2', "lockMode": "slot" }, { "slot": 3, "typeId": 'theheist:xray_mode_lvl_1', "lockMode": "slot" }],
 "rechargeLevel": 2,
 "startObjectives": [{ "name": "Access next level", "sortOrder": 3 }, { "name": "Get Magnet mode", "sortOrder": 2 }, { "name": "Get Stealth mode", "sortOrder": 1 }],
@@ -38,7 +37,7 @@ setup: () => {
         "type": "display_research", "do": { "researchID": 302 }, "delay": 40
     }]);
     LevelConstructor.rechargeStation(new Vector(4990.5, -60, 123.5), 3);
-    LevelConstructor.newGameband(new Vector(4994.5, -59, 121.5), "magnet", "§5§lMagnet Lvl. 1", 4, 5, []);
+    LevelConstructor.newGameband(new Vector(4994.5, -59, 121.5), "magnet", "§5§lMagnet", 4, 5, []);
 } // Magnet Research
 
 {
@@ -61,7 +60,8 @@ setup: () => {
 
 {
     LevelConstructor.keypad(new Vector(5004.5, -59, 95.5), 3, 3, []);
-    LevelConstructor.newGameband(new Vector(5004.5, -59, 108.5), "stealth", "§f§lStealth Lvl. 1", 5, 3, []);
+    LevelConstructor.keypad(new Vector(5005.5, -59, 103.5), 3, 3, []);
+    LevelConstructor.newGameband(new Vector(5004.5, -59, 108.5), "stealth", "§f§lStealth", 5, 3, []);
     LevelConstructor.computer(new Vector(5001.5, -59, 100.5), "Research info", 4, [{
         "type": "display_research", "do": { "researchID": 301 }, "delay": 40
     }]);

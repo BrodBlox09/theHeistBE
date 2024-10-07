@@ -1,0 +1,20 @@
+{
+    "format_version": "1.21.30",
+    "minecraft:block": {
+        "description": {
+            "identifier": "theheist:stealth_mode_lvl_2_enchanted",
+            "is_experimental": false
+        },
+        "components": {
+            "minecraft:geometry": "geometry.stealth_mode",
+            "minecraft:material_instances": {
+                "icon": {
+                    "texture": "stealth_icon_enchanted"
+                },
+                "*": {
+                    "texture": "stealth_mode_enchanted"
+                }
+            }
+        }
+    }
+}

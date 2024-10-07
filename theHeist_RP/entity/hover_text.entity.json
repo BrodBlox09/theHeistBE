@@ -1,0 +1,20 @@
+{
+    "format_version": "1.10.0",
+    "minecraft:client_entity": {
+        "description": {
+            "identifier": "theheist:hover_text",
+            "materials": {
+                "default": "entity"
+            },
+            "textures": {
+                "default": "textures/blocks/black"
+            },
+            "geometry": {
+                "default": "geometry.none"
+            },
+            "render_controllers": [
+                "controller.render.default"
+            ]
+        }
+    }
+}

@@ -191,9 +191,42 @@ export default class LevelConstructor {
         cameras++;
     }
 
+    static sonar(loc: Vector, rot: number) {
+        const sonar = overworld.spawnEntity("armor_stand", new Vector(loc.x, Utilities.cameraHeight, loc.z));
+        var rotationVector = { 'x': 0, 'y': rot };
+        sonar.setRotation(rotationVector);
+        overworld.spawnEntity("theheist:sonar", loc).setRotation(rotationVector);
+        const sonarDataNode = {
+            "name": "cameraTracker",
+            "isRobot": false,
+            "rotation": rot,
+            "disabled": false,
+            "cameraID": cameras,
+            "type": "sonar"
+        }
+        DataManager.setData(sonar, sonarDataNode);
+        cameras++;
+    }
+
+    static sonar360(loc: Vector) {
+        const sonar360 = overworld.spawnEntity("armor_stand", new Vector(loc.x, Utilities.cameraHeight, loc.z));
+        overworld.spawnEntity("theheist:sonar360", loc);
+        const sonarDataNode = {
+            "name": "cameraTracker",
+            "isRobot": false,
+            "rotation": 0,
+            "disabled": false,
+            "cameraID": cameras,
+            "type": "sonar360"
+        }
+        DataManager.setData(sonar360, sonarDataNode);
+        cameras++;
+    }
+
     static cameraRobot(loc: Vector, rot: number) {
         const robot = overworld.spawnEntity("armor_stand", { "x": loc.x, "y": Utilities.cameraHeight, "z": loc.z });
         robot.setRotation({ "x": 0, "y": rot });
+        robot.addTag("robot");
         overworld.spawnEntity("theheist:camera_robot", loc).setRotation({ "x": 0, "y": rot });
         const robotDataNode = {
             "name": "cameraTracker",
@@ -211,6 +244,7 @@ export default class LevelConstructor {
     static staticCameraRobot(loc: Vector, rot: number) {
         const robot = overworld.spawnEntity("armor_stand", { "x": loc.x, "y": Utilities.cameraHeight, "z": loc.z });
         robot.setRotation({ "x": 0, "y": rot });
+        robot.addTag("robot");
         overworld.spawnEntity("theheist:camera_robot", loc).setRotation({ "x": 0, "y": rot });
         const robotDataNode = {
             "name": "cameraTracker",
@@ -221,6 +255,43 @@ export default class LevelConstructor {
             "disabled": false,
             "cameraID": cameras,
             "type": "camera"
+        };
+        DataManager.setData(robot, robotDataNode);
+        cameras++;
+    }
+
+    static sonarRobot(loc: Vector, rot: number) {
+        const robot = overworld.spawnEntity("armor_stand", { "x": loc.x, "y": Utilities.cameraHeight, "z": loc.z });
+        robot.setRotation({ "x": 0, "y": rot });
+        robot.addTag("robot");
+        overworld.spawnEntity("theheist:sonar_robot", loc).setRotation({ "x": 0, "y": rot });
+        const robotDataNode = {
+            "name": "cameraTracker",
+            "isRobot": true,
+            "isStunned": false,
+            "rotation": rot,
+            "disabled": false,
+            "cameraID": cameras,
+            "type": "sonar"
+        };
+        DataManager.setData(robot, robotDataNode);
+        cameras++;
+    }
+
+    static staticSonarRobot(loc: Vector, rot: number) {
+        const robot = overworld.spawnEntity("armor_stand", { "x": loc.x, "y": Utilities.cameraHeight, "z": loc.z });
+        robot.setRotation({ "x": 0, "y": rot });
+        robot.addTag("robot");
+        overworld.spawnEntity("theheist:sonar_robot", loc).setRotation({ "x": 0, "y": rot });
+        const robotDataNode = {
+            "name": "cameraTracker",
+            "isRobot": true,
+            "isStatic": true,
+            "isStunned": false,
+            "rotation": rot,
+            "disabled": false,
+            "cameraID": cameras,
+            "type": "sonar"
         };
         DataManager.setData(robot, robotDataNode);
         cameras++;

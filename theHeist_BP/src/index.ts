@@ -1,11 +1,12 @@
 import { EntityTypes, system, world, Vector3, EntityInventoryComponent, GameMode, EntityQueryOptions } from "@minecraft/server";
-import Vector from "./Vector";
+import VoiceOverManager from "./VoiceOverManager";
 import DataManager from "./DataManager";
+import Utilities from "./Utilities";
+import Vector from "./Vector";
+import "./customComponents";
 import "./lvl_loader";
 import "./gameband";
 import "./alarm";
-import Utilities from "./Utilities";
-import VoiceOverManager from "./VoiceOverManager";
 
 /*world.afterEvents.worldInitialize.subscribe(event => {
 	const def = new DynamicPropertiesDefinition();
@@ -36,22 +37,22 @@ const levelLocations: Record<string, Vector3> = {
 	"0": { 'x': 2000.5, 'y': -50, 'z': 56.5 },
 	"-1": {'x': 3075.5, 'y': -50, 'z': 100.5},
 	"-2": { 'x': 4101, 'y': -47, 'z': 131 },
-	"-3": { 'x': 4996, 'y': -44, 'z': 126 }
+	"-3": { 'x': 4996, 'y': -44, 'z': 126 },
+	"-4": { 'x': 5893, 'y': -44, 'z': 129 },
+	"-5": { 'x': 6939, 'y': -54, 'z': 71 }
 }
 
 const objectivesObjective = world.scoreboard.getObjective("objectives") ?? world.scoreboard.addObjective("objectives", "Objectives");
 
-const allowedPlayers = [
-	"BrodBlox09",
-	"BrodBloxRox",
-	"McMelonTV"
-];
-
 world.beforeEvents.chatSend.subscribe(event => {
 	const player = event.sender;
 	const msg = event.message;
-	if (!allowedPlayers.includes(player.name) || !msg.startsWith("!")) return;
+	if (!msg.startsWith("!")) return;
 	event.cancel = true;
+	if (!player.hasTag("developer")) {
+		player.sendMessage("§4You must have the §6'developer'§4 tag to use developer commands.");
+		return;
+	}
 	const args = msg.slice(1).split(" ");
 	const cmd = args.shift();
 	switch (cmd) {
@@ -88,8 +89,9 @@ world.beforeEvents.chatSend.subscribe(event => {
 		case "clearData":
 			DataManager.clearData(player);
 			system.run(() => {
-				player.getTags().forEach((x) => { player.removeTag(x); });
+				player.getTags().forEach((x) => { if (x != "developer") player.removeTag(x); });
 			});
+			system.run(() => Utilities.dimensions.overworld.runCommand('tickingarea remove_all'));
 			break;
 		case "rotateCam":
 			system.run(() => {
@@ -132,7 +134,7 @@ world.beforeEvents.chatSend.subscribe(event => {
 		}
 		case "fillLarge": {
 			system.run(() => {
-				const lvlCI = Utilities.levelCloneInfo["level_-3"];
+				const lvlCI = Utilities.levelCloneInfo["level_-5"];
 				Utilities.fillBlocks(new Vector(lvlCI.startX, parseInt(args[0]), lvlCI.startZ), new Vector(lvlCI.endX, parseInt(args[0]), lvlCI.endZ), args[1]);
 			});
 			break;
@@ -146,6 +148,10 @@ world.beforeEvents.chatSend.subscribe(event => {
 			world.sendMessage(DataManager.GetDataRaw(Utilities.dimensions.overworld.getEntities(query)[0]) as string);
 			break;
 		}
+		case "myData": {
+			world.sendMessage(DataManager.GetDataRaw(player) as string);
+			break;
+		}
 		case "lvlData": {
 			var data = DataManager.getData(player, "levelInformation");
 			world.sendMessage(JSON.stringify(data));
@@ -153,8 +159,13 @@ world.beforeEvents.chatSend.subscribe(event => {
 		}
 		case "getBlockPermutation": {
 			var block = Utilities.dimensions.overworld.getBlock(player.location)!;
-			console.log(block.typeId);
+			console.warn(block.typeId);
 			break;
+		}
+		case "spawnJeb": {
+			system.run(() => {
+				Utilities.dimensions.overworld.spawnEntity("minecraft:sheep", player.location).nameTag = "jeb_";
+			});
 		}
 	}
 });

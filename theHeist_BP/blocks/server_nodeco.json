@@ -1,0 +1,13 @@
+{
+    "format_version": "1.21.30",
+    "minecraft:block": {
+        "description": {
+            "identifier": "theheist:server_nodeco",
+            "is_experimental": false,
+            "menu_category": {
+                "category": "construction"
+            }
+        },
+        "components": { }
+    }
+}

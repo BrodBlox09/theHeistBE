@@ -1,4 +1,4 @@
-import { ItemStack, Player, system, world, DisplaySlotId, BlockInventoryComponent, BlockPermutation, Container, ItemLockMode, GameMode } from "@minecraft/server";
+import { ItemStack, Player, system, world, DisplaySlotId, BlockInventoryComponent, BlockPermutation, Container, ItemLockMode, GameMode, HudVisibility } from "@minecraft/server";
 import Vector from "./Vector";
 import Utilities from "./Utilities";
 import DataManager from "./DataManager";
@@ -6,8 +6,6 @@ import VoiceOverManager from "./VoiceOverManager";
 import LevelConstructor from "./levels/LevelConstructor";
 import LevelDefinitions from "./levels/levelDefinitions";
 import GameObjectiveManager from "./GameObjectiveManager";
-
-// Hack delay: 2 seconds or 40 ticks
 
 /**
  * Base player energy tracker data node:
@@ -87,6 +85,9 @@ const bustedCounterObjective = world.scoreboard.getObjective("bustedCounter")!;
 
 const overworld = Utilities.dimensions.overworld;
 
+const persistentEntities = ["minecraft:player","minecraft:painting","minecraft:chicken","theheist:driver","theheist:rideable"];
+const persistentTags = ["loadingLevel","developer"];
+
 system.afterEvents.scriptEventReceive.subscribe((event) => {
 	const id = event.id;
 	const msg = event.message;
@@ -94,7 +95,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 		case "theheist:load-level": {
 			const entities = overworld.getEntities();
 			for (const entity of entities) {
-				if (!["minecraft:player", "minecraft:painting"].includes(entity.typeId)) entity.kill();
+				if (!persistentEntities.includes(entity.typeId) && !entity.hasTag("persistent")) entity.remove();
 			}
 			const player = world.getPlayers().filter((x) => (x != undefined && x != null))[0];
 			if (player == undefined) {
@@ -110,7 +111,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 					// Load level 1 (The van tutorial level)
 					// Clear all data on player
 					DataManager.clearData(player);
-					player.getTags().forEach((x) => { if (x != 'loadingLevel') player.removeTag(x); });
+					player.getTags().forEach((x) => { if (!persistentTags.includes(x)) player.removeTag(x); });
 					// Add energyTracker data node
 					const playerEnergyTrackerDataNode: EnergyTracker = { "name": "energyTracker", "energyUnits": 0.0, "recharging": false, "usingRechargerID": -1, "rechargeLevel": 1 };
 					DataManager.setData(player, playerEnergyTrackerDataNode);
@@ -118,7 +119,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 					if (!bustedCounterObjective.hasParticipant(player)) {
 						bustedCounterObjective.setScore(player, 0);
 					}
-					const playerLevelInformationDataNode = { "name": "levelInformation", "currentModes": [], "information": [{ "name": "alarmLevel", "level": 0 }, { "name": "gameLevel", "level": 1 }, { "name": "playerInv", "inventory": [{ "slot": 0, "typeId": 'theheist:recharge_mode_lvl_1', "lockMode": "slot" }, { "slot": 1, "typeId": 'theheist:hacking_mode_lvl_1', "lockMode": "slot" }] }] };
+					const playerLevelInformationDataNode: LevelInformation = { "name": "levelInformation", "currentModes": [], "information": [{ "name": "alarmLevel", "level": 0, "sonarTimeout": 0 }, { "name": "gameLevel", "level": 1 }, { "name": "playerInv", "inventory": [{ "slot": 0, "typeId": 'theheist:recharge_mode_lvl_1', "lockMode": "slot" }, { "slot": 1, "typeId": 'theheist:hacking_mode_lvl_1', "lockMode": "slot" }] }] };
 					DataManager.setData(player, playerLevelInformationDataNode);
 					
 					Utilities.reloadPlayerInv(player, playerLevelInformationDataNode);
@@ -168,14 +169,14 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 					// Load level 0.5 (The vent intro level)
 					// Clear all data on player
 					DataManager.clearData(player);
-					player.getTags().forEach((x) => { if (x != 'loadingLevel') player.removeTag(x); });
+					player.getTags().forEach((x) => { if (!persistentTags.includes(x)) player.removeTag(x); });
 					// Add energyTracker data
 					const playerEnergyTrackerDataNode: EnergyTracker = { "name": "energyTracker", "energyUnits": 0.0, "recharging": false, "usingRechargerID": -1, "rechargeLevel": 1 };
 					DataManager.setData(player, playerEnergyTrackerDataNode);
 					if (!bustedCounterObjective.hasParticipant(player)) {
 						bustedCounterObjective.setScore(player, 0);
 					}
-					const playerLevelInformationDataNode = { "name": "levelInformation", "currentModes": [], "information": [{ "name": "alarmLevel", "level": 0 }, { "name": "gameLevel", "level": 0.5 }, { "name": "playerInv", "inventory": [{ "slot": 0, "typeId": 'theheist:recharge_mode_lvl_1', "lockMode": "slot" }, { "slot": 1, "typeId": 'theheist:hacking_mode_lvl_1', "lockMode": "slot" }] }] };
+					const playerLevelInformationDataNode: LevelInformation = { "name": "levelInformation", "currentModes": [], "information": [{ "name": "alarmLevel", "level": 0, "sonarTimeout": 0 }, { "name": "gameLevel", "level": 0.5 }, { "name": "playerInv", "inventory": [{ "slot": 0, "typeId": 'theheist:recharge_mode_lvl_1', "lockMode": "slot" }, { "slot": 1, "typeId": 'theheist:hacking_mode_lvl_1', "lockMode": "slot" }] }] };
 					DataManager.setData(player, playerLevelInformationDataNode);
 
 					Utilities.reloadPlayerInv(player, playerLevelInformationDataNode);
@@ -193,7 +194,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 					// Clear all data on player
 					DataManager.clearData(player);
 					// Previous level made use of tags, clear them here
-					player.getTags().forEach((x) => { if (x != 'loadingLevel') player.removeTag(x); });
+					player.getTags().forEach((x) => { if (!persistentTags.includes(x)) player.removeTag(x); });
 					// Add energyTracker data
 					const playerEnergyTrackerDataNode: EnergyTracker = { "name": "energyTracker", "energyUnits": 100.0, "recharging": false, "usingRechargerID": -1, "rechargeLevel": 1 };
 					DataManager.setData(player, playerEnergyTrackerDataNode);
@@ -201,8 +202,8 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 					if (!bustedCounterObjective.hasParticipant(player)) {
 						bustedCounterObjective.setScore(player, 0);
 					}
-					const playerLevelInformationDataNode = { "name": "levelInformation", "currentModes": [], "information": [{ "name": "alarmLevel", "level": 0 }, { "name": "gameLevel", "level": 0 }, { "name": "playerInv", "inventory": [{ "slot": 0, "typeId": 'theheist:recharge_mode_lvl_1', "lockMode": "slot" }, { "slot": 1, "typeId": 'theheist:hacking_mode_lvl_1', "lockMode": "slot" }] }] };
-
+					const playerLevelInformationDataNode: LevelInformation = { "name": "levelInformation", "currentModes": [], "information": [{ "name": "alarmLevel", "level": 0, "sonarTimeout": 0 }, { "name": "gameLevel", "level": 0 }, { "name": "playerInv", "inventory": [{ "slot": 0, "typeId": 'theheist:recharge_mode_lvl_1', "lockMode": "slot" }, { "slot": 1, "typeId": 'theheist:hacking_mode_lvl_1', "lockMode": "slot" }] }] };
+					playerLevelInformationDataNode.information[2].inventory.push({ "slot": 19, "typeId": 'theheist:phone' });
 					DataManager.setData(player, playerLevelInformationDataNode);
 
 					Utilities.reloadPlayerInv(player, playerLevelInformationDataNode);
@@ -221,7 +222,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 						// Kill all entities
 						const entities = overworld.getEntities();
 						for (const entity of entities) {
-							if (!["minecraft:player","minecraft:painting"].includes(entity.typeId)) entity.kill();
+							if (!persistentEntities.includes(entity.typeId) && !entity.hasTag("persistent")) entity.remove();
 						}
 						// Camera 0
 						const camera0 = overworld.spawnEntity("armor_stand", { "x": 2014.5, "y": cameraHeight, "z": 51.5 });
@@ -570,7 +571,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 					// Clear all data on player
 					DataManager.clearData(player);
 					// Previous level made use of tags, clear them here
-					player.getTags().forEach((x) => { if (x != 'loadingLevel') player.removeTag(x); });
+					player.getTags().forEach((x) => { if (!persistentTags.includes(x)) player.removeTag(x); });
 					// Add energyTracker data
 					const playerEnergyTrackerDataNode: EnergyTracker = { "name": "energyTracker", "energyUnits": 100.0, "recharging": false, "usingRechargerID": -1, "rechargeLevel": 1 };
 					DataManager.setData(player, playerEnergyTrackerDataNode);
@@ -578,7 +579,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 					if (!bustedCounterObjective.hasParticipant(player)) {
 						bustedCounterObjective.setScore(player, 0);
 					}
-					const playerLevelInformationDataNode = { "name": "levelInformation", "currentModes": [], "information": [{ "name": "alarmLevel", "level": 0 }, { "name": "gameLevel", "level": -1 }, { "name": "playerInv", "inventory": [{ "slot": 0, "typeId": 'theheist:recharge_mode_lvl_1', "lockMode": "slot" }, { "slot": 1, "typeId": 'theheist:hacking_mode_lvl_1', "lockMode": "slot" }] }] };
+					const playerLevelInformationDataNode: LevelInformation = { "name": "levelInformation", "currentModes": [], "information": [{ "name": "alarmLevel", "level": 0, "sonarTimeout": 0 }, { "name": "gameLevel", "level": -1 }, { "name": "playerInv", "inventory": [{ "slot": 0, "typeId": 'theheist:recharge_mode_lvl_1', "lockMode": "slot" }, { "slot": 1, "typeId": 'theheist:hacking_mode_lvl_1', "lockMode": "slot" }] }] };
 					
 					DataManager.setData(player, playerLevelInformationDataNode);
 
@@ -609,7 +610,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 						// Kill all entities
 						const entities = overworld.getEntities();
 						for (const entity of entities) {
-							if (!["minecraft:player","minecraft:painting"].includes(entity.typeId)) entity.kill();
+							if (!persistentEntities.includes(entity.typeId) && !entity.hasTag("persistent")) entity.remove();
 						}
 						// Clear sensor residue
 						const levelCloneInfo = Utilities.levelCloneInfo[`level_-1`];
@@ -1242,7 +1243,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 				default:
 					// Clear all data on player
 					DataManager.clearData(player);
-					player.getTags().forEach((x) => { if (x != 'loadingLevel') player.removeTag(x); });
+					player.getTags().forEach((x) => { if (!persistentTags.includes(x)) player.removeTag(x); });
 					if (!bustedCounterObjective.hasParticipant(player)) {
 						bustedCounterObjective.setScore(player, 0);
 					}
@@ -1260,7 +1261,8 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 					const playerEnergyTrackerDataNode: EnergyTracker = { "name": "energyTracker", "energyUnits": maxEnergy, "recharging": false, "usingRechargerID": -1, "rechargeLevel": levelDefinition.rechargeLevel };
 					DataManager.setData(player, playerEnergyTrackerDataNode);
 
-					const playerLevelInformationDataNode: LevelInformation = { "name": "levelInformation", "currentModes": [], "information": [{ "name": "alarmLevel", "level": 0 }, { "name": "gameLevel", "level": levelNum }, { "name": "playerInv", "inventory": [] }] };
+					const playerLevelInformationDataNode: LevelInformation = { "name": "levelInformation", "currentModes": [], "information": [{ "name": "alarmLevel", "level": 0, "sonarTimeout": 0 }, { "name": "gameLevel", "level": levelNum }, { "name": "playerInv", "inventory": [] }] };
+					levelDefinition.startingItems.push({ "slot": 19, "typeId": 'theheist:phone' });
 					levelDefinition.startingItems.forEach((item) => {
 						playerLevelInformationDataNode.information[2].inventory.push(item);
 					});
@@ -1277,26 +1279,32 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 					player.teleport(Vector.v3ToVector(levelDefinition.loadElevatorLoc).add(new Vector(0, 4, 0)));
 					var elevatorInterval =  runElelevatorAnimation(Vector.v3ToVector(levelDefinition.loadElevatorLoc));
 
+					const levelCloneInfo = Utilities.levelCloneInfo[`level_${levelNum}`];
 					// Ensure parts far away are loaded
-					overworld.runCommand('tickingarea remove_all');
-					//overworld.runCommand('tickingarea add 3033 -60 129 3039 -69 132 "t1" true');
-
+					overworld.runCommandAsync('tickingarea remove_all');
+					system.runTimeout(() => {
+						// Ticking area doesn't depend on Y level and it uses rounded X and Z coordinates
+						overworld.runCommandAsync(`tickingarea add ${levelCloneInfo.startX} 0 ${levelCloneInfo.startZ} ${levelCloneInfo.endX} 0 ${levelCloneInfo.endZ} level-wide`);
+					}, 2); // Ensure this ticking area isn't removed
+					
 					system.runTimeout(() => {
 						const entities = overworld.getEntities();
 						for (const entity of entities) {
-							if (!["minecraft:player","minecraft:painting"].includes(entity.typeId)) entity.kill();
+							if (!persistentEntities.includes(entity.typeId) && !entity.hasTag("persistent")) entity.remove();
 						}
 						// Clear sensor mode residue
 						const levelCloneInfo = Utilities.levelCloneInfo[`level_${levelNum}`];
 						Utilities.fillBlocks(new Vector(levelCloneInfo.startX, Utilities.cameraMappingHeight - 4, levelCloneInfo.startZ), new Vector(levelCloneInfo.endX, Utilities.cameraMappingHeight - 4, levelCloneInfo.endZ), "air");
 						overworld.runCommandAsync(`fill ${levelCloneInfo.startX} ${Utilities.levelHeight} ${levelCloneInfo.startZ} ${levelCloneInfo.endX} ${Utilities.levelHeight} ${levelCloneInfo.endZ} air replace theheist:robot_path`);
 						overworld.runCommandAsync(`clone ${levelCloneInfo.startX} ${Utilities.floorCloneHeight} ${levelCloneInfo.startZ} ${levelCloneInfo.endX} ${Utilities.floorCloneHeight} ${levelCloneInfo.endZ} ${levelCloneInfo.startX} ${Utilities.levelHeight - 1} ${levelCloneInfo.startZ}`);
+						// Move drilled areas back into position
+						overworld.runCommandAsync(`clone ${levelCloneInfo.startX} ${Utilities.drilledBlocksHeight} ${levelCloneInfo.startZ} ${levelCloneInfo.endX} ${Utilities.drilledBlocksHeight + 1} ${levelCloneInfo.endZ} ${levelCloneInfo.startX} ${Utilities.levelHeight} ${levelCloneInfo.startZ} filtered normal minecraft:hardened_clay`);
+						overworld.runCommandAsync(`clone ${levelCloneInfo.startX} ${Utilities.drilledBlocksHeight} ${levelCloneInfo.startZ} ${levelCloneInfo.endX} ${Utilities.drilledBlocksHeight + 1} ${levelCloneInfo.endZ} ${levelCloneInfo.startX} ${Utilities.levelHeight + 1} ${levelCloneInfo.startZ} filtered move minecraft:hardened_clay`);
 						
 						LevelConstructor.start();
-						levelDefinition.setup()
+						levelDefinition.setup();
 					}, SECOND * 7.5); // After 7.5 seconds load level objects
 					system.runTimeout(() => { // After 10 seconds bring the player out of the elevator and end the interval
-						overworld.runCommand('tickingarea remove_all');
 						system.clearRun(elevatorInterval);
 						player.teleport(levelDefinition.startPlayerLoc);
 						player.removeTag('loadingLevel');
@@ -1321,7 +1329,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 			const player = world.getPlayers().filter((x) => (x != undefined))[0];
 			var playerInvContainer = player.getComponent("inventory")!.container as Container;
 			var index = Utilities.inventoryContainerIndexOf(playerInvContainer, keycardItemTypeId);
-			var i2 = 19;
+			var i2 = 21; //19
 			while (playerInvContainer.getItem(i2) && i2 < playerInvContainer.size) i2++;
 			if (index) playerInvContainer.setItem(index); // If item is in slot, clear slot (avoids errors)
 			var itemStack = new ItemStack(keycardItemTypeId);
@@ -1362,27 +1370,36 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 			}
 			bustedCounterObjective.setScore(player, 0);
 
-			if (currLevel != -3) overworld.runCommandAsync(`scriptevent theheist:load-level ${currLevel - 1}-1`);
+			if (currLevel != -5) overworld.runCommandAsync(`scriptevent theheist:load-level ${currLevel - 1}-1`);
 			else endDemo(player);
+			break;
+		}
+		case "theheist:end_demo": {
+			const player = world.getPlayers().filter((player) => (player != undefined && player != null))[0];
+			endDemo(player);
 			break;
 		}
 	}
 });
 
 function endDemo(player: Player) {
-	player.teleport(new Vector(-22.5, -59, 67.5));
+	Utilities.clearPlayerInventory(player);
+	DataManager.clearData(player);
+	player.onScreenDisplay.setHudVisibility(HudVisibility.Hide);
+	player.camera.fade({"fadeTime":{"holdTime": 5,"fadeInTime":0.5,"fadeOutTime":0.5}});
 	player.onScreenDisplay.setTitle("Thanks for playing!", {
-		"fadeInDuration": 20,
-		"fadeOutDuration": 20,
-		"stayDuration": 160,
+		"fadeInDuration": 10,
+		"fadeOutDuration": 10,
+		"stayDuration": 100,
 		"subtitle": "More levels coming soon"
 	});
+	system.runTimeout(() => player.teleport(new Vector(44.5, -59, 70.5), {"rotation":{"x":0,"y":90}}), 20);
+	system.runTimeout(() => player.onScreenDisplay.setHudVisibility(HudVisibility.Reset), 120);
 }
 
 /**
  * Assumes elevator height of 12 blocks
  * @param middleBottomPos The position of the bottom-most middle of the elevator.
- * @param elevatorHeight The number of blocks tall the elevator is.
  * @returns An opaque identifier that can be used with the clearRun function to cancel the execution of this animation.
  */
 function runElelevatorAnimation(middleBottomPos: Vector): number {

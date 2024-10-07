@@ -1,0 +1,29 @@
+{
+    "format_version": "1.10.0",
+    "minecraft:client_entity": {
+        "description": {
+            "identifier": "theheist:driver",
+            "materials": {
+                "default": "entity"
+            },
+            "textures": {
+                "default": "textures/entity/driver"
+            },
+            "geometry": {
+                "default": "geometry.driver"
+            },
+            "render_controllers": [
+                "controller.render.default"
+            ],
+			"scripts": {
+				"animate": ["base_animation_controller","riding_animation_controller"]
+			},
+            "animations": {
+                "base_animation_controller": "controller.animation.driver.base",
+                "riding_animation_controller": "controller.animation.humanoid.riding_legs_only",
+                "default": "animation.zombie.attack_bare_hand",
+                "riding.legs": "animation.humanoid.riding.legs"
+            }
+        }
+    }
+}

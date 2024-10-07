@@ -8,10 +8,6 @@
             "is_experimental": false
         },
 		"components": {
-            "minecraft:pushable": {
-                "is_pushable": false,
-                "is_pushable_by_piston": false
-            },
             "minecraft:damage_sensor": {
                 "triggers": {
                     "deals_damage": false
@@ -19,14 +15,18 @@
             },
             "minecraft:rideable": {
                 "interact_text": "",
-                "pull_in_entities": false,
-                "rider_can_interact": false,
+                "pull_in_entities": true,
                 "seat_count": 1,
                 "seats": [
                     {
                         "lock_rider_rotation": 0
                     }
-                ]
+                ],
+                "family_types": ["driver"]
+            },
+            "minecraft:collision_box": {
+                "height": 0,
+                "width": 0
             }
         }
 	}

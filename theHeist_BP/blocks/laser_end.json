@@ -1,5 +1,5 @@
 {
-    "format_version": "1.16.100",
+    "format_version": "1.21.30",
     "minecraft:block": {
         "description": {
             "identifier": "theheist:laser_end",
@@ -7,16 +7,9 @@
             "menu_category": {
                 "category": "construction"
             },
-            "properties": {
+            "states": {
                 "theheist:rotation": [2, 3, 4, 5],
                 "theheist:connect": [true, false]
-            }
-        },
-        "events": {
-            "theheist:set_rotation": {
-                    "set_block_property": {
-                        "theheist:rotation": "(query.cardinal_facing_2d)"
-                    }
             }
         },
         "components": {
@@ -36,41 +29,41 @@
                     "ambient_occlusion": false
                 }
             },
-            "minecraft:on_player_placing": {
-                "event": "theheist:set_rotation"
-            },
-            "minecraft:geometry": "geometry.laser_end"
+            "minecraft:geometry": "geometry.laser_end",
+            "minecraft:custom_components": [
+                "theheist:directional_block"
+            ]
         },
         "permutations": [
             {
-                "condition": "query.block_property('theheist:connect')",
+                "condition": "query.block_state('theheist:connect')",
                 "components": {
                     "tag:laser": {},
                     "minecraft:geometry": "geometry.laser_end_connected"
                 }
             },
             {
-                "condition": "query.block_property('theheist:rotation') == 2",
+                "condition": "query.block_state('theheist:rotation') == 2",
                 "components": {
-                    "minecraft:rotation": [0, 180, 0]
+                    "minecraft:transformation": { "rotation": [0, 180, 0] }
                 }
             },
             {
-                "condition": "query.block_property('theheist:rotation') == 3",
+                "condition": "query.block_state('theheist:rotation') == 3",
                 "components": {
-                    "minecraft:rotation": [0, 0, 0]
+                    "minecraft:transformation": { "rotation": [0, 0, 0] }
                 }
             },
             {
-                "condition": "query.block_property('theheist:rotation') == 4",
+                "condition": "query.block_state('theheist:rotation') == 4",
                 "components": {
-                    "minecraft:rotation": [0, 270, 0]
+                    "minecraft:transformation": { "rotation": [0, 270, 0] }
                 }
             },
             {
-                "condition": "query.block_property('theheist:rotation') == 5",
+                "condition": "query.block_state('theheist:rotation') == 5",
                 "components": {
-                    "minecraft:rotation": [0, 90, 0]
+                    "minecraft:transformation": { "rotation": [0, 90, 0] }
                 }
             }
         ]

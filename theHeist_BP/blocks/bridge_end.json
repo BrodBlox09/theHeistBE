@@ -1,0 +1,55 @@
+{
+    "format_version": "1.21.30",
+    "minecraft:block": {
+        "description": {
+            "identifier": "theheist:bridge_end",
+            "is_experimental": false,
+            "menu_category": {
+                "category": "construction"
+            },
+            "states": {
+                "theheist:rotation": [2, 3, 4, 5]
+            }
+        },
+        "components": {
+            "minecraft:material_instances": {
+                "north": {
+                    "texture": "bridge_end_front"
+                },
+                "*": {
+                    "texture": "bridge_end_side"
+                }
+            },
+            "minecraft:geometry": "geometry.normal",
+            "minecraft:custom_components": [
+                "theheist:directional_block"
+            ]
+        },
+        "permutations": [
+            {
+                "condition": "query.block_state('theheist:rotation') == 2",
+                "components": {
+                    "minecraft:transformation": { "rotation": [0, 180, 0] }
+                }
+            },
+            {
+                "condition": "query.block_state('theheist:rotation') == 3",
+                "components": {
+                    "minecraft:transformation": { "rotation": [0, 0, 0] }
+                }
+            },
+            {
+                "condition": "query.block_state('theheist:rotation') == 4",
+                "components": {
+                    "minecraft:transformation": { "rotation": [0, 270, 0] }
+                }
+            },
+            {
+                "condition": "query.block_state('theheist:rotation') == 5",
+                "components": {
+                    "minecraft:transformation": { "rotation": [0, 90, 0] }
+                }
+            }
+        ]
+    }
+}

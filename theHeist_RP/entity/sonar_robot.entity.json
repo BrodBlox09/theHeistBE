@@ -1,0 +1,20 @@
+{
+    "format_version": "1.10.0",
+    "minecraft:client_entity": {
+        "description": {
+            "identifier": "theheist:sonar_robot",
+            "materials": {
+                "default": "animated_entity"
+            },
+            "textures": {
+                "default": "textures/entity/sonar_robot"
+            },
+            "geometry": {
+                "default": "geometry.robot"
+            },
+            "render_controllers": [
+                "controller.render.robot"
+            ]
+        }
+    }
+}

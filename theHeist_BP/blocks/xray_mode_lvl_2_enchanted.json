@@ -1,0 +1,20 @@
+{
+    "format_version": "1.21.30",
+    "minecraft:block": {
+        "description": {
+            "identifier": "theheist:xray_mode_lvl_2_enchanted",
+            "is_experimental": false
+        },
+        "components": {
+            "minecraft:geometry": "geometry.xray_mode",
+            "minecraft:material_instances": {
+                "icon": {
+                    "texture": "xray_icon_enchanted"
+                },
+                "*": {
+                    "texture": "xray_mode_enchanted"
+                }
+            }
+        }
+    }
+}

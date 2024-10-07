@@ -1,149 +1,13 @@
 {
-    "format_version": "1.16.100",
+    "format_version": "1.21.30",
     "minecraft:block": {
         "description": {
             "identifier": "theheist:custom_door_1_top",
             "is_experimental": false,
-            "properties": {
+            "states": {
                 "theheist:rotation": [2, 3, 4, 5],
                 "theheist:unlocked": [true, false],
                 "theheist:open": [false, true]
-            }
-        },
-        "events": {
-            "theheist:setup_door": {
-                "sequence": [
-                    {
-                        "set_block_property": {
-                            "theheist:rotation": "(query.cardinal_facing_2d)"
-                        }
-                    },
-                    {
-                        "trigger": {
-                            "event": "theheist:set_bottom_door",
-                            "target": "self"
-                        }
-                    }
-                ]
-            },
-            "theheist:set_bottom_door": {
-                "sequence": [
-                    {
-                        "condition": "(query.block_property('theheist:rotation') == 2 && query.block_property('theheist:unlocked') == true && query.block_property('theheist:open') == false)",
-                        "run_command": {
-                            "command": "setblock ~ ~-1 ~ theheist:custom_door_1_bottom [\"theheist:rotation\":2,\"theheist:unlocked\":true,\"theheist:open\":false]"
-                        }
-                    },
-                    {
-                        "condition": "(query.block_property('theheist:rotation') == 2 && query.block_property('theheist:unlocked') == true && query.block_property('theheist:open') == true)",
-                        "run_command": {
-                            "command": "setblock ~ ~-1 ~ theheist:custom_door_1_bottom [\"theheist:rotation\":2,\"theheist:unlocked\":true,\"theheist:open\":true]"
-                        }
-                    },
-                    {
-                        "condition": "(query.block_property('theheist:rotation') == 2 && query.block_property('theheist:unlocked') == false && query.block_property('theheist:open') == false)",
-                        "run_command": {
-                            "command": "setblock ~ ~-1 ~ theheist:custom_door_1_bottom [\"theheist:rotation\":2,\"theheist:unlocked\":false,\"theheist:open\":false]"
-                        }
-                    },
-                    {
-                        "condition": "(query.block_property('theheist:rotation') == 3 && query.block_property('theheist:unlocked') == true && query.block_property('theheist:open') == false)",
-                        "run_command": {
-                            "command": "setblock ~ ~-1 ~ theheist:custom_door_1_bottom [\"theheist:rotation\":3,\"theheist:unlocked\":true,\"theheist:open\":false]"
-                        }
-                    },
-                    {
-                        "condition": "(query.block_property('theheist:rotation') == 3 && query.block_property('theheist:unlocked') == true && query.block_property('theheist:open') == true)",
-                        "run_command": {
-                            "command": "setblock ~ ~-1 ~ theheist:custom_door_1_bottom [\"theheist:rotation\":3,\"theheist:unlocked\":true,\"theheist:open\":true]"
-                        }
-                    },
-                    {
-                        "condition": "(query.block_property('theheist:rotation') == 3 && query.block_property('theheist:unlocked') == false && query.block_property('theheist:open') == false)",
-                        "run_command": {
-                            "command": "setblock ~ ~-1 ~ theheist:custom_door_1_bottom [\"theheist:rotation\":3,\"theheist:unlocked\":false,\"theheist:open\":false]"
-                        }
-                    },
-                    {
-                        "condition": "(query.block_property('theheist:rotation') == 4 && query.block_property('theheist:unlocked') == true && query.block_property('theheist:open') == false)",
-                        "run_command": {
-                            "command": "setblock ~ ~-1 ~ theheist:custom_door_1_bottom [\"theheist:rotation\":4,\"theheist:unlocked\":true,\"theheist:open\":false]"
-                        }
-                    },
-                    {
-                        "condition": "(query.block_property('theheist:rotation') == 4 && query.block_property('theheist:unlocked') == true && query.block_property('theheist:open') == true)",
-                        "run_command": {
-                            "command": "setblock ~ ~-1 ~ theheist:custom_door_1_bottom [\"theheist:rotation\":4,\"theheist:unlocked\":true,\"theheist:open\":true]"
-                        }
-                    },
-                    {
-                        "condition": "(query.block_property('theheist:rotation') == 4 && query.block_property('theheist:unlocked') == false && query.block_property('theheist:open') == false)",
-                        "run_command": {
-                            "command": "setblock ~ ~-1 ~ theheist:custom_door_1_bottom [\"theheist:rotation\":4,\"theheist:unlocked\":false,\"theheist:open\":false]"
-                        }
-                    },
-                    {
-                        "condition": "(query.block_property('theheist:rotation') == 5 && query.block_property('theheist:unlocked') == true && query.block_property('theheist:open') == false)",
-                        "run_command": {
-                            "command": "setblock ~ ~-1 ~ theheist:custom_door_1_bottom [\"theheist:rotation\":5,\"theheist:unlocked\":true,\"theheist:open\":false]"
-                        }
-                    },
-                    {
-                        "condition": "(query.block_property('theheist:rotation') == 5 && query.block_property('theheist:unlocked') == true && query.block_property('theheist:open') == true)",
-                        "run_command": {
-                            "command": "setblock ~ ~-1 ~ theheist:custom_door_1_bottom [\"theheist:rotation\":5,\"theheist:unlocked\":true,\"theheist:open\":true]"
-                        }
-                    },
-                    {
-                        "condition": "(query.block_property('theheist:rotation') == 5 && query.block_property('theheist:unlocked') == false && query.block_property('theheist:open') == false)",
-                        "run_command": {
-                            "command": "setblock ~ ~-1 ~ theheist:custom_door_1_bottom [\"theheist:rotation\":5,\"theheist:unlocked\":false,\"theheist:open\":false]"
-                        }
-                    }
-                ]
-            },
-            "theheist:toggle_door": {
-                "sequence": [
-                    {
-                        "condition": "(query.block_property('theheist:open') == false)",
-                        "set_block_property": {
-                            "theheist:open": true
-                        }
-                    },
-                    {
-                        "condition": "(query.block_property('theheist:open') == false)",
-						"run_command": {
-							"command": [
-								"playsound random.door_open @a ~ ~-0.5 ~"
-							]
-						}
-					},
-                    {
-                        "condition": "(query.block_property('theheist:open') == true)",
-                        "set_block_property": {
-                            "theheist:open": false
-                        }
-                    },
-                    {
-                        "condition": "(query.block_property('theheist:open') == true)",
-						"run_command": {
-							"command": [
-								"playsound random.door_close @a ~ ~-0.5 ~"
-							]
-						}
-					},
-                    {
-                        "trigger": {
-                            "event": "theheist:set_bottom_door",
-                            "target": "self"
-                        }
-                    }
-                ]
-            },
-            "theheist:break_door": {
-                "run_command": {
-                    "command": "setblock ~ ~-1 ~ air"
-                }
             }
         },
         "components": {
@@ -161,76 +25,68 @@
                 "size": [16, 16, 3]
             },
             "minecraft:geometry": "geometry.custom_door_1_top",
-            "minecraft:on_player_placing": {
-                "event": "theheist:setup_door"
-            },
-            "minecraft:on_player_destroyed": {
-                "event": "theheist:break_door",
-                "target": "self"
-            },
-            "minecraft:on_interact": {
-                "condition": "query.block_property('theheist:unlocked') == true",
-                "event": "theheist:toggle_door"
-            },
-            "minecraft:light_dampening": 0
+            "minecraft:light_dampening": 0,
+            "minecraft:custom_components": [
+                "theheist:top_door"
+            ]
         },
         "permutations": [
             {
-                "condition": "query.block_property('theheist:rotation') == 2 && query.block_property('theheist:open') == false",
+                "condition": "query.block_state('theheist:rotation') == 2 && query.block_state('theheist:open') == false",
                 "components": {
-                    "minecraft:rotation": [0, 180, 0]
+                    "minecraft:transformation": { "rotation": [0, 180, 0] }
                 }
             },
             {
-                "condition": "query.block_property('theheist:rotation') == 3 && query.block_property('theheist:open') == false",
+                "condition": "query.block_state('theheist:rotation') == 3 && query.block_state('theheist:open') == false",
                 "components": {
-                    "minecraft:rotation": [0, 0, 0]
+                    "minecraft:transformation": { "rotation": [0, 0, 0] }
                 }
             },
             {
-                "condition": "query.block_property('theheist:rotation') == 4 && query.block_property('theheist:open') == false",
+                "condition": "query.block_state('theheist:rotation') == 4 && query.block_state('theheist:open') == false",
                 "components": {
-                    "minecraft:rotation": [0, 270, 0]
+                    "minecraft:transformation": { "rotation": [0, 270, 0] }
                 }
             },
             {
-                "condition": "query.block_property('theheist:rotation') == 5 && query.block_property('theheist:open') == false",
+                "condition": "query.block_state('theheist:rotation') == 5 && query.block_state('theheist:open') == false",
                 "components": {
-                    "minecraft:rotation": [0, 90, 0]
+                    "minecraft:transformation": { "rotation": [0, 90, 0] }
                 }
             },
             {
-                "condition": "query.block_property('theheist:rotation') == 2 && query.block_property('theheist:open') == true",
+                "condition": "query.block_state('theheist:rotation') == 2 && query.block_state('theheist:open') == true",
                 "components": {
-                    "minecraft:rotation": [0, 90, 0]
+                    "minecraft:transformation": { "rotation": [0, 90, 0] }
                 }
             },
             {
-                "condition": "query.block_property('theheist:rotation') == 3 && query.block_property('theheist:open') == true",
+                "condition": "query.block_state('theheist:rotation') == 3 && query.block_state('theheist:open') == true",
                 "components": {
-                    "minecraft:rotation": [0, 270, 0]
+                    "minecraft:transformation": { "rotation": [0, 270, 0] }
                 }
             },
             {
-                "condition": "query.block_property('theheist:rotation') == 4 && query.block_property('theheist:open') == true",
+                "condition": "query.block_state('theheist:rotation') == 4 && query.block_state('theheist:open') == true",
                 "components": {
-                    "minecraft:rotation": [0, 180, 0]
+                    "minecraft:transformation": { "rotation": [0, 180, 0] }
                 }
             },
             {
-                "condition": "query.block_property('theheist:rotation') == 5 && query.block_property('theheist:open') == true",
+                "condition": "query.block_state('theheist:rotation') == 5 && query.block_state('theheist:open') == true",
                 "components": {
-                    "minecraft:rotation": [0, 0, 0]
+                    "minecraft:transformation": { "rotation": [0, 0, 0] }
                 }
             },
             {
-                "condition": "query.block_property('theheist:open') == true",
+                "condition": "query.block_state('theheist:open') == true",
                 "components": {
                     "tag:open": {}
                 }
             },
             {
-                "condition": "query.block_property('theheist:open') == false",
+                "condition": "query.block_state('theheist:open') == false",
                 "components": {
                     "tag:closed": {}
                 }

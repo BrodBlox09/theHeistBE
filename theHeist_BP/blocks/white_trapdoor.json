@@ -1,5 +1,5 @@
 {
-    "format_version": "1.16.100",
+    "format_version": "1.21.30",
     "minecraft:block": {
         "description": {
             "identifier": "theheist:white_trapdoor",
@@ -7,85 +7,50 @@
             "menu_category": {
                 "category": "construction"
             },
-            "properties": {
+            "states": {
                 "theheist:isopen": [false, true],
                 "theheist:locked": [false, true],
                 "theheist:rotation": [2, 3, 4, 5]
             }
         },
-        "events": {
-            "theheist:toggletrapdoor": {
-                "sequence": [
-                    {
-                        "condition": "query.block_property('theheist:isopen') == true && query.block_property('theheist:locked') == false",
-                        "set_block_property": {
-                            "theheist:isopen": false
-                        },
-                        "run_command": {
-                            "command": [
-                                "playsound random.door_close @a ~ ~ ~"
-                            ]
-                        }
-                    },
-                    {
-                        "condition": "query.block_property('theheist:isopen') == false && query.block_property('theheist:locked') == false",
-                        "set_block_property": {
-                            "theheist:isopen": true
-                        },
-                        "run_command": {
-                            "command": [
-                                "playsound random.door_open @a ~ ~ ~"
-                            ]
-                        }
-                    }
-                ]
-            },
-            "theheist:set_rotation": {
-                "set_block_property": {
-                    "theheist:rotation": "(query.cardinal_facing_2d)"
-                }
-            }
-        },
         "components": {
-            "minecraft:on_interact": {
-                "event": "theheist:toggletrapdoor"
-            },
-            "minecraft:on_player_placing": {
-                "event": "theheist:set_rotation"
-            },
             "minecraft:material_instances": {
                 "*": {
                     "texture": "white_trapdoor"
                 }
-            }
+            },
+            "minecraft:custom_components": [
+                "theheist:directional_block",
+                "theheist:trapdoor"
+            ]
         },
         "permutations": [
             {
-                "condition": "query.block_property('theheist:rotation') == 2",
+                "condition": "query.block_state('theheist:rotation') == 2",
                 "components": {
-                    "minecraft:rotation": [0, 180, 0]
+                    "minecraft:transformation": { "rotation": [0, 180, 0] }
                 }
             },
             {
-                "condition": "query.block_property('theheist:rotation') == 3",
+                "condition": "query.block_state('theheist:rotation') == 3",
                 "components": {
-                    "minecraft:rotation": [0, 0, 0]
+                    "minecraft:transformation": { "rotation": [0, 0, 0] }
                 }
             },
             {
-                "condition": "query.block_property('theheist:rotation') == 4",
+                "condition": "query.block_state('theheist:rotation') == 4",
                 "components": {
-                    "minecraft:rotation": [0, 270, 0]
+                    "minecraft:transformation": { "rotation": [0, 270, 0] }
                 }
             },
             {
-                "condition": "query.block_property('theheist:rotation') == 5",
+                "condition": "query.block_state('theheist:rotation') == 5",
                 "components": {
-                    "minecraft:rotation": [0, 90, 0]
+                    "minecraft:transformation": { "rotation": [0, 90, 0] }
                 }
             },
             {
-                "condition": "query.block_property('theheist:isopen') == true",
+                "condition": "query.block_state('theheist:isopen') == true",
                 "components": {
                     "minecraft:geometry": "geometry.white_trapdoor_open",
                     "minecraft:selection_box": {
@@ -99,7 +64,7 @@
                 }
             },
             {
-                "condition": "query.block_property('theheist:isopen') == false",
+                "condition": "query.block_state('theheist:isopen') == false",
                 "components": {
                     "minecraft:geometry": "geometry.white_trapdoor_closed",
                     "minecraft:selection_box": {

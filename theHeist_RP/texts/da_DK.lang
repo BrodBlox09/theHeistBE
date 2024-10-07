@@ -1,0 +1,258 @@
+pack.name=The Heist RP
+pack.description=The Heist resource pack transferred to PE by BrodBlox09
+tile.theheist:keypad.name=Keypad
+tile.theheist:computer.name=Computer
+tile.theheist:custom_door_1_bottom.name=Custom Door 1
+tile.theheist:custom_door_2_bottom.name=Custom Door 2
+tile.theheist:custom_door_3_bottom.name=Custom Door 3
+tile.theheist:custom_door_4_bottom_l.name=Custom Door 4 Left
+tile.theheist:custom_door_4_bottom_r.name=Custom Door 4 Right
+tile.theheist:fake_iron_block.name=Fake Iron Block
+tile.theheist:vending_machine.name=Vending Machine
+tile.theheist:green_block.name=Green Block
+tile.theheist:dropper_block.name=Dropper Block
+tile.theheist:conveyor.name=Conveyor
+tile.theheist:laser.name=Laser
+tile.theheist:laser_end.name=Laser End
+## I don't know if all three are needed, but just to be safe
+item.crimson_sign.name=White Sign
+tile.crimson_wall_sign.name=White Sign
+tile.crimson_standing_sign.name=White Sign
+tile.theheist:camera_sight.name=Camera Sight Block
+tile.theheist:sonar_sight.name=Sonar Sight Block
+tile.theheist:white_trapdoor.name=White Trapdoor
+tile.theheist:reinforced_iron_block.name=Reinforced Iron Block
+tile.theheist:file_cabinet.name=File Cabinet
+tile.theheist:recharge_mode_lvl_1=Recharge Mode Lvl. 1
+tile.theheist:recharge_mode_lvl_2=Recharge Mode Lvl. 2
+tile.theheist:hacking_mode_lvl_1=Hacking Mode Lvl. 1
+tile.theheist:hacking_mode_lvl_2=Hacking Mode Lvl. 2
+tile.theheist:sensor_mode_lvl_1=Sensor Mode Lvl. 1
+tile.theheist:sensor_mode_lvl_2=Sensor Mode Lvl. 2
+tile.theheist:xray_mode_lvl_1=X-Ray Mode Lvl. 1
+tile.theheist:chair.name=Chair
+tile.theheist:server.name=Server
+tile.theheist:recharge_station.name=Recharge Station
+tile.theheist:projector.name=Projector
+tile.theheist:drawer_decoration.name=Drawer Decoration
+tile.theheist:keycard_reader.name=Keycard Reader
+tile.theheist:chemistry_decoration.name=Chemistry Decoration
+item.theheist:nv_glasses.name=NV Goggles
+tile.theheist:gameband_display.name=Gameband Display Stand
+tile.theheist:sensor_mode_display.name=Sensor Mode Display
+
+## Rename vanilla items
+item.dye.red.name=Red Keycard
+item.dye.yellow.name=Yellow Keycard
+item.dye.green.name=Green Keycard
+item.dye.blue.name=Blue Keycard
+
+map.sub.forgot_prototypes=Hey dumb dumb, you forgot some of the prototypes!
+
+## All lang files have this in English annoyingly
+map.sub.107=Whatever you do, don't click that link. Trust me, it'll scar you for life.
+
+map.sub.001.A=Ok, forbryder. Lad os gå over planen en gang til, så du ikke ødelægger det hele. Dit job er at stjæle værdifulde forskningsresultater og prototyper. For at gøre dette, skal du gå ind i bygningen. Det er pænt simpelt til at starte med. Gå op af trapperne indtil du kommer til taget. Gå ind i ventilationssystemet og kravl ned til stueetagen.
+map.sub.001.B=Når du når dertil, bør du gå ud og begynde at søge. Vær opmærksom på sikkerhedssystemerne. Hvis du bliver opdaget bliver hele stedet låst ned. Forudsat at det ikke sker, og du formår at at arbejde din vej hele vejen ud af bygningen, så mød mig her. Vi kører væk og du får dine 70 procent. Hvad venter du på? Kom i gang.
+map.sub.002=Så hvordan kom du overhovedet ind i den her branche? Er du der? Virker din mikrofon ikke? Jamen det er da en fantastisk start på et kup. Jeg går ud fra at din mikrofon er gået i stykker. Bare fortsæt, det kan også være lige meget.
+
+map.sub.003=Hvorfor flytter du dig ikke? Sidder du fast? Det er bare en falddør. Prøv at hoppe.
+map.sub.004=Sådan der.
+map.sub.101=Okay, stop der! Seriøst, bevæg dig ikke! Inden du går nogen steder, skal du vide at der er et kamera omkring hjørnet! Der er den her ting med kameraer: Hvis de ser dig, så hæver de alarm-niveauet. Når alarm-niveauet når et vist punkt, går alarmen af. Og det betyder at jeg bliver nødt til at finde en anden til at gøre det her, hvilket ville være irriterende. Så for at løse det, skal du løbe så hurtigt som du kan fra kvindernes toilet til vagtkontoret på den anden side af gangen.
+map.sub.102=Prøv at se om du kan gøre noget ved det kamera.
+map.sub.103=Når du er færdig, så bryd ind i kontoret ved siden af. Men skynd dig, vi har ikke hele natten.
+map.sub.104=Sådan der! Det er hvad vi er ude efter! Du skal ned i kælderen.
+map.sub.105=Hvad venter du på? Bare kram væggen og bevæg dig mod receptionistens skrivebord.
+map.sub.106=Kan du se døren, der siger: Kun Autoriseret Personale? Det er der, du skal hen. Du skal bruge et nøglekort, men det har du ikke.
+map.sub.108=Virkelig? Er du allerede løbet tør for strøm? Du har brugt den for meget. Brug genopladningsstationen i mødeværelset. Du bliver nødt til at sætte den til den blå indstilling.
+map.sub.109=Wow, jeg havde ikke regnet med at du ville nå så langt.
+
+map.sub.200=Stå ikke bare der, hack prototypen!
+map.sub.201=Vent, har du tænkt dig at bruge den? Bare lad være med at ødelægge den.
+map.sub.202=Nåh ja, jeg glemte at nævne robotterne. Det er nok i dine bedste interesser at holde dig væk fra dem.
+map.sub.204=Du klarer dig pænt godt for en forbryder.
+
+map.sub.300=Denne etage er stor, lad være med at blive væk.
+map.sub.301=Intet nøglekort denne gang. Du bliver vel nødt til at finde koden.
+map.sub.302=Det her er grunden til at vi aldrig kan have pæne ting. Du har nøglen, gå hen til elevatoren. Vi er ikke færdige endnu.
+
+map.sub.400=Fik jeg nævnt at der også var lasere?
+map.sub.401=Se på dig selv. Mission Impossible derovre.
+map.sub.402=Så hvad nu?
+map.sub.403=Hmm. Smart.
+map.sub.404=Hvem ville have tænkt, du er faktisk en pænt god tyv.
+
+map.sub.500=Vent, gjorde du lige det!? Det kunnet have dræbt dig! Du må virkeligt have brug for de her penge.
+map.sub.501=Det er chokerende at de bare har dem til at ligge, synes du ikke? Glem at jeg sagde det. Det var en dårlig idé.
+map.sub.502=Huh, hvem ville have tænkt.
+map.sub.503=Så hvad laver kriminelle som dig i deres fritid? Har du nogen hobbier? Ah vent, ja ... din mikrofon ...
+map.sub.504=Jeg må indrømme at det føles en smule underligt at tale til en, der ikke kan svare.
+
+map.sub.600=Kun en etage mere efter den her.
+map.sub.601=Jeg tænker at hvem end, der arbejder her, kommer til at blive meget overrasket mandag morgen.
+map.sub.602=Du bliver nødt til at komme forbi på en eller anden måde. Hvis du vil have dine penge, altså.
+
+map.sub.700=Nå for dælan, det her er en smule akavet. Der er noget, jeg bliver nødt til at fortælle dig. Jeg har ikke været fuldstændigt ærlig overfor dig. Jeg havde ikke helt regnet med at det ville komme til dette. Det er en noget ubehagelig situation, du har placeret mig i. På den ene side er du en dygtig tyv. På den anden side, så er jeg ikke rigtigt interesseret i at miste mit job. Ser du, jeg arbejder for de her fyre; hele kuppet har var en fælde. Der er ingen penge. De var interesserede i en udefra til at teste sikkerheden. Jeg tror ikke de er interesserede i at du forlader bygningen med den rigtige prototype. Så for at forhindre det, aktiverer jeg alarmen udefra. Det kommer til at tage omkring 5 minutter. Så bare bliv der, eller ved du hvad, kunne jeg få dig til at gå ind foran kameraet? Det ville få det hele til at gå noget hurtigere.
+map.sub.701=Hey, hvad laver du? Der er ingen udgang på den her etage. Du er langt under jorden og elevatoren kører ikke op. Der er intet her, der kan hjælpe dig, i hvert fald ikke, hvad jeg kender til.
+map.sub.702=Bare stop dig selv, du kommer ikke ud herfra.
+map.sub.703=Virkelig!? Teleportering? Det må være en joke. Du er godt klar over at du kommer til at få mig fyret for det her. Du bliver nødt til at leve resten af dit liv vidende at du fik en mand fyret. Kan du virkelig leve med det?
+map.sub.704=Vil du ikke være sød at lade være?
+
+
+map.console.camera=§o§7Deaktiveret kamera
+map.console.sonar=§o§7Deaktiveret sonar
+map.console.alarm=§o§7Fjernede sikkerhedsadvarsler
+
+map.mail.001=Hej Tom. Jeg fandt dit nøglekort til elevatoren igen ... Du kan finde det i træskuffen i supportkontoret.
+map.mail.002=Lol, tjek den her video ud: KLIK HER, sez, Zed (https://www.youtube.com/watch?v=Hb7w-dIjNHI)
+map.mail.003=Hey Sally. Kan du ikke gøre mig en tjeneste, og ringe til investorerne? Jeg kunne godt tænke mig at give dem en rundvisning rundt i kælderen næste uge. Prototyperne er klar. Venlig hilsen, Donovan
+
+map.mail.100=Sensor niveau 1 (Energiforbrug 1,0 enheder/sek): Denne indstilling lader brugeren at se hvilke områder, der er overvåget af kameraer og vagtrobotter. Derudover kan den også lave et kort over robotternes patruljer, når aktiv.
+map.mail.101=Hacking niveau 2: (Energiforbrug 10 enheder pr. brug): Denne indstilling lader brugeren hacke konsoller op til niveau 2 med et lavere energiforbrug.
+map.mail.102=Genopladning niveau 2: Gamebandet kan nu holde op til 150 energienheder samtidig med at den kan vise brugeren deres nuværende missioner.
+map.mail.103=Hola, Sandro. Hvis du vil se de nye robotdesigns, så skal du besøge Hank ved kameravedligeholdelse. Han har en masse resterende nøglekort til elevatoren.
+map.mail.104=Re: Hvad mener du med at jeg har det forkerte nøglekort? Genopladningsforskningscenteret skulle have haft hentet det grønne nøglekort og kameravedligeholdelsen det gule. Jeg beder om én simpel ting ... jeg kan ikke fatte at Richard ødelægger noget så simpelt. Beklager, vi skal nok sørge for at have det løst mandag morgen.
+
+map.mail.200=Hey Sam. Hvis du er irriteret over air conditionen, så gå over og sig hej til Dani. Jeg har hørt at han har hapset et nøglekort for at kunne komme ind i ventilationsrummet. Kig efter ham ovre i kundeservice. Hans computer har en pauseskærm med en kylling, der går rundt. Tro mig, du kan ikke misse den.
+map.mail.201=Er de godt klar over hvem de snakker til? Jeg er forskningschef! Hvorfor skal jeg kunne huske en 10-cifret kode bare for at kunne hoppe på en elevator? Skide være med det, jeg klistrer bare en note på mit skrivebord med koden. Jeg siger dig, de der sikkerhedsmennesker er gået for vidt. Venlig hilsen, forskningschefen.
+map.mail.202=Kære Stephanie, eftersom du er ny, vil jeg anbefale at du besøger sensorforskningscenteret. De kan skaffe dig kort over alle etagerne i centeret. De uploader det bare direkte til dit Gameband.
+map.mail.203=X-ray niveau 1 (Energiforbrug 1,33 enheder/sek): Ved at aktivere denne indstilling, kan brugeren se igennem lervægge. Denne effekt fungerer som et slags en-vejs spejl, hvilket betyder at kameraer og robotter ikke kan se dig igennem vægge, når aktiv.
+map.mail.204=Sensor niveau 2 (Energiforbrug 0,4 enheder/sek): Sensorindstillingen forbruger nu mindre energi. Derudover lader sensorindstillingen nu brugeren se et kort over etagen, de er på. De kan gøre dette når sensorindstillingen er valgt og brugeren kigger direkte ned.
+map.mail.205=Vigtigt: Public Service-meddelse. Alle glemte objekter som nøglekort kan afhentes ved hittegodskontoret, som er på etage -2 ved vagtkontoret. Tak for din opmærksomhed.
+map.mail.206=Hej Howard. Forskningschefen bad mig om at hjælpe med sin computer her den anden dag. Jeg var ikke klar over at hans syn var så ringe. Du skulle have set størrelsen på hans skrivebordsikoner. De er gigantiske! Han har også en gul sticky note på sit bord på størrelse med Eiffel-tårnet.
+
+map.mail.300=Hej Freya. Vi får brug for en mekaniker her på mandag. En robot er styrtet ind i laser-sikkerhedssystemet rundt om hjørnet. Folk er nødt til at hoppe for ikke at aktivere alarmerne. Det er ret sjovt, på en måde.
+map.mail.301=Snigning niveau 1. (Energiforbrug 40,0 enheder/sek): Denne indstilling lader brugeren være usynlig kortvarigt. Når brugeren er usynlig, kan denne ikke blive set at synsbaserede kameraer, robotter og lasere.
+map.mail.302=Magnet niveau 1 (Energiforbrug 1,6 enheder/sek): Denne indstilling lader brugeren nøjes med støbte iron blocks på luftet. Kraften udstedt når aktiv vil altid suge brugeren opad. Når denne er forbundet, kan brugeren glide på loftet.
+map.mail.303=Re: Jeg kiggede på informationsfeedet igen og jeg kan fortælle dig at hver gang en af de her robotter bevæger sig ind foran mig, skaber det en stor blindvinkel. Kameraerne er ikke i stand til at se noget som helst bag ved robotten. For 117. gang, de her kameraer har brug for en software-opdatering! Folk kan nemt udnytte det til at komme igennem sikkerhedsnettet.
+map.mail.304=Hej Lauren. Hvis du skal med elevatoren ned til regnskabsafdelingen, så kan du bare låne mit nøglekort. Bare husk at aflevere det tilbage til mig i kontrolrummet når du er færdig. Jeg lægger det i min skuffe uden at låse den, så du kan hente det mandag morgen.
+
+map.mail.400=Som en respons på de forskningsmæssige fremskridt i Snigningsforskningslaboratorierne, har vi udviklet et overvågningssystem, som kan opdage brugere selv når de bruger snigning. I stedet for at stole på syn, så opdager vores design bevægelse.
+map.mail.401=Genopladning niveau 3: Gamebandet kan nu holde op til 200 energienheder.
+map.mail.402=Hey Bob. Hvad siger du til at vi gør testene på mandag lidt mere interessante? Hvis du vil have dit nøglekort igen, så bliver du nødt til at komme igennem træningsområdet uden at aktivere alarmerne. Betragt dette som en slags hævn for din lille joke med kaffekoppen. Jeg bærer ikke nag.
+map.mail.403=Lamning niveau 1 (Energiforbrug 10,0 enheder pr. brug): Denne indstilling kan benyttes til at lamme en hvilken som helst robot indenfor to blokke i 10 sekunder.
+map.mail.404=Re: Hej Adam. Hvad mener du med at der er stort problem med sonar-designet? Du arbejder i regnskab, hvad fanden ved du om det? Venlig hilsen, Roger.
+map.mail.405=Kære Roger. Jeg ved godt at det ikke rigtigt er mit job at nævne det, men jeg kom til at tænke på måden I detekter bevægelse. Den udsender pulser i meget langsomme intervaller, ville man ikke være i stand til at snige forbi ved at stå stille en gang imellem? Venlig hilsen Adam.
+map.mail.406=X-ray niveau 2 (Energiforbrug 0,67 enheder/sek): Denne indstilling er dobbelt så energi-effektiv som sin forgænger og brugeren kan nu også se igennem andesit-vægge.
+
+map.mail.500=Re: Re: Lad være med at misforstå mig, jeg er virkeligt glad for mit kontor. Det er virkeligt stort, jeg kunne bare godt tænkte mig at det var en smule tættere på Boringslaboratoriet. Jeg mener, det er helt ovre på den anden side af gangen. Nåh ja, I gav mig også to nøglekort. Er det okay hvis jeg beholder en af dem som en slags reserve?
+map.mail.501=Boring niveau 1 (Energiforbrug 30,0 enheder pr. brug): Denne indstilling lader brugeren disintegrere vægge af brunt hærdet ler og lave huller på menneskestørrelse.
+map.mail.502=Hacking niveau 3: (Energiforbrug 5 enheder pr. brug): Denne indstilling lader brugeren hacke konsoller op til niveau 3 med et mindre energiforbrug.
+map.mail.503=Snigning niveau 2: (Energiforbrug 10,0 enheder/sek): Denne forbedrede version af snigningsindstillingen er 4x mere energieffektiv end den tidligere model. Det betyder at den kan bruges i længere tid af gangen.
+map.mail.504=Re: Kære Donovan: Jeg planlagde en rundvisning med investorerne næste uge, men er løbet ind i et problem: Personalechefen er på ferie. Han efterlod sit nøglekort i sit kontor, men kommer ikke til at være der til rundvisningen. Venlig hilsen Sally.
+map.mail.505=Re: Hej Naomi. Jeg ved du er nysgerrig efter den hemmelige prototype. Er du godt klar over at den eneste måde at komme hen til den er med godkendelse fra personale-, forsknings-, teknologi- og ingeniørchefen? Beklager, men det kommer ikke til at ske.
+map.mail.506=Kære Zed. Jeg har fået en del negative kommentarer vedørende din arbejdsindsats. Noget om at du ser YouTube-videoer i arbejdstiden. Jeg har hørt at de overvejer ikke at fornye din kontrakt. Det ville være en skam. Jeg ville muligvis være i stand til at sige nogle gode ting om dig til chefen. Dog kun, hvis du kan gøre mig en lille tjeneste. Jeg har brug for en eller anden til at teste sikkerheden af centeret her vha. vores Gamebands. Jeg har brug for det til en objektiv test. Tror du, du ville kunne gøre det? Venlig hilsen Walter.
+map.mail.507=Re: Jeg er godt klar over at sikkerhedssystemerne her er glansløse. Jeg skal nok skaffe nogen til at føre eksperimentet denne opkommende weekend. Lad os se, hvordan det kommer til at gå. Måske kan det ændre den gamles holdninger. Venlig hilsen Walter.
+map.mail.508=Hej Emma. Ved du hvornår den nye assistent kommer? Ved han i det mindste, hvad han laver den her gang? Hvis jeg skal til at bruge min tid på at forklare hver eneste lille ting, hvad er så pointen i en assistent? Anyway, jeg har stadig den gamles nøgler og sådan. Skal jeg bare efterlade det i min skuffe og give det til den nye?
+
+## Cu
+beginnerTips.1=If you have Minecraft Java, check out the original version: https://www.planetminecraft.com/project/the-heist-3372054/
+beginnerTips.2=Standing in front of cameras increases the alarm level.
+beginnerTips.3=Cameras and sonars can't see you if you are farther than 10 blocks away.
+beginnerTips.4=Upgrading gamebands can make them cheaper or faster.
+beginnerTips.5=The last gameband you unlock is really cool.
+beginnerTips.6=Select recharge mode to view your objectives.
+beginnerTips.7=Robots are like moving cameras.
+beginnerTips.8=Levels get more and more difficult the lower you go.
+beginnerTips.9=Wow, this place has really tight security.
+beginnerTips.10=Didn't think you'd make it this far.
+beginnerTips.11=CHICKEN
+beginnerTips.12=This project took over a month to create!
+
+midgameTips.1=If you have Minecraft Java, check out the original version: https://www.planetminecraft.com/project/the-heist-3372054/
+midgameTips.2=Standing in front of cameras increases the alarm level.
+midgameTips.3=Cameras and sonars can't see you if you are farther than 10 blocks away.
+midgameTips.4=Upgrading gamebands can make them cheaper or faster.
+midgameTips.5=The last gameband you unlock is really cool.
+midgameTips.6=Select recharge mode to view your objectives.
+midgameTips.7=Robots are like moving cameras.
+midgameTips.8=Levels get more and more difficult the lower you go.
+midgameTips.9=Wow, this place has really tight security.
+midgameTips.10=Didn't think you'd make it this far.
+midgameTips.11=CHICKEN
+midgameTips.12=This project took over a month to create!
+midgameTips.13=Make sure to recharge your gamebands whenever you can.
+midgameTips.14=Sonars only see you if you are moving and in their LINE of sight.
+midgameTips.15=If you have Minecraft Java, check out the original version: https://www.planetminecraft.com/project/the-heist-3372054/
+midgameTips.16=Standing in front of cameras increases the alarm level.
+midgameTips.17=Cameras and sonars can't see you if you are farther than 10 blocks away.
+midgameTips.18=Upgrading gamebands can make them cheaper or faster.
+midgameTips.19=The last gameband you unlock is really cool.
+midgameTips.20=Select recharge mode to view your objectives.
+midgameTips.21=Robots are like moving cameras.
+midgameTips.22=Levels get more and more difficult the lower you go.
+midgameTips.23=Wow, this place has really tight security.
+midgameTips.24=Didn't think you'd make it this far.
+midgameTips.25=CHICKEN
+midgameTips.26=This project took over a month to create!
+midgameTips.27=Make sure to recharge your gamebands whenever you can.
+midgameTips.28=Sonars only see you if you are moving and in their LINE of sight.
+midgameTips.29=If you have Minecraft Java, check out the original version: https://www.planetminecraft.com/project/the-heist-3372054/
+midgameTips.30=Standing in front of cameras increases the alarm level.
+midgameTips.31=Cameras and sonars can't see you if you are farther than 10 blocks away.
+midgameTips.32=Upgrading gamebands can make them cheaper or faster.
+midgameTips.33=The last gameband you unlock is really cool.
+midgameTips.34=Select recharge mode to view your objectives.
+midgameTips.35=Robots are like moving cameras.
+midgameTips.36=Levels get more and more difficult the lower you go.
+midgameTips.37=Wow, this place has really tight security.
+midgameTips.38=Didn't think you'd make it this far.
+midgameTips.39=CHICKEN
+midgameTips.40=This project took over a month to create!
+midgameTips.41=Make sure to recharge your gamebands whenever you can.
+midgameTips.42=Sonars only see you if you are moving and in their LINE of sight.
+midgameTips.43=If you have Minecraft Java, check out the original version: https://www.planetminecraft.com/project/the-heist-3372054/
+midgameTips.44=Standing in front of cameras increases the alarm level.
+midgameTips.45=Cameras and sonars can't see you if you are farther than 10 blocks away.
+midgameTips.46=Upgrading gamebands can make them cheaper or faster.
+midgameTips.47=The last gameband you unlock is really cool.
+midgameTips.48=Select recharge mode to view your objectives.
+midgameTips.49=Robots are like moving cameras.
+midgameTips.50=Levels get more and more difficult the lower you go.
+midgameTips.51=Wow, this place has really tight security.
+midgameTips.52=Didn't think you'd make it this far.
+midgameTips.53=CHICKEN
+midgameTips.54=This project took over a month to create!
+midgameTips.55=Make sure to recharge your gamebands whenever you can.
+midgameTips.56=Sonars only see you if you are moving and in their LINE of sight.
+midgameTips.57=If you have Minecraft Java, check out the original version: https://www.planetminecraft.com/project/the-heist-3372054/
+midgameTips.58=Standing in front of cameras increases the alarm level.
+midgameTips.59=Cameras and sonars can't see you if you are farther than 10 blocks away.
+midgameTips.60=Upgrading gamebands can make them cheaper or faster.
+midgameTips.61=The last gameband you unlock is really cool.
+midgameTips.62=Select recharge mode to view your objectives.
+midgameTips.63=Robots are like moving cameras.
+midgameTips.64=Levels get more and more difficult the lower you go.
+midgameTips.65=Wow, this place has really tight security.
+midgameTips.66=Didn't think you'd make it this far.
+midgameTips.67=CHICKEN
+midgameTips.68=This project took over a month to create!
+midgameTips.69=Make sure to recharge your gamebands whenever you can.
+
+lategameTips.1=If you have Minecraft Java, check out the original version: https://www.planetminecraft.com/project/the-heist-3372054/
+lategameTips.2=Standing in front of cameras increases the alarm level.
+lategameTips.3=Cameras and sonars can't see you if you are farther than 10 blocks away.
+lategameTips.4=Upgrading gamebands can make them cheaper or faster.
+lategameTips.5=The last gameband you unlock is really cool.
+lategameTips.6=Select recharge mode to view your objectives.
+lategameTips.7=Robots are like moving cameras.
+lategameTips.8=Levels get more and more difficult the lower you go.
+lategameTips.9=Wow, this place has really tight security.
+lategameTips.10=Didn't think you'd make it this far.
+lategameTips.11=CHICKEN
+lategameTips.12=This project took over a month to create!
+lategameTips.13=Make sure to recharge your gamebands whenever you can.
+lategameTips.14=Sonars only see you if you are moving and in their LINE of sight.
+lategameTips.15=If you have Minecraft Java, check out the original version: https://www.planetminecraft.com/project/the-heist-3372054/
+lategameTips.16=Standing in front of cameras increases the alarm level.
+lategameTips.17=Cameras and sonars can't see you if you are farther than 10 blocks away.
+lategameTips.18=Upgrading gamebands can make them cheaper or faster.
+lategameTips.19=The last gameband you unlock is really cool.
+lategameTips.20=Select recharge mode to view your objectives.
+lategameTips.21=Robots are like moving cameras.
+lategameTips.22=Levels get more and more difficult the lower you go.
+lategameTips.23=Wow, this place has really tight security.
+lategameTips.24=Didn't think you'd make it this far.
+lategameTips.25=CHICKEN
+lategameTips.26=This project took over a month to create!
+lategameTips.27=Make sure to recharge your gamebands whenever you can.

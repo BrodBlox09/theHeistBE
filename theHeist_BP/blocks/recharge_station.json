@@ -1,5 +1,5 @@
 {
-    "format_version": "1.16.100",
+    "format_version": "1.21.30",
     "minecraft:block": {
         "description": {
             "identifier": "theheist:recharge_station",
@@ -7,22 +7,12 @@
             "menu_category": {
                 "category": "construction"
             },
-            "properties": {
+            "states": {
                 "theheist:state": [1, 2, 3],
                 "theheist:rotation": [2, 3, 4, 5]
             }
         },
-        "events": {
-            "theheist:set_rotation": {
-                "set_block_property": {
-                    "theheist:rotation": "(query.cardinal_facing_2d)"
-                }
-            }
-        },
         "components": {
-            "minecraft:on_player_placing": {
-                "event": "theheist:set_rotation"
-            },
             "minecraft:selection_box": {
                 "origin": [-6, 0, -6],
                 "size": [12, 16, 12]
@@ -30,63 +20,105 @@
             "minecraft:collision_box": {
                 "origin": [-6, 0, -6],
                 "size": [12, 16, 12]
-            }
+            },
+            "minecraft:custom_components": [
+                "theheist:directional_block"
+            ]
         },
         "permutations": [
             {
-                "condition": "query.block_property('theheist:rotation') == 2",
+                "condition": "query.block_state('theheist:rotation') == 2",
                 "components": {
-                    "minecraft:rotation": [0, 180, 0]
+                    "minecraft:transformation": { "rotation": [0, 180, 0] }
                 }
             },
             {
-                "condition": "query.block_property('theheist:rotation') == 3",
+                "condition": "query.block_state('theheist:rotation') == 3",
                 "components": {
-                    "minecraft:rotation": [0, 0, 0]
+                    "minecraft:transformation": { "rotation": [0, 0, 0] }
                 }
             },
             {
-                "condition": "query.block_property('theheist:rotation') == 4",
+                "condition": "query.block_state('theheist:rotation') == 4",
                 "components": {
-                    "minecraft:rotation": [0, 270, 0]
+                    "minecraft:transformation": { "rotation": [0, 270, 0] }
                 }
             },
             {
-                "condition": "query.block_property('theheist:rotation') == 5",
+                "condition": "query.block_state('theheist:rotation') == 5",
                 "components": {
-                    "minecraft:rotation": [0, 90, 0]
+                    "minecraft:transformation": { "rotation": [0, 90, 0] }
                 }
             },
 
             {
-                "condition": "query.block_property('theheist:state') == 1",
+                "condition": "query.block_state('theheist:state') == 1",
                 "components": {
                     "minecraft:geometry": "geometry.recharge_station_base",
                     "minecraft:material_instances": {
+                        "command_block": {
+                            "texture": "command_block"
+                        },
+                        "power": {
+                            "texture": "power_blue"
+                        },
+                        "anvil_base": {
+                            "texture": "anvil_base"
+                        },
+                        "color_indicator": {
+                            "texture": "unlocked_screen"
+                        },
                         "*": {
-                            "texture": "recharge_station_1"
+                            "texture": "iron_block"
                         }
                     }
                 }
             },
             {
-                "condition": "query.block_property('theheist:state') == 2",
+                "condition": "query.block_state('theheist:state') == 2",
                 "components": {
                     "minecraft:geometry": "geometry.recharge_station_gameband",
                     "minecraft:material_instances": {
-                        "*": {
+                        "gameband": {
                             "texture": "recharge_station_2"
+                        },
+                        "command_block": {
+                            "texture": "command_block"
+                        },
+                        "power": {
+                            "texture": "power_blue"
+                        },
+                        "anvil_base": {
+                            "texture": "anvil_base"
+                        },
+                        "color_indicator": {
+                            "texture": "unlocked_screen"
+                        },
+                        "*": {
+                            "texture": "iron_block"
                         }
                     }
                 }
             },
             {
-                "condition": "query.block_property('theheist:state') == 3",
+                "condition": "query.block_state('theheist:state') == 3",
                 "components": {
                     "minecraft:geometry": "geometry.recharge_station_base",
                     "minecraft:material_instances": {
+                        "command_block": {
+                            "texture": "command_block"
+                        },
+                        "power": {
+                            "texture": "power_blank"
+                        },
+                        "anvil_base": {
+                            "texture": "anvil_base"
+                        },
+                        "color_indicator": {
+                            "texture": "redstone_block_old"
+                        },
                         "*": {
-                            "texture": "recharge_station_3"
+                            "texture": "iron_block"
                         }
                     }
                 }

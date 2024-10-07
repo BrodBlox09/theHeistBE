@@ -1,0 +1,12 @@
+{
+	"format_version": "1.12.0",
+	"animation_controllers": {
+		"controller.animation.driver.base": {
+			"states": {
+				"default": {
+                    "animations": ["default"]
+                }
+			}
+		}
+	}
+}

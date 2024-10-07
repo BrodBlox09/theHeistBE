@@ -3,6 +3,9 @@
     "theheist:keypad": {
         
     },
+    "theheist:server_nodeco":{
+        "textures": "server_side"
+    },
     "theheist:computer": {
 
     },

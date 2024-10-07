@@ -1,0 +1,260 @@
+pack.name=The Heist RP
+pack.description=The Heist resource pack transferred to PE by BrodBlox09
+tile.theheist:keypad.name=Keypad
+tile.theheist:computer.name=Computer
+tile.theheist:custom_door_1_bottom.name=Custom Door 1
+tile.theheist:custom_door_2_bottom.name=Custom Door 2
+tile.theheist:custom_door_3_bottom.name=Custom Door 3
+tile.theheist:custom_door_4_bottom_l.name=Custom Door 4 Left
+tile.theheist:custom_door_4_bottom_r.name=Custom Door 4 Right
+tile.theheist:fake_iron_block.name=Fake Iron Block
+tile.theheist:vending_machine.name=Vending Machine
+tile.theheist:green_block.name=Green Block
+tile.theheist:dropper_block.name=Dropper Block
+tile.theheist:conveyor.name=Conveyor
+tile.theheist:laser.name=Laser
+tile.theheist:laser_end.name=Laser End
+## I don't know if all three are needed, but just to be safe
+item.crimson_sign.name=White Sign
+tile.crimson_wall_sign.name=White Sign
+tile.crimson_standing_sign.name=White Sign
+tile.theheist:camera_sight.name=Camera Sight Block
+tile.theheist:sonar_sight.name=Sonar Sight Block
+tile.theheist:white_trapdoor.name=White Trapdoor
+tile.theheist:reinforced_iron_block.name=Reinforced Iron Block
+tile.theheist:file_cabinet.name=File Cabinet
+tile.theheist:recharge_mode_lvl_1=Recharge Mode Lvl. 1
+tile.theheist:recharge_mode_lvl_2=Recharge Mode Lvl. 2
+tile.theheist:hacking_mode_lvl_1=Hacking Mode Lvl. 1
+tile.theheist:hacking_mode_lvl_2=Hacking Mode Lvl. 2
+tile.theheist:sensor_mode_lvl_1=Sensor Mode Lvl. 1
+tile.theheist:sensor_mode_lvl_2=Sensor Mode Lvl. 2
+tile.theheist:xray_mode_lvl_1=X-Ray Mode Lvl. 1
+tile.theheist:chair.name=Chair
+tile.theheist:server.name=Server
+tile.theheist:recharge_station.name=Recharge Station
+tile.theheist:projector.name=Projector
+tile.theheist:drawer_decoration.name=Drawer Decoration
+tile.theheist:keycard_reader.name=Keycard Reader
+tile.theheist:chemistry_decoration.name=Chemistry Decoration
+item.theheist:nv_glasses.name=NV Goggles
+tile.theheist:gameband_display.name=Gameband Display Stand
+tile.theheist:sensor_mode_display.name=Sensor Mode Display
+
+## Rename vanilla items
+item.dye.red.name=Red Keycard
+item.dye.yellow.name=Yellow Keycard
+item.dye.green.name=Green Keycard
+item.dye.blue.name=Blue Keycard
+
+map.sub.forgot_prototypes=Hey dumb dumb, you forgot some of the prototypes!
+
+## All lang files have this in English annoyingly
+map.sub.107=Whatever you do, don't click that link. Trust me, it'll scar you for life.
+
+map.sub.001.A=Ok dief, laten we het plan nog één keer doorlopen. Het doel van deze inbraak is om waardevolle research en prototypes te stelen. Om dit voor elkaar te krijgen moet je het gebouw binnendringen. Dit zal niet heel moeilijk zijn. Volg de trap tot je op het dak komt en dring daar via de ventilatieschacht het gebouw binnen. In de ventilatie beweeg je richting de begaande grond waar je uit de ventilatie zal gaan en waar het echte werk begint.
+map.sub.001.B=Wees voorzichtig voor de bewakingssystemen. Als je gesnapt wordt zal het hele gebouw op slot gaan. Als we er we even vanuit gaan dat dat niet gebeurt en je weet jezelf door het gebouw te maneuvreren, kom dan weer terug hierheen. Dan gaan we ervan samen vandoor en is 70 procent van de buit voor jou. Dus waar wacht je op? Kom op, aan de slag.
+map.sub.002=Hoe ben je eigenlijk in dit werk terecht gekomen? Ben je daar nog? Staat je microfoon wel aan? Super, dat is een goeie manier om een inbraak te starten… Je microfoon is waarschijnlijk kapot. Gewoon doorgaan, het maakt niet uit.
+map.sub.003=Waarom sta je stil? Zit je vast of zo. Het is maar een luik. Probeer anders te springen.
+map.sub.004=Zie je wel.
+
+map.sub.101=Ok stop hier! Ik meen het, blijf daar! Voordat je verder gaat. Er is een camera om de hoek. De camera’s werken als volgt. Als ze je zien gaat het alarm level in het gebouw omhoog. Als het alarm level een bepaald niveau bereikt activeert het alarm en dan moet ik iemand anders gaan vinden om deze klus te doen. Daar heb ik echt geen zin in. Dus wat ik wil dat doet is ren zo snel als je kunt van het dames toilet naar de security office tegenover het toilet. 
+map.sub.102=Kijk of je iets aan die camera kunt doen.
+map.sub.103=Als je klaar bent, breek dan in bij het kantoor hiernaast. Maak wel haast. We hebben niet de hele nacht.
+map.sub.104=Kijk, dat is de reden dat we hier zijn. Je moet in dat ondergrondse complex zien te komen.
+map.sub.105=Waar wacht je op? Beweeg gewoon langs de muur richting the receptie desk.
+map.sub.106=Zie je die deur die zegt: Authorized Personnel Only? Dat is waar je heen moet. Je hebt een keycard nodig. Die heb je helaas niet.
+map.sub.108=Serieus? Ben je nu al door je energie heen? Je hebt hem te veel gebruikt. Gebruik de recharge station in de meeting room. Je moet hem naar de blauwe mode switchen.
+map.sub.109=Wow, Ik had eigenlijk niet verwacht dat je zo ver zou komen.
+
+
+map.sub.200=Wat sta je daar nou te staan. Hack die prototype.
+map.sub.201=Wacht ga je hem gebruiken? Zorg ervoor dat je hem niet kapot maakt.
+map.sub.202=Oja, had ik al gezegd dat er robots zijn. Daar wil je waarschijnlijk bij uit de buurt blijven.
+map.sub.204=Je doet het best wel goed. Voor een schurk.
+
+map.sub.300=Deze verdieping is groot. Zorg dat je niet verdwaalt.
+map.sub.301=Geen keycard deze keer. In denk dat je code moet gaan vinden.
+map.sub.302=Kijk dit is waarom ze geen mooie dingen kunnen hebben. Je hebt code. Ga naar de lift. We zijn nog niet klaar.
+
+map.sub.400=Had ik je al vertelt van de lasers?
+map.sub.401=Kijk je gaan. Het is net Mission Impossible.
+
+map.sub.402=En toen?
+map.sub.403=Hmm slim.
+map.sub.404=Wie had dat gedacht. Je bent nog bekwaam als dief ook.
+
+map.sub.500=Wacht deed je dat net? Je had wel dood kunnen gaan. Je hebt dit geld wel heel hard nodig.
+map.sub.501=Het is schokkend dat ze dit gewoon laten liggen hier. Vergeet wat net ik zei. Dat was echt heel slecht.
+map.sub.502=Hmm, wie had dat gedacht.
+map.sub.503=SDus wat doet een delinquent zoals jijzelf in zijn vrije tijd. Heb je hobby’s? Oh ja wacht, je microfoon...
+map.sub.504=Ik moet wel zeggen, het voelt raar om met iemand te praten die niet kan antwoorden.
+
+map.sub.600=Nog één verdieping na deze.
+map.sub.601=Degene die hier werkt zal erg verrast zijn maandag ochtend.
+map.sub.602=Je moet op één of andere manier naar de overkant zien te komen. Dat is als je je geld wilt hebben uiteraard.
+
+map.sub.700=Hmm, dit is een beetje ongemakkelijk. Er is iets dat ik je moet vertellen. Ik ben niet helemaal eerlijk met je geweest tot nu toe. Je hebt me in eigenaardige positie gebracht. Aan de ene kant ben je goeie inbreker. Aan de andere kant heb ik geen zin mijn baan te verliezen. Ik werk voor deze mensen. Dit alles was een test. Er is geen geld. Ze wouden gewoon dat iemand van buitenaf de beveiliging zou testen. Ik denk niet dat ze blij zullen zijn als jij er daadwerkelijk met de prototypes vandoor gaat. Dus om dat te voorkomen ga ik van buitenaf het alarm activeren. Dat duurt waarschijnlijk zo’n 5 minuten. Dus als je gewoon even geduld hebt.. Of nog beter, spring gewoon voor een camera. Dan gaat alles een stuk sneller.
+map.sub.701=Hey, waar ga je heen? Er is geen uitgang op deze verdieping. Je bent ver onder de grond en de lift gaat niet terug omhoog. Er is hier niks dat je kan helpen. Of althans niet zo ver ik weet.
+map.sub.702=Stop gewoon, je gaat toch niet ontsnappen.
+map.sub.703=Serieus?! Teleportatie? Dit moet een grap zijn. Je realiseert je wel dat ik ontslagen ga worden hiervoor he. Je zal de rest van je leven weten dat dankzij jou iemand ontslagen is. Kan je daar mee leven?
+map.sub.704=Doe het niet!
+
+
+map.console.camera=§o§7Disabled camera
+map.console.sonar=§o§7Disabled sonar
+map.console.alarm=§o§7Removed security warnings
+
+map.mail.001=Hey Tom, Ik heb je keycard voor de lift weer gevonden... Hij zit in de la van het houten bureau in de Support Office.
+map.mail.002=Lol, heb je deze video gezien?: Klik hier, Greetz, Zed (https://www.youtube.com/watch?v=Hb7w-dIjNHI)
+map.mail.003=Hey Sally, Ik wil dat je contact zoekt met de investeerders. Ik wil ze volgende week een rondleiding geven door het ondergrondse onderzoekscentrum. De nieuwste prototypes zijn klaar. Vriendelijke groet, Donovan
+
+map.mail.100=Sensor lvl. 1 (Energieverbruik: 1.0 units/sec): Deze mode stelt de gebruiker in staat om weer te geven welke gebieden bekeken worden door camera’s en bewakingsrobots. Daarnaast is het in staat om bewakingsroutes van robots in kaart te brengen wanneer sensor mode geactiveerd is.
+map.mail.101=Hacking lvl. 2: (Energieverbruik: 10 units per gebruik): Deze mode stelt de gebruiker in staat om lvl 2 consoles te hacken voor een lager energieverbruik.
+map.mail.102=Recharge lvl. 2: De Gameband kan nu 150 units energie opslaan terwijl het nog steeds in staat is de gebruiker zijn huidige doelen te laten zien.
+map.mail.103=Ola Sandro, Als je de nieuwe robot ontwerpen wil zien moet even langs gaan bij Henk van camera maintenance. Hij heeft een aantal reserve keycards voor de lift.
+map.mail.104=Re: Hoe bedoel je je hebt de verkeerde keycard. Recharge Research had de groene moeten krijgen en Camera Maintenace de gele. I vraag één simpel ding... I begrijp niet hoe Richard dit heeft kunnen verpesten. Mijn excuses. We lossen het maandag ochtend wel op.
+
+map.mail.200=Hey Sam, Als je last hebt van de airconditioning ga dan gewoon even langs bij Dani. Hij heeft een keycard van de ventilation maintenance room weten te scoren. Je kunt hem vinden bij Customer Support. Hij heeft een lopende kip als screensaver voor zijn PC. Hij is niet te missen.
+map.mail.201=Realiseren ze wel tegen wie ze het hebben?! Ik ben de Head of Research! Waarom zou ik in vredesnaam een 10 cijfer lange code moeten onthouden om in een lift te kunnen stappen? Laat ook maar, ik plak wel een briefje op mijn bureau met de code. Ik zeg het je, die beveiligingsmensen zijn knettergek, ze gaan met hun beveiliging veel te ver. Groet, Head of Research
+map.mail.202=Beste Stephanie, aangezien je nieuw bent raad ik je aan even langs te gaan bij de mensen van Sensor Research. Zij kunnen je namelijk platgronden geven van alle verdiepingen binnen het onderzoekscentrum. Het is een kwestie van uploaden naar je Gameband.
+map.mail.203=X-ray lvl. 1 (Energieverbruik: 1.33 units/sec): Het activeren van deze mode stelt de gebruiker in staat om door muren van klei te kijken. Dit effect werkt als een eenrichtingsspiegel. Dat wil zeggen de gebruiker kan door een muur robots en camera’s zonder dat zij de gebruiker kunnen zien.
+map.mail.204=Sensor lvl. 2 (Energieverbruik: 0.4 units/sec): Sensor mode heeft nu een nog lager energieverbruik. Daarnaast geeft het de gebruiker de mogelijkheid plattegronden van de verdieping waarop ze zijn weer te geven. Je kan deze plattegronden laten zien door Sensor Mode te selecteren en recht naar beneden te kijken.
+map.mail.205=Belangrijke Mededeling: Verloren spullen zoals keycards kunnen worden opgehaald bij de Lost & Found. Deze is te vinden bij de Security Office op verdieping -2. Bedankt de voor de aandacht.
+map.mail.206=Hey Howard, de Head of Research vroeg me laatst om hulp voor zijn pc. Het was me tot nu toe nog niet opgevallen dat zijn ogen zo slecht waren. Je had grootte van de icoontjes op zijn desktop moeten zien. Ze zijn gigantisch. Hij heeft ook een gele sticky note op zijn bureau. Het is werkelijk de grootste sticky note die ik ooit gezien heb.
+
+map.mail.300=Hey Freya, kun je maandag een monteur sturen. Er is een kapotte robot tegen het laser beveiligingssysteem gecrasht. Mensen moet nu door de lasers springen om te voorkomen dat ze het alarm systeem activeren. Het is hilarisch om te zien.
+map.mail.301=Stealth lvl 1. (Energieverbruik 40.0 units/sec): Deze mode stelt de gebruiker in staat om tijdelijk onzichtbaar te worden. Terwijl de gebruiker onzichtbaar is kan hij niet gedetecteerd worden door optische camera’s, robots en lasers
+map.mail.302=Magnet lvl. 1 (Energieverbruik: 1.6 units/sec): Deze mode stelt de gebruiker in staat om aangetrokken te worden naar Cast Iron Blocks op het plafond. De kracht zorgt er altijd voor dat de gebruiker omhoog getrokken wordt. Terwijl magnet mode geactiveerd is kan de gebruiker langs het plafond glijden.
+map.mail.303=Re: Ik heb de data bestudeerd en ik kan je garanderen dat elke keer dat één van deze robots voor een camera langs gaat er een grote blinde vlek ontstaat. De camera’s kunnen vervolgens niets achter de robot zien. Ik zeg het je, die camera’s hebben een software upgrade nodig. Mensen kunnen deze blinde vlek gemakkelijk misbruiken om langs de bewaking te glippen.
+map.mail.304=Hey Lauren, Je kunt mijn keycard wel lenen als je bij accounting langs wil gaan. Zorg er alleen wel voor dat je hem als je klaar bent weer terug brengt naar de control room. Ik leg hem in mijn la. Dan kan je hem maandag ochtend komen ophalen.
+
+map.mail.400=Als reactie op de ontwikkelingen van het Stealth Research laboratorium hebben wij een nieuwe bewakingssysteem ontworpen dat in staat is gebruiker die onzichtbaar zijn te detecteren. In plaats van optische camera’s maken onze ontwerpen gebruik van bewegingsdetectoren.
+map.mail.401=Recharge lvl. 3: De Gameband kan nu 200 units energie opslaan.
+map.mail.402=Hey Bob, wat dacht je ervan als we het experiment maandag ochtend interessant maken. Als je je keycard terug wilt zal je heelhuids door de training area moet komen zonder het alarm te activeren. Dat is je verdiende loon voor je kleine stunt met mijn koffie mok. Nu staan we quit.
+map.mail.403=Stun lvl. 1 (Energieverbruik 10.0 units per gebruik): Deze mode kan gebruikt worden om robots binnen een afstand van 2 meter voor 10 seconde te stunnen.
+map.mail.404=Re: Hey Adam, hoe bedoel je we hebben een grote blunder gemaakt met ons ontwerp? Jij werk op het accounting kantoor. Hoe kun je als een accountant hier in vredes naam van af weten? Met vriendelijke groet, Roger
+map.mail.405=Beste Roger, ik ben misschien niet de aangewezen persoon om dit ter sprake te brengen, maar ik heb lopen nadenken over hoe jullie gebruik maken van geluid om bewegingen te detecteren. Op het moment zenden jullie maar heel af en toe een geluidspuls uit. Is het niet zo dat iemand gewoon af en toe stil kan staan en op die manier langs de bewaking kan glippen? Met vriendelijke groet, Adam
+map.mail.406=X-ray lvl. 2 (Energieverbruik: 0.67 units/sec): Deze mode is 2x zo energiezuinig als voorheen. Daarnaast stelt deze upgrade de gebruiker in staat om door Andesite muren te kunnen kijken.
+
+map.mail.500=Re: Re: Begrijp me niet verkeerd. Ik ben heel erg dankbaar voor het kantoor dat jullie mij gegeven hebben. Het is erg ruim. Ik had het alleen fijn gevonden als ik wat dichter bij het Drill Research laboratorium zat. Nu moet ik helemaal naar einde van de hal aan de andere kant van de verdieping lopen. Jullie hebben mij trouwens per ongeluk twee keycards gestuurd voor het lab. Is het goed als ik er eentje als reserve houdt?”
+map.mail.501=Drill lvl. 1 (Energieverbruik 30.0 units per gebruik): Deze mode stelt de gebruiker in staat om de bruine klei muren te boren om zo een doorgang te maken.
+map.mail.502=Hacking lvl. 3 (Energieverbruik 5 units per gebruik): Deze mode stelt de gebruiker in staat om level 3 consoles te hacken bij een lager energieverbruik.
+map.mail.503=Stealth lvl 2. (Energieverbruik 10.0 units/sec): Deze verbeterde versie van stealth mode is 4x zo energiezuinig als het vorige model. Dit betekent dat de gebruiker veel langer onzichtbaar kan zijn.
+map.mail.504=Re: Beste Donovan, Ik heb de afspraak voor de rondleiding met de investeerders vastgelegd. Er is alleen één probleem. De Chief of Staff is met vakantie volgende week. Hij heeft zijn keycard in zijn kantoor achtergelaten. Maar hij zal er dus niet bij zijn voor de rondleiding. Met vriendelijke groet, Sally
+map.mail.505=Re: Hey Naomi, ik weet dat je nieuwsgierig bent naar het super geheime prototype. Maar je zal hem niet zien zonder goedkeuring van de Chiefs of Staff, Research, Technology & Engineering. Leg je er maar bij neer. Dat gaat echt niet gebeuren.
+map.mail.506=Beste Zed, ik heb in de wandelgangen veel negatief commentaar over je opgevangen. Filmpjes kijken op Youtube onder werktijd. Daarmee kom je in de problemen. Ik heb ze horen zeggen dat ze waarschijnlijk niet je contract gaan verlengen. Ik zou een goed woordje voor je kunnen doen. Dat is uiteraard als jij ook iets voor mij wilt doen. Ik heb iemand nodig die de bewakingssystemen in het complex testen met onze Gamebands. Iemand van buitenaf. Denk je dat je dit voor mij kunt regelen? Met vriendelijke groet, Walter
+map.mail.507=Re: Ik ben me er dondersgoed van bewust dan de bewaking in dit complex de wensen over laat. Ik laat daarom dit weekend iemand het bewakingssysteem testen. Het wordt afwachten hoe dat zal gaan. Misschien brengt het de grote baas op andere gedachten en wordt de beveiliging eindelijk aangescherpt. Met vriendelijke groet, Walter
+map.mail.508=Hey Emma, heb je enig idee wanneer mijn nieuwe assistent eindelijk komt? En please zeg me dat hij deze keer competent is. Wat is het nut van een assistent als je alles moet voorkauwen. Dan kan ik het net zo goed zelf doen. Ik heb trouwens nog de spullen en keycards van de vorige assistent. Zal ik die gewoon op mijn kantoor bewaren tot de nieuwe eindelijk komt?
+
+## Cu
+beginnerTips.1=If you have Minecraft Java, check out the original version: https://www.planetminecraft.com/project/the-heist-3372054/
+beginnerTips.2=Standing in front of cameras increases the alarm level.
+beginnerTips.3=Cameras and sonars can't see you if you are farther than 10 blocks away.
+beginnerTips.4=Upgrading gamebands can make them cheaper or faster.
+beginnerTips.5=The last gameband you unlock is really cool.
+beginnerTips.6=Select recharge mode to view your objectives.
+beginnerTips.7=Robots are like moving cameras.
+beginnerTips.8=Levels get more and more difficult the lower you go.
+beginnerTips.9=Wow, this place has really tight security.
+beginnerTips.10=Didn't think you'd make it this far.
+beginnerTips.11=CHICKEN
+beginnerTips.12=This project took over a month to create!
+
+midgameTips.1=If you have Minecraft Java, check out the original version: https://www.planetminecraft.com/project/the-heist-3372054/
+midgameTips.2=Standing in front of cameras increases the alarm level.
+midgameTips.3=Cameras and sonars can't see you if you are farther than 10 blocks away.
+midgameTips.4=Upgrading gamebands can make them cheaper or faster.
+midgameTips.5=The last gameband you unlock is really cool.
+midgameTips.6=Select recharge mode to view your objectives.
+midgameTips.7=Robots are like moving cameras.
+midgameTips.8=Levels get more and more difficult the lower you go.
+midgameTips.9=Wow, this place has really tight security.
+midgameTips.10=Didn't think you'd make it this far.
+midgameTips.11=CHICKEN
+midgameTips.12=This project took over a month to create!
+midgameTips.13=Make sure to recharge your gamebands whenever you can.
+midgameTips.14=Sonars only see you if you are moving and in their LINE of sight.
+midgameTips.15=If you have Minecraft Java, check out the original version: https://www.planetminecraft.com/project/the-heist-3372054/
+midgameTips.16=Standing in front of cameras increases the alarm level.
+midgameTips.17=Cameras and sonars can't see you if you are farther than 10 blocks away.
+midgameTips.18=Upgrading gamebands can make them cheaper or faster.
+midgameTips.19=The last gameband you unlock is really cool.
+midgameTips.20=Select recharge mode to view your objectives.
+midgameTips.21=Robots are like moving cameras.
+midgameTips.22=Levels get more and more difficult the lower you go.
+midgameTips.23=Wow, this place has really tight security.
+midgameTips.24=Didn't think you'd make it this far.
+midgameTips.25=CHICKEN
+midgameTips.26=This project took over a month to create!
+midgameTips.27=Make sure to recharge your gamebands whenever you can.
+midgameTips.28=Sonars only see you if you are moving and in their LINE of sight.
+midgameTips.29=If you have Minecraft Java, check out the original version: https://www.planetminecraft.com/project/the-heist-3372054/
+midgameTips.30=Standing in front of cameras increases the alarm level.
+midgameTips.31=Cameras and sonars can't see you if you are farther than 10 blocks away.
+midgameTips.32=Upgrading gamebands can make them cheaper or faster.
+midgameTips.33=The last gameband you unlock is really cool.
+midgameTips.34=Select recharge mode to view your objectives.
+midgameTips.35=Robots are like moving cameras.
+midgameTips.36=Levels get more and more difficult the lower you go.
+midgameTips.37=Wow, this place has really tight security.
+midgameTips.38=Didn't think you'd make it this far.
+midgameTips.39=CHICKEN
+midgameTips.40=This project took over a month to create!
+midgameTips.41=Make sure to recharge your gamebands whenever you can.
+midgameTips.42=Sonars only see you if you are moving and in their LINE of sight.
+midgameTips.43=If you have Minecraft Java, check out the original version: https://www.planetminecraft.com/project/the-heist-3372054/
+midgameTips.44=Standing in front of cameras increases the alarm level.
+midgameTips.45=Cameras and sonars can't see you if you are farther than 10 blocks away.
+midgameTips.46=Upgrading gamebands can make them cheaper or faster.
+midgameTips.47=The last gameband you unlock is really cool.
+midgameTips.48=Select recharge mode to view your objectives.
+midgameTips.49=Robots are like moving cameras.
+midgameTips.50=Levels get more and more difficult the lower you go.
+midgameTips.51=Wow, this place has really tight security.
+midgameTips.52=Didn't think you'd make it this far.
+midgameTips.53=CHICKEN
+midgameTips.54=This project took over a month to create!
+midgameTips.55=Make sure to recharge your gamebands whenever you can.
+midgameTips.56=Sonars only see you if you are moving and in their LINE of sight.
+midgameTips.57=If you have Minecraft Java, check out the original version: https://www.planetminecraft.com/project/the-heist-3372054/
+midgameTips.58=Standing in front of cameras increases the alarm level.
+midgameTips.59=Cameras and sonars can't see you if you are farther than 10 blocks away.
+midgameTips.60=Upgrading gamebands can make them cheaper or faster.
+midgameTips.61=The last gameband you unlock is really cool.
+midgameTips.62=Select recharge mode to view your objectives.
+midgameTips.63=Robots are like moving cameras.
+midgameTips.64=Levels get more and more difficult the lower you go.
+midgameTips.65=Wow, this place has really tight security.
+midgameTips.66=Didn't think you'd make it this far.
+midgameTips.67=CHICKEN
+midgameTips.68=This project took over a month to create!
+midgameTips.69=Make sure to recharge your gamebands whenever you can.
+
+lategameTips.1=If you have Minecraft Java, check out the original version: https://www.planetminecraft.com/project/the-heist-3372054/
+lategameTips.2=Standing in front of cameras increases the alarm level.
+lategameTips.3=Cameras and sonars can't see you if you are farther than 10 blocks away.
+lategameTips.4=Upgrading gamebands can make them cheaper or faster.
+lategameTips.5=The last gameband you unlock is really cool.
+lategameTips.6=Select recharge mode to view your objectives.
+lategameTips.7=Robots are like moving cameras.
+lategameTips.8=Levels get more and more difficult the lower you go.
+lategameTips.9=Wow, this place has really tight security.
+lategameTips.10=Didn't think you'd make it this far.
+lategameTips.11=CHICKEN
+lategameTips.12=This project took over a month to create!
+lategameTips.13=Make sure to recharge your gamebands whenever you can.
+lategameTips.14=Sonars only see you if you are moving and in their LINE of sight.
+lategameTips.15=If you have Minecraft Java, check out the original version: https://www.planetminecraft.com/project/the-heist-3372054/
+lategameTips.16=Standing in front of cameras increases the alarm level.
+lategameTips.17=Cameras and sonars can't see you if you are farther than 10 blocks away.
+lategameTips.18=Upgrading gamebands can make them cheaper or faster.
+lategameTips.19=The last gameband you unlock is really cool.
+lategameTips.20=Select recharge mode to view your objectives.
+lategameTips.21=Robots are like moving cameras.
+lategameTips.22=Levels get more and more difficult the lower you go.
+lategameTips.23=Wow, this place has really tight security.
+lategameTips.24=Didn't think you'd make it this far.
+lategameTips.25=CHICKEN
+lategameTips.26=This project took over a month to create!
+lategameTips.27=Make sure to recharge your gamebands whenever you can.

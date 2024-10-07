@@ -15,7 +15,8 @@ interface LevelInformation {
 	"information": [
 		{
 			"name": "alarmLevel",
-			"level": number
+			"level": number,
+			"sonarTimeout": number
 		},
 		{
 			"name": "gameLevel",
@@ -41,14 +42,13 @@ interface ILevelCloneInfo {
 	"startZ": number,
 	"endX": number,
 	"endZ": number,
-	"prisonLoc": any,
-	"mapLoc": any
+	"prisonLoc": IVector3,
+	"mapLoc": IVector3
 }
 
 interface ILevel {
 	"loadElevatorLoc": IVector3,
 	"startPlayerLoc": IVector3,
-	"tickingAreas": Array<IBlockArea>
 	"levelID": string,
 	"startingItems": Array<IInventorySlotData>,
 	"rechargeLevel": number,

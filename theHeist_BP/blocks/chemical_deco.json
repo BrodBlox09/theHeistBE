@@ -1,5 +1,5 @@
 {
-    "format_version": "1.16.100",
+    "format_version": "1.21.30",
     "minecraft:block": {
         "description": {
             "identifier": "theheist:chemistry_decoration",
@@ -7,31 +7,20 @@
             "menu_category": {
                 "category": "construction"
             },
-            "properties": {
+            "states": {
                 "theheist:type": [0, 1, 2, 3, 4, 5]
             }
         },
-        "events": {
-            "theheist:setup_block": {
-                "sequence": [
-                    {
-                        "set_block_property": {
-                            "theheist:type": "(math.die_roll_integer(1, 0, 5))"
-                        }
-                    }
-                ]
-            }
-        },
         "components": {
-            "minecraft:on_player_placing": {
-                "event": "theheist:setup_block"
-            },
-            "minecraft:light_dampening": 0
+            "minecraft:light_dampening": 0,
+            "minecraft:custom_components": [
+                "theheist:6_types"
+            ]
         },
         "permutations": [
             {
                 // Water
-                "condition": "query.block_property('theheist:type') == 0",
+                "condition": "query.block_state('theheist:type') == 0",
                 "components": {
                     "minecraft:geometry": "geometry.chemical_deco_1",
                     "minecraft:material_instances": {
@@ -46,7 +35,7 @@
             },
             {
                 // Blood lookin thing
-                "condition": "query.block_property('theheist:type') == 1",
+                "condition": "query.block_state('theheist:type') == 1",
                 "components": {
                     "minecraft:geometry": "geometry.chemical_deco_2",
                     "minecraft:material_instances": {
@@ -61,7 +50,7 @@
             },
             {
                 // Double vials
-                "condition": "query.block_property('theheist:type') == 2",
+                "condition": "query.block_state('theheist:type') == 2",
                 "components": {
                     "minecraft:geometry": "geometry.chemical_deco_3",
                     "minecraft:material_instances": {
@@ -76,7 +65,7 @@
             },
             {
                 // Double vials on a stand
-                "condition": "query.block_property('theheist:type') == 3",
+                "condition": "query.block_state('theheist:type') == 3",
                 "components": {
                     "minecraft:geometry": "geometry.chemical_deco_4",
                     "minecraft:material_instances": {
@@ -97,7 +86,7 @@
             },
             {
                 // Single large vial
-                "condition": "query.block_property('theheist:type') == 4",
+                "condition": "query.block_state('theheist:type') == 4",
                 "components": {
                     "minecraft:geometry": "geometry.chemical_deco_5",
                     "minecraft:material_instances": {
@@ -112,7 +101,7 @@
             },
             {
                 // Bunsen Burner
-                "condition": "query.block_property('theheist:type') == 5",
+                "condition": "query.block_state('theheist:type') == 5",
                 "components": {
                     "minecraft:geometry": "geometry.chemical_deco_6",
                     "minecraft:material_instances": {

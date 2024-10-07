@@ -3,6 +3,12 @@
     "texture_data": {
         "nv_glasses": {
 			"textures": "textures/items/nv_glasses"
-		}
+		},
+        "player_inventory_cover": {
+            "textures": "textures/items/player_inventory_cover"
+        },
+        "phone": {
+            "textures": "textures/items/phone"
+        }
     }
 }

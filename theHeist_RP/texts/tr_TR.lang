@@ -1,0 +1,348 @@
+pack.name=The Heist RP
+pack.description=The Heist resource pack transferred to PE by BrodBlox09
+tile.theheist:keypad.name=Keypad
+tile.theheist:computer.name=Computer
+tile.theheist:custom_door_1_bottom.name=Custom Door 1
+tile.theheist:custom_door_2_bottom.name=Custom Door 2
+tile.theheist:custom_door_3_bottom.name=Custom Door 3
+tile.theheist:custom_door_4_bottom_l.name=Custom Door 4 Left
+tile.theheist:custom_door_4_bottom_r.name=Custom Door 4 Right
+tile.theheist:fake_iron_block.name=Fake Iron Block
+tile.theheist:vending_machine.name=Vending Machine
+tile.theheist:green_block.name=Green Block
+tile.theheist:dropper_block.name=Dropper Block
+tile.theheist:conveyor.name=Conveyor
+tile.theheist:laser.name=Laser
+tile.theheist:laser_end.name=Laser End
+## I don't know if all three are needed, but just to be safe
+item.crimson_sign.name=White Sign
+tile.crimson_wall_sign.name=White Sign
+tile.crimson_standing_sign.name=White Sign
+tile.theheist:camera_sight.name=Camera Sight Block
+tile.theheist:sonar_sight.name=Sonar Sight Block
+tile.theheist:white_trapdoor.name=White Trapdoor
+tile.theheist:reinforced_iron_block.name=Reinforced Iron Block
+tile.theheist:file_cabinet.name=File Cabinet
+tile.theheist:recharge_mode_lvl_1=Recharge Mode Lvl. 1
+tile.theheist:recharge_mode_lvl_2=Recharge Mode Lvl. 2
+tile.theheist:hacking_mode_lvl_1=Hacking Mode Lvl. 1
+tile.theheist:hacking_mode_lvl_2=Hacking Mode Lvl. 2
+tile.theheist:sensor_mode_lvl_1=Sensor Mode Lvl. 1
+tile.theheist:sensor_mode_lvl_2=Sensor Mode Lvl. 2
+tile.theheist:xray_mode_lvl_1=X-Ray Mode Lvl. 1
+tile.theheist:chair.name=Chair
+tile.theheist:server.name=Server
+tile.theheist:recharge_station.name=Recharge Station
+tile.theheist:projector.name=Projector
+tile.theheist:drawer_decoration.name=Drawer Decoration
+tile.theheist:keycard_reader.name=Keycard Reader
+tile.theheist:chemistry_decoration.name=Chemistry Decoration
+item.theheist:nv_glasses.name=NV Goggles
+tile.theheist:gameband_display.name=Gameband Display Stand
+tile.theheist:sensor_mode_display.name=Sensor Mode Display
+
+## Rename vanilla items
+item.dye.red.name=Red Keycard
+item.dye.yellow.name=Yellow Keycard
+item.dye.green.name=Green Keycard
+item.dye.blue.name=Blue Keycard
+
+map.sub.forgot_prototypes=Hey dumb dumb, you forgot some of the prototypes!
+
+## All lang files have this in English annoyingly
+map.sub.107=Whatever you do, don't click that link. Trust me, it'll scar you for life.
+
+map.sub.001.A=Tamam hırsız. Yanlış yapmaman için üzerinden bir daha geçelim. Senin işin değerli araştırma ve prototipleri çalmak. Bunu yapmak için binaya girmen gerekiyor. Başta çok basit. Çatıya gelene kadar merdivenlerden yukarı çık. Sonra havalandırma sistemine gir. Oradan zemin kata doğru alçalman gerekiyor.
+
+map.sub.001.B=Dışarı çıkıp aramaya başladığında. Güvenlik sistemlerine dikkat et. Eğer yakalanırsan, bütün alan kilitlenir. Bunun olmayacağını düşünerek, ve binadan yolunu bulup çıkmayı başarırsan, benimle burda buluş. Oradan arabayla kaçıcağız ve paranın yüzde 70’ini alıcaksın. Yani, neyi bekliyorsun? Git bakalım.
+
+map.sub.002=Buraya kadar tam olarak neler aldın? Orada mısın? Mikrofonun çalışıyor mu? Çok güzel, soygunu başlatmak için ne güzel bir yol. Sanırım mikrofonun patladı. Sadece gitmeye devam et. Sorun değil.
+
+
+map.sub.003=Niye hareket etmiyorsun? Takıldın veya başka birşey mi oldu? Sadece bir kapak. Atlamaya çalış.
+
+map.sub.004=İşte oldu.
+
+
+map.sub.101=Tamam şimdi, orada dur! Ciddiyim hareket etme! Biryere gitmeden önce, köşede bir kamera var! Kameralarla ilgili yapman gereken şey: Eğer seni görürlerse, alarmın sesini yükseltirler. Alarm sesi biryere kadar varınca, alarm kapanacak. Ve bu demek ki bunu yapacak birisini bulmam gerek. Bu da bir talihsizlik. Yapman gereken şey, olabildiğince hızlıca kızlar tuvaletinden koşup koridordan güvenlik ofisine girmek.
+
+map.sub.102=Bak bakalım kamerayla ilgili bir şeyler yapabiliyor musun.
+
+map.sub.103=İşin bittiğinde ofis yanı kapısına git. Ama hızlı ol. Bütün gece burada değiliz.
+
+map.sub.104=İşte! Burada oluşumuzun nedeni! Bodrum kata gitmelisin.
+
+map.sub.105=Neyi bekliyorsun? Sadece duvara yapış ve resepsiyon masasına ilerle.
+
+map.sub.106=Şu kapıyı görüyor musun: Sadece yetkili personel? oraya gitmen gerekiyor. Kilit kartı gerekli. Ama sende yok.
+
+map.sub.108=Gerçekten mi? Daha şimdiden gücün mü bitti? Çok kullandın. Buluşma odasındaki doldurma şarj istasyonunu kullan. Mavi moda geçmen gerekiyor.
+
+map.sub.109=Vay, buraya kadar geleceğini düşünmüyordum.
+
+
+
+map.sub.200=Sadece burada durma. Prototipi hack’le!
+map.sub.201=Bekle, onu kullanıcak mısın? Sadece kırmadığından emin ol.
+
+map.sub.202=Ha bu arada, robotları anlatmayı unuttum. Büyük ihtimalle onlardan kaçmak istersin.
+
+map.sub.204=Bir sahtekar için, çok yeteneklisin
+
+
+
+map.sub.300=Bu kat büyük. Kaybolma.
+
+map.sub.301=Bu sefer kilit kartı yok. Sanırım bu sefer senin kodu bulman gerek.
+
+map.sub.302=İşte bu neden onların güzel şeylere sahip olamayacağı. Kodu aldın, asansöre git. İşimiz hala bitmedi.
+
+
+
+map.sub.400=Lazerler olduğunuda söylemiş miydim?
+
+map.sub.401=Kendine bak. Görevimiz Tehlike’de gibi gidiyorsun.
+
+map.sub.402=Şimdi ne?
+
+map.sub.403=Hmm. Akıllıca.
+
+map.sub.404=Kim bilebilirdi, Sen aslında kabiliyetli bir hırsızmışsın.
+
+
+
+map.sub.500=Bekle, onu nasıl yaptın?! Orada ölebilirdin! Bu paraya çok ihtiyacın olmalı.
+
+map.sub.501=Döşemeleri böyle yapmaları şok edici değil mi? Söylediğimi unut. Çok kötüydü.
+
+map.sub.502=Hah, kim bilebilirdi.
+map.sub.503=Senin gibi bir suçlu eğlenmek için ne yapar? Herhangi bir hobi? Oh evet bekle, mikrofonun…
+
+map.sub.504=Söylemeliyim, cevap veremeyen biriyle konuşmak biraz garip hissettiriyor
+
+
+
+map.sub.600=Bu kattan sonra son bir kat
+
+map.sub.601=Burda çalışan kişiler pazartesi sabahı çok şaşıracak.
+
+map.sub.602=Bir şekilde karşı tarafa geçmen gerekiyor. Bu kadar, paranı istiyorsan tabikide.
+
+
+
+map.sub.700.A=Ah shugs, bu biraz garip. Sana bir şey söylemem gerekiyor. Seninle tamamen samimi olmadım. Senin gerçekten buraya kadar geleceğini düşünmüyordum. Beni garip bir duruma soktun. Bir tarafta yetenekli bir soyguncusun, sanırım. Diğer tarafta işimi kaybetmek istemiyorum. Ben bu adamlar için çalışıyorum. Bütün bu şeyler daha önce hazırlanmıştı. Para yok.
+
+map.sub.700.B=Sadece dışarıdan birinin güvenliği kontrol etmesini istediler. Bu binadan gerçek prototiplerle kaçmana iyi bir şey diyeceklerini sanmıyorum . Bunun olmasını önlemek için. Dışarıdan alarmı çalıştırıcağım. 5 dakika sürücek. Yani orada kal. Veya belki sen, biliyorsun işte, kameranın önüne geçebilirsin? Bu işi hızlandırır.
+
+map.sub.701=Hey, nereye gidiyorsun? Bu kata çıkış yok. Yerin altındasın ve asansör yukarı çıkmıyor. Bu katta sana yardım edebilecek hiçbir şey yok. En azından, benim bildiğim.
+
+map.sub.702=Orada dur, buradan çıkmıyorsun
+
+map.sub.703=Gerçekten mi?! Işınlanma mı? Şaka yapıyor olmalısın? Beni senin yüzünden kovucaklar. Hayatının geri kalanını bir adamı kovdurttuğunu hatırlayarak geçirmelisin. Tamam mı?
+
+map.sub.704=Lütfen yapma!
+
+
+
+
+map.console.camera=§o§7Kamera kaptıldı
+
+map.console.sonar=§o§7Radar kapatıldı
+
+map.console.alarm=§o§7Güvenlik uyarıları silindi
+
+
+
+map.mail.001=Hey Tom, Yine asansör için senin kilit kartını buldum… Yardım ofisindeki odun masanın çekmecesinde bulucaksın.
+
+map.mail.002=Kahkaha içindeyim, bu videoya bakmalısın: BURAYA TIKLA, Saygılarla, Zed (https://www.youtube.com/watch?v=Hb7w-dIjNHI)
+
+map.mail.003=Hey Sally, yatırımcıları aramanı istiyorum. Diğer hafta onlara bodrum katında bir tur vermek istiyorum. Prototipler hazır. Saygılarla, Donovan
+
+
+
+map.mail.100=Sensör düzey 1: (Enerji kullanımı 1.0 ünite/saniye): Bu mod kullanıcının kamera ve robotların hangi alanları gördüğünü görmesini sağlar. Bu kullanım dışında robotların çizdiği yol görülebilir.
+
+map.mail.101=Hack’leme düzey 2: (Enerji kullanımı her kullanışta 10 ünite): Bu mod kullanıcının bölüm iki konsollarını hackliyebilmesini sağlar ve daha az enerji kullanır
+
+map.mail.102=Şarj olma düzey 2: Gameband şimdi 150 ünite depolayabiliyor ve hala kullanıcıya yapması gereken olayları gösterebiliyor
+
+map.mail.103=Ola Sandro, eğer yeni robot dizaynlarını görmek istersen kamera odasındaki Hank’e gitmen gerekiyor. Onda bir sürü yedek kilit kartı var.
+
+map.mail.104=Re: Ne demek sende yanlış kilit kartı var? Şarj Olma Araştırmaları bölümünde yeşil kilit kartı ve Kamera Yapımı’nda da sarı. Çok kolay birşey söyledim… Richard’ın bu kadar basit birşeyi yanlış yapmasına inanamıyorum. Özür dilerim. Pazartesi sabahı düzeltiriz.
+
+
+
+map.mail.200=Hey Sam, eğer klima seni rahatsız ediyorsa Dani’ye git. Duyduğuma göre havalandırma yapımı odası için bir kilit kartı varmış. Müşteri Yardımı’nda onu ara, bilgisayarının arkaplanı yürüyen tavuk resmi. Bulamamak biraz zor.
+
+map.mail.201=Kimle konuştuklarını biliyorlar mı? Ben Araştırmanın başıyım! Niye bir asansöre binmek için 10 numaralı bir kod hatırlamam gerekiyorki? Boşver, masamın üstüne yapışkanlı bir not yapıştıracağım. Güvenliği çok göze alanlara çalışanlara söylüyorum. Saygılarla, Araştırma’nın Başı
+
+map.mail.202=Sevgili Stephanie, yeni olduğunu görüyorum, Sensör Araştırmasındaki adamları/kızları ziyaret etmeni öneriyorum. Tesisin bütün katlarının haritalarını sana verebilirler. Direkten Gamband’ine yüklüyorlar.
+
+map.mail.203=X-ray düzey 1 (Enerji kullanımı 1.33 ünite/saniye): Bu modu kullanmak kullanıcının killerin diğer tarafını görmesini sağlar. Bu efekt tek yönlü cam gibi çalışır yani robotlar ve kameralar mod aktiveyken kullanıcıyı duvarın arkasından göremez
+
+map.mail.204=Sensör düzey 2 (Enerji kullanımı 0.4 ünite/saniyede): Sensor modu artık daha az enerji kullanıyor. Buna ek olarak, Sensör modu artık bulundukları katın haritasını gösteriyor. Bunu yapmaları için Sensör modunun açık ve direkt olarak aşağıya bakılması gerekiyor.
+
+map.mail.205=Önemli: Kamu hizmeti Anonsu kilit kartları gibi kaybolmuş eşyalar Kaybolmuş ve Bulunmuş bölümünden alınabilir , o da -2. kattaki güvenlik ofisindedir. Okuduğunuz için teşekkürler.
+
+map.mail.206=Hey Howard, Araştırmanın Başı bana onun bilgisayarı için ona yardım etmemi istedi. Gözünün bu kadar kötü olduğunu farketmemiştim. Bilgisayarının masaüstündeki ikonlarını görmen gerek. Acayip büyükler. Bir de masasının üzerinde bir sarı yapışkan not var. Gerçekten de insanoğlu tarihinin en büyük notu.
+
+
+
+map.mail.300=Hey Freya, pazartesiden sonra bir mekanik çalışanına ihtiyacımız olacak. Çalışmayan bir robot lazerlere çarptı. Alarmların çalmaması için zıplayarak geçmek zorundalar. İzlemesi biraz komik.
+
+map.mail.301=Gizlilik düzey 1 (Enerji kullanımı 40.0 ünite/saniye): Bu mod kullanıcın görünmez olmasını sağlar. Görünmezken kullanıcıyı görüş bazlı kameralar, robotlar ve lazerler göremez.
+map.mail.302=Mıknatıs düzey 1 (Enerji kullanımı 1.6 ünite/saniye): Bu mod kullanıcının tavandaki demir bloklara yapışmasını sağlar. Bu özellik her zaman kullanıcıyı yukarı çeker. Ama ayrıca tavanda yürümenizi de sağlar.
+
+map.mail.303=Re: Bilgiye bir daha baktım ve sana söyleyebilirim ki ne zaman bir robot kameranın önüne geçse kocaman bir kör nokta oluşuyor ve kamera robottan başka birşey göremiyor. Sana bir daha söylüyorum ki bu kameralara acil bir güvenlik güncellemesi gelmesi lazım. Herkes kolayca kameraları kırabilir ve güvenliğin önüne geçebilir
+
+map.mail.304=Hey Lauren, Eğer asansörden aşağı muhasebeyi görmek için inmek istersen denim kartımı ödünç al. Sadece işin bittiğinde kontrol odasına koyduğundan emin ol, çekmeci açık bırakacağım ki Pazartesi sabahı al
+
+
+
+map.mail.400=Gizlilik Araştırması geliştiricilerine yanıt olarak Gizlilik kullananları bile bulan bir kamera icat ettik. Bu kamera görüntü yerine hareketi takip ediyor
+
+map.mail.401=Şarj olma düzey 3: Gameband artık 200 ünite enerji depolayabiliyor.
+
+map.mail.402=Hey Bob, Pazartesi testlerini biraz ilginç yapalım. Kilit kartını geri istiyorsan alarmları çalıştırmadan eğitim alanından geçmen gerek. Kahveyle yaptığın küçük şakaya karşı benim şakam gibi düşün. Sert bir duyguyla söylemiyorum.
+
+map.mail.403=Sersemletici düzey 1 (Enerji kullanımı 10.0 her kullanış 10 ünite): Bu mod 2 blok yakındaki herhangi bir robotu şok etmek için kullanılır.
+
+map.mail.404=Re: Hey Adam, ne demek radar l ilgili bir sorun var. Sen muhasebede çalışıyorsun, Sen böyle şeyleri nasıl bilebilirsin ki? Saygılarla, Roger
+
+map.mail.405=Sayın Roger, Bu denim uzmanlığım değil, ama sizin sesi hareket bulmak için kullandığınız yöntemi düşünüyordum. Yavaş aralıklarla dalga gönderiyor. Dalga gelirken durmak ve yokken ilerlemek geçmemizi sağlamaz mı? Saygılarla, Adam
+
+map.mail.406=X-ray düzey 2 (Enerji kullanımı 0.67 ünite/saniye): Bu mod kullanıcının enerjisini iki kat yavaş bitirir. Buna ek olarak kullanıcı artık kullanıcının andezit duvarların arkasınıda görmesini sağlıyor
+
+
+map.mail.500=Re: Re: Beni yanlış anlama Bana verilen ofisle sorun yok. Çok geniş. Sadece Delme Araştırma odasına haha yakın olsun isterdim . Demek istediğim koridorun diğer tarafında. Bana iki kilit kartı göndermişsiniz. Bif tanesini yedek tutsam  olur mu?
+
+map.mail.501=Delme düzey 1 (Enerji kullanımı 30.0 ünite her kullanım): Bu mod kullanıcının kahverengi sertleştirilmiş kil de insan-boyutu delikler açar.
+
+map.mail.502=Hack’leme düzey 3: (Enerji kullanımı 5 ünite her kullanım): Bu mod kullanıcının düzey 3 konsollarını hacklemelerini daha düşük enerjide yapabilir.
+
+map.mail.503=Gizlilik düzey 2. (Enerji kullanımı 10.0 ünite/saniye): Gizliliğin bu gelişmiş hali eski modelden 4 kat daha az enerji harcıyor. Bu da demek ki daha uzun süre kullanılabilir.
+
+map.mail.504=Re: Sayın Donovan, Diğer hafta yatırımcılarla bir tur ayarladım. Tek sorun personel şefi tatilde olucak . Ofiste kilit kartını bıraktı, ama tur için burada olmayacak. Saygılarla, Sally
+
+map.mail.505=Re: Hey Naomi, Biliyorum gizli prototiple merakın var. Almanın tek yolu, Araştırma, Teknoloji ve Mühendislik Personeli Şefinden gelicek onay. İnan bana öyle birşey olmayacak.
+
+map.mail.506.A=Sayın Zed, İşinin üzerine bir sürü negatif yorum alıyorum. İş saatlerinde YouTube videoları izlemek. Duyduğuma göre sözleşmeyi uzatmıyorlarmış. Bu bir başarısızlık.
+
+map.mail.506.B=Seni iyi bir hale sokabilirim. O da, bana bir iyilik yaparsan. Buranın güvenliğini test edicek birini bulmanı istiyorum. Teste katılan kişinin ne yapacağını önceden bilmesini istemiyorum. Yapabileceğini düşünüyor musun? Saygılarla, Walter
+
+map.mail.507=Re: Buradaki güvenlik sistemlerinin iyi olmadığından korkuyorum. Bu hafta sonu bu işi yapabilicek birini bulucağım. Bakalım nasıl gidecek. Belki yaşlı adamın aklını değiştirir.  Saygılarla, Walter
+
+map.mail.508=Hey Emma, Yeni asistanın ne zaman geleceğini biliyor musun? Lütfen bilgili olduğunu söyle. Eğer zamanımı her küçük detayı anlatarak geçireceksem, o zaman ilk olarak asistana sahip olmanın anlamı ne? Her neyse bende bir sürü eski anahtar ve başka şeyler var. Çekmecemde bırakıp diğer adama bırakayım mı?
+
+## Cu
+beginnerTips.1=If you have Minecraft Java, check out the original version: https://www.planetminecraft.com/project/the-heist-3372054/
+beginnerTips.2=Standing in front of cameras increases the alarm level.
+beginnerTips.3=Cameras and sonars can't see you if you are farther than 10 blocks away.
+beginnerTips.4=Upgrading gamebands can make them cheaper or faster.
+beginnerTips.5=The last gameband you unlock is really cool.
+beginnerTips.6=Select recharge mode to view your objectives.
+beginnerTips.7=Robots are like moving cameras.
+beginnerTips.8=Levels get more and more difficult the lower you go.
+beginnerTips.9=Wow, this place has really tight security.
+beginnerTips.10=Didn't think you'd make it this far.
+beginnerTips.11=CHICKEN
+beginnerTips.12=This project took over a month to create!
+
+midgameTips.1=If you have Minecraft Java, check out the original version: https://www.planetminecraft.com/project/the-heist-3372054/
+midgameTips.2=Standing in front of cameras increases the alarm level.
+midgameTips.3=Cameras and sonars can't see you if you are farther than 10 blocks away.
+midgameTips.4=Upgrading gamebands can make them cheaper or faster.
+midgameTips.5=The last gameband you unlock is really cool.
+midgameTips.6=Select recharge mode to view your objectives.
+midgameTips.7=Robots are like moving cameras.
+midgameTips.8=Levels get more and more difficult the lower you go.
+midgameTips.9=Wow, this place has really tight security.
+midgameTips.10=Didn't think you'd make it this far.
+midgameTips.11=CHICKEN
+midgameTips.12=This project took over a month to create!
+midgameTips.13=Make sure to recharge your gamebands whenever you can.
+midgameTips.14=Sonars only see you if you are moving and in their LINE of sight.
+midgameTips.15=If you have Minecraft Java, check out the original version: https://www.planetminecraft.com/project/the-heist-3372054/
+midgameTips.16=Standing in front of cameras increases the alarm level.
+midgameTips.17=Cameras and sonars can't see you if you are farther than 10 blocks away.
+midgameTips.18=Upgrading gamebands can make them cheaper or faster.
+midgameTips.19=The last gameband you unlock is really cool.
+midgameTips.20=Select recharge mode to view your objectives.
+midgameTips.21=Robots are like moving cameras.
+midgameTips.22=Levels get more and more difficult the lower you go.
+midgameTips.23=Wow, this place has really tight security.
+midgameTips.24=Didn't think you'd make it this far.
+midgameTips.25=CHICKEN
+midgameTips.26=This project took over a month to create!
+midgameTips.27=Make sure to recharge your gamebands whenever you can.
+midgameTips.28=Sonars only see you if you are moving and in their LINE of sight.
+midgameTips.29=If you have Minecraft Java, check out the original version: https://www.planetminecraft.com/project/the-heist-3372054/
+midgameTips.30=Standing in front of cameras increases the alarm level.
+midgameTips.31=Cameras and sonars can't see you if you are farther than 10 blocks away.
+midgameTips.32=Upgrading gamebands can make them cheaper or faster.
+midgameTips.33=The last gameband you unlock is really cool.
+midgameTips.34=Select recharge mode to view your objectives.
+midgameTips.35=Robots are like moving cameras.
+midgameTips.36=Levels get more and more difficult the lower you go.
+midgameTips.37=Wow, this place has really tight security.
+midgameTips.38=Didn't think you'd make it this far.
+midgameTips.39=CHICKEN
+midgameTips.40=This project took over a month to create!
+midgameTips.41=Make sure to recharge your gamebands whenever you can.
+midgameTips.42=Sonars only see you if you are moving and in their LINE of sight.
+midgameTips.43=If you have Minecraft Java, check out the original version: https://www.planetminecraft.com/project/the-heist-3372054/
+midgameTips.44=Standing in front of cameras increases the alarm level.
+midgameTips.45=Cameras and sonars can't see you if you are farther than 10 blocks away.
+midgameTips.46=Upgrading gamebands can make them cheaper or faster.
+midgameTips.47=The last gameband you unlock is really cool.
+midgameTips.48=Select recharge mode to view your objectives.
+midgameTips.49=Robots are like moving cameras.
+midgameTips.50=Levels get more and more difficult the lower you go.
+midgameTips.51=Wow, this place has really tight security.
+midgameTips.52=Didn't think you'd make it this far.
+midgameTips.53=CHICKEN
+midgameTips.54=This project took over a month to create!
+midgameTips.55=Make sure to recharge your gamebands whenever you can.
+midgameTips.56=Sonars only see you if you are moving and in their LINE of sight.
+midgameTips.57=If you have Minecraft Java, check out the original version: https://www.planetminecraft.com/project/the-heist-3372054/
+midgameTips.58=Standing in front of cameras increases the alarm level.
+midgameTips.59=Cameras and sonars can't see you if you are farther than 10 blocks away.
+midgameTips.60=Upgrading gamebands can make them cheaper or faster.
+midgameTips.61=The last gameband you unlock is really cool.
+midgameTips.62=Select recharge mode to view your objectives.
+midgameTips.63=Robots are like moving cameras.
+midgameTips.64=Levels get more and more difficult the lower you go.
+midgameTips.65=Wow, this place has really tight security.
+midgameTips.66=Didn't think you'd make it this far.
+midgameTips.67=CHICKEN
+midgameTips.68=This project took over a month to create!
+midgameTips.69=Make sure to recharge your gamebands whenever you can.
+
+lategameTips.1=If you have Minecraft Java, check out the original version: https://www.planetminecraft.com/project/the-heist-3372054/
+lategameTips.2=Standing in front of cameras increases the alarm level.
+lategameTips.3=Cameras and sonars can't see you if you are farther than 10 blocks away.
+lategameTips.4=Upgrading gamebands can make them cheaper or faster.
+lategameTips.5=The last gameband you unlock is really cool.
+lategameTips.6=Select recharge mode to view your objectives.
+lategameTips.7=Robots are like moving cameras.
+lategameTips.8=Levels get more and more difficult the lower you go.
+lategameTips.9=Wow, this place has really tight security.
+lategameTips.10=Didn't think you'd make it this far.
+lategameTips.11=CHICKEN
+lategameTips.12=This project took over a month to create!
+lategameTips.13=Make sure to recharge your gamebands whenever you can.
+lategameTips.14=Sonars only see you if you are moving and in their LINE of sight.
+lategameTips.15=If you have Minecraft Java, check out the original version: https://www.planetminecraft.com/project/the-heist-3372054/
+lategameTips.16=Standing in front of cameras increases the alarm level.
+lategameTips.17=Cameras and sonars can't see you if you are farther than 10 blocks away.
+lategameTips.18=Upgrading gamebands can make them cheaper or faster.
+lategameTips.19=The last gameband you unlock is really cool.
+lategameTips.20=Select recharge mode to view your objectives.
+lategameTips.21=Robots are like moving cameras.
+lategameTips.22=Levels get more and more difficult the lower you go.
+lategameTips.23=Wow, this place has really tight security.
+lategameTips.24=Didn't think you'd make it this far.
+lategameTips.25=CHICKEN
+lategameTips.26=This project took over a month to create!
+lategameTips.27=Make sure to recharge your gamebands whenever you can.
