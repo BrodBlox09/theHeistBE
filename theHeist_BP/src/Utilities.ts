@@ -46,7 +46,8 @@ export default class Utilities {
 		this.dimensions.overworld.getBlock(location)?.setPermutation(BlockPermutation.resolve(block, permutations));
 	}
 
-	static setBlockState(block: Block, stateName: string, stateValue: boolean | number | string) {
+	static setBlockState(block: Block, stateName: string, stateValue: boolean | number | string, checkForRedundance: boolean = true) {
+		if (checkForRedundance && block.permutation.getState(stateName) === stateValue) return;
 		block.setPermutation(block.permutation.withState(stateName, stateValue));
 	}
 

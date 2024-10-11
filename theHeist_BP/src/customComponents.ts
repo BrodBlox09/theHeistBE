@@ -4,6 +4,7 @@ import Vector from "./Vector";
 
 function robotPathTick(event: BlockComponentTickEvent) {
     let block = event.block;
+    if (block.typeId != "theheist:robot_path") return; // For some reason without this non-robot-path blocks run this...
     if (block.north()?.hasTag("robot_path")) Utilities.setBlockState(block, "theheist:north", 1);
     else Utilities.setBlockState(block, "theheist:north", 0);
     if (block.south()?.hasTag("robot_path")) Utilities.setBlockState(block, "theheist:south", 1);
