@@ -14,6 +14,28 @@ export default class LevelConstructor {
         rechargeStations = 0;
     }
 
+    static door1(loc: Vector, permutations?: Record<string, string | number | boolean>) {
+        Utilities.setBlock(loc, "theheist:custom_door_1_bottom", permutations);
+        Utilities.setBlock(loc.add(new Vector(0, 1, 0)), "theheist:custom_door_1_top", permutations);
+    }
+
+    static door2(loc: Vector, permutations?: Record<string, string | number | boolean>) {
+        Utilities.setBlock(loc, "theheist:custom_door_2_bottom", permutations);
+        Utilities.setBlock(loc.add(new Vector(0, 1, 0)), "theheist:custom_door_2_top", permutations);
+    }
+
+    static door3(loc: Vector, permutations?: Record<string, string | number | boolean>) {
+        Utilities.setBlock(loc, "theheist:custom_door_3_bottom", permutations);
+        Utilities.setBlock(loc.add(new Vector(0, 1, 0)), "theheist:custom_door_3_top", permutations);
+    }
+
+    static door4(locLeft: Vector, locRight: Vector, permutations?: Record<string, string | number | boolean>) {
+        Utilities.setBlock(locLeft, "theheist:custom_door_4_bottom_l", permutations);
+        Utilities.setBlock(locLeft.add(new Vector(0, 1, 0)), "theheist:custom_door_4_top_l", permutations);
+        Utilities.setBlock(locRight, "theheist:custom_door_4_bottom_r", permutations);
+        Utilities.setBlock(locRight.add(new Vector(0, 1, 0)), "theheist:custom_door_4_top_r", permutations);
+    }
+
     static gamebandUpgrade(loc: Vector, mode: string, modeText: string, level: number, inventorySlot: number, blockRot: number, actions: IAction[]) {
         const console = overworld.spawnEntity("armor_stand", { "x": loc.x, "y": Utilities.consolesHeight, "z": loc.z });
         Utilities.setBlock(loc, `theheist:${mode}_mode_display`, { "theheist:rotation": blockRot });
@@ -87,12 +109,14 @@ export default class LevelConstructor {
         Utilities.setBlock(loc, "theheist:keypad", { "theheist:rotation": blockRot });
         overworld.spawnEntity("theheist:hover_text", loc).nameTag = `Lvl. ${level}`;
         var allActions = actions;
-        allActions.push({
-            "type": "set_block", "do": { "x": loc.x, "y": loc.y, "z": loc.z, "block": "theheist:keypad", "permutations": { "theheist:rotation": blockRot, "theheist:unlocked": 1 } }
-        },
+        allActions.push(
+            {
+                "type": "set_block", "do": { "x": loc.x, "y": loc.y, "z": loc.z, "block": "theheist:keypad", "permutations": { "theheist:rotation": blockRot, "theheist:unlocked": 1 } }
+            },
             {
                 "type": "set_block", "do": { "x": loc.x, "y": loc.y, "z": loc.z, "block": "theheist:keypad", "permutations": { "theheist:rotation": blockRot, "theheist:unlocked": 2 } }, "delay": 40
-            });
+            }
+        );
         const consoleActionTracker = {
             "name": "actionTracker",
             "used": false,

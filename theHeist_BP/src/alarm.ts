@@ -1,4 +1,4 @@
-import { world, system, GameMode, Player, EntityQueryOptions, MolangVariableMap } from "@minecraft/server";
+import { world, system, GameMode, Player, EntityQueryOptions, MolangVariableMap, BlockComponent, Block } from "@minecraft/server";
 import { solidToTransparent } from "./gamebands/xray";
 import * as SensorModeFunc from "./gamebands/sensor";
 import DataManager from "./DataManager";
@@ -88,15 +88,16 @@ function cameraCanSeeThrough(location: Vector): boolean {
 	if (topBlockTID.startsWith("theheist:laser") && bottomBlockTID.startsWith("theheist:laser")) return true;
 	if (topBlockTID.endsWith("_stained_glass") && bottomBlockTID.endsWith("_stained_glass")) return true;
 	if (topBlockTID.endsWith("_stained_glass_pane") && bottomBlockTID.endsWith("_stained_glass_pane")) return true;
-	if (bottomBlockTID.startsWith("theheist:custom_door_") && bottomBlock.permutation.getState("theheist:open")) return true;
+	if (bottomBlockTID.startsWith("theheist:custom_door_") && Utilities.getBlockState(bottomBlock, "theheist:open")) return true;
 	return false;
 }
 
 function sonarCanSeeThrough(location: Vector): boolean {
 	var block = Utilities.dimensions.overworld.getBlock(location);
-	if (block?.typeId == "minecraft:air") return true;
-	if (block?.typeId == "theheist:laser") return true;
-	if (block?.typeId.startsWith("theheist:custom_door_") && block.permutation.getState("theheist:open")) return true;
+	if (!block) return false;
+	if (block.isAir) return true;
+	if (block.typeId == "theheist:laser") return true;
+	if (block.typeId.startsWith("theheist:custom_door_") && Utilities.getBlockState(block, "theheist:open")) return true;
 	return false;
 }
 
@@ -170,7 +171,6 @@ function updateRobots(player: Player, level: number, levelInformation: LevelInfo
 				if (reqRot < 0 && currRot > 90) reqRot = 270;
 				if (reqRot > 0 && currRot < 0) currRot = 360 + currRot;
 				if (Math.abs(reqRot - currRot) >= 25) {
-					//console.log(`Curr: ${currRot}\nReq: ${reqRot}\nDir: ${Math.sign(reqRot - currRot)}`);
 					cameraRobotArmorStand.setRotation({ "x": 0, "y": currRot + Math.sign(reqRot - currRot) * 4.5 });
 					move = false;
 				} else cameraRobotArmorStand.setRotation({ "x": 0, "y": reqRot });

@@ -1,4 +1,4 @@
-import { EntityTypes, system, world, Vector3, EntityInventoryComponent, GameMode, EntityQueryOptions } from "@minecraft/server";
+import { system, world, Vector3, Player, EntityQueryOptions } from "@minecraft/server";
 import VoiceOverManager from "./VoiceOverManager";
 import DataManager from "./DataManager";
 import Utilities from "./Utilities";
@@ -20,15 +20,15 @@ world.afterEvents.playerSpawn.subscribe(eventData => {
 	if (!eventData.initialSpawn || !eventData.player.hasTag('loadingLevel')) return;
 	var levelInfo: LevelInformation = DataManager.getData(eventData.player, "levelInformation");
 	var gameLevel = levelInfo.information[1].level;
-	if (gameLevel == 0.5) Utilities.dimensions.overworld.runCommandAsync(`scriptevent theheist:load-level 0-1`);
-	if (gameLevel == 0) Utilities.dimensions.overworld.runCommandAsync(`scriptevent theheist:load-level 0-2`);
-	else Utilities.dimensions.overworld.runCommandAsync(`scriptevent theheist:load-level ${gameLevel}-1`);
+	if (gameLevel == 0.5) Utilities.dimensions.overworld.runCommand(`scriptevent theheist:load-level 0-1`);
+	if (gameLevel == 0) Utilities.dimensions.overworld.runCommand(`scriptevent theheist:load-level 0-2`);
+	else Utilities.dimensions.overworld.runCommand(`scriptevent theheist:load-level ${gameLevel}-1`);
 	eventData.player.sendMessage("RUNNING LOADING OF LEVEL");
 });
 
-system.beforeEvents.watchdogTerminate.subscribe((event) => {
-	event.cancel = true;
-});
+// system.beforeEvents.watchdogTerminate.subscribe((event) => {
+// 	event.cancel = true;
+// });
 
 const levelLocations: Record<string, Vector3> = {
 	"2": { 'x': 0.5, 'y': -50, 'z': 56.5 },
@@ -44,16 +44,16 @@ const levelLocations: Record<string, Vector3> = {
 
 const objectivesObjective = world.scoreboard.getObjective("objectives") ?? world.scoreboard.addObjective("objectives", "Objectives");
 
-world.beforeEvents.chatSend.subscribe(event => {
-	const player = event.sender;
-	const msg = event.message;
-	if (!msg.startsWith("!")) return;
-	event.cancel = true;
+system.afterEvents.scriptEventReceive.subscribe(event => { // stable-friendly version of world.beforeEvents.chatSend
+	if (event.id != "theheist:run_cmd") return;
+	const player = event.sourceEntity as Player;
+	if (!player || player.typeId != "minecraft:player") return;
 	if (!player.hasTag("developer")) {
 		player.sendMessage("§4You must have the §6'developer'§4 tag to use developer commands.");
 		return;
 	}
-	const args = msg.slice(1).split(" ");
+	const msg = event.message;
+	const args = msg.split(" ");
 	const cmd = args.shift();
 	switch (cmd) {
 		case "lvlTp":

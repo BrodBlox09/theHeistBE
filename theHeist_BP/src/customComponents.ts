@@ -56,10 +56,11 @@ function bottomDoorPlace(event: BlockComponentOnPlaceEvent) {
     system.runTimeout(() => {
         let block = event.block;
         let blockTypeId = block.typeId;
-        let topBlock = block.above();
+        let topBlock = block.above()!;
         let topBlockTypeId = blockTypeId.slice(0, 23) + "top";
         let topBlockPermutation = BlockPermutation.resolve(topBlockTypeId, block.permutation.getAllStates());
-        topBlock?.setPermutation(topBlockPermutation);
+        topBlock.setType('air');
+        topBlock.setPermutation(topBlockPermutation);
     });
 }
 
@@ -110,29 +111,19 @@ function directionalBlockOnPlaceEvent(event: BlockComponentPlayerPlaceBeforeEven
     let block = event.block;
     let playerRot = event.player!.getRotation().y;
         if (-45 < playerRot && playerRot <= 45) { // South
-            block.setPermutation(block.permutation.withState("theheist:rotation", 3));
+            Utilities.setBlockState(block, "theheist:rotation", 3);
         } else if (45 < playerRot && playerRot <= 135) { // West
-            block.setPermutation(block.permutation.withState("theheist:rotation", 4));
+            Utilities.setBlockState(block, "theheist:rotation", 4);
         } else if ((135 < playerRot && playerRot <= 180) || (-180 <= playerRot && playerRot <= -135)) { // North
-            block.setPermutation(block.permutation.withState("theheist:rotation", 2));
+            Utilities.setBlockState(block, "theheist:rotation", 2);
         } else if (-135 < playerRot && playerRot <= -45) { // East
-            block.setPermutation(block.permutation.withState("theheist:rotation", 5));
+            Utilities.setBlockState(block, "theheist:rotation", 5);
         }
     });
 }
 
-function randBlock3Types(event: BlockComponentPlayerPlaceBeforeEvent) {
-    system.runTimeout(() => {
-    let block = event.block;
-        block.setPermutation(block.permutation.withState("theheist:type", Utilities.getRandInt(0, 3)));
-    });
-}
-
-function randBlock6Types(event: BlockComponentPlayerPlaceBeforeEvent) {
-    system.runTimeout(() => {
-    let block = event.block;
-        block.setPermutation(block.permutation.withState("theheist:type", Utilities.getRandInt(0, 6)));
-    });
+function randBlockNTypes(nTypes: number, event: BlockComponentPlayerPlaceBeforeEvent) {
+    event.permutationToPlace = Utilities.permutationWithState(event.permutationToPlace, "theheist:type", Utilities.getRandInt(0, nTypes));
 }
 
 world.beforeEvents.worldInitialize.subscribe(event => {
@@ -140,16 +131,16 @@ world.beforeEvents.worldInitialize.subscribe(event => {
         beforeOnPlayerPlace: directionalBlockOnPlaceEvent
     });
     event.blockComponentRegistry.registerCustomComponent('theheist:3_types', {
-        beforeOnPlayerPlace: randBlock3Types
+        beforeOnPlayerPlace: randBlockNTypes.bind(null, 3)
     });
     event.blockComponentRegistry.registerCustomComponent('theheist:6_types', {
-        beforeOnPlayerPlace: randBlock6Types
+        beforeOnPlayerPlace: randBlockNTypes.bind(null, 6)
     });
     event.blockComponentRegistry.registerCustomComponent('theheist:bottom_door', {
         beforeOnPlayerPlace: directionalBlockOnPlaceEvent,
         onPlayerDestroy: bottomDoorBreak,
         onPlayerInteract: bottomDoorInteract,
-        onPlace: bottomDoorPlace
+        onPlace: bottomDoorPlace // This event doesn't run when trying to reset a door...for some reason (on script set block)
     });
     event.blockComponentRegistry.registerCustomComponent('theheist:top_door', {
         beforeOnPlayerPlace: directionalBlockOnPlaceEvent,

@@ -1,12 +1,21 @@
 {
-  "format_version": "1.16.0",
+  "format_version": "1.21.70",
   "minecraft:entity": {
     "description": {
       "identifier": "minecraft:chicken",
+      "spawn_category": "creature",
       "is_spawnable": true,
       "is_summonable": true,
-      "is_experimental": false
+      "properties": {
+        "minecraft:climate_variant": {
+          "type": "enum",
+          "values": [ "temperate", "warm", "cold" ],
+          "default": "temperate",
+          "client_sync": true
+        }
+      }
     },
+
     "component_groups": {
       "minecraft:chicken_baby": {
         "minecraft:is_baby": {
@@ -60,7 +69,10 @@
             "pumpkin_seeds",
             "pitcher_pod",
             "torchflower_seeds"
-          ]
+          ],
+          "property_inheritance": {
+            "minecraft:climate_variant": {}
+          }
         },
         "minecraft:behavior.breed": {
           "priority": 3,
@@ -98,13 +110,16 @@
         "value": 4,
         "max": 4
       },
-      "minecraft:damage_sensor": {
-          "triggers": {
-              "deals_damage": false
-          }
-      },
       "minecraft:movement": {
         "value": 0.25
+      },
+      "minecraft:damage_sensor": {
+        "triggers": [
+          {
+            "cause": "all",
+            "deals_damage": "no"
+          }
+        ]
       },
       "minecraft:leashable": {
         "soft_distance": 4.0,
@@ -114,49 +129,9 @@
       "minecraft:balloonable": {
         "mass": 0.5
       },
-      "minecraft:navigation.walk": {
-        "can_path_over_water": true,
-        "avoid_damage_blocks": true
-      },
-      "minecraft:movement.basic": {
-      },
-      "minecraft:jump.static": {
-      },
-      "minecraft:can_climb": {
-      },
-      "minecraft:despawn": {
-        "despawn_from_distance": {}
-      },
-      "minecraft:behavior.float": {
-        "priority": 0
-      },
-      "minecraft:behavior.panic": {
-        "priority": 1,
-        "speed_multiplier": 1.5
-      },
-      "minecraft:behavior.mount_pathing": {
-        "priority": 2,
-        "speed_multiplier": 1.5,
-        "target_dist": 0.0,
-        "track_target": true
-      },
-      "minecraft:behavior.tempt": {
-        "priority": 4,
-        "speed_multiplier": 1.0,
-        "items": [
-          "wheat_seeds",
-          "beetroot_seeds",
-          "melon_seeds",
-          "pumpkin_seeds",
-          "pitcher_pod",
-          "torchflower_seeds"
-        ]
-      },
-      "minecraft:physics": {
-      },
       "minecraft:pushable": {
-        "is_pushable": true,
-        "is_pushable_by_piston": true
+        "is_pushable": false,
+        "is_pushable_by_piston": false
       },
       "minecraft:conditional_bandwidth_optimization": {
       },
@@ -166,23 +141,45 @@
     },
 
     "events": {
-      "from_egg": {
-        "add": { "component_groups": [ "minecraft:chicken_baby" ] }
-      },
-
       "minecraft:entity_spawned": {
-        "randomize": [
+        "sequence": [
           {
-            "weight": 95,
-            "trigger": "minecraft:spawn_adult"
+            "randomize": [
+              {
+                "weight": 95,
+                "trigger": "minecraft:spawn_adult"
+              },
+              {
+                "weight": 5,
+                "add": {
+                  "component_groups": [
+                    "minecraft:chicken_baby"
+                  ]
+                }
+              }
+            ]
           },
           {
-            "weight": 5,
-            "add": {
-              "component_groups": [
-                "minecraft:chicken_baby"
-              ]
-            }
+            "first_valid": [
+              {
+                "filters": {
+                  "test": "has_biome_tag",
+                  "value": "spawns_warm_variant_farm_animals"
+                },
+                "set_property": {
+                  "minecraft:climate_variant": "warm"
+                }
+              },
+              {
+                "filters": {
+                  "test": "has_biome_tag",
+                  "value": "spawns_cold_variant_farm_animals"
+                },
+                "set_property": {
+                  "minecraft:climate_variant": "cold"
+                }
+              }
+            ]
           }
         ]
       },
@@ -215,6 +212,17 @@
           "component_groups": [
             "minecraft:chicken_adult"
           ]
+        }
+      },
+
+      "minecraft:hatch_warm": {
+        "set_property": {
+          "minecraft:climate_variant": "warm"
+        }
+      },
+      "minecraft:hatch_cold": {
+        "set_property": {
+          "minecraft:climate_variant": "cold"
         }
       }
     }

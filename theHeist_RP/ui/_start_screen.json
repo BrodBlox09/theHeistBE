@@ -1,16 +1,20 @@
 {
   "namespace": "start",
-
   "achievements_icon": {
     "type": "image",
     "texture": "textures/ui/achievements",
     "layer": 3,
-    "size": [ 16, 16 ]
+    "size": [
+      16,
+      16
+    ]
   },
-
   "inbox_bell_animation": {
     "anim_type": "flip_book",
-    "initial_uv": [ 0, 0 ],
+    "initial_uv": [
+      0,
+      0
+    ],
     "frame_count": 28,
     "frame_step": 8,
     "fps": 10,
@@ -18,23 +22,29 @@
     "reset_event": "inbox_bell_animation_reset",
     "looping": false
   },
-
   "inbox_bell_animated_icon": {
     "type": "image",
     "layer": 2,
     "texture": "textures/ui/bell_ringing",
-    "uv_size": [ 16, 16 ],
-    "size": [ 16, 16 ],
+    "uv_size": [
+      16,
+      16
+    ],
+    "size": [
+      16,
+      16
+    ],
     "uv": "@start.inbox_bell_animation"
   },
-
   "inbox_icon": {
     "type": "image",
     "texture": "textures/ui/icon_bell",
     "layer": 3,
-    "size": [ 16, 16 ]
+    "size": [
+      16,
+      16
+    ]
   },
-
   "unread_notification_animation_show": {
     "anim_type": "flip_book",
     "frame_count": 4,
@@ -43,21 +53,22 @@
     "looping": false,
     "resettable": false
   },
-
   "unread_notification_animation_wait": {
     "anim_type": "wait",
     "duration": 2.0,
     "play_event": "inbox_bell_animation_start",
     "next": "@start.unread_notification_animation_show"
   },
-
   "unread_notification_icon": {
     "type": "image",
     "texture": "textures/ui/red_dot",
     "layer": 4,
     "anchor_from": "top_right",
     "anchor_to": "top_right",
-    "size": [ 7, 8 ],
+    "size": [
+      7,
+      8
+    ],
     "bindings": [
       {
         "binding_name": "#unread_notification_icon"
@@ -68,21 +79,27 @@
       }
     ]
   },
-
   "feedback_icon": {
     "type": "image",
     "texture": "textures/ui/Feedback",
     "layer": 3,
-    "size": [ 16, 16 ]
+    "size": [
+      16,
+      16
+    ]
   },
-
   "feedback_icon_edu": {
     "type": "image",
     "texture": "$feedback_texture",
-    "offset": [ -0.5, -0.5 ],
-    "size": [ 16, 16 ],
+    "offset": [
+      -0.5,
+      -0.5
+    ],
+    "size": [
+      16,
+      16
+    ],
     "layer": 3,
-
     "$feedback_texture": "textures/ui/feedback",
     "variables": [
       {
@@ -91,51 +108,64 @@
       }
     ]
   },
-
   "Xbox_icon": {
     "type": "image",
     "texture": "textures/ui/xbox4",
     "layer": 3,
-    "size": [ 27, 27 ]
+    "size": [
+      27,
+      27
+    ]
   },
-
   "change_skin_icon": {
     "type": "image",
     "anchor_from": "left_middle",
     "anchor_to": "left_middle",
     "texture": "textures/ui/hangar",
     "layer": 3,
-    "size": [ 32, 16 ]
+    "size": [
+      32,
+      16
+    ]
   },
-
   "manage_accounts_icon": {
     "type": "image",
     "anchor_from": "center",
     "anchor_to": "center",
     "texture": "textures/ui/profile_glyph_combined",
     "layer": 3,
-    "size": [ 11, 12 ]
+    "size": [
+      11,
+      12
+    ]
   },
-
   "new_offers_icon@common_store.new_offer_icon": {
     "layer": 11, // This is the lowest layer where the button border won't show through this icon while being pressed
     "anchor_from": "top_right",
     "anchor_to": "top_right"
   },
-
   "edu_ai_lesson_crafter_button_content": {
     "type": "stack_panel",
     "orientation": "horizontal",
-    "size": [ "100%c", "100%" ],
+    "size": [
+      "100%c",
+      "100%"
+    ],
     "controls": [
       {
         "padded_label@common.empty_panel": {
-          "size": [ "100%c", "100%" ],
+          "size": [
+            "100%c",
+            "100%"
+          ],
           "controls": [
             {
               "label": {
                 "type": "label",
-                "size": [ "default", "default" ],
+                "size": [
+                  "default",
+                  "default"
+                ],
                 "color": "$text_color",
                 "text": "menu.ai_lesson_crafter"
               }
@@ -145,15 +175,24 @@
       },
       {
         "padded_icon@common.empty_panel": {
-          "size": [ "100%c", "100%c" ],
+          "size": [
+            "100%c",
+            "100%c"
+          ],
           "controls": [
             {
               "icon": {
                 "type": "image",
                 "texture": "textures/ui/icon_external_link",
                 "color": "$glyph_color",
-                "size": [ 9, 9 ],
-                "offset": [ 3, 7 ]
+                "size": [
+                  9,
+                  9
+                ],
+                "offset": [
+                  3,
+                  7
+                ]
               }
             }
           ]
@@ -161,11 +200,16 @@
       }
     ]
   },
-
   "preview_tag": {
     "type": "image",
-    "size": [ "100%c + 4px", 15 ],
-    "offset": [ 19, -1 ],
+    "size": [
+      "100%c + 4px",
+      15
+    ],
+    "offset": [
+      19,
+      -1
+    ],
     "layer": 11, // This is the lowest layer where the button border won't show through this icon while being pressed
     "anchor_from": "top_right",
     "anchor_to": "top_right",
@@ -180,8 +224,14 @@
       {
         "preview_label": {
           "type": "label",
-          "size": [ "default", 10 ],
-          "offset": [ 0, 1 ],
+          "size": [
+            "default",
+            10
+          ],
+          "offset": [
+            0,
+            1
+          ],
           "text": "menu.preview",
           "color": "$store_white_text_color",
           "anchor_from": "top_middle",
@@ -191,44 +241,52 @@
       }
     ]
   },
-
   "update_prompt_icon": {
     "type": "image",
     "texture": "textures/ui/update",
     "layer": 12, // This is the lowest layer where the button border won't show through this icon while being pressed
     "anchor_from": "top_right",
     "anchor_to": "top_right",
-    "size": [ 11, 21 ]
+    "size": [
+      11,
+      21
+    ]
   },
-
   "marketplace_error_icon@common_store.marketplace_error_icon": {
     "layer": 12,
     "anchor_from": "top_left",
     "anchor_to": "top_left"
   },
-
   "sale_ribbon_icon": {
     "type": "image",
     "texture": "textures/ui/saleribbon",
     "layer": 12 // This is the lowest layer where the button border won't show through this icon while being pressed
   },
-
   "alex_icon": {
     "type": "image",
     "texture": "textures/ui/icon_alex",
     "layer": 1,
-    "size": [ 16, 16 ]
+    "size": [
+      16,
+      16
+    ]
   },
-
   "gamerpic": {
-    "type": "custom",
-    "renderer": "profile_image_renderer",
-    "size": [ 16, 16 ],
+    "type": "image",
+    "size": [
+      16,
+      16
+    ],
     "layer": 2,
     "$gamerpic_visible|default": "#none",
     "bindings": [
       {
-        "binding_name": "#profile_image_options"
+        "binding_name": "#gamerpic_texture_path",
+        "binding_name_override": "#texture"
+      },
+      {
+        "binding_name": "#gamerpic_texture_location_type",
+        "binding_name_override": "#texture_file_system"
       },
       {
         "binding_name": "$gamerpic_visible",
@@ -236,7 +294,6 @@
       }
     ]
   },
-
   "copyright": {
     "type": "panel",
     "controls": [
@@ -246,8 +303,14 @@
           "color": "$main_header_text_color",
           "layer": 2,
           "text": "menu.copyright",
-          "size": [ "default", 10 ],
-          "max_size": [ "100%", "100%" ],
+          "size": [
+            "default",
+            10
+          ],
+          "max_size": [
+            "100%",
+            "100%"
+          ],
           "anchor_from": "top_left",
           "anchor_to": "top_left"
         }
@@ -258,16 +321,20 @@
           "texture": "textures/ui/Black",
           "anchor_from": "top_left",
           "anchor_to": "top_left",
-          "offset": [ -1, -1 ],
+          "offset": [
+            -1,
+            -1
+          ],
           "alpha": 0.6,
-          "size": [ "100%sm + 4px", "100%sm + 2px" ],
+          "size": [
+            "100%sm + 4px",
+            "100%sm + 2px"
+          ],
           "layer": 1
         }
       }
     ]
-
   },
-
   "development_version": {
     "type": "panel",
     "controls": [
@@ -277,8 +344,14 @@
           "color": "$main_header_text_color",
           "layer": 2,
           "text": "#development_version",
-          "size": [ "default", 10 ],
-          "max_size": [ "100%", "100%" ],
+          "size": [
+            "default",
+            10
+          ],
+          "max_size": [
+            "100%",
+            "100%"
+          ],
           "anchor_from": "center",
           "anchor_to": "center",
           "bindings": [
@@ -295,18 +368,23 @@
           "anchor_from": "center",
           "anchor_to": "center",
           "alpha": 0.6,
-          "size": [ "100%sm + 2px", "100%sm + 2px" ],
+          "size": [
+            "100%sm + 2px",
+            "100%sm + 2px"
+          ],
           "layer": 1
         }
       }
     ]
   },
-
   "version": {
     "type": "panel",
     "anchor_from": "top_right",
     "anchor_to": "top_right",
-    "size": [ "50%", "100%" ],
+    "size": [
+      "50%",
+      "100%"
+    ],
     "controls": [
       {
         "label": {
@@ -314,8 +392,14 @@
           "color": "$main_header_text_color",
           "layer": 2,
           "text": "#version",
-          "size": [ "default", 10 ],
-          "max_size": [ "100%", "100%" ],
+          "size": [
+            "default",
+            10
+          ],
+          "max_size": [
+            "100%",
+            "100%"
+          ],
           "anchor_from": "top_right",
           "anchor_to": "top_right",
           "bindings": [
@@ -331,47 +415,30 @@
           "texture": "textures/ui/Black",
           "anchor_from": "top_right",
           "anchor_to": "top_right",
-          "offset": [ 1, -1 ],
+          "offset": [
+            1,
+            -1
+          ],
           "alpha": 0.6,
-          "size": [ "100%sm + 2px", "100%sm + 2px" ],
+          "size": [
+            "100%sm + 2px",
+            "100%sm + 2px"
+          ],
           "layer": 1
         }
       }
     ]
   },
-
-  "trial_info": {
-    "type": "panel",
-    "controls": [
-        {
-          "trial_label": {
-            "type": "label",
-            "size": [ "150%", 20 ],
-            "offset": [ 4, 0 ],
-            "text": "menu.trialLabel",
-            "color": "$body_text_color",
-            "text_alignment": "center",
-            "layer": 2
-          }
-        },
-        {
-          "label_background": {
-            "type": "image",
-            "texture": "textures/ui/Black",
-            "anchor_from": "center",
-            "anchor_to": "center",
-            "alpha": 0.6,
-            "size": [ "100%sm + 10px", "100%sm + 10px" ],
-            "layer": 1
-        }
-      }
-    ]
-  },
-
   "text_panel": {
     "type": "panel",
-    "size": [ "100%-2px", 10 ],
-    "offset": [ 0, -1 ],
+    "size": [
+      "100%-2px",
+      10
+    ],
+    "offset": [
+      0,
+      -1
+    ],
     "anchor_from": "bottom_middle",
     "anchor_to": "bottom_middle",
     "controls": [
@@ -388,7 +455,6 @@
       }
     ]
   },
-
   "anim_main_buttons_panel_alpha": {
     "anim_type": "alpha",
     "easing": "linear",
@@ -397,7 +463,6 @@
     "to": 1,
     "play_event": "anim_main_buttons_panel_alpha_play_event"
   },
-
   "anim_new_player_buttons_panel_alpha": {
     "anim_type": "alpha",
     "easing": "linear",
@@ -407,14 +472,15 @@
     "play_event": "anim_new_player_buttons_panel_alpha_play_event",
     "end_event": "anim_new_player_buttons_panel_finish_event"
   },
-
   //---------------------------------------------------------------------------
   // Skins Panel
   //---------------------------------------------------------------------------
-
   "skin_or_profile_panel": {
     "type": "panel",
-    "size": [ 55, 25 ],
+    "size": [
+      55,
+      25
+    ],
     "anchor_from": "bottom_middle",
     "anchor_to": "bottom_middle",
     "variables": [
@@ -433,7 +499,7 @@
         "change_skin@start.change_skin_button": {
           "bindings": [
             {
-              "binding_name": "#edu_signed_in_only_ui_visible",
+              "binding_name": "#change_skin_visible",
               "binding_name_override": "#visible"
             }
           ]
@@ -443,7 +509,7 @@
         "change_skin_button_demo@start.change_skin_button_demo": {
           "bindings": [
             {
-              "binding_name": "#edu_demo_only_ui_visible",
+              "binding_name": "#change_skin_visible",
               "binding_name_override": "#visible"
             }
           ]
@@ -460,14 +526,7 @@
         }
       },
       {
-        "switch_accounts@start.switch_accounts_button": {
-          "bindings": [
-            {
-              "binding_name": "#edu_signed_in_only_ui_visible",
-              "binding_name_override": "#visible"
-            }
-          ]
-        }
+        "switch_accounts@start.switch_accounts_button": {}
       },
       {
         "profile_button@start.profile_button": {
@@ -488,74 +547,105 @@
       }
     ]
   },
-
   "change_skin_button@common_buttons.light_glyph_button": {
-    "ignored": "(not $education_edition)",
+    "ignored": "((not $education_edition) or $is_edu_demo)",
     "$pressed_button_name": "button.menu_skins",
-    "size": [ 25, 25 ],
+    "size": [
+      25,
+      25
+    ],
     "anchor_from": "bottom_left",
     "anchor_to": "bottom_left",
-    "$button_content_offset": [ 1, 2 ],
+    "$button_content_offset": [
+      1,
+      2
+    ],
     "$button_content": "start.change_skin_icon",
     "$pressed_alpha": 0.65,
     "$focus_id": "menu_skins_button",
     "$button_tts_header": "accessibility.start.skinPicker"
   },
-
   "change_skin_button_demo@common_buttons.light_glyph_button": {
-    "ignored": "(not $education_edition)",
+    "ignored": "(not $is_edu_demo)",
     "$pressed_button_name": "button.menu_skins",
-    "size": [ 25, 25 ],
+    "size": [
+      25,
+      25
+    ],
     "anchor_from": "bottom_middle",
     "anchor_to": "bottom_middle",
-    "$button_content_offset": [ 1, 2 ],
+    "$button_content_offset": [
+      1,
+      2
+    ],
     "$button_content": "start.change_skin_icon",
     "$pressed_alpha": 0.65,
     "$focus_id": "menu_skins_button",
     "$button_tts_header": "accessibility.start.skinPicker"
   },
-
   "switch_accounts_button@common_buttons.light_content_button": {
-    "ignored": "(not $education_edition)",
+    "ignored": "((not $education_edition) or $is_edu_demo)",
     "$pressed_button_name": "button.manage_account",
-    "size": [ 25, 25 ],
+    "size": [
+      25,
+      25
+    ],
     "anchor_from": "bottom_right",
     "anchor_to": "bottom_right",
-    "$button_content_offset": [ 0, 0 ],
+    "$button_content_offset": [
+      0,
+      0
+    ],
     "$button_content": "start.manage_accounts_icon",
     "$pressed_alpha": 0.65,
     "$focus_id": "menu_account_button",
     "$button_tts_header": "accounts.manage"
   },
-
   "dressing_room_button@common_buttons.light_text_form_fitting_button": {
     "ignored": "($education_edition)",
     "$pressed_button_name": "button.to_profile_screen",
-    "size": [ "100%c", 25 ],
+    "size": [
+      "100%c",
+      25
+    ],
     "anchor_from": "bottom_middle",
     "anchor_to": "bottom_middle",
     "$button_state_panel": "common_buttons.new_ui_width_fitting_button_panel",
-    "$button_text_size": [ "default", 10 ],
+    "$button_text_size": [
+      "default",
+      10
+    ],
     "$button_text": "profileScreen.header",
     "$focus_id": "profile_button",
     "$pressed_alpha": 0.65
   },
-
   "profile_button_content": {
     "type": "stack_panel",
-    "size": [ "100%c", 24 ],
+    "size": [
+      "100%c",
+      24
+    ],
     "orientation": "horizontal",
     "controls": [
       {
         "gamerpic_offset_wrapper": {
           "type": "panel",
-          "size": [ "100%c", "100%c" ],
+          "size": [
+            "100%c",
+            "100%c"
+          ],
           "controls": [
             {
               "gamerpic_with_border": {
                 "type": "panel",
-                "size": [ 18, 18 ],
-                "offset": [ -2, 0 ],
+                "size": [
+                  18,
+                  18
+                ],
+                "offset": [
+                  -2,
+                  0
+                ],
                 "controls": [
                   {
                     "gamerpic@start.gamerpic": {
@@ -575,7 +665,10 @@
                   {
                     "border_black@common.focus_border_black": {
                       "layer": 3,
-                      "size": [ 18, 18 ]
+                      "size": [
+                        18,
+                        18
+                      ]
                     }
                   }
                 ]
@@ -586,27 +679,42 @@
       },
       {
         "padding_middle@common.empty_panel": {
-          "size": [ 2, "100%" ]
+          "size": [
+            2,
+            "100%"
+          ]
         }
       },
       {
         "vertically_central_text": {
           "type": "stack_panel",
           "orientation": "vertical",
-          "size": [ "100%c", "100%c" ],
+          "size": [
+            "100%c",
+            "100%c"
+          ],
           "controls": [
             {
               "top_padding": {
                 "type": "panel",
-                "size": [ "0px", 4 ]
+                "size": [
+                  "0px",
+                  4
+                ]
               }
             },
             {
               "profile_button_label@common_buttons.new_ui_binding_button_label": {
                 "layer": 1,
                 "$button_text": "menu.profile",
-                "$button_text_size": [ "default", "default" ],
-                "$button_text_max_size": [ "default", 20 ],
+                "$button_text_size": [
+                  "default",
+                  "default"
+                ],
+                "$button_text_max_size": [
+                  "default",
+                  20
+                ],
                 "$button_text_binding_type": "none",
                 "$button_binding_condition": "none",
                 "$button_text_grid_collection_name": ""
@@ -617,25 +725,38 @@
       },
       {
         "padding_right@common.empty_panel": {
-          "size": [ 6, "100%" ]
+          "size": [
+            6,
+            "100%"
+          ]
         }
       }
     ]
   },
-
   "profile_button@common_buttons.light_content_form_fitting_button": {
-    "size": [ "100%c", "100%c" ],
-    "$button_content_size_override": [ "100%c", "100%c - 4px" ],
+    "size": [
+      "100%c",
+      "100%c"
+    ],
+    "$button_content_size_override": [
+      "100%c",
+      "100%c - 4px"
+    ],
     "$button_content": "start.profile_button_content",
     "$pressed_button_name": "button.menu_profile"
   },
-
   "skin_viewer_panel": {
     "type": "input_panel",
     "anchor_from": "bottom_middle",
     "anchor_to": "bottom_middle",
-    "size": [ "100%", "100% - 24px" ],
-    "offset": [ 0, -16 ],
+    "size": [
+      "100%",
+      "100% - 24px"
+    ],
+    "offset": [
+      0,
+      -16
+    ],
     "gesture_tracking_button": "button.turn_doll",
     "tts_ignore_count": true,
     "button_mappings": [
@@ -650,8 +771,10 @@
       {
         "paper_doll_panel": {
           "type": "panel",
-          "size": [ "100%", "100% - 10px" ],
-
+          "size": [
+            "100%",
+            "100% - 10px"
+          ],
           "controls": [
             {
               "paper_doll": {
@@ -663,8 +786,14 @@
                 "anchor_from": "bottom_middle",
                 "anchor_to": "bottom_middle",
                 "rotation": "gesture_x",
-                "size": [ "100%", "100%" ],
-                "offset": [ 0, -22 ],
+                "size": [
+                  "100%",
+                  "100%"
+                ],
+                "offset": [
+                  0,
+                  -22
+                ],
                 "animation_reset_name": "screen_animation_reset",
                 "anims": [
                   "@common.screen_exit_size_animation_push",
@@ -711,7 +840,10 @@
           "layer": 2,
           "anchor_from": "top_middle",
           "anchor_to": "bottom_middle",
-          "size": [ 8, 8 ],
+          "size": [
+            8,
+            8
+          ],
           "bindings": [
             {
               "binding_name": "#playername"
@@ -721,48 +853,41 @@
       }
     ]
   },
-
   "skin_panel": {
     "type": "panel",
     "anchor_to": "bottom_right",
     "anchor_from": "bottom_right",
-    "size": [ "50% - 75px", 124 ],
-    "offset": [ 0, "-10% - 4px" ],
-    "controls": [
-      { "change_profile_or_skin@start.skin_or_profile_panel": {} },
-      { "viewer_panel@start.skin_viewer_panel": {} }
-    ]
-  },
-
-  //--------------------------------------------------------------------------
-  // Friends drawer button panel
-  //--------------------------------------------------------------------------
-
-  "friendsdrawer_button_panel": {
-    "type": "panel",
-    "anchor_from": "top_right",
-    "anchor_to": "top_right",
-    "offset": [ -5, 5 ],
-    "size": [ "100%c", "100%c" ],
+    "size": [
+      "50% - 75px",
+      124
+    ],
+    "offset": [
+      0,
+      "-10% - 4px"
+    ],
     "controls": [
       {
-        "friendsdrawer_button@friendsbutton.button": {
-          "$pressed_button_name": "button.friends_drawer",
-          "$button_text": "#friends_with_count"
-        }
+        "change_profile_or_skin@start.skin_or_profile_panel": {}
+      },
+      {
+        "viewer_panel@start.skin_viewer_panel": {}
       }
     ]
   },
-
   //--------------------------------------------------------------------------
-  // Gathering
+  // Gatherings
   //--------------------------------------------------------------------------
-
   "gathering_button@common_buttons.light_text_form_fitting_button": {
-    "size": [ "100%c", 25 ],
+    "size": [
+      "100%c",
+      25
+    ],
     "$pressed_button_name": "button.gathering",
     "$button_state_panel": "common_buttons.new_ui_width_fitting_button_panel",
-    "$button_text_max_size": [ 107, 25 ],
+    "$button_text_max_size": [
+      105,
+      25
+    ],
     "$button_text": "#gathering_button_text",
     "$button_text_binding_type": "global",
     "$focus_override_right": "play_button",
@@ -773,12 +898,13 @@
       }
     ]
   },
-
   "gathering_badge": {
     "type": "image",
-    "size": [ "237%y", "100%" ],
+    "size": [
+      "237%y",
+      "100%"
+    ],
     "layer": 20,
-    "allow_debug_missing_texture": false,
     "bindings": [
       {
         "binding_name": "#gathering_badge",
@@ -786,22 +912,30 @@
       }
     ]
   },
-
   "badge_and_caption": {
     "type": "stack_panel",
     "orientation": "vertical",
-    "size": [ "100%", "100%c" ],
+    "size": [
+      "100%",
+      "100%c"
+    ],
     "controls": [
       {
         "caption_and_padding": {
           "type": "stack_panel",
           "orientation": "horizontal",
-          "size": [ "100%", "100%c" ],
+          "size": [
+            "100%",
+            "100%c"
+          ],
           "layer": 14,
           "controls": [
             {
               "pad@common.empty_panel": {
-                "size": [ 12, 1 ]
+                "size": [
+                  12,
+                  1
+                ]
               }
             },
             {
@@ -814,14 +948,20 @@
         "badge_and_padding": {
           "type": "stack_panel",
           "orientation": "horizontal",
-          "size": [ "100%", 30 ],
+          "size": [
+            "100%",
+            30
+          ],
           "controls": [
             {
               "badge@start.gathering_badge": {}
             },
             {
               "fill@common.empty_panel": {
-                "size": [ "fill", "100%" ]
+                "size": [
+                  "fill",
+                  "100%"
+                ]
               }
             }
           ],
@@ -835,10 +975,12 @@
       }
     ]
   },
-
   "gathering_caption": {
     "type": "image",
-    "size": [ "100%c + 6px", "100%c + 12px" ],
+    "size": [
+      "100%c + 6px",
+      "100%c + 12px"
+    ],
     "anchor_to": "bottom_middle",
     "anchor_from": "bottom_middle",
     "layer": 9,
@@ -853,8 +995,14 @@
           "type": "label",
           "text": "#text",
           "font_scale_factor": 0.9,
-          "offset": [ 0, -2 ],
-          "size": [ 88, "default" ],
+          "offset": [
+            0,
+            -2
+          ],
+          "size": [
+            88,
+            "default"
+          ],
           "text_alignment": "center",
           "layer": 10,
           "color": "$gathering_caption_foreground_color",
@@ -879,21 +1027,29 @@
       }
     ]
   },
-
   "gathering_panel": {
     "type": "stack_panel",
     "orientation": "vertical",
-    "size": [ "100%", "100%c" ],
+    "size": [
+      "100%",
+      "100%c"
+    ],
     "controls": [
       {
         "horizontal_panel": {
           "type": "stack_panel",
           "orientation": "horizontal",
-          "size": [ "100%", "100%c" ],
+          "size": [
+            "100%",
+            "100%c"
+          ],
           "controls": [
             {
               "pad@common.empty_panel": {
-                "size": [ 5, 0 ]
+                "size": [
+                  5,
+                  0
+                ]
               }
             },
             {
@@ -902,7 +1058,10 @@
                 "orientation": "vertical",
                 "anchor_to": "bottom_left",
                 "anchor_from": "bottom_left",
-                "size": [ "100% - 5px", "100%c" ],
+                "size": [
+                  "100% - 5px",
+                  "100%c"
+                ],
                 "controls": [
                   {
                     "badge_and_caption@start.badge_and_caption": {}
@@ -920,7 +1079,10 @@
       {
         "bottom_pad": {
           "type": "panel",
-          "size": [ "100%", 5 ],
+          "size": [
+            "100%",
+            5
+          ],
           "bindings": [
             {
               "binding_name": "#upper_online_buttons_visible",
@@ -937,60 +1099,85 @@
       }
     ]
   },
-
   //---------------------------------------------------------------------------
   // Online Buttons Panel (and the lang button)
   //---------------------------------------------------------------------------
-
   "edu_feedback_button@common_buttons.light_content_button": {
-    "size": [ 25, 25 ],
-    "$button_pressed_offset": [ 0, 0 ],
+    "size": [
+      25,
+      25
+    ],
+    "$button_pressed_offset": [
+      0,
+      0
+    ],
     "$button_content": "start.feedback_icon_edu",
     "$pressed_button_name": "button.edu_feedback"
   },
-
-
   "release_feedback_button@common_buttons.light_content_button": {
-    "size": [ 24, 24 ],
-    "$button_pressed_offset": [ 0, 0 ],
+    "size": [
+      24,
+      24
+    ],
+    "$button_pressed_offset": [
+      0,
+      0
+    ],
     "$button_content": "start.feedback_icon",
     "$pressed_button_name": "button.feedback_button_pressed"
   },
-
   "pre_release_feedback_button@start.release_feedback_button": {
     "property_bag": {
       "#hyperlink": "https://aka.ms/minecraftfbbeta"
     }
   },
-
   "feedback_button": {
     "ignored": "$feedback_ignored",
     "type": "panel",
     "$button_tts_header": "accessibility.start.feedback",
     "controls": [
-      { "edu_feedback_button@start.edu_feedback_button": { "ignored": "$edu_feedback_ignored" } },
-      { "release_feedback_button@start.release_feedback_button": { "ignored": "($pre_release or $education_edition)" } },
-      { "pre_release_feedback_button@start.pre_release_feedback_button": { "ignored": "(not $pre_release or $education_edition)" } }
+      {
+        "edu_feedback_button@start.edu_feedback_button": {
+          "ignored": "$edu_feedback_ignored"
+        }
+      },
+      {
+        "release_feedback_button@start.release_feedback_button": {
+          "ignored": "($pre_release or $education_edition)"
+        }
+      },
+      {
+        "pre_release_feedback_button@start.pre_release_feedback_button": {
+          "ignored": "(not $pre_release or $education_edition)"
+        }
+      }
     ]
   },
-
   "achievements_button@common_buttons.light_content_button": {
-    "size": [ 24, 24 ],
+    "size": [
+      24,
+      24
+    ],
     "$button_content": "start.achievements_icon",
     "$pressed_button_name": "button.menu_achievements"
   },
-
   "achievements_icon_button": {
     "ignored": "$achievements_ignored",
     "type": "panel",
     "$button_tts_header": "menu.achievements",
     "controls": [
-      { "achievements_button@start.achievements_button": { "ignored": "$education_edition" } }
+      {
+        "achievements_button@start.achievements_button": {
+          "ignored": "$education_edition"
+        }
+      }
     ]
   },
-
   "inbox_button@common_buttons.light_content_button": {
-    "size": [ 24, 24 ],
+    "size": [
+      24,
+      24
+    ],
     "$button_content": "start.inbox_bell_animated_icon",
     "$pressed_button_name": "button.menu_inbox",
     "$button_tts_header": "menu.inbox",
@@ -1011,13 +1198,18 @@
       }
     ]
   },
-
   "inbox_button_unread_panel": {
     "type": "panel",
     "anchor_from": "top_right",
     "anchor_to": "top_right",
-    "size": [ 7, 8 ],
-    "offset": [ 0, 1 ],
+    "size": [
+      7,
+      8
+    ],
+    "offset": [
+      0,
+      1
+    ],
     "controls": [
       {
         "background@start.unread_notification_icon": {
@@ -1026,34 +1218,50 @@
       }
     ]
   },
-
   "inbox_icon_button": {
     "type": "panel",
     "$button_tts_header": "menu.inbox",
-    "offset": [ 0, 0 ],
+    "offset": [
+      0,
+      0
+    ],
     "ignored": "$education_edition",
     "controls": [
-      { "inbox_button@start.inbox_button": {} },
-      { "inbox_button_unread_panel@start.inbox_button_unread_panel": {} }
+      {
+        "inbox_button@start.inbox_button": {}
+      },
+      {
+        "inbox_button_unread_panel@start.inbox_button_unread_panel": {}
+      }
     ]
   },
-
   // Button will resize itself to length of the text
   "xbl_signin_button@common_buttons.light_text_form_fitting_button": {
-    "size": [ "100%c", 25 ],
+    "size": [
+      "100%c",
+      25
+    ],
     "$pressed_button_name": "button.signin",
     "$button_state_panel": "common_buttons.new_ui_width_fitting_button_panel",
-    "$button_text_size": [ "default", 10 ],
-    "$button_text_max_size": [ 80, 10 ], // longest localized string length will fit in this
+    "$button_text_size": [
+      "default",
+      10
+    ],
+    "$button_text_max_size": [
+      80,
+      10
+    ], // longest localized string length will fit in this
     "$button_text": "xbox.signin",
     "$focus_id": "menu_xbox_signin_button",
     "anchor_from": "left_middle",
     "anchor_to": "left_middle"
   },
-
   "platform_signin_button@common_buttons.light_text_button": {
     "$pressed_button_name": "button.signin",
-    "$button_text_max_size": [ "100%", 26 ],
+    "$button_text_max_size": [
+      "100%",
+      26
+    ],
     "$focus_id": "menu_xbox_signin_button",
     "$button_text": "#platform_signin_text",
     "$button_text_binding_type": "global",
@@ -1065,31 +1273,40 @@
       }
     ]
   },
-
   "column_frame": {
     "type": "panel"
   },
-
   "educator_resources_button@start.main_button": {
     "$pressed_button_name": "button.edu_resources",
     "$button_text": "menu.educatorResources"
   },
-
   "upper_online_buttons_panel": {
     "type": "stack_panel",
-    "size": [ "100%", "100%c" ],
+    "size": [
+      "100%",
+      "100%c"
+    ],
     "controls": [
       {
         "top_pad": {
           "type": "panel",
-          "size": [ "100%", 5 ]
+          "size": [
+            "100%",
+            5
+          ]
         }
       },
       {
         "stacked_column": {
           "type": "stack_panel",
-          "size": [ "100%", "100%c" ],
-          "offset": [ "5%", 0 ],
+          "size": [
+            "100%",
+            "100%c"
+          ],
+          "offset": [
+            "5%",
+            0
+          ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
           "orientation": "horizontal",
@@ -1098,7 +1315,10 @@
               "xbl_btn_padding": {
                 "ignored": "($nx_os or $is_ps4)",
                 "type": "panel",
-                "size": [ 5, 0 ],
+                "size": [
+                  5,
+                  0
+                ],
                 "bindings": [
                   {
                     "binding_name": "#sign_in_visible",
@@ -1110,10 +1330,18 @@
             {
               "xbl_btn@start.column_frame": {
                 "ignored": "($nx_os or $is_ps4)",
-                "size": [ 94, 25 ],
-                "max_size": [ "95%", 25 ],
+                "size": [
+                  94,
+                  25
+                ],
+                "max_size": [
+                  "95%",
+                  25
+                ],
                 "controls": [
-                  { "xbl_signin_button@start.xbl_signin_button": {} }
+                  {
+                    "xbl_signin_button@start.xbl_signin_button": {}
+                  }
                 ],
                 "bindings": [
                   {
@@ -1126,7 +1354,10 @@
             {
               "platform_signin_btn@start.column_frame": {
                 "ignored": "(not $nx_os and not $is_ps4)",
-                "size": [ "90% - 6px", 32 ],
+                "size": [
+                  "90% - 6px",
+                  32
+                ],
                 "controls": [
                   {
                     "platform_signin_button@start.platform_signin_button": {}
@@ -1145,12 +1376,18 @@
                 "ignored": "(not $nx_os and not $is_ps4)",
                 "type": "stack_panel",
                 "orientation": "horizontal",
-                "size": [ "100%c", 16 ],
+                "size": [
+                  "100%c",
+                  16
+                ],
                 "controls": [
                   {
                     "gamerpic_with_border": {
                       "type": "panel",
-                      "size": [ "100%c", "100%" ],
+                      "size": [
+                        "100%c",
+                        "100%"
+                      ],
                       "controls": [
                         {
                           "gamerpic@start.gamerpic": {}
@@ -1158,7 +1395,10 @@
                         {
                           "border_white@common.focus_border_white": {
                             "layer": 3,
-                            "size": [ 16, 16 ]
+                            "size": [
+                              16,
+                              16
+                            ]
                           }
                         }
                       ]
@@ -1167,13 +1407,19 @@
                   {
                     "spacer": {
                       "type": "panel",
-                      "size": [ 1, 0 ]
+                      "size": [
+                        1,
+                        0
+                      ]
                     }
                   },
                   {
                     "label_panel": {
                       "type": "panel",
-                      "size": [ "100%c", "100%" ],
+                      "size": [
+                        "100%c",
+                        "100%"
+                      ],
                       "controls": [
                         {
                           "gamertag_label": {
@@ -1182,8 +1428,14 @@
                             "layer": 1,
                             "text": "#gamertag_label",
                             "locked_alpha": 0.5,
-                            "size": [ "default", "100%" ],
-                            "offset": [ 0, "25%" ],
+                            "size": [
+                              "default",
+                              "100%"
+                            ],
+                            "offset": [
+                              0,
+                              "25%"
+                            ],
                             "bindings": [
                               {
                                 "binding_name": "#gamertag_label"
@@ -1209,7 +1461,10 @@
       {
         "bottom_pad": {
           "type": "panel",
-          "size": [ "100%", 5 ]
+          "size": [
+            "100%",
+            5
+          ]
         }
       }
     ],
@@ -1220,12 +1475,14 @@
       }
     ]
   },
-
   "lower_online_buttons_panel": {
     "type": "stack_panel",
     "anchor_to": "bottom_left",
     "anchor_from": "bottom_left",
-    "size": [ "100%", "100%c" ],
+    "size": [
+      "100%",
+      "100%c"
+    ],
     "variables": [
       {
         "requires": "($showing_new_player_flow_buttons)",
@@ -1241,8 +1498,14 @@
       {
         "stacked_column": {
           "type": "stack_panel",
-          "size": [ "100%", 32 ],
-          "offset": [ "5%", 0 ],
+          "size": [
+            "100%",
+            32
+          ],
+          "offset": [
+            "5%",
+            0
+          ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
           "orientation": "horizontal",
@@ -1251,7 +1514,10 @@
               "feedback_padding": {
                 "ignored": "$feedback_ignored",
                 "type": "panel",
-                "size": [ 3, "100%" ],
+                "size": [
+                  3,
+                  "100%"
+                ],
                 "bindings": [
                   {
                     "binding_name": "#feedback_visible",
@@ -1263,9 +1529,14 @@
             {
               "feedback_btn@start.column_frame": {
                 "ignored": "$feedback_ignored",
-                "size": [ 28, 32 ],
+                "size": [
+                  28,
+                  32
+                ],
                 "controls": [
-                  { "feedback_button@start.feedback_button": {} }
+                  {
+                    "feedback_button@start.feedback_button": {}
+                  }
                 ],
                 "bindings": [
                   {
@@ -1277,8 +1548,14 @@
             },
             {
               "signingin": {
-                "size": [ "default", "100%" ],
-                "max_size": [ 120, "100%" ],
+                "size": [
+                  "default",
+                  "100%"
+                ],
+                "max_size": [
+                  120,
+                  "100%"
+                ],
                 "type": "label",
                 "color": "$main_header_text_color",
                 "text": "#signingin_text",
@@ -1297,7 +1574,10 @@
               "achievements_padding": {
                 "ignored": "$achievements_ignored",
                 "type": "panel",
-                "size": [ 3, "100%" ],
+                "size": [
+                  3,
+                  "100%"
+                ],
                 "bindings": [
                   {
                     "binding_name": "#achievements_icon_visible",
@@ -1309,9 +1589,14 @@
             {
               "achievements_btn@start.column_frame": {
                 "ignored": "$achievements_ignored",
-                "size": [ 28, 32 ],
+                "size": [
+                  28,
+                  32
+                ],
                 "controls": [
-                  { "achievements_icon_button@start.achievements_icon_button": {} }
+                  {
+                    "achievements_icon_button@start.achievements_icon_button": {}
+                  }
                 ],
                 "bindings": [
                   {
@@ -1324,7 +1609,10 @@
             {
               "inbox_padding": {
                 "type": "panel",
-                "size": [ 3, "100%" ],
+                "size": [
+                  3,
+                  "100%"
+                ],
                 "bindings": [
                   {
                     "binding_name": "#inbox_enabled",
@@ -1335,9 +1623,14 @@
             },
             {
               "inbox_btn@start.column_frame": {
-                "size": [ 28, 32 ],
+                "size": [
+                  28,
+                  32
+                ],
                 "controls": [
-                  { "inbox_icon_button@start.inbox_icon_button": {} }
+                  {
+                    "inbox_icon_button@start.inbox_icon_button": {}
+                  }
                 ],
                 "bindings": [
                   {
@@ -1350,7 +1643,10 @@
             {
               "profile_btn_padding": {
                 "type": "panel",
-                "size": [ 5, "100%" ],
+                "size": [
+                  5,
+                  "100%"
+                ],
                 "bindings": [
                   {
                     "binding_name": "#profile_button_a_visible",
@@ -1361,9 +1657,14 @@
             },
             {
               "profile_btn@start.column_frame": {
-                "size": [ "100%c", 32 ],
+                "size": [
+                  "100%c",
+                  32
+                ],
                 "controls": [
-                  { "profile_button@start.profile_button": {} }
+                  {
+                    "profile_button@start.profile_button": {}
+                  }
                 ],
                 "bindings": [
                   {
@@ -1378,73 +1679,73 @@
       }
     ]
   },
-
   //---------------------------------------------------------------------------
   // Main Buttons Panel
   //---------------------------------------------------------------------------
-
   "main_button@common_buttons.light_text_button": {
-    "size": [ "100% - 2px", "100% - 2px" ]
+    "size": [
+      "100% - 2px",
+      "100% - 2px"
+    ]
   },
-
   "main_button_dark@common_buttons.dark_text_button": {
-    "size": [ "100% - 2px", "100% - 2px" ]
+    "size": [
+      "100% - 2px",
+      "100% - 2px"
+    ]
   },
-
   "main_content_button@common_buttons.light_content_button": {
-    "size": [ "100% - 2px", "100% - 2px" ]
+    "size": [
+      "100% - 2px",
+      "100% - 2px"
+    ]
   },
-
   "play_button@start.main_button": {
     "$pressed_button_name": "$play_button_target",
     "$button_text": "menu.play",
-    "$focus_override_right": "profile_button",
-    "default_focus_precedence": 1
+    "$focus_override_right": "profile_button"
   },
-
   "get_started_button@start.main_button": {
     "$pressed_button_name": "button.menu_get_started",
-    "$button_text": "#get_started_button_text",
-    "$button_text_binding_type": "global",
-    "$button_binding_condition": "once"
+    "$button_text": "menu.getStarted"
   },
-
   "main_menu_button@edu_common.underline_button": {
     "$pressed_button_name": "button.open_main_menu",
-    "$single_label_size": [ "default", "default" ],
+    "$single_label_size": [
+      "default",
+      "default"
+    ],
     "$single_line_font_scale_factor": 1,
     "$single_line_label_text": "menu.openMainMenu",
     "$font_type": "smooth"
   },
-
   "featured_world_button@start.main_button": {
     "$pressed_button_name": "button.featured_category",
     "$button_text": "start_screen.start_demo"
   },
-
   "unlock_full_game_button@start.main_button": {
+    "ignored": "(not $is_edu_demo)",
     "$pressed_button_name": "button.manage_account",
     "$button_text": "#unlock_full_game_button_text",
     "$button_text_binding_type": "global"
   },
-
   "launch_editions_button@start.main_button": {
     "$pressed_button_name": "button.launch_editions",
     "$button_text": "menu.editions"
   },
-
   "ai_lesson_crafter_button@common_buttons.light_content_button": {
-    "size": [ "100% - 2px", "100% - 2px" ],
+    "size": [
+      "100% - 2px",
+      "100% - 2px"
+    ],
     "ignored": "(not $education_edition)",
     "$pressed_button_name": "button.ai_lesson_crafter",
     "$button_content": "start.edu_ai_lesson_crafter_button_content"
   },
-
   "settings_button@start.main_button": {
     "$pressed_button_name": "button.menu_settings",
     "$button_text": "menu.settings"
   },
-
   "realms_button@start.main_button_dark": {
     "$pressed_button_name": "button.menu_realms",
     "$button_text": "menu.realmsServer",
@@ -1452,14 +1753,15 @@
     "$hover_button_texture": "textures/ui/realms_button_borderless_hover",
     "$pressed_button_texture": "textures/ui/realms_button_borderless_hover_pressed"
   },
-
   "servers_button@start.main_button": {
     "$pressed_button_name": "button.menu_servers",
     "$button_text": "menu.servers"
   },
-
   "store_button@common_buttons.light_content_button": {
-    "size": [ "100% - 2px", "100% - 2px" ],
+    "size": [
+      "100% - 2px",
+      "100% - 2px"
+    ],
     "$pressed_button_name": "button.menu_store",
     "$button_text": "menu.store",
     "$button_content": "start.store_button_content",
@@ -1467,17 +1769,13 @@
     "$button_binding_condition": "none",
     "$button_text_grid_collection_name": "",
     "tts_inherit_siblings": true,
-    "$focus_override_right": "profile_button",
-    "bindings": [
-      {
-        "binding_name": "(not #marketplace_disabled)",
-        "binding_name_override": "#visible"
-      }
-    ]
+    "$focus_override_right": "profile_button"
   },
-
   "error_store_button@common_buttons.light_content_button": {
-    "size": [ "100% - 2px", "100% - 2px" ],
+    "size": [
+      "100% - 2px",
+      "100% - 2px"
+    ],
     "$pressed_button_name": "button.menu_store",
     "$button_text": "menu.store",
     "$button_content": "start.store_button_content",
@@ -1486,20 +1784,31 @@
     "$button_text_grid_collection_name": "",
     "tts_inherit_siblings": true
   },
-
   "store_button_sale_banner@start.sale_ribbon_icon": {
-    "size": [ "100%c", 16 ], // For some reason doing 100%c + X doesn't work on an image?
+    "size": [
+      "100%c",
+      16
+    ], // For some reason doing 100%c + X doesn't work on an image?
     "controls": [
       {
         "banner_label_padding": {
           "type": "panel",
-          "size": [ "100%c + 12px", "100%" ],
+          "size": [
+            "100%c + 12px",
+            "100%"
+          ],
           "controls": [
             {
               "banner_label": {
                 "type": "label",
-                "size": [ "default", 10 ],
-                "offset": [ -1, -1 ],
+                "size": [
+                  "default",
+                  10
+                ],
+                "offset": [
+                  -1,
+                  -1
+                ],
                 "text": "store.startMenu.sale",
                 "color": "$title_text_color",
                 "layer": 1,
@@ -1513,7 +1822,6 @@
       }
     ]
   },
-
   "store_button_content": {
     "type": "panel",
     "controls": [
@@ -1526,19 +1834,23 @@
         "sales_banner@start.store_button_sale_banner": {
           "anchor_from": "top_left",
           "anchor_to": "top_left",
-          "offset": [ -6, -8 ],
+          "offset": [
+            -6,
+            -8
+          ],
           "visible": false // leaving this here in case we override with a treatment pack during a sale
         }
       }
     ]
   },
-
   "store_error_image": {
     "type": "image",
     "texture": "textures/ui/ErrorGlyph",
-    "size": [ 15, 15 ]
+    "size": [
+      15,
+      15
+    ]
   },
-
   "store_error_content": {
     "type": "image",
     "texture": "textures/ui/disabledButton",
@@ -1554,16 +1866,20 @@
       }
     ]
   },
-
   "store_sale_label": {
     "type": "label",
-    "size": [ "default", 10 ],
-    "offset": [ 4, 0 ],
+    "size": [
+      "default",
+      10
+    ],
+    "offset": [
+      4,
+      0
+    ],
     "text": "store.startMenu.sale",
     "color": "$light_button_default_text_color",
     "layer": 2
   },
-
   "store_button_stack@start.stacked_row": {
     "controls": [
       {
@@ -1574,8 +1890,14 @@
       {
         "update_icon@start.update_prompt_icon": {
           "ignored": "$store_disabled",
-          "size": [ "52.38%y", 15 ],
-          "offset": [ -16, -6 ],
+          "size": [
+            "52.38%y",
+            15
+          ],
+          "offset": [
+            -16,
+            -6
+          ],
           "bindings": [
             {
               "binding_name": "#update_icon_visible",
@@ -1588,7 +1910,10 @@
       {
         "new_offers_icon@start.new_offers_icon": {
           "ignored": "$store_disabled",
-          "offset": [ 8, -6 ],
+          "offset": [
+            8,
+            -6
+          ],
           "anchor_from": "top_right",
           "anchor_to": "top_right",
           "bindings": [
@@ -1601,26 +1926,35 @@
       }
     ]
   },
-
   "buy_game_button@start.main_button": {
     "$pressed_button_name": "button.menu_buy_game",
     "$button_text": "$unlock_full_game_button_text"
   },
-
   "stacked_row": {
     "type": "panel",
-    "size": [ "100%", 32 ]
+    "size": [
+      "100%",
+      32
+    ]
   },
-
   "main_buttons_stack_panel": {
     "type": "stack_panel",
-    "size": [ "100%", "100%" ],
+    "size": [
+      "100%",
+      "100%"
+    ],
     "orientation": "vertical",
-    "$title_offset_padding|default": [ "100%", "12%" ],
+    "$title_offset_padding|default": [
+      "100%",
+      "10%"
+    ],
     "variables": [
       {
         "requires": "($pocket_screen)",
-        "$title_offset_padding": [ "100%", "12%" ]
+        "$title_offset_padding": [
+          "100%",
+          "5%"
+        ]
       }
     ],
     "controls": [
@@ -1636,13 +1970,19 @@
       {
         "padding_fill_1": {
           "type": "panel",
-          "size": [ "100%", "fill" ]
+          "size": [
+            "100%",
+            "fill"
+          ]
         }
       },
       {
         "main_buttons_panel": {
           "type": "panel",
-          "size": [ "100%", "100%c" ],
+          "size": [
+            "100%",
+            "100%c"
+          ],
           "variables": [
             {
               "requires": "($showing_new_player_flow_buttons)",
@@ -1671,7 +2011,10 @@
       {
         "main_buttons_panel_new_player_flow": {
           "type": "panel",
-          "size": [ "100%", "100%c" ],
+          "size": [
+            "100%",
+            "100%c"
+          ],
           "bindings": [
             {
               "binding_name": "#showing_new_player_flow_buttons",
@@ -1690,7 +2033,10 @@
       {
         "padding_fill_2": {
           "type": "panel",
-          "size": [ "100%", "fill" ],
+          "size": [
+            "100%",
+            "fill"
+          ],
           "controls": [
             {
               "gamepad_helpers@start.gamepad_helpers": {}
@@ -1704,40 +2050,31 @@
       {
         "padding_3": {
           "type": "panel",
-          "size": [ "100%", 10 ] // size of text at the bottom of the screen
+          "size": [
+            "100%",
+            10
+          ] // size of text at the bottom of the screen
         }
       }
     ]
   },
-
   "main_buttons_panel_new_player_flow": {
     "type": "panel",
-    "size": [ 150, "100%c" ],
+    "size": [
+      150,
+      "100%c"
+    ],
     "controls": [
       {
         "stacked_rows": {
           "type": "stack_panel",
-          "size": [ "100%", "100%c" ],
+          "size": [
+            "100%",
+            "100%c"
+          ],
           "anchor_from": "bottom_middle",
           "anchor_to": "bottom_middle",
           "controls": [
-            {
-              "test_label_row@start.stacked_row": {
-                "ignored": "(not $trial or not $is_new_trial_mode_enabled)",
-                "controls": [
-                  {
-                    "trial_info@start.trial_info": {}
-                  }
-                ]
-              }
-            },
-            {
-              "spacer": {
-                "type": "panel",
-                "ignored": "(not $trial or not $is_new_trial_mode_enabled)",
-                "size": [ 20, 20 ]
-              }
-            },
             {
               "get_started_row@start.stacked_row": {
                 "controls": [
@@ -1761,15 +2098,20 @@
       }
     ]
   },
-
   "main_buttons_panel": {
     "type": "panel",
-    "size": [ 150, "100%c" ],
+    "size": [
+      150,
+      "100%c"
+    ],
     "controls": [
       {
         "stacked_rows": {
           "type": "stack_panel",
-          "size": [ "100%", "100%c" ],
+          "size": [
+            "100%",
+            "100%c"
+          ],
           "anchor_from": "bottom_middle",
           "anchor_to": "bottom_middle",
           "controls": [
@@ -1777,7 +2119,9 @@
               "stacked_row_0@start.stacked_row": {
                 "ignored": "(not $play_button_visible)",
                 "controls": [
-                  { "play_button@start.play_button": {} }
+                  {
+                    "play_button@start.play_button": {}
+                  }
                 ]
               }
             },
@@ -1785,7 +2129,9 @@
               "featured_world@start.stacked_row": {
                 "ignored": "$featured_world_ignored",
                 "controls": [
-                  { "featured_world_button@start.featured_world_button": {} }
+                  {
+                    "featured_world_button@start.featured_world_button": {}
+                  }
                 ]
               }
             },
@@ -1796,22 +2142,33 @@
                   {
                     "stacked_columns": {
                       "type": "stack_panel",
-                      "size": [ "100%", "100%" ],
+                      "size": [
+                        "100%",
+                        "100%"
+                      ],
                       "orientation": "horizontal",
                       "controls": [
                         {
                           "stacked_col_0": {
                             "type": "panel",
-                            "size": [ "fill", "100%" ],
+                            "size": [
+                              "fill",
+                              "100%"
+                            ],
                             "controls": [
-                              { "settings_button@start.settings_button": {} }
+                              {
+                                "settings_button@start.settings_button": {}
+                              }
                             ]
                           }
                         },
                         {
                           "stacked_col_1": {
                             "type": "panel",
-                            "size": [ "fill", "100%" ],
+                            "size": [
+                              "fill",
+                              "100%"
+                            ],
                             "ignored": "($store_ignored)",
                             "controls": [
                               {
@@ -1821,8 +2178,14 @@
                               },
                               {
                                 "update_icon@start.update_prompt_icon": {
-                                  "size": [ "52.38%y", 15 ],
-                                  "offset": [ -16, -6 ],
+                                  "size": [
+                                    "52.38%y",
+                                    15
+                                  ],
+                                  "offset": [
+                                    -16,
+                                    -6
+                                  ],
                                   "bindings": [
                                     {
                                       "binding_name": "#update_icon_visible",
@@ -1834,7 +2197,10 @@
                               },
                               {
                                 "new_offers_icon@start.new_offers_icon": {
-                                  "offset": [ 8, -6 ],
+                                  "offset": [
+                                    8,
+                                    -6
+                                  ],
                                   "anchor_from": "top_right",
                                   "anchor_to": "top_right",
                                   "bindings": [
@@ -1863,20 +2229,18 @@
                   }
                 ],
                 "controls": [
-                  { "ai_lesson_crafter_button@start.ai_lesson_crafter_button": {} },
-                  { "lesson_crafter_preview_overlay@start.preview_tag": {} }
+                  {
+                    "ai_lesson_crafter_button@start.ai_lesson_crafter_button": {}
+                  },
+                  {
+                    "lesson_crafter_preview_overlay@start.preview_tag": {}
+                  }
                 ]
               }
             },
             {
               "edu_featured_button@start.stacked_row": {
-                "ignored": "(not $education_edition)",
-                "bindings": [
-                  {
-                    "binding_name": "#edu_signed_in_only_ui_visible",
-                    "binding_name_override": "#visible"
-                  }
-                ],
+                "ignored": "(not $education_edition or $is_edu_demo)",
                 "controls": [
                   {
                     "new_and_featured_button@edu_featured.featured_button": {}
@@ -1897,7 +2261,10 @@
                   {
                     "settings_and_editions": {
                       "type": "stack_panel",
-                      "size": [ "100%", "100%" ],
+                      "size": [
+                        "100%",
+                        "100%"
+                      ],
                       "orientation": "horizontal",
                       "ignored": "($trial or not $supports_launching_legacy_version)",
                       "bindings": [
@@ -1910,16 +2277,24 @@
                         {
                           "settings_panel": {
                             "type": "panel",
-                            "size": [ "fill", "100%" ],
+                            "size": [
+                              "fill",
+                              "100%"
+                            ],
                             "controls": [
-                              { "settings_button@start.settings_button": {} }
+                              {
+                                "settings_button@start.settings_button": {}
+                              }
                             ]
                           }
                         },
                         {
                           "editions_panel": {
                             "type": "panel",
-                            "size": [ "fill", "100%" ],
+                            "size": [
+                              "fill",
+                              "100%"
+                            ],
                             "controls": [
                               {
                                 "launch_editions_button@start.launch_editions_button": {}
@@ -1988,15 +2363,11 @@
             },
             {
               "unlock_full_game_row@start.stacked_row": {
-                "ignored": "(not $education_edition)",
-                "bindings": [
-                  {
-                    "binding_name": "#edu_demo_only_ui_visible",
-                    "binding_name_override": "#visible"
-                  }
-                ],
+                "ignored": "(not $is_edu_demo)",
                 "controls": [
-                  { "unlock_full_game@start.unlock_full_game_button": {} }
+                  {
+                    "unlock_full_game@start.unlock_full_game_button": {}
+                  }
                 ]
               }
             },
@@ -2009,7 +2380,9 @@
               "buy_game@start.stacked_row": {
                 "ignored": "$unlock_full_game_button_ignored",
                 "controls": [
-                  { "buy_game_button@start.buy_game_button": {} }
+                  {
+                    "buy_game_button@start.buy_game_button": {}
+                  }
                 ]
               }
             },
@@ -2034,22 +2407,32 @@
       }
     ]
   },
-
   "gamepad_helpers": {
     "type": "stack_panel",
     "orientation": "horizontal",
-    "size": [ "100%c", 26 ],
+    "size": [
+      "100%c",
+      26
+    ],
     "controls": [
-      { "gamepad_helper_a@common.gamepad_helper_a": {} },
+      {
+        "gamepad_helper_a@common.gamepad_helper_a": {}
+      },
       {
         "gamepad_helper_b_and_padding": {
           "ignored": "(not $can_quit)",
           "type": "panel",
-          "size": [ "100%c + 10px", "100%c" ],
+          "size": [
+            "100%c + 10px",
+            "100%c"
+          ],
           "controls": [
             {
               "gamepad_helper_b@common.gamepad_helper_b": {
-                "offset": [ 10, 0 ],
+                "offset": [
+                  10,
+                  0
+                ],
                 "anchor_to": "left_middle",
                 "anchor_from": "left_middle"
               }
@@ -2060,11 +2443,17 @@
       {
         "gamepad_helper_y_and_padding": {
           "type": "panel",
-          "size": [ "100%c + 10px", "100%c" ],
+          "size": [
+            "100%c + 10px",
+            "100%c"
+          ],
           "controls": [
             {
               "gamepad_helper_y@common.gamepad_helper_y": {
-                "offset": [ 10, 0 ],
+                "offset": [
+                  10,
+                  0
+                ],
                 "anchor_to": "left_middle",
                 "anchor_from": "left_middle"
               }
@@ -2082,11 +2471,17 @@
       {
         "gamepad_helper_x_and_padding": {
           "type": "panel",
-          "size": [ "100%c + 10px", "100%c" ],
+          "size": [
+            "100%c + 10px",
+            "100%c"
+          ],
           "controls": [
             {
               "gamepad_helper_x@common.gamepad_helper_x": {
-                "offset": [ 10, 0 ],
+                "offset": [
+                  10,
+                  0
+                ],
                 "anchor_to": "left_middle",
                 "anchor_from": "left_middle"
               }
@@ -2102,13 +2497,18 @@
       }
     ]
   },
-
   "vr_swap_description@common.keyboard_helper_description": {
-    "offset": [ 5, 2 ]
+    "offset": [
+      5,
+      2
+    ]
   },
-
   "keyboard_helper_vr_swap@common.keyboard_helper": {
-    "$text_color": [ 1.0, 1.0, 1.0 ],
+    "$text_color": [
+      1.0,
+      1.0,
+      1.0
+    ],
     "$description_bind": "#button_keyboard_description",
     "$keyboard_description": "start.vr_swap_description",
     "$keyboard_character": "keyboard.keyName.e",
@@ -2119,22 +2519,24 @@
       }
     ]
   },
-
   //---------------------------------------------------------------------------
   // Realms Invite Panel
   //---------------------------------------------------------------------------
-
   "invite_notification_icon": {
     "type": "image",
     "texture": "textures/ui/invite_base",
-    "size": [ 20, 20 ]
+    "size": [
+      20,
+      20
+    ]
   },
-
   "invite_notification_button@common_buttons.light_content_button": {
-    "size": [ 24, 24 ],
+    "size": [
+      24,
+      24
+    ],
     "$button_content": "start.invite_notification_icon"
   },
-
   "notification_button_text": {
     "type": "label",
     "color": "$tab_secondary_unchecked_text_color",
@@ -2146,12 +2548,10 @@
       }
     ]
   },
-
   "notification_button_text_background": {
     "type": "image",
     "texture": "textures/ui/invite_number_background"
   },
-
   "notification_button_text_panel": {
     "type": "panel",
     "anchor_from": "top_right",
@@ -2164,8 +2564,14 @@
             {
               "background@start.notification_button_text_background": {
                 "layer": -1,
-                "size": [ "100%+4px", "100%" ],
-                "offset": [ -0.5, 0 ]
+                "size": [
+                  "100%+4px",
+                  "100%"
+                ],
+                "offset": [
+                  -0.5,
+                  0
+                ]
               }
             }
           ]
@@ -2173,91 +2579,108 @@
       }
     ]
   },
-
   //---------------------------------------------------------------------------
   // Cloud Upload Popup
   //---------------------------------------------------------------------------
   "cloud_upload_prompt@common_dialogs.main_panel_three_buttons": {
-    "size": [ 300, 200 ],
+    "size": [
+      300,
+      200
+    ],
     "$fill_alpha": 1,
-
     "layer": 101,
     "$text_name": "cloud_upload.title",
     "$description_text": "cloud_upload.prompt.description",
-    "$button_size": [ "100%", 30 ],
+    "$button_size": [
+      "100%",
+      30
+    ],
     "$close_button_to_button_id": "button.close_cloud_upload_prompt",
-
     "$child_control": "start.scrolling_child",
     "$scrolling_content": "common.tts_label_focus_wrapper",
-
     "$top_button_panel": "start.cloud_upload_do_not_show_checkbox",
     "$middle_button_panel": "start.cloud_upload_worlds_button",
     "$bottom_button_panel": "start.cloud_upload_learn_more_button",
-
     "$tts_label_panel": "start.cloud_upload_description"
   },
-
   "scrolling_child": {
     "type": "panel",
     "controls": [
       {
         "scrolling_panel@common.scrolling_panel": {
-          "$scrolling_pane_size": [ "100% - 1px", "100% - 2px" ],
-          "$scroll_view_port_size": [ "100% - 4px", "100% - 4px" ],
-          "$scroll_view_port_offset": [ 3, 2 ],
-          "$scroll_size": [ 5, "100% - 2px" ],
+          "$scrolling_pane_size": [
+            "100% - 1px",
+            "100% - 2px"
+          ],
+          "$scroll_view_port_size": [
+            "100% - 4px",
+            "100% - 4px"
+          ],
+          "$scroll_view_port_offset": [
+            3,
+            2
+          ],
+          "$scroll_size": [
+            5,
+            "100% - 2px"
+          ],
           "$show_background": false
         }
       }
     ]
   },
-
   "cloud_upload_worlds_button@popup_dialog.popup_dialog_button": {
     "size": "$button_size",
     "$pressed_button_name": "button.worlds",
     "$button_text": "cloud_upload.prompt.button.worlds"
   },
-
   "cloud_upload_learn_more_button@popup_dialog.popup_dialog_button": {
     "size": "$button_size",
     "$pressed_button_name": "button.learn_more",
     "$button_text": "cloud_upload.prompt.button.learn_more"
   },
-
   "cloud_upload_description": {
     "type": "label",
-    "size": [ "100% - 4px", "default" ],
+    "size": [
+      "100% - 4px",
+      "default"
+    ],
     "font_type": "smooth",
     "line_padding": 1.5,
     "color": "$body_text_color",
     "text": "cloud_upload.prompt.description"
   },
-
   "cloud_upload_do_not_show_checkbox@common.checkbox": {
-    "size": [ "100%", 30 ],
+    "size": [
+      "100%",
+      30
+    ],
     "anchor_from": "top_left",
     "anchor_to": "top_left",
     "$toggle_name": "cloud_upload_do_not_show_again",
     "$toggle_state_binding_name": "#cloud_upload_do_not_show_again",
     "$toggle_label_text|default": "cloud_upload.prompt.do_not_show_toggle",
-
     "tts_control_type_order_priority": 100,
     "tts_value_order_priority": 101,
     "$toggle_enabled_binding_type": "global",
-
     "controls": [
       {
         "header_description_stack_panel": {
           "type": "stack_panel",
           "orientation": "horizontal",
-          "size": [ "100%", "100%" ],
+          "size": [
+            "100%",
+            "100%"
+          ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
-
           "controls": [
             {
               "checkbox_visuals@common.toggle_visuals": {
-                "size": [ 30, "100%" ],
+                "size": [
+                  30,
+                  "100%"
+                ],
                 "anchor_from": "left_middle",
                 "anchor_to": "left_middle"
               }
@@ -2266,14 +2689,20 @@
               "buffer_panel": {
                 "type": "panel",
                 "layer": 3,
-                "size": [ "fill", "100%" ],
+                "size": [
+                  "fill",
+                  "100%"
+                ],
                 "controls": [
                   {
                     "label": {
                       "type": "label",
                       "color": "$light_button_default_text_color",
                       "text": "$toggle_label_text",
-                      "size": [ "default", "default" ],
+                      "size": [
+                        "default",
+                        "default"
+                      ],
                       "anchor_from": "center",
                       "anchor_to": "center"
                     }
@@ -2284,7 +2713,10 @@
             {
               "another_panel": {
                 "type": "panel",
-                "size": [ 30, "100%" ]
+                "size": [
+                  30,
+                  "100%"
+                ]
               }
             }
           ]
@@ -2292,20 +2724,16 @@
       }
     ]
   },
-
   //---------------------------------------------------------------------------
   // Screens
   //---------------------------------------------------------------------------
-
   "start_screen@common.base_screen": {
-
     "$screen_animations": [
       "@common.screen_exit_animation_push_fade",
       "@common.screen_exit_animation_pop_fade",
       "@common.screen_entrance_animation_push_fade",
       "@common.screen_entrance_animation_pop_fade"
     ],
-
     "button_mappings": [
       {
         "ignored": "(not $can_quit)",
@@ -2332,9 +2760,9 @@
         "mapping_type": "global"
       }
     ],
-    "$screen_content": "start.start_screen_content"
+    "$screen_content": "start.start_screen_content",
+    "$screen_bg_content": "bg.bg"
   },
-
   "start_screen_content": {
     "type": "panel",
     "$achievements_ignored|default": false,
@@ -2384,8 +2812,14 @@
           "orientation": "vertical",
           "anchor_to": "bottom_left",
           "anchor_from": "bottom_left",
-          "size": [ "50% - 75px", "100%c" ],
-          "offset": [ 0, "-10%" ],
+          "size": [
+            "50% - 75px",
+            "100%c"
+          ],
+          "offset": [
+            0,
+            "-10%"
+          ],
           "variables": [
             {
               "requires": "($showing_new_player_flow_buttons)",
@@ -2407,17 +2841,13 @@
             {
               "lower_online_buttons_panel@start.lower_online_buttons_panel": {}
             }
-          ],
-          "bindings": [
-            {
-              "binding_name": "#online_stack_visible",
-              "binding_name_override": "#visible"
-            }
           ]
         }
       },
       {
-        "skin_panel@start.skin_panel": { "layer": 1 }
+        "skin_panel@start.skin_panel": {
+          "layer": 1
+        }
       },
       {
         "text_panel@start.text_panel": {}
@@ -2428,17 +2858,6 @@
           "control_ids": {
             "cloud_upload_prompt": "@start.cloud_upload_prompt"
           }
-        }
-      },
-      {
-        "friendsdrawer_button_panel@start.friendsdrawer_button_panel": {
-          "$focus_id": "friendsdrawer_button",
-          "bindings": [
-            {
-              "binding_name": "#friends_drawer_button_enabled",
-              "binding_name_override": "#visible"
-            }
-          ]
         }
       }
     ]

@@ -1,4 +1,4 @@
-import { MolangVariableMap, BlockPermutation, EffectTypes, Vector3, world, system, Player, EntityInventoryComponent, EffectType, DisplaySlotId, ScoreboardObjective, Container, ItemStack, ItemLockMode, Entity, Dimension, ItemUseAfterEvent, BlockVolume, EntityEquippableComponent, EquipmentSlot, EntityItemComponent } from "@minecraft/server";
+import { MolangVariableMap, BlockPermutation, EffectTypes, Vector3, world, system, Player, EntityInventoryComponent, EffectType, DisplaySlotId, ScoreboardObjective, Container, ItemStack, ItemLockMode, Entity, Dimension, ItemUseAfterEvent, BlockVolume, EntityEquippableComponent, EquipmentSlot, EntityItemComponent, ItemStartUseOnAfterEvent } from "@minecraft/server";
 import Vector from "./Vector";
 import DataManager from "./DataManager";
 import Utilities from "./Utilities";
@@ -65,9 +65,14 @@ const SECOND = 20;
 
 const overworld = world.getDimension("overworld");
 
-world.afterEvents.itemUse.subscribe((event: ItemUseAfterEvent) => {
+world.afterEvents.itemStartUseOn.subscribe(itemUse);
+world.afterEvents.itemUse.subscribe(itemUse);
+
+function itemUse(event: ItemUseAfterEvent | ItemStartUseOnAfterEvent) {
 	const player = event.source;
-	var text = event.itemStack.typeId;
+	var itemStack = event.itemStack;
+	if (!itemStack) return;
+	var text = itemStack.typeId;
 
 	if (text.endsWith("_enchanted")) text = text.substring(0, text.length - "_enchanted".length);
 	let keycardType;
@@ -127,7 +132,7 @@ world.afterEvents.itemUse.subscribe((event: ItemUseAfterEvent) => {
 			keycard(keycardType!, player);
 			break;
 	}
-});
+}
 
 /**
  * @description Mode Type: Instant
@@ -206,7 +211,6 @@ function rechargeMode(lvl: number, player: Player) {
 		"maxDistance": 2,
 		"closest": 1
 	}
-	//{"type":"set_block", "do":{"x":-22, "y":-58, "z":58, "block":"theheist:computer", "permutations":"[\"theheist:rotation\":5, \"theheist:unlocked\":true]"}}
 	const armorStands = overworld.getEntities(query);
 	for (const armorStand of armorStands) {
 		var armorStandEnergyTrackerDataNode = DataManager.getData(armorStand, "energyTracker");
@@ -252,12 +256,10 @@ function hackingMode(lvl: number, player: Player) {
 		"maxDistance": 2,
 		"closest": 1
 	}
-	//{"type":"set_block", "do":{"x":-22, "y":-58, "z":58, "block":"theheist:computer", "permutations":"[\"theheist:rotation\":5, \"theheist:unlocked\":true]"}}
 	const armorStands = overworld.getEntities(query);
 	var i = 0;
 	for (const armorStand of armorStands) {
 		i++;
-		//player.sendMessage(armorStand.location.x + ", " + armorStand.location.y + ", and " + armorStand.location.z);
 		var armorStandActionTracker = DataManager.getData(armorStand, 'actionTracker');
 		if (armorStandActionTracker.used == true || armorStandActionTracker.isKeycardReader) {
 			i--;
@@ -277,13 +279,6 @@ function hackingMode(lvl: number, player: Player) {
 			player.playSound('map.hack_use');
 			if (armorStandActionTracker.level != 0) playerEnergyTracker.energyUnits -= Utilities.gamebandInfo.hackingMode[lvl].cost;
 			DataManager.setData(player, playerEnergyTracker);
-			/*var block = armorStandActionTracker.block;
-			if (block.type != "keycard_reader") {
-				// _____________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________WHYWHYWHY!!!
-				var blockSetter1 = {"type": "set_block", "do": { "x": block.x, "y": block.y, "z": block.z, "block": `theheist:${block.type}`, "permutations": {"theheist:rotation": block.rotation, "theheist:unlocked": 1} }};
-				var blockSetter2 = {"type": "set_block", "do": { "x": block.x, "y": block.y, "z": block.z, "block": `theheist:${block.type}`, "permutations": {"theheist:rotation": block.rotation, "theheist:unlocked": 2} }, "delay": 40};
-				armorStandActionTracker.actions.unshift( blockSetter1, blockSetter2 );
-			}*/
 			armorStandActionTracker.actions.forEach((x: IAction) => {
 				if (!x.delay) {
 					action(x, player);
@@ -319,7 +314,7 @@ function resetPlayerInventory(player: Player) {
 	playerInvContainer.clearAll();
 	playerInvData.forEach((invSlotData: any) => {
 		var itemStack = new ItemStack(invSlotData.typeId);
-		itemStack.lockMode = ItemLockMode[invSlotData.lockMode as keyof typeof ItemLockMode];
+		if (invSlotData.lockMode) itemStack.lockMode = ItemLockMode[invSlotData.lockMode as keyof typeof ItemLockMode];
 		playerInvContainer.setItem(invSlotData.slot, itemStack);
 	});
 }
@@ -349,16 +344,27 @@ function action(actionInfo: IAction, player: Player) {
 			var slideshowID = actionInfo.do;
 			startSlideshow(slideshowID, player);
 			break;
+		case "set_door": {
+			var x = actionInfo.do.x;
+			var y = actionInfo.do.y;
+			var z = actionInfo.do.z;
+			var doorNumber = actionInfo.do.doorNumber;
+			var permutations = actionInfo.do.permutations;
+			var side = actionInfo.do.side;
+			Utilities.setBlock(new Vector(x, y, z), `theheist:custom_door_${doorNumber}_bottom${side == undefined ? "" : `_${side}`}`, permutations);
+			Utilities.setBlock(new Vector(x, y + 1, z), `theheist:custom_door_${doorNumber}_top${side == undefined ? "" : `_${side}`}`, permutations);
+			break;
+		}
 		case "set_block": {
 			var x = actionInfo.do.x;
 			var y = actionInfo.do.y;
 			var z = actionInfo.do.z;
 			var block = actionInfo.do.block;
 			var permutations = actionInfo.do.permutations;
-			Utilities.setBlock({ "x": x, "y": y, "z": z }, block, permutations);
+			Utilities.setBlock(new Vector(x, y, z), block, permutations);
 			var query: Record<any, any> = {
 				"type": "theheist:hover_text",
-				"location": { "x": x, "y": y, "z": z },
+				"location": new Vector(x, y, z),
 				"maxDistance": 1,
 				"closest": 1
 			};
@@ -407,15 +413,13 @@ function action(actionInfo: IAction, player: Player) {
 			var maxParticles = 10;
 			var radius = 0.4;
 			for (var i = 0; i < maxParticles; i++) {
-				//console.warn((displayCameraLocation.x + ((cos(360 * i/maxParticles) * radius))).toString());
-				//console.warn((360 * i/maxParticles).toString());
 				const x = displayCameraLocation.x + ((Utilities.cos(360 * (i / maxParticles)) * radius));
 				const y = displayCameraLocation.y + 0.5;
 				const z = displayCameraLocation.z + ((Utilities.sin(360 * (i / maxParticles)) * radius));
 
 				try {
-					const molangVarMap = new MolangVariableMap()
-					molangVarMap.setVector3("velocity", { x, y, z })
+					const molangVarMap = new MolangVariableMap();
+					molangVarMap.setVector3("velocity", { x, y, z });
 					overworld.spawnParticle("minecraft:explosion_particle", { x, y, z }, molangVarMap);
 				} catch (err) { }
 
@@ -423,8 +427,6 @@ function action(actionInfo: IAction, player: Player) {
 			break;
 		case "voice_says":
 			var soundID = actionInfo.do.soundID;
-			//const player = world.getPlayers().filter((x) => (x != undefined && x != null))[0];
-			//if (player == undefined) return;
 			player.playSound(`map.${soundID}`);
 			player.sendMessage([{ "text": "§5§oVoice:§r " }, { "translate": `map.sub.${soundID}` }]);
 			break;
@@ -434,7 +436,7 @@ function action(actionInfo: IAction, player: Player) {
 			break;
 		case "run_command":
 			var command = actionInfo.do.command;
-			overworld.runCommandAsync(command);
+			overworld.runCommand(command);
 			break;
 		case "hack_console": {
 			var x = actionInfo.do.x;
@@ -758,9 +760,11 @@ system.runInterval(() => {
 		}
 	}
 
+	// Toggle below when creating new level
 	//cloneFloor(Vector.v3ToVector(player.location));
 	//flattenMap(Vector.v3ToVector(player.location));
 	//clearGlass(Vector.v3ToVector(player.location));
+
 	// Give player effects
 	const saturation = EffectTypes.get('saturation')!;
 	const nightVision = EffectTypes.get('night_vision')!;

@@ -1,6 +1,7 @@
-import { BlockPermutation, Vector3, Block, world, Player, Container, EntityInventoryComponent, ItemStack, ItemLockMode, BlockVolume, BlockType, BlockFillOptions, SpawnEntityOptions, Entity, EntityEquippableComponent, EquipmentSlot } from "@minecraft/server";
+import { BlockPermutation, Vector3, Block, world, Player, Container, EntityInventoryComponent, ItemStack, ItemLockMode, BlockVolume, BlockType, BlockFillOptions, Entity, EntityEquippableComponent, EquipmentSlot } from "@minecraft/server";
 import DataManager from "./DataManager";
 import Vector from "./Vector";
+import { BlockStateSuperset } from "@minecraft/vanilla-data";
 
 export default class Utilities {
 	static dimensions = {
@@ -38,8 +39,8 @@ export default class Utilities {
 		return Math.floor(Math.random() * (max - min) + min);
 	}
 
-	static spawnEntity(location: Vector3, identitifier: string, options: SpawnEntityOptions | undefined = undefined): Entity {
-		return this.dimensions.overworld.spawnEntity(identitifier, location, options);
+	static spawnEntity(location: Vector3, identitifier: string): Entity {
+		return this.dimensions.overworld.spawnEntity(identitifier, location);
 	}
 
 	static setBlock(location: Vector3, block: string, permutations: Record<string, string | number | boolean> | undefined = undefined) {
@@ -47,8 +48,16 @@ export default class Utilities {
 	}
 
 	static setBlockState(block: Block, stateName: string, stateValue: boolean | number | string, checkForRedundance: boolean = true) {
-		if (checkForRedundance && block.permutation.getState(stateName) === stateValue) return;
-		block.setPermutation(block.permutation.withState(stateName, stateValue));
+		if (checkForRedundance && block.permutation.getState(stateName as keyof BlockStateSuperset) === stateValue) return;
+		block.setPermutation(block.permutation.withState(stateName as keyof BlockStateSuperset, stateValue));
+	}
+
+	static getBlockState(block: Block, stateName: string) {
+		return block.permutation.getState(stateName as keyof BlockStateSuperset);
+	}
+
+	static permutationWithState(permutation: BlockPermutation, stateName: string, value: string | number  | boolean | undefined) {
+		return permutation.withState(stateName as keyof BlockStateSuperset, value);
 	}
 
 	static fillBlocks2(location1: Vector3, location2: Vector3, block: BlockPermutation | BlockType | string, options?: BlockFillOptions) {
