@@ -98,7 +98,7 @@ export function updateSensorDisplay(player: Player, levelInformation: LevelInfor
     // Update ground to show where the camera sight blocks are
     if (!playerIsInSensorMode(levelInformation)) return; // Player is not in sensor mode
     clearSensed(player, levelInformation);
-    var loc = Vector.v3ToVector(player.location);
+    var loc = Vector.fromV3(player.location);
     loc.y = Utilities.cameraMappingHeight - 3; // To get to camera sight blocks height
     var corner1Top = loc.subtract(new Vector(sensingRange, 0, sensingRange));
     var corner2Top = loc.add(new Vector(sensingRange, 0, sensingRange));
@@ -112,7 +112,7 @@ export function updateSensorDisplay(player: Player, levelInformation: LevelInfor
 }
 
 function clearSensed(player: Player, levelInformation: LevelInformation) {
-    var loc = Vector.v3ToVector(player.location);
+    var loc = Vector.fromV3(player.location);
     loc.y = Utilities.floorCloneHeight; // To get to floor height
     var corner1 = loc.subtract(new Vector(clearRange, 0, clearRange));
     var corner2 = loc.add(new Vector(clearRange, 0, clearRange));

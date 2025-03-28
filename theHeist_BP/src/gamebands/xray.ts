@@ -74,7 +74,7 @@ export function updateXRayDisplay(player: Player, levelInformation: LevelInforma
     // Update ground to show where the camera sight blocks are
     if (!playerIsInXRayMode(levelInformation)) return; // Player is not in xray mode
     clearXRayDisplay(player, levelInformation);
-    var loc = Vector.v3ToVector(player.location);
+    var loc = Vector.fromV3(player.location);
     var corner1 = loc.subtract(new Vector(viewRange, viewRange, viewRange));
     var corner2 = loc.add(new Vector(viewRange, viewRange, viewRange));
     solidToTransparent.forEach((x) => {
@@ -88,7 +88,7 @@ export function updateXRayDisplay(player: Player, levelInformation: LevelInforma
 }
 
 function clearXRayDisplay(player: Player, levelInformation: LevelInformation) {
-    var loc = Vector.v3ToVector(player.location);
+    var loc = Vector.fromV3(player.location);
     loc.y = Utilities.levelHeight; // Ensure xray does not go below the level
     var corner1 = loc.subtract(new Vector(clearRange, clearRange, clearRange));
     var corner2 = loc.add(new Vector(clearRange, clearRange, clearRange));

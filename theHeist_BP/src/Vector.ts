@@ -11,6 +11,14 @@ export default class Vector implements Vector3, IVector3 {
         this.z = _z;
     }
 
+    above() {
+        return this.add(Vector.up);
+    }
+
+    below() {
+        return this.add(Vector.down);
+    }
+
     /**
      * 
      * @param oV Other vector to add
@@ -27,7 +35,7 @@ export default class Vector implements Vector3, IVector3 {
         return new Vector(this.x - oV.x, this.y - oV.y, this.z - oV.z);
     }
 
-    static v3ToVector(v3: Vector3) {
+    static fromV3(v3: Vector3) {
         return new Vector(v3.x, v3.y, v3.z);
     }
 

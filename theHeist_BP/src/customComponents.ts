@@ -81,11 +81,11 @@ function bottomDoorInteract(event: BlockComponentPlayerInteractEvent) {
     if (isOpen) {
         Utilities.setBlockState(block, "theheist:open", false);
         Utilities.setBlockState(block.above()!, "theheist:open", false);
-        Utilities.dimensions.overworld.playSound("random.door_close", Vector.v3ToVector(block.location).add(new Vector(0, 0.5, 0)));
+        Utilities.dimensions.overworld.playSound("random.door_close", Vector.fromV3(block.location).add(new Vector(0, 0.5, 0)));
     } else {
         Utilities.setBlockState(block, "theheist:open", true);
         Utilities.setBlockState(block.above()!, "theheist:open", true);
-        Utilities.dimensions.overworld.playSound("random.door_open", Vector.v3ToVector(block.location).add(new Vector(0, 0.5, 0)));
+        Utilities.dimensions.overworld.playSound("random.door_open", Vector.fromV3(block.location).add(new Vector(0, 0.5, 0)));
     }
 }
 
@@ -98,11 +98,11 @@ function topDoorInteract(event: BlockComponentPlayerInteractEvent) {
     if (isOpen) {
         Utilities.setBlockState(block, "theheist:open", false);
         Utilities.setBlockState(block.below()!, "theheist:open", false);
-        Utilities.dimensions.overworld.playSound("random.door_close", Vector.v3ToVector(block.location).add(new Vector(0, -0.5, 0)));
+        Utilities.dimensions.overworld.playSound("random.door_close", Vector.fromV3(block.location).add(new Vector(0, -0.5, 0)));
     } else {
         Utilities.setBlockState(block, "theheist:open", true);
         Utilities.setBlockState(block.below()!, "theheist:open", true);
-        Utilities.dimensions.overworld.playSound("random.door_open", Vector.v3ToVector(block.location).add(new Vector(0, -0.5, 0)));
+        Utilities.dimensions.overworld.playSound("random.door_open", Vector.fromV3(block.location).add(new Vector(0, -0.5, 0)));
     }
 }
 

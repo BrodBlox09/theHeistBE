@@ -35,7 +35,7 @@ function tryStartMagnetMode(player: Player, lvl: number, levelInformation: Level
 }
 
 function clearBarriers(player: Player) {
-    Utilities.fillBlocksWithOptions(Vector.v3ToVector(player.location).subtract(new Vector(3, 3, 3)), Vector.v3ToVector(player.location).add(new Vector(3, 3, 3)), "air", {
+    Utilities.fillBlocksWithOptions(Vector.fromV3(player.location).subtract(new Vector(3, 3, 3)), Vector.fromV3(player.location).add(new Vector(3, 3, 3)), "air", {
         "blockFilter": {
             "includeTypes": ["minecraft:barrier"]
         }

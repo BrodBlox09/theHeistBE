@@ -162,6 +162,11 @@ system.afterEvents.scriptEventReceive.subscribe(event => { // stable-friendly ve
 			console.warn(block.typeId);
 			break;
 		}
+		case "setDoor": {
+			Utilities.setBlock(Vector.fromV3(player.getBlockFromViewDirection()!.block.location).above(), "air");
+			Utilities.setBlock(Vector.fromV3(player.getBlockFromViewDirection()!.block.location).above(), "theheist:custom_door_1_bottom");
+			break;
+		}
 		case "spawnJeb": {
 			system.run(() => {
 				Utilities.dimensions.overworld.spawnEntity("minecraft:sheep", player.location).nameTag = "jeb_";

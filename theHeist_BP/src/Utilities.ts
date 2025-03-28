@@ -43,8 +43,11 @@ export default class Utilities {
 		return this.dimensions.overworld.spawnEntity(identitifier, location);
 	}
 
-	static setBlock(location: Vector3, block: string, permutations: Record<string, string | number | boolean> | undefined = undefined) {
-		this.dimensions.overworld.getBlock(location)?.setPermutation(BlockPermutation.resolve(block, permutations));
+	static setBlock(location: Vector3, blockType: string, permutations: Record<string, string | number | boolean> | undefined = undefined) {
+		var block = this.dimensions.overworld.getBlock(location);
+		if (!block) return;
+		block.setType("air"); // Ensure any onPlace events run when the actual block is placed
+		block.setPermutation(BlockPermutation.resolve(blockType, permutations));
 	}
 
 	static setBlockState(block: Block, stateName: string, stateValue: boolean | number | string, checkForRedundance: boolean = true) {

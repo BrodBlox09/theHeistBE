@@ -761,9 +761,9 @@ system.runInterval(() => {
 	}
 
 	// Toggle below when creating new level
-	//cloneFloor(Vector.v3ToVector(player.location));
-	//flattenMap(Vector.v3ToVector(player.location));
-	//clearGlass(Vector.v3ToVector(player.location));
+	//cloneFloor(Vector.fromV3(player.location));
+	//flattenMap(Vector.fromV3(player.location));
+	//clearGlass(Vector.fromV3(player.location));
 
 	// Give player effects
 	const saturation = EffectTypes.get('saturation')!;

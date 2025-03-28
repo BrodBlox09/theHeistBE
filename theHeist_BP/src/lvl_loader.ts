@@ -602,8 +602,8 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 					reloadSidebarDisplay();
 
 					player.onScreenDisplay.setTitle(`§o§7Level ${levelNum}`, { "fadeInDuration": 20, "fadeOutDuration": 20, "stayDuration": 160 });
-					player.teleport(Vector.v3ToVector(levelDefinition.loadElevatorLoc).add(new Vector(0, 4, 0)));
-					var elevatorInterval =  runElelevatorAnimation(Vector.v3ToVector(levelDefinition.loadElevatorLoc));
+					player.teleport(Vector.fromV3(levelDefinition.loadElevatorLoc).add(new Vector(0, 4, 0)));
+					var elevatorInterval =  runElelevatorAnimation(Vector.fromV3(levelDefinition.loadElevatorLoc));
 
 					const levelCloneInfo = Utilities.levelCloneInfo[`level_${levelNum}`];
 					// Ensure parts far away are loaded
