@@ -25,7 +25,7 @@ LevelConstructor.cameraRobot(new Vector(3088.5, -59.25, 134.5), -90);
 LevelConstructor.cameraRobot(new Vector(3055.5, -59.25, 124.5), -180);
 
 LevelConstructor.keypad(new Vector(3079.5, -59, 107.5), 1, 2, [{
-    "type": "set_door", "do": { "x": 3078, "y": -60, "z": 106, "doorNumber": 1, "permutations": { "theheist:rotation": 2, "theheist:unlocked": true } }, "delay": 40
+    "type": "set_block", "do": { "x": 3078, "y": -60, "z": 106, "block": "theheist:custom_door_1_bottom", "permutations": { "theheist:rotation": 2, "theheist:unlocked": true } }, "delay": 40
 }]);
 LevelConstructor.computer(new Vector(3072.5, -59, 105.5), "Research info", 3, [{
     "type": "display_research", "do": { "researchID": 100 }, "delay": 40
@@ -33,13 +33,13 @@ LevelConstructor.computer(new Vector(3072.5, -59, 105.5), "Research info", 3, [{
 LevelConstructor.newGameband(new Vector(3074.5, -59, 100.5), "sensor", "§6§lSensor", 2, 2, []);
 LevelConstructor.keypad(new Vector(3074.5, -59, 116.5), 3, 5, []);
 LevelConstructor.keypad(new Vector(3052.5, -59, 115.5), 1, 2, [{
-    "type": "set_door", "do": { "x": 3051, "y": -60, "z": 114, "doorNumber": 1, "permutations": { "theheist:rotation": 2, "theheist:unlocked": true } }, "delay": 40
+    "type": "set_block", "do": { "x": 3051, "y": -60, "z": 114, "block": "theheist:custom_door_1_bottom", "permutations": { "theheist:rotation": 2, "theheist:unlocked": true } }, "delay": 40
 }]);
 LevelConstructor.computer(new Vector(3045.5, -59, 111.5), "Mail", 4, [{
     "type": "display_mail", "do": { "mailID": 103 }, "delay": 40
 }]);
 LevelConstructor.keypad(new Vector(3074.5, -59, 139.5), 1, 5, [{
-    "type": "set_door", "do": { "x": 3075, "y": -60, "z": 140, "doorNumber": 1, "permutations": { "theheist:rotation": 5, "theheist:unlocked": true } }, "delay": 40
+    "type": "set_block", "do": { "x": 3075, "y": -60, "z": 140, "block": "theheist:custom_door_1_bottom", "permutations": { "theheist:rotation": 5, "theheist:unlocked": true } }, "delay": 40
 }]);
 LevelConstructor.computer(new Vector(3080.5, -59, 142.5), "Clear alarm status", 3, [{
     "type": "set_alarm_level", "do": { "value": 0 }, "delay": 40
@@ -54,13 +54,13 @@ LevelConstructor.computer(new Vector(3082.5, -59, 118.5), "Mail", 5, [{
     "type": "manage_objectives", "do": { "manageType": 1, "objective": "Find Green Keycard", "sortOrder": 0 }, "delay": 40
 }]);
 LevelConstructor.keypad(new Vector(3104.5, -59, 116.5), 2, 4, [{
-    "type": "set_door", "do": { "x": 3103, "y": -60, "z": 115, "doorNumber": 2, "permutations": { "theheist:rotation": 4, "theheist:unlocked": true } }, "delay": 40
+    "type": "set_block", "do": { "x": 3103, "y": -60, "z": 115, "block": "theheist:custom_door_2_bottom", "permutations": { "theheist:rotation": 4, "theheist:unlocked": true } }, "delay": 40
 },
 {
     "type": "hack_console", "do": { "x": 3097, "z": 123 }, "delay": 40
 }]);
 LevelConstructor.keypad(new Vector(3097.5, -59, 123.5), 2, 2, [{
-    "type": "set_door", "do": { "x": 3096, "y": -60, "z": 122, "doorNumber": 2, "permutations": { "theheist:rotation": 2, "theheist:unlocked": true } }, "delay": 40
+    "type": "set_block", "do": { "x": 3096, "y": -60, "z": 122, "block": "theheist:custom_door_2_bottom", "permutations": { "theheist:rotation": 2, "theheist:unlocked": true } }, "delay": 40
 },
 {
     "type": "hack_console", "do": { "x": 3104, "z": 116 }, "delay": 40
@@ -70,23 +70,23 @@ LevelConstructor.computer(new Vector(3097.5, -59, 114.5), "Research info", 2, [{
 }]);
 LevelConstructor.gamebandUpgrade(new Vector(3106.5, -59, 117.5), "hacking", "§2§lHacking Lvl. 2", 2, 1, 5, []);
 LevelConstructor.keypad(new Vector(3062.5, -59, 150.5), 2, 3, [{
-    "type": "set_door", "do": { "x": 3061, "y": -60, "z": 151, "doorNumber": 2, "permutations": { "theheist:rotation": 3, "theheist:unlocked": true } }, "delay": 40
+    "type": "set_block", "do": { "x": 3061, "y": -60, "z": 151, "block": "theheist:custom_door_2_bottom", "permutations": { "theheist:rotation": 3, "theheist:unlocked": true } }, "delay": 40
 }]);
 LevelConstructor.computer(new Vector(3058.5, -59, 156.5), "Research info", 4, [{
     "type": "display_research", "do": { "researchID": 102 }, "delay": 40
 }]);
 LevelConstructor.gamebandUpgrade(new Vector(3063.5, -59, 159.5), "recharge", "§1§lRecharge Lvl. 2", 2, 0, 3, []);
 LevelConstructor.keycardReader(new Vector(3039.5, -59, 129.5), "yellow", [{
-    "type": "set_door", "do": { "x": 3038, "y": -60, "z": 131, "doorNumber": 2, "permutations": { "theheist:rotation": 4, "theheist:unlocked": true, "theheist:open": true } }
+    "type": "set_block", "do": { "x": 3038, "y": -60, "z": 131, "block": "theheist:custom_door_2_bottom", "permutations": { "theheist:rotation": 4, "theheist:unlocked": true, "theheist:open": true } }
 },
 {
     "type": "play_sound", "do": { "soundID": "random.door_open" }
 }]);
 LevelConstructor.keycardReader(new Vector(3087.5, -59, 131.5), "green", [{
-    "type": "set_door", "do": { "x": 3089, "y": -60, "z": 130, "doorNumber": 4, "side": "l", "permutations": { "theheist:rotation": 2, "theheist:unlocked": true, "theheist:open": true } }
+    "type": "set_block", "do": { "x": 3089, "y": -60, "z": 130, "block": "theheist:custom_door_4_bottom_l", "permutations": { "theheist:rotation": 2, "theheist:unlocked": true, "theheist:open": true } }
 },
 {
-    "type": "set_door", "do": { "x": 3090, "y": -60, "z": 130, "doorNumber": 4, "side": "r", "permutations": { "theheist:rotation": 2, "theheist:unlocked": true, "theheist:open": true  } }
+    "type": "set_block", "do": { "x": 3090, "y": -60, "z": 130, "block": "theheist:custom_door_4_bottom_r", "permutations": { "theheist:rotation": 2, "theheist:unlocked": true, "theheist:open": true  } }
 },
 {
     "type": "play_sound", "do": { "soundID": "random.door_open" }
@@ -101,14 +101,14 @@ LevelConstructor.computer(new Vector(3081.5, -59, 137.5), "Disable nearby camera
     "type": "disable_camera", "do": { "cameraID": 4 }, "delay": 40
 }]);
 
-LevelConstructor.door1(new Vector(3078, -60, 106), { "theheist:rotation": 2, "theheist:unlocked": false });
-LevelConstructor.door1(new Vector(3051, -60, 114), { "theheist:rotation": 2, "theheist:unlocked": false });
-LevelConstructor.door1(new Vector(3075, -60, 140), { "theheist:rotation": 5, "theheist:unlocked": false });
-LevelConstructor.door2(new Vector(3103, -60, 115), { "theheist:rotation": 4, "theheist:unlocked": false });
-LevelConstructor.door2(new Vector(3096, -60, 122), { "theheist:rotation": 2, "theheist:unlocked": false });
-LevelConstructor.door2(new Vector(3061, -60, 151), { "theheist:rotation": 3, "theheist:unlocked": false });
-LevelConstructor.door2(new Vector(3038, -60, 131), { "theheist:rotation": 4, "theheist:unlocked": false });
-LevelConstructor.door4(new Vector(3089, -60, 130), new Vector(3090, -60, 130), { "theheist:rotation": 2, "theheist:unlocked": false });
+LevelConstructor.door1(new Vector(3078, -60, 106), 2);
+LevelConstructor.door1(new Vector(3051, -60, 114), 2);
+LevelConstructor.door1(new Vector(3075, -60, 140), 5);
+LevelConstructor.door2(new Vector(3103, -60, 115), 4);
+LevelConstructor.door2(new Vector(3096, -60, 122), 2);
+LevelConstructor.door2(new Vector(3061, -60, 151), 3);
+LevelConstructor.door2(new Vector(3038, -60, 131), 4);
+LevelConstructor.door4(new Vector(3089, -60, 130), new Vector(3090, -60, 130), 2);
 
 LevelConstructor.rechargeStation(new Vector(3070.5, -60, 110.5), 4);
 LevelConstructor.rechargeStation(new Vector(3100.5, -60, 121.5), 3);
@@ -171,8 +171,8 @@ export default level;
 //         var elevatorInterval =  runElelevatorAnimation(new Vector(3099.0, -60, 109.0));
 
 //         // Ensure parts far away are loaded
-//         overworld.runCommandAsync('tickingarea remove_all');
-//         overworld.runCommandAsync('tickingarea add 3032 -61 128 3040 -14 133 "t1" true');
+//         overworld.runCommand('tickingarea remove_all');
+//         overworld.runCommand('tickingarea add 3032 -61 128 3040 -14 133 "t1" true');
 
 //         system.runTimeout(() => { // After 10 seconds bring the player out of the elevator and end the interval
 //             overworld.runCommand('tickingarea remove_all');
@@ -189,8 +189,8 @@ export default level;
 //             // Clear sensor residue
 //             const levelCloneInfo = Utilities.levelCloneInfo[`level_-1`];
 //             Utilities.fillBlocks(new Vector(levelCloneInfo.startX, Utilities.cameraMappingHeight - 4, levelCloneInfo.startZ), new Vector(levelCloneInfo.endX, Utilities.cameraMappingHeight - 4, levelCloneInfo.endZ), "air");
-//             overworld.runCommandAsync(`fill ${levelCloneInfo.startX} ${Utilities.levelHeight} ${levelCloneInfo.startZ} ${levelCloneInfo.endX} ${Utilities.levelHeight} ${levelCloneInfo.endZ} air replace theheist:robot_path`);
-//             overworld.runCommandAsync(`clone ${levelCloneInfo.startX} ${Utilities.floorCloneHeight} ${levelCloneInfo.startZ} ${levelCloneInfo.endX} ${Utilities.floorCloneHeight} ${levelCloneInfo.endZ} ${levelCloneInfo.startX} ${Utilities.levelHeight - 1} ${levelCloneInfo.startZ}`);
+//             overworld.runCommand(`fill ${levelCloneInfo.startX} ${Utilities.levelHeight} ${levelCloneInfo.startZ} ${levelCloneInfo.endX} ${Utilities.levelHeight} ${levelCloneInfo.endZ} air replace theheist:robot_path`);
+//             overworld.runCommand(`clone ${levelCloneInfo.startX} ${Utilities.floorCloneHeight} ${levelCloneInfo.startZ} ${levelCloneInfo.endX} ${Utilities.floorCloneHeight} ${levelCloneInfo.endZ} ${levelCloneInfo.startX} ${Utilities.levelHeight - 1} ${levelCloneInfo.startZ}`);
 
 //             // // Camera 0
 //             // const camera0 = overworld.spawnEntity("armor_stand", { "x": 3066.5, "y": cameraHeight, "z": 105.5 });

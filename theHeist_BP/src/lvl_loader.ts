@@ -158,7 +158,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 								"type": "manage_objectives", "do": { "manageType": 2, "objective": "Activate Slideshow", "sortOrder": 0 }, "delay": 40
 							},
 							{
-								"type": "slideshow", "do": 1, "delay": 44
+								"type": "slideshow", "do": { "slideshowID": 1 }, "delay": 44
 							}
 						]
 					};
@@ -607,10 +607,10 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 
 					const levelCloneInfo = Utilities.levelCloneInfo[`level_${levelNum}`];
 					// Ensure parts far away are loaded
-					overworld.runCommandAsync('tickingarea remove_all');
+					overworld.runCommand('tickingarea remove_all');
 					system.runTimeout(() => {
 						// Ticking area doesn't depend on Y level and it uses rounded X and Z coordinates
-						overworld.runCommandAsync(`tickingarea add ${levelCloneInfo.startX} 0 ${levelCloneInfo.startZ} ${levelCloneInfo.endX} 0 ${levelCloneInfo.endZ} level-wide`);
+						overworld.runCommand(`tickingarea add ${levelCloneInfo.startX} 0 ${levelCloneInfo.startZ} ${levelCloneInfo.endX} 0 ${levelCloneInfo.endZ} level-wide`);
 					}, 2); // Ensure this ticking area isn't removed
 					
 					system.runTimeout(() => {
@@ -621,11 +621,11 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 						// Clear sensor mode residue
 						const levelCloneInfo = Utilities.levelCloneInfo[`level_${levelNum}`];
 						Utilities.fillBlocks(new Vector(levelCloneInfo.startX, Utilities.cameraMappingHeight - 4, levelCloneInfo.startZ), new Vector(levelCloneInfo.endX, Utilities.cameraMappingHeight - 4, levelCloneInfo.endZ), "air");
-						overworld.runCommandAsync(`fill ${levelCloneInfo.startX} ${Utilities.levelHeight} ${levelCloneInfo.startZ} ${levelCloneInfo.endX} ${Utilities.levelHeight} ${levelCloneInfo.endZ} air replace theheist:robot_path`);
-						overworld.runCommandAsync(`clone ${levelCloneInfo.startX} ${Utilities.floorCloneHeight} ${levelCloneInfo.startZ} ${levelCloneInfo.endX} ${Utilities.floorCloneHeight} ${levelCloneInfo.endZ} ${levelCloneInfo.startX} ${Utilities.levelHeight - 1} ${levelCloneInfo.startZ}`);
+						overworld.runCommand(`fill ${levelCloneInfo.startX} ${Utilities.levelHeight} ${levelCloneInfo.startZ} ${levelCloneInfo.endX} ${Utilities.levelHeight} ${levelCloneInfo.endZ} air replace theheist:robot_path`);
+						overworld.runCommand(`clone ${levelCloneInfo.startX} ${Utilities.floorCloneHeight} ${levelCloneInfo.startZ} ${levelCloneInfo.endX} ${Utilities.floorCloneHeight} ${levelCloneInfo.endZ} ${levelCloneInfo.startX} ${Utilities.levelHeight - 1} ${levelCloneInfo.startZ}`);
 						// Move drilled areas back into position
-						overworld.runCommandAsync(`clone ${levelCloneInfo.startX} ${Utilities.drilledBlocksHeight} ${levelCloneInfo.startZ} ${levelCloneInfo.endX} ${Utilities.drilledBlocksHeight + 1} ${levelCloneInfo.endZ} ${levelCloneInfo.startX} ${Utilities.levelHeight} ${levelCloneInfo.startZ} filtered normal minecraft:hardened_clay`);
-						overworld.runCommandAsync(`clone ${levelCloneInfo.startX} ${Utilities.drilledBlocksHeight} ${levelCloneInfo.startZ} ${levelCloneInfo.endX} ${Utilities.drilledBlocksHeight + 1} ${levelCloneInfo.endZ} ${levelCloneInfo.startX} ${Utilities.levelHeight + 1} ${levelCloneInfo.startZ} filtered move minecraft:hardened_clay`);
+						overworld.runCommand(`clone ${levelCloneInfo.startX} ${Utilities.drilledBlocksHeight} ${levelCloneInfo.startZ} ${levelCloneInfo.endX} ${Utilities.drilledBlocksHeight + 1} ${levelCloneInfo.endZ} ${levelCloneInfo.startX} ${Utilities.levelHeight} ${levelCloneInfo.startZ} filtered normal minecraft:hardened_clay`);
+						overworld.runCommand(`clone ${levelCloneInfo.startX} ${Utilities.drilledBlocksHeight} ${levelCloneInfo.startZ} ${levelCloneInfo.endX} ${Utilities.drilledBlocksHeight + 1} ${levelCloneInfo.endZ} ${levelCloneInfo.startX} ${Utilities.levelHeight + 1} ${levelCloneInfo.startZ} filtered move minecraft:hardened_clay`);
 						
 						LevelConstructor.start();
 						levelDefinition.setup();
@@ -696,7 +696,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 			}
 			bustedCounterObjective.setScore(player, 0);
 
-			if (currLevel != -5) overworld.runCommandAsync(`scriptevent theheist:load-level ${currLevel - 1}-1`);
+			if (currLevel != -5) overworld.runCommand(`scriptevent theheist:load-level ${currLevel - 1}-1`);
 			else endDemo(player);
 			break;
 		}

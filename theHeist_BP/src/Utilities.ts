@@ -43,11 +43,9 @@ export default class Utilities {
 		return this.dimensions.overworld.spawnEntity(identitifier, location);
 	}
 
-	static setBlock(location: Vector3, blockType: string, permutations: Record<string, string | number | boolean> | undefined = undefined) {
-		var block = this.dimensions.overworld.getBlock(location);
-		if (!block) return;
-		block.setType("air"); // Ensure any onPlace events run when the actual block is placed
-		block.setPermutation(BlockPermutation.resolve(blockType, permutations));
+	static setBlock(location: Vector3, blockType: string, permutations?: Record<string, string | number | boolean>) {
+		this.dimensions.overworld.setBlockType(location, "air"); // Ensure any onPlace events run when the actual block is placed
+		this.dimensions.overworld.setBlockPermutation(location, BlockPermutation.resolve(blockType, permutations));
 	}
 
 	static setBlockState(block: Block, stateName: string, stateValue: boolean | number | string, checkForRedundance: boolean = true) {
@@ -63,11 +61,7 @@ export default class Utilities {
 		return permutation.withState(stateName as keyof BlockStateSuperset, value);
 	}
 
-	static fillBlocks2(location1: Vector3, location2: Vector3, block: BlockPermutation | BlockType | string, options?: BlockFillOptions) {
-		this.dimensions.overworld.fillBlocks(new BlockVolume(location1, location2), block, options);
-	}
-
-	static fillBlocks(location1: Vector3, location2: Vector3, block: string, permutations: Record<string, string | number | boolean> | undefined = undefined) {
+	static fillBlocks(location1: Vector3, location2: Vector3, block: string, permutations?: Record<string, string | number | boolean>) {
 		this.dimensions.overworld.fillBlocks(new BlockVolume(location1, location2), BlockPermutation.resolve(block, permutations), {
 			"ignoreChunkBoundErrors": true
 		});
@@ -79,7 +73,7 @@ export default class Utilities {
 		});
 	}
 
-	static fillBlocksWithOptions(location1: Vector3, location2: Vector3, block: string, options: BlockFillOptions, permutations: Record<string, string | number | boolean> | undefined = undefined) {
+	static fillBlocksWithOptions(location1: Vector3, location2: Vector3, block: string, options: BlockFillOptions, permutations?: Record<string, string | number | boolean>) {
 		if (!options.ignoreChunkBoundErrors) options.ignoreChunkBoundErrors = true;
 		this.dimensions.overworld.fillBlocks(new BlockVolume(location1, location2), BlockPermutation.resolve(block, permutations), options);
 	}

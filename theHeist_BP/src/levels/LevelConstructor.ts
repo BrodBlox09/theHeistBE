@@ -1,4 +1,4 @@
-import { ItemStack, Player, system, world, DisplaySlotId, BlockInventoryComponent, BlockPermutation, Container, ItemLockMode } from "@minecraft/server";
+import { ItemStack, Container } from "@minecraft/server";
 import Vector from "../Vector";
 import Utilities from "../Utilities";
 import DataManager from "../DataManager";
@@ -14,33 +14,28 @@ export default class LevelConstructor {
         rechargeStations = 0;
     }
 
-    static door1(loc: Vector, permutations?: Record<string, string | number | boolean>) {
-        Utilities.setBlock(loc, "theheist:custom_door_1_bottom", permutations);
-        Utilities.setBlock(loc.add(new Vector(0, 1, 0)), "theheist:custom_door_1_top", permutations);
+    static door1(loc: Vector, rotation: number, unlocked: boolean = false) {
+        Utilities.setBlock(loc, "theheist:custom_door_1_bottom", { "theheist:rotation": rotation, "theheist:unlocked": unlocked });
     }
 
-    static door2(loc: Vector, permutations?: Record<string, string | number | boolean>) {
-        Utilities.setBlock(loc, "theheist:custom_door_2_bottom", permutations);
-        Utilities.setBlock(loc.add(new Vector(0, 1, 0)), "theheist:custom_door_2_top", permutations);
+    static door2(loc: Vector, rotation: number, unlocked: boolean = false) {
+        Utilities.setBlock(loc, "theheist:custom_door_2_bottom", { "theheist:rotation": rotation, "theheist:unlocked": unlocked });
     }
 
-    static door3(loc: Vector, permutations?: Record<string, string | number | boolean>) {
-        Utilities.setBlock(loc, "theheist:custom_door_3_bottom", permutations);
-        Utilities.setBlock(loc.add(new Vector(0, 1, 0)), "theheist:custom_door_3_top", permutations);
+    static door3(loc: Vector, rotation: number, unlocked: boolean = false) {
+        Utilities.setBlock(loc, "theheist:custom_door_3_bottom", { "theheist:rotation": rotation, "theheist:unlocked": unlocked });
     }
 
-    static door4(locLeft: Vector, locRight: Vector, permutations?: Record<string, string | number | boolean>) {
-        Utilities.setBlock(locLeft, "theheist:custom_door_4_bottom_l", permutations);
-        Utilities.setBlock(locLeft.add(new Vector(0, 1, 0)), "theheist:custom_door_4_top_l", permutations);
-        Utilities.setBlock(locRight, "theheist:custom_door_4_bottom_r", permutations);
-        Utilities.setBlock(locRight.add(new Vector(0, 1, 0)), "theheist:custom_door_4_top_r", permutations);
+    static door4(locLeft: Vector, locRight: Vector, rotation: number, unlocked: boolean = false) {
+        Utilities.setBlock(locLeft, "theheist:custom_door_4_bottom_l", { "theheist:rotation": rotation, "theheist:unlocked": unlocked });
+        Utilities.setBlock(locRight, "theheist:custom_door_4_bottom_r", { "theheist:rotation": rotation, "theheist:unlocked": unlocked });
     }
 
     static gamebandUpgrade(loc: Vector, mode: string, modeText: string, level: number, inventorySlot: number, blockRot: number, actions: IAction[]) {
         const console = overworld.spawnEntity("armor_stand", { "x": loc.x, "y": Utilities.consolesHeight, "z": loc.z });
         Utilities.setBlock(loc, `theheist:${mode}_mode_display`, { "theheist:rotation": blockRot });
         const modeInCase = mode.substring(0, 1).toUpperCase() + mode.substring(1).toLowerCase();
-        var allActions = [
+        var allActions: ActionList = [
             {
                 "type": "upgrade_gameband", "do": {
                     "displayBlock": { "x": loc.x, "y": loc.y, "z": loc.z },
@@ -68,7 +63,7 @@ export default class LevelConstructor {
         const console = overworld.spawnEntity("armor_stand", { "x": loc.x, "y": Utilities.consolesHeight, "z": loc.z });
         Utilities.setBlock(loc, `theheist:${mode}_mode_display`, { "theheist:rotation": blockRot });
         const modeInCase = mode.substring(0, 1).toUpperCase() + mode.substring(1).toLowerCase();
-        var allActions = [
+        var allActions: ActionList = [
             {
                 "type": "new_gameband", "do": {
                     "displayBlock": { "x": loc.x, "y": loc.y, "z": loc.z },
@@ -92,7 +87,7 @@ export default class LevelConstructor {
         DataManager.setData(console, consoleActionTracker);
     }
 
-    static keycardReader(loc: Vector, color: string, actions: Array<IAction>) {
+    static keycardReader(loc: Vector, color: string, actions: ActionList) {
         const console = overworld.spawnEntity("armor_stand", { "x": loc.x, "y": Utilities.consolesHeight, "z": loc.z });
         const consoleActionTracker = {
             "name": "actionTracker",
@@ -104,7 +99,7 @@ export default class LevelConstructor {
         DataManager.setData(console, consoleActionTracker);
     }
 
-    static keypad(loc: Vector, level: number, blockRot: number, actions: Array<IAction>) {
+    static keypad(loc: Vector, level: number, blockRot: number, actions: ActionList) {
         const console = overworld.spawnEntity("armor_stand", { "x": loc.x, "y": Utilities.consolesHeight, "z": loc.z });
         Utilities.setBlock(loc, "theheist:keypad", { "theheist:rotation": blockRot });
         overworld.spawnEntity("theheist:hover_text", loc).nameTag = `Lvl. ${level}`;
@@ -126,17 +121,19 @@ export default class LevelConstructor {
         DataManager.setData(console, consoleActionTracker);
     }
 
-    static keypadWithPrereq(loc: Vector, level: number, blockRot: number, actions: Array<IAction>, prereq: any, desc: string = "") {
+    static keypadWithPrereq(loc: Vector, level: number, blockRot: number, actions: ActionList, prereq: any, desc: string = "") {
         const console = overworld.spawnEntity("armor_stand", { "x": loc.x, "y": Utilities.consolesHeight, "z": loc.z });
         Utilities.setBlock(loc, "theheist:keypad", { "theheist:rotation": blockRot });
         if (desc.length > 0) overworld.spawnEntity("theheist:hover_text", loc).nameTag = desc;
         var allActions = actions;
-        allActions.push({
-            "type": "set_block", "do": { "x": loc.x, "y": loc.y, "z": loc.z, "block": "theheist:keypad", "permutations": { "theheist:rotation": blockRot, "theheist:unlocked": 1 } }
-        },
+        allActions.push(
+            {
+                "type": "set_block", "do": { "x": loc.x, "y": loc.y, "z": loc.z, "block": "theheist:keypad", "permutations": { "theheist:rotation": blockRot, "theheist:unlocked": 1 } }
+            },
             {
                 "type": "set_block", "do": { "x": loc.x, "y": loc.y, "z": loc.z, "block": "theheist:keypad", "permutations": { "theheist:rotation": blockRot, "theheist:unlocked": 2 } }, "delay": 40
-            });
+            }
+        );
         const consoleActionTracker = {
             "name": "actionTracker",
             "used": false,
@@ -147,17 +144,19 @@ export default class LevelConstructor {
         DataManager.setData(console, consoleActionTracker);
     }
 
-    static computer(loc: Vector, desc: string, blockRot: number, actions: Array<IAction>) {
+    static computer(loc: Vector, desc: string, blockRot: number, actions: ActionList) {
         const console = overworld.spawnEntity("armor_stand", { "x": loc.x, "y": Utilities.consolesHeight, "z": loc.z });
         Utilities.setBlock(loc, "theheist:computer", { "theheist:rotation": blockRot });
         overworld.spawnEntity("theheist:hover_text", loc).nameTag = desc;
         var allActions = actions;
-        allActions.push({
-            "type": "set_block", "do": { "x": loc.x, "y": loc.y, "z": loc.z, "block": "theheist:computer", "permutations": { "theheist:rotation": blockRot, "theheist:unlocked": 1 } }
-        },
+        allActions.push(
+            {
+                "type": "set_block", "do": { "x": loc.x, "y": loc.y, "z": loc.z, "block": "theheist:computer", "permutations": { "theheist:rotation": blockRot, "theheist:unlocked": 1 } }
+            },
             {
                 "type": "set_block", "do": { "x": loc.x, "y": loc.y, "z": loc.z, "block": "theheist:computer", "permutations": { "theheist:rotation": blockRot, "theheist:unlocked": 2 } }, "delay": 40
-            });
+            }
+        );
         const consoleActionTracker = {
             "name": "actionTracker",
             "used": false,

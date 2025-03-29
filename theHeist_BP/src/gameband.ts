@@ -341,20 +341,9 @@ function cancelAllModes(player: Player, lvlInfo: LevelInformation) {
 function action(actionInfo: IAction, player: Player) {
 	switch (actionInfo.type) {
 		case "slideshow":
-			var slideshowID = actionInfo.do;
+			var slideshowID = actionInfo.do.slideshowID;
 			startSlideshow(slideshowID, player);
 			break;
-		case "set_door": {
-			var x = actionInfo.do.x;
-			var y = actionInfo.do.y;
-			var z = actionInfo.do.z;
-			var doorNumber = actionInfo.do.doorNumber;
-			var permutations = actionInfo.do.permutations;
-			var side = actionInfo.do.side;
-			Utilities.setBlock(new Vector(x, y, z), `theheist:custom_door_${doorNumber}_bottom${side == undefined ? "" : `_${side}`}`, permutations);
-			Utilities.setBlock(new Vector(x, y + 1, z), `theheist:custom_door_${doorNumber}_top${side == undefined ? "" : `_${side}`}`, permutations);
-			break;
-		}
 		case "set_block": {
 			var x = actionInfo.do.x;
 			var y = actionInfo.do.y;
@@ -362,7 +351,7 @@ function action(actionInfo: IAction, player: Player) {
 			var block = actionInfo.do.block;
 			var permutations = actionInfo.do.permutations;
 			Utilities.setBlock(new Vector(x, y, z), block, permutations);
-			var query: Record<any, any> = {
+			var query = {
 				"type": "theheist:hover_text",
 				"location": new Vector(x, y, z),
 				"maxDistance": 1,
@@ -427,8 +416,7 @@ function action(actionInfo: IAction, player: Player) {
 			break;
 		case "voice_says":
 			var soundID = actionInfo.do.soundID;
-			player.playSound(`map.${soundID}`);
-			player.sendMessage([{ "text": "§5§oVoice:§r " }, { "translate": `map.sub.${soundID}` }]);
+			VoiceOverManager.play(player, soundID);
 			break;
 		case "play_sound":
 			var soundID = actionInfo.do.soundID;
@@ -441,7 +429,7 @@ function action(actionInfo: IAction, player: Player) {
 		case "hack_console": {
 			var x = actionInfo.do.x;
 			var z = actionInfo.do.z;
-			var query: Record<any, any> = {
+			var query = {
 				"type": "armor_stand",
 				"location": new Vector(x, consolesHeight, z),
 				"maxDistance": 2,
@@ -643,7 +631,7 @@ function startSlideshow(slideshowID: number, player: Player) {
 			system.runTimeout(() => {
 				system.clearRun(hideHud);
 				player.camera.clear();
-				overworld.runCommandAsync("scriptevent theheist:load-level 0-1");
+				overworld.runCommand("scriptevent theheist:load-level 0-1");
 			}, SECOND * 30.5);
 			break;
 	}
@@ -669,7 +657,7 @@ function playerBusted(player: Player, currentLevel: number) {
 			}, SECOND * 3);
 			system.runTimeout(() => {
 				player.removeTag("BUSTED");
-				overworld.runCommandAsync('scriptevent theheist:load-level 0-2');
+				overworld.runCommand('scriptevent theheist:load-level 0-2');
 			}, SECOND * (3 + 5));
 			break;
 		}
@@ -693,7 +681,7 @@ function playerBusted(player: Player, currentLevel: number) {
 			}, SECOND * 3);
 			system.runTimeout(() => {
 				player.removeTag("BUSTED");
-				overworld.runCommandAsync(`scriptevent theheist:load-level ${currentLevel}-1`);
+				overworld.runCommand(`scriptevent theheist:load-level ${currentLevel}-1`);
 			}, SECOND * (3 + 5));
 			break;
 		}
@@ -701,7 +689,7 @@ function playerBusted(player: Player, currentLevel: number) {
 }
 
 function stopAllSound() {
-	overworld.getEntities({ "excludeTypes": ["minecraft:armor_stand", "theheist:hover_text"] }).forEach((e) => { try { e.runCommandAsync('stopsound @s'); } catch { } });
+	overworld.getEntities({ "excludeTypes": ["minecraft:armor_stand", "theheist:hover_text"] }).forEach((e) => { try { e.runCommand('stopsound @s'); } catch { } });
 }
 
 function cloneFloor(loc: Vector) {
@@ -712,8 +700,8 @@ function cloneFloor(loc: Vector) {
 	corner2.y = Utilities.levelHeight - 1;
 	var corner3 = loc.subtract(new Vector(range, 0, range));
 	corner3.y = Utilities.floorCloneHeight;
-	overworld.runCommandAsync(`clone ${corner1.x} ${corner1.y} ${corner1.z} ${corner2.x} ${corner2.y} ${corner2.z} ${corner3.x} ${corner3.y} ${corner3.z}`);
-	//overworld.runCommandAsync(`fill ${corner1.x} ${Utilities.floorCloneHeight + 1} ${corner1.z} ${corner2.x} ${Utilities.floorCloneHeight + 1} ${corner2.z} air`);
+	overworld.runCommand(`clone ${corner1.x} ${corner1.y} ${corner1.z} ${corner2.x} ${corner2.y} ${corner2.z} ${corner3.x} ${corner3.y} ${corner3.z}`);
+	//overworld.runCommand(`fill ${corner1.x} ${Utilities.floorCloneHeight + 1} ${corner1.z} ${corner2.x} ${Utilities.floorCloneHeight + 1} ${corner2.z} air`);
 }
 
 function flattenMap(loc: Vector) {
@@ -724,7 +712,7 @@ function flattenMap(loc: Vector) {
 	corner2.y = Utilities.levelMapHeight + 1;
 	var corner3 = loc.subtract(new Vector(range, 0, range));
 	corner3.y = Utilities.levelMapHeight;
-	overworld.runCommandAsync(`clone ${corner1.x} ${corner1.y} ${corner1.z} ${corner2.x} ${corner2.y} ${corner2.z} ${corner3.x} ${corner3.y} ${corner3.z} masked move`);
+	overworld.runCommand(`clone ${corner1.x} ${corner1.y} ${corner1.z} ${corner2.x} ${corner2.y} ${corner2.z} ${corner3.x} ${corner3.y} ${corner3.z} masked move`);
 }
 
 function clearGlass(loc: Vector) {
@@ -732,7 +720,7 @@ function clearGlass(loc: Vector) {
 	loc.y = -50;
 	var corner1 = loc.subtract(new Vector(range, 0, range));
 	var corner2 = loc.add(new Vector(range, 0, range));
-	overworld.runCommandAsync(`fill ${corner1.x} ${corner1.y} ${corner1.z} ${corner2.x} ${corner2.y} ${corner2.z} air replace glass`);
+	overworld.runCommand(`fill ${corner1.x} ${corner1.y} ${corner1.z} ${corner2.x} ${corner2.y} ${corner2.z} air replace glass`);
 }
 
 system.runInterval(() => {

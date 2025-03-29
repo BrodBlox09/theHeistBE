@@ -26,11 +26,12 @@
 - [ ] somehow make reach shorter to match the original
 - [ ] use the original models and textures for the gamebands (animated stuff  and laser thingy is missing), computers, drawers, signs, chairs, recharge stations, etc
 ### Backend
+- [ ] Bring each level definition to their own seperate file <!-- Close! Need to do 3 more (1-1, 0-1, and 0-2) -->
+- [ ] Rewrite levels so that they have a level ID and a level name so that the level name is NOT used to ID the level in the code
+- [ ] Remove the bi-digit numbering scheme that levels currently have
 - [ ] Rewrite the data management system (DataManager-rewrite branch)
-- [x] Separate the functionality of each gameband into seperate files
-- [x] Consider modualizing the level loading system, where each level gets its own file
-- [x] Rewrite objective system to rely on IDs to update each objective's status?
-- [x] Create a system to handle a player leaving during an alarm scene or level load
+- [ ] Separate the functionality of each gameband into seperate files <!-- Almost, still need to do Hacking and Recharge -->
+- [x] Rewrite objective system to rely on IDs to update each objective's status? <!-- We sure this is done? -->
 ## Level -5
 ### World
 - [ ] Port level -5's build to Bedrock and replace blocks that have special models/textures

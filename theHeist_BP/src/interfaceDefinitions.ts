@@ -5,9 +5,11 @@ interface ModeData {
 
 interface IAction {
 	type: string;
-	do: any;
+	do: Record<string, any>;
 	delay?: number;
 }
+
+type ActionList = Array<IAction>;
 
 interface LevelInformation {
 	"name": "levelInformation",
