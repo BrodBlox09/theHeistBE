@@ -22,7 +22,8 @@
             "minecraft:custom_components": [
                 "theheist:directional_block",
                 "theheist:trapdoor"
-            ]
+            ],
+            "tag:one_way_collidable": {} // Prevents the player from being pushed out by the trapdoor collision, just like vanilla
         },
         "permutations": [
             {
