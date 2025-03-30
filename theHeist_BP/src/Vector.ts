@@ -34,8 +34,12 @@ export default class Vector implements Vector3, IVector3 {
     subtract(oV: Vector): Vector {
         return new Vector(this.x - oV.x, this.y - oV.y, this.z - oV.z);
     }
+    
+    toString() {
+        return `${this.x} ${this.y} ${this.z}`;
+    }
 
-    static fromV3(v3: Vector3) {
+    static from(v3: Vector3) {
         return new Vector(v3.x, v3.y, v3.z);
     }
 

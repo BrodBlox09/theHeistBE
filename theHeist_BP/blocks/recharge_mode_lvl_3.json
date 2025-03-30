@@ -2,8 +2,7 @@
     "format_version": "1.21.30",
     "minecraft:block": {
         "description": {
-            "identifier": "theheist:recharge_mode_lvl_3",
-            "is_experimental": false
+            "identifier": "theheist:recharge_mode_lvl_3"
         },
         "components": {
             "minecraft:geometry": "geometry.recharge_mode",

@@ -1,4 +1,4 @@
-import { MolangVariableMap, BlockPermutation, EffectTypes, Vector3, world, system, Player, EntityInventoryComponent, EffectType, DisplaySlotId, ScoreboardObjective, Container, ItemStack, ItemLockMode, Entity, Dimension, ItemUseAfterEvent, BlockVolume, EntityEquippableComponent, EquipmentSlot, EntityItemComponent, ItemStartUseOnAfterEvent } from "@minecraft/server";
+import { MolangVariableMap, BlockPermutation, EffectTypes, world, system, Player, EntityInventoryComponent, ScoreboardObjective, Container, ItemStack, ItemLockMode, Entity, ItemUseAfterEvent, BlockVolume, EntityEquippableComponent, EquipmentSlot, EntityItemComponent, ItemStartUseOnAfterEvent } from "@minecraft/server";
 import Vector from "./Vector";
 import DataManager from "./DataManager";
 import Utilities from "./Utilities";
@@ -222,7 +222,7 @@ function rechargeMode(lvl: number, player: Player) {
 			if (armorStandEnergyTrackerDataNode.block.y - 1 > player.location.y) return;
 			playerEnergyTrackerDataNode.recharging = true;
 			player.playSound("portal.travel", { "volume": 0.1, "pitch": 2 });
-			Utilities.setBlock(blockLocation, "theheist:recharge_station", { "theheist:rotation": armorStandEnergyTrackerDataNode.block.rotation, "theheist:state": 2 });
+			Utilities.setBlock(blockLocation, "theheist:recharge_station", { "minecraft:cardinal_direction": armorStandEnergyTrackerDataNode.block.rotation, "theheist:state": 2 });
 			playerEnergyTrackerDataNode.usingRechargerID = armorStandEnergyTrackerDataNode.rechargerID;
 			// Enter "1 mode only" state
 			var playerInvContainer = (player.getComponent("inventory") as EntityInventoryComponent).container as Container;
@@ -233,7 +233,7 @@ function rechargeMode(lvl: number, player: Player) {
 		} else {
 			// The player is currently recharging
 			playerEnergyTrackerDataNode.recharging = false;
-			Utilities.setBlock(blockLocation, "theheist:recharge_station", { "theheist:rotation": armorStandEnergyTrackerDataNode.block.rotation, "theheist:state": 1 });
+			Utilities.setBlock(blockLocation, "theheist:recharge_station", { "minecraft:cardinal_direction": armorStandEnergyTrackerDataNode.block.rotation, "theheist:state": 1 });
 			playerEnergyTrackerDataNode.usingRechargerID = -1;
 			// Bring back player's items
 			resetPlayerInventory(player);
@@ -844,7 +844,7 @@ system.runInterval(() => {
 			for (const subArmorStand of subArmorStands) {
 				var armorStandEnergyTracker = DataManager.getData(subArmorStand, "energyTracker");
 				if (armorStandEnergyTracker.rechargerID != playerEnergyTracker.usingRechargerID) continue;
-				Utilities.setBlock({ x: armorStandEnergyTracker.block.x, y: armorStandEnergyTracker.block.y, z: armorStandEnergyTracker.block.z }, "theheist:recharge_station", { "theheist:rotation": armorStandEnergyTracker.block.rotation, "theheist:state": 1 });
+				Utilities.setBlock({ x: armorStandEnergyTracker.block.x, y: armorStandEnergyTracker.block.y, z: armorStandEnergyTracker.block.z }, "theheist:recharge_station", { "minecraft:cardinal_direction": armorStandEnergyTracker.block.rotation, "theheist:state": 1 });
 				playerEnergyTracker.usingRechargerID = -1;
 			}
 		} else if (playerEnergyTracker.energyUnits < Utilities.gamebandInfo.rechargeMode[playerEnergyTracker.rechargeLevel].max) {
@@ -862,7 +862,7 @@ system.runInterval(() => {
 					var diff = Math.abs(armorStandEnergyTracker.energyUnits);
 					playerEnergyTracker.energyUnits -= diff;
 					armorStandEnergyTracker.energyUnits = 0;
-					Utilities.setBlock({ x: armorStandEnergyTracker.block.x, y: armorStandEnergyTracker.block.y, z: armorStandEnergyTracker.block.z }, "theheist:recharge_station", { "theheist:rotation": armorStandEnergyTracker.block.rotation, "theheist:state": 3 });
+					Utilities.setBlock({ x: armorStandEnergyTracker.block.x, y: armorStandEnergyTracker.block.y, z: armorStandEnergyTracker.block.z }, "theheist:recharge_station", { "minecraft:cardinal_direction": armorStandEnergyTracker.block.rotation, "theheist:state": 3 });
 					playerEnergyTracker.recharging = false;
 					playerEnergyTracker.usingRechargerID = -1;
 					resetPlayerInventory(player);

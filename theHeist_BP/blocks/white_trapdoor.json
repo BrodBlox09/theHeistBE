@@ -1,16 +1,20 @@
 {
-    "format_version": "1.21.30",
+    "format_version": "1.21.70",
     "minecraft:block": {
         "description": {
             "identifier": "theheist:white_trapdoor",
-            "is_experimental": false,
             "menu_category": {
                 "category": "construction"
             },
             "states": {
+                "theheist:rotation": [2, 3, 4, 5],
                 "theheist:isopen": [false, true],
-                "theheist:locked": [false, true],
-                "theheist:rotation": [2, 3, 4, 5]
+                "theheist:locked": [false, true]
+            },
+            "traits": {
+                "minecraft:placement_direction": {
+                    "enabled_states": [ "minecraft:cardinal_direction" ]
+                }
             }
         },
         "components": {
@@ -20,34 +24,33 @@
                 }
             },
             "minecraft:custom_components": [
-                "theheist:directional_block",
                 "theheist:trapdoor"
             ],
             "tag:one_way_collidable": {} // Prevents the player from being pushed out by the trapdoor collision, just like vanilla
         },
         "permutations": [
             {
-                "condition": "query.block_state('theheist:rotation') == 2",
+                "condition": "query.block_state('minecraft:cardinal_direction') == 'north'",
                 "components": {
                     "minecraft:transformation": { "rotation": [0, 180, 0] }
                 }
             },
             {
-                "condition": "query.block_state('theheist:rotation') == 3",
+                "condition": "query.block_state('minecraft:cardinal_direction') == 'east'",
+                "components": {
+                    "minecraft:transformation": { "rotation": [0, 90, 0] }
+                }
+            },
+            {
+                "condition": "query.block_state('minecraft:cardinal_direction') == 'south'",
                 "components": {
                     "minecraft:transformation": { "rotation": [0, 0, 0] }
                 }
             },
             {
-                "condition": "query.block_state('theheist:rotation') == 4",
+                "condition": "query.block_state('minecraft:cardinal_direction') == 'west'",
                 "components": {
-                    "minecraft:transformation": { "rotation": [0, 270, 0] }
-                }
-            },
-            {
-                "condition": "query.block_state('theheist:rotation') == 5",
-                "components": {
-                    "minecraft:transformation": { "rotation": [0, 90, 0] }
+                    "minecraft:transformation": { "rotation": [0, -90, 0] }
                 }
             },
             {

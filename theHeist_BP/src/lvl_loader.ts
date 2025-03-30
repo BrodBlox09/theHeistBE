@@ -137,10 +137,10 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 					// Use for cameras that need to be facing different directions than north (I think)
 					const recharge0DataNode = { "name": "energyTracker", "rechargerID": 0, "energyUnits": 21.0, "block": { "x": -22, "y": -59, "z": 62, "rotation": 5 }, "actions": [{ "type": "manage_objectives", "do": { "manageType": 2, "objective": "Recharge Gameband", "sortOrder": 1 } }] };
 					DataManager.setData(recharge0, recharge0DataNode);
-					Utilities.setBlock({ x: -22, y: -59, z: 62 }, "theheist:recharge_station", { "theheist:rotation": 5, "theheist:state": 1 });
+					Utilities.setBlock({ x: -22, y: -59, z: 62 }, "theheist:recharge_station", { "minecraft:cardinal_direction": "east", "theheist:state": 1 });
 					// Load hackable console 0
 					const computer0 = overworld.spawnEntity("minecraft:armor_stand", new Vector(-21.5, consolesHeight, 58.5));
-					Utilities.setBlock({ x: -22, y: -58, z: 58 }, "theheist:computer", { "theheist:rotation": 5, "theheist:unlocked": 0 });
+					Utilities.setBlock({ x: -22, y: -58, z: 58 }, "theheist:computer", { "minecraft:cardinal_direction": "east", "theheist:unlocked": 0 });
 					overworld.spawnEntity("theheist:hover_text", { x: -21.5, y: -58, z: 58.5 }).nameTag = "Start slideshow";
 					// 2 seconds or 40 ticks for static, then green and action!
 					const computer0DataNode = {
@@ -149,10 +149,10 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 						"level": 1,
 						"actions": [
 							{
-								"type": "set_block", "do": { "x": -22, "y": -58, "z": 58, "block": "theheist:computer", "permutations": { "theheist:rotation": 5, "theheist:unlocked": 1 } }
+								"type": "set_block", "do": { "x": -22, "y": -58, "z": 58, "block": "theheist:computer", "permutations": { "minecraft:cardinal_direction": "east", "theheist:unlocked": 1 } }
 							},
 							{
-								"type": "set_block", "do": { "x": -22, "y": -58, "z": 58, "block": "theheist:computer", "permutations": { "theheist:rotation": 5, "theheist:unlocked": 2 } }, "delay": 40
+								"type": "set_block", "do": { "x": -22, "y": -58, "z": 58, "block": "theheist:computer", "permutations": { "minecraft:cardinal_direction": "east", "theheist:unlocked": 2 } }, "delay": 40
 							},
 							{
 								"type": "manage_objectives", "do": { "manageType": 2, "objective": "Activate Slideshow", "sortOrder": 0 }, "delay": 40
@@ -305,7 +305,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 						DataManager.setData(camera5, camera5DataNode);
 						// Console 0 (Type: Computer)
 						const console0 = overworld.spawnEntity("armor_stand", { "x": 2020.5, "y": consolesHeight, "z": 54.5 });
-						Utilities.setBlock({ x: 2020, y: -59, z: 54 }, "theheist:computer", { "theheist:rotation": 5 });
+						Utilities.setBlock({ x: 2020, y: -59, z: 54 }, "theheist:computer", { "minecraft:cardinal_direction": "east" });
 						overworld.spawnEntity("theheist:hover_text", { x: 2020.5, y: -59, z: 54.5 }).nameTag = "Disable nearby camera";
 						const console0ActionTracker = {
 							"name": "actionTracker",
@@ -313,10 +313,10 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 							"level": 1,
 							"actions": [
 								{
-									"type": "set_block", "do": { "x": 2020, "y": -59, "z": 54, "block": "theheist:computer", "permutations": { "theheist:rotation": 5, "theheist:unlocked": 1 } }
+									"type": "set_block", "do": { "x": 2020, "y": -59, "z": 54, "block": "theheist:computer", "permutations": { "minecraft:cardinal_direction": "east", "theheist:unlocked": 1 } }
 								},
 								{
-									"type": "set_block", "do": { "x": 2020, "y": -59, "z": 54, "block": "theheist:computer", "permutations": { "theheist:rotation": 5, "theheist:unlocked": 2 } }, "delay": 40
+									"type": "set_block", "do": { "x": 2020, "y": -59, "z": 54, "block": "theheist:computer", "permutations": { "minecraft:cardinal_direction": "east", "theheist:unlocked": 2 } }, "delay": 40
 								},
 								{
 									"type": "disable_camera", "do": { "cameraID": 0 }, "delay": 40
@@ -332,7 +332,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 						DataManager.setData(console0, console0ActionTracker);
 						// Console 1 (Type: Computer)
 						const console1 = overworld.spawnEntity("armor_stand", { "x": 2017.5, "y": consolesHeight, "z": 52.5 });
-						Utilities.setBlock({ x: 2017, y: -59, z: 52 }, "theheist:computer", { "theheist:rotation": 2 });
+						Utilities.setBlock({ x: 2017, y: -59, z: 52 }, "theheist:computer", { "minecraft:cardinal_direction": "north" });
 						overworld.spawnEntity("theheist:hover_text", { x: 2017.5, y: -59, z: 52.5 }).nameTag = "Clear alarm status";
 						const console1ActionTracker = {
 							"name": "actionTracker",
@@ -340,10 +340,10 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 							"level": 1,
 							"actions": [
 								{
-									"type": "set_block", "do": { "x": 2017, "y": -59, "z": 52, "block": "theheist:computer", "permutations": { "theheist:rotation": 2, "theheist:unlocked": 1 } }
+									"type": "set_block", "do": { "x": 2017, "y": -59, "z": 52, "block": "theheist:computer", "permutations": { "minecraft:cardinal_direction": "north", "theheist:unlocked": 1 } }
 								},
 								{
-									"type": "set_block", "do": { "x": 2017, "y": -59, "z": 52, "block": "theheist:computer", "permutations": { "theheist:rotation": 2, "theheist:unlocked": 2 } }, "delay": 40
+									"type": "set_block", "do": { "x": 2017, "y": -59, "z": 52, "block": "theheist:computer", "permutations": { "minecraft:cardinal_direction": "north", "theheist:unlocked": 2 } }, "delay": 40
 								},
 								{
 									"type": "set_alarm_level", "do": { "value": 0 }, "delay": 40
@@ -353,22 +353,22 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 						DataManager.setData(console1, console1ActionTracker);
 						// Console 2 (Type: Keypad)
 						const console2 = overworld.spawnEntity("armor_stand", { "x": 2014.5, "y": consolesHeight, "z": 60.5 });
-						Utilities.setBlock({ x: 2014, y: -59, z: 60 }, "theheist:keypad", { "theheist:rotation": 5 });
+						Utilities.setBlock({ x: 2014, y: -59, z: 60 }, "theheist:keypad", { "minecraft:cardinal_direction": "east" });
 						overworld.spawnEntity("theheist:hover_text", { x: 2014.5, y: -59, z: 60.5 }).nameTag = "Lvl. 1";
-						Utilities.setBlock({ x: 2015, y: -60, z: 61 }, "theheist:custom_door_1_bottom", { "theheist:rotation": 5, "theheist:unlocked": false });
+						Utilities.setBlock({ x: 2015, y: -60, z: 61 }, "theheist:custom_door_1_bottom", { "minecraft:cardinal_direction": "east", "theheist:unlocked": false });
 						const console2ActionTracker = {
 							"name": "actionTracker",
 							"used": false,
 							"level": 1,
 							"actions": [
 								{
-									"type": "set_block", "do": { "x": 2014, "y": -59, "z": 60, "block": "theheist:keypad", "permutations": { "theheist:rotation": 5, "theheist:unlocked": 1 } }
+									"type": "set_block", "do": { "x": 2014, "y": -59, "z": 60, "block": "theheist:keypad", "permutations": { "minecraft:cardinal_direction": "east", "theheist:unlocked": 1 } }
 								},
 								{
-									"type": "set_block", "do": { "x": 2014, "y": -59, "z": 60, "block": "theheist:keypad", "permutations": { "theheist:rotation": 5, "theheist:unlocked": 2 } }, "delay": 40
+									"type": "set_block", "do": { "x": 2014, "y": -59, "z": 60, "block": "theheist:keypad", "permutations": { "minecraft:cardinal_direction": "east", "theheist:unlocked": 2 } }, "delay": 40
 								},
 								{
-									"type": "set_block", "do": { "x": 2015, "y": -60, "z": 61, "block": "theheist:custom_door_1_bottom", "permutations": { "theheist:rotation": 5, "theheist:unlocked": true } }, "delay": 40
+									"type": "set_block", "do": { "x": 2015, "y": -60, "z": 61, "block": "theheist:custom_door_1_bottom", "permutations": { "minecraft:cardinal_direction": "east", "theheist:unlocked": true } }, "delay": 40
 								},
 								{
 									"type": "manage_objectives", "do": { "manageType": 2, "objective": "Break into Director's office", "sortOrder": 0 }, "delay": 40
@@ -378,7 +378,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 						DataManager.setData(console2, console2ActionTracker);
 						// Console 3 (Type: Computer)
 						const console3 = overworld.spawnEntity("armor_stand", { "x": 2018.5, "y": consolesHeight, "z": 65.5 });
-						Utilities.setBlock({ x: 2018, y: -59, z: 65 }, "theheist:computer", { "theheist:rotation": 2 });
+						Utilities.setBlock({ x: 2018, y: -59, z: 65 }, "theheist:computer", { "minecraft:cardinal_direction": "north" });
 						overworld.spawnEntity("theheist:hover_text", { x: 2018.5, y: -59, z: 65.5 }).nameTag = "Mail";
 						const console3ActionTracker = {
 							"name": "actionTracker",
@@ -386,10 +386,10 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 							"level": 1,
 							"actions": [
 								{
-									"type": "set_block", "do": { "x": 2018, "y": -59, "z": 65, "block": "theheist:computer", "permutations": { "theheist:rotation": 2, "theheist:unlocked": 1 } }
+									"type": "set_block", "do": { "x": 2018, "y": -59, "z": 65, "block": "theheist:computer", "permutations": { "minecraft:cardinal_direction": "north", "theheist:unlocked": 1 } }
 								},
 								{
-									"type": "set_block", "do": { "x": 2018, "y": -59, "z": 65, "block": "theheist:computer", "permutations": { "theheist:rotation": 2, "theheist:unlocked": 2 } }, "delay": 40
+									"type": "set_block", "do": { "x": 2018, "y": -59, "z": 65, "block": "theheist:computer", "permutations": { "minecraft:cardinal_direction": "north", "theheist:unlocked": 2 } }, "delay": 40
 								},
 								{
 									"type": "display_mail", "do": { "mailID": "003" }, "delay": 40
@@ -405,22 +405,22 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 						DataManager.setData(console3, console3ActionTracker);
 						// Console 4 (Type: Keypad)
 						const console4 = overworld.spawnEntity("armor_stand", { "x": 1996.5, "y": consolesHeight, "z": 55.5 });
-						Utilities.setBlock({ x: 1996, y: -59, z: 55 }, "theheist:keypad", { "theheist:rotation": 3 });
+						Utilities.setBlock({ x: 1996, y: -59, z: 55 }, "theheist:keypad", { "minecraft:cardinal_direction": "south" });
 						overworld.spawnEntity("theheist:hover_text", { x: 1996.5, y: -59, z: 55.5 }).nameTag = "Lvl. 1";
-						Utilities.setBlock({ x: 1995, y: -60, z: 56 }, "theheist:custom_door_1_bottom", { "theheist:rotation": 3, "theheist:unlocked": false });
+						Utilities.setBlock({ x: 1995, y: -60, z: 56 }, "theheist:custom_door_1_bottom", { "minecraft:cardinal_direction": "south", "theheist:unlocked": false });
 						const console4ActionTracker = {
 							"name": "actionTracker",
 							"used": false,
 							"level": 1,
 							"actions": [
 								{
-									"type": "set_block", "do": { "x": 1996, "y": -59, "z": 55, "block": "theheist:keypad", "permutations": { "theheist:rotation": 3, "theheist:unlocked": 1 } }
+									"type": "set_block", "do": { "x": 1996, "y": -59, "z": 55, "block": "theheist:keypad", "permutations": { "minecraft:cardinal_direction": "south", "theheist:unlocked": 1 } }
 								},
 								{
-									"type": "set_block", "do": { "x": 1996, "y": -59, "z": 55, "block": "theheist:keypad", "permutations": { "theheist:rotation": 3, "theheist:unlocked": 2 } }, "delay": 40
+									"type": "set_block", "do": { "x": 1996, "y": -59, "z": 55, "block": "theheist:keypad", "permutations": { "minecraft:cardinal_direction": "south", "theheist:unlocked": 2 } }, "delay": 40
 								},
 								{
-									"type": "set_block", "do": { "x": 1995, "y": -60, "z": 56, "block": "theheist:custom_door_1_bottom", "permutations": { "theheist:rotation": 3, "theheist:unlocked": true } }, "delay": 40
+									"type": "set_block", "do": { "x": 1995, "y": -60, "z": 56, "block": "theheist:custom_door_1_bottom", "permutations": { "minecraft:cardinal_direction": "south", "theheist:unlocked": true } }, "delay": 40
 								},
 								{
 									// Hack other keypad
@@ -431,22 +431,22 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 						DataManager.setData(console4, console4ActionTracker);
 						// Console 5 (Type: Keypad)
 						const console5 = overworld.spawnEntity("armor_stand", { "x": 1992.5, "y": consolesHeight, "z": 62.5 });
-						Utilities.setBlock({ x: 1992, y: -59, z: 62 }, "theheist:keypad", { "theheist:rotation": 5 });
+						Utilities.setBlock({ x: 1992, y: -59, z: 62 }, "theheist:keypad", { "minecraft:cardinal_direction": "east" });
 						overworld.spawnEntity("theheist:hover_text", { x: 1992.5, y: -59, z: 62.5 }).nameTag = "Lvl. 1";
-						Utilities.setBlock({ x: 1993, y: -60, z: 61 }, "theheist:custom_door_1_bottom", { "theheist:rotation": 5, "theheist:unlocked": false });
+						Utilities.setBlock({ x: 1993, y: -60, z: 61 }, "theheist:custom_door_1_bottom", { "minecraft:cardinal_direction": "east", "theheist:unlocked": false });
 						const console5ActionTracker = {
 							"name": "actionTracker",
 							"used": false,
 							"level": 1,
 							"actions": [
 								{
-									"type": "set_block", "do": { "x": 1992, "y": -59, "z": 62, "block": "theheist:keypad", "permutations": { "theheist:rotation": 5, "theheist:unlocked": 1 } }
+									"type": "set_block", "do": { "x": 1992, "y": -59, "z": 62, "block": "theheist:keypad", "permutations": { "minecraft:cardinal_direction": "east", "theheist:unlocked": 1 } }
 								},
 								{
-									"type": "set_block", "do": { "x": 1992, "y": -59, "z": 62, "block": "theheist:keypad", "permutations": { "theheist:rotation": 5, "theheist:unlocked": 2 } }, "delay": 40
+									"type": "set_block", "do": { "x": 1992, "y": -59, "z": 62, "block": "theheist:keypad", "permutations": { "minecraft:cardinal_direction": "east", "theheist:unlocked": 2 } }, "delay": 40
 								},
 								{
-									"type": "set_block", "do": { "x": 1993, "y": -60, "z": 61, "block": "theheist:custom_door_1_bottom", "permutations": { "theheist:rotation": 5, "theheist:unlocked": true } }, "delay": 40
+									"type": "set_block", "do": { "x": 1993, "y": -60, "z": 61, "block": "theheist:custom_door_1_bottom", "permutations": { "minecraft:cardinal_direction": "east", "theheist:unlocked": true } }, "delay": 40
 								},
 								{
 									// Hack other keypad
@@ -457,7 +457,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 						DataManager.setData(console5, console5ActionTracker);
 						// Console 6 (Type: Computer)
 						const console6 = overworld.spawnEntity("armor_stand", { "x": 1978.5, "y": consolesHeight, "z": 64.5 });
-						Utilities.setBlock({ x: 1978, y: -59, z: 64 }, "theheist:computer", { "theheist:rotation": 3 });
+						Utilities.setBlock({ x: 1978, y: -59, z: 64 }, "theheist:computer", { "minecraft:cardinal_direction": "south" });
 						overworld.spawnEntity("theheist:hover_text", { x: 1978.5, y: -59, z: 64.5 }).nameTag = "Mail";
 						const console6ActionTracker = {
 							"name": "actionTracker",
@@ -465,10 +465,10 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 							"level": 1,
 							"actions": [
 								{
-									"type": "set_block", "do": { "x": 1978, "y": -59, "z": 64, "block": "theheist:computer", "permutations": { "theheist:rotation": 3, "theheist:unlocked": 1 } }
+									"type": "set_block", "do": { "x": 1978, "y": -59, "z": 64, "block": "theheist:computer", "permutations": { "minecraft:cardinal_direction": "south", "theheist:unlocked": 1 } }
 								},
 								{
-									"type": "set_block", "do": { "x": 1978, "y": -59, "z": 64, "block": "theheist:computer", "permutations": { "theheist:rotation": 3, "theheist:unlocked": 2 } }, "delay": 40
+									"type": "set_block", "do": { "x": 1978, "y": -59, "z": 64, "block": "theheist:computer", "permutations": { "minecraft:cardinal_direction": "south", "theheist:unlocked": 2 } }, "delay": 40
 								},
 								{
 									"type": "display_mail", "do": { "mailID": "002" }, "delay": 40
@@ -481,7 +481,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 						DataManager.setData(console6, console6ActionTracker);
 						// Console 7 (Type: Computer)
 						const console7 = overworld.spawnEntity("armor_stand", { "x": 1978.5, "y": consolesHeight, "z": 56.5 });
-						Utilities.setBlock({ x: 1978, y: -59, z: 56 }, "theheist:computer", { "theheist:rotation": 2 });
+						Utilities.setBlock({ x: 1978, y: -59, z: 56 }, "theheist:computer", { "minecraft:cardinal_direction": "north" });
 						overworld.spawnEntity("theheist:hover_text", { x: 1978.5, y: -59, z: 56.5 }).nameTag = "Mail";
 						const console7ActionTracker = {
 							"name": "actionTracker",
@@ -489,10 +489,10 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 							"level": 1,
 							"actions": [
 								{
-									"type": "set_block", "do": { "x": 1978, "y": -59, "z": 56, "block": "theheist:computer", "permutations": { "theheist:rotation": 2, "theheist:unlocked": 1 } }
+									"type": "set_block", "do": { "x": 1978, "y": -59, "z": 56, "block": "theheist:computer", "permutations": { "minecraft:cardinal_direction": "north", "theheist:unlocked": 1 } }
 								},
 								{
-									"type": "set_block", "do": { "x": 1978, "y": -59, "z": 56, "block": "theheist:computer", "permutations": { "theheist:rotation": 2, "theheist:unlocked": 2 } }, "delay": 40
+									"type": "set_block", "do": { "x": 1978, "y": -59, "z": 56, "block": "theheist:computer", "permutations": { "minecraft:cardinal_direction": "north", "theheist:unlocked": 2 } }, "delay": 40
 								},
 								{
 									"type": "display_mail", "do": { "mailID": "001" }, "delay": 40
@@ -512,10 +512,10 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 							"keycardType": "yellow",
 							"actions": [
 								{
-									"type": "set_block", "do": { "x": 1988, "y": -60, "z": 68, "block": "theheist:custom_door_4_bottom_l", "permutations": { "theheist:rotation": 3, "theheist:unlocked": true, "theheist:open": true } }
+									"type": "set_block", "do": { "x": 1988, "y": -60, "z": 68, "block": "theheist:custom_door_4_bottom_l", "permutations": { "minecraft:cardinal_direction": "south", "theheist:unlocked": true, "theheist:open": true } }
 								},
 								{
-									"type": "set_block", "do": { "x": 1987, "y": -60, "z": 68, "block": "theheist:custom_door_4_bottom_r", "permutations": { "theheist:rotation": 3, "theheist:unlocked": true, "theheist:open": true  } }
+									"type": "set_block", "do": { "x": 1987, "y": -60, "z": 68, "block": "theheist:custom_door_4_bottom_r", "permutations": { "minecraft:cardinal_direction": "south", "theheist:unlocked": true, "theheist:open": true  } }
 								},
 								{
 									"type": "voice_says", "do": { "soundID": "109" }
@@ -529,7 +529,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 
 						// Recharge Station 0
 						const recharge0 = overworld.spawnEntity("minecraft:armor_stand", new Vector(1998.5, rechargeHeight, 72.5));
-						Utilities.setBlock({ x: 1998, y: -60, z: 72 }, "theheist:recharge_station", { "theheist:rotation": 5 });
+						Utilities.setBlock({ x: 1998, y: -60, z: 72 }, "theheist:recharge_station", { "minecraft:cardinal_direction": "east" });
 						const recharge0DataNode = {
 							"name": "energyTracker",
 							"rechargerID": 0,
@@ -539,7 +539,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 						DataManager.setData(recharge0, recharge0DataNode);
 						// Recharge Station 1
 						const recharge1 = overworld.spawnEntity("minecraft:armor_stand", new Vector(1986.5, rechargeHeight, 70.5));
-						Utilities.setBlock({ x: 1986, y: -60, z: 70 }, "theheist:recharge_station", { "theheist:rotation": 4 });
+						Utilities.setBlock({ x: 1986, y: -60, z: 70 }, "theheist:recharge_station", { "minecraft:cardinal_direction": "west" });
 						const recharge1DataNode = {
 							"name": "energyTracker",
 							"rechargerID": 0,
@@ -554,8 +554,8 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 						// Set doors and trapdoors
 
 						// Reset end level doors
-						Utilities.setBlock(new Vector(1988, -60, 68), "theheist:custom_door_4_bottom_l", { "theheist:rotation": 3, "theheist:unlocked": false });
-						Utilities.setBlock(new Vector(1987, -60, 68), "theheist:custom_door_4_bottom_r", { "theheist:rotation": 3, "theheist:unlocked": false });
+						Utilities.setBlock(new Vector(1988, -60, 68), "theheist:custom_door_4_bottom_l", { "minecraft:cardinal_direction": "south", "theheist:unlocked": false });
+						Utilities.setBlock(new Vector(1987, -60, 68), "theheist:custom_door_4_bottom_r", { "minecraft:cardinal_direction": "south", "theheist:unlocked": false });
 						Utilities.setBlock(new Vector(1987, -59, 73), "minecraft:lever", { "lever_direction": "north" });
 						// Turn on command blocks
 						Utilities.fillBlocks({ x: 2029.50, y: -59.00, z: 56.50 }, { x: 2029.50, y: -59.00, z: 61.50 }, 'minecraft:redstone_block');
@@ -602,8 +602,8 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 					reloadSidebarDisplay();
 
 					player.onScreenDisplay.setTitle(`§o§7Level ${levelNum}`, { "fadeInDuration": 20, "fadeOutDuration": 20, "stayDuration": 160 });
-					player.teleport(Vector.fromV3(levelDefinition.loadElevatorLoc).add(new Vector(0, 4, 0)));
-					var elevatorInterval =  runElelevatorAnimation(Vector.fromV3(levelDefinition.loadElevatorLoc));
+					player.teleport(Vector.from(levelDefinition.loadElevatorLoc).add(new Vector(0, 4, 0)));
+					var elevatorInterval =  runElelevatorAnimation(Vector.from(levelDefinition.loadElevatorLoc));
 
 					const levelCloneInfo = Utilities.levelCloneInfo[`level_${levelNum}`];
 					// Ensure parts far away are loaded

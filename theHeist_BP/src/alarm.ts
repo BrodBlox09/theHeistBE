@@ -157,7 +157,7 @@ function updateRobots(player: Player, level: number, levelInformation: LevelInfo
 					"closest": 1
 				};
 				var cameraRobot = Utilities.dimensions.overworld.getEntities(cameraRobotQuery)[0];
-				if (system.currentTick % 3 == 0) disabledSecurityDeviceEffect(Vector.fromV3(cameraRobot.location));
+				if (system.currentTick % 3 == 0) disabledSecurityDeviceEffect(Vector.from(cameraRobot.location));
 				return;
 			}
 			var move = (!cameraDataNode.isStatic);
@@ -237,7 +237,7 @@ function updateCameras(player: Player, level: number, playerLevelInformationData
 				"closest": 1
 			}
 			var displayCamera = Utilities.dimensions.overworld.getEntities(displayCameraQuery)[0];
-			if (system.currentTick % 3 == 0) disabledSecurityDeviceEffect(Vector.fromV3(displayCamera.location));
+			if (system.currentTick % 3 == 0) disabledSecurityDeviceEffect(Vector.from(displayCamera.location));
 			return false;
 		}
 		if (cameraTrackerDataNode.isStunned) {
@@ -319,7 +319,7 @@ function updateCameras(player: Player, level: number, playerLevelInformationData
 			// x sin() needs to be inverted to work properly for some reason
 			var belowBlock = { "x": armorStand.location.x, "y": armorStand.location.y - 2, "z": armorStand.location.z };
 			armorStand.teleport({ "x": armorStand.location.x + -(Utilities.sin(armorStand.getRotation().y) * tpDistance), "y": cameraMappingHeight, "z": armorStand.location.z + (Utilities.cos(armorStand.getRotation().y) * tpDistance) }, { 'dimension': Utilities.dimensions.overworld });
-			let armorStandLocation = Vector.fromV3({ "x": armorStand.location.x, "y": Utilities.levelHeight, "z": armorStand.location.z });
+			let armorStandLocation = Vector.from({ "x": armorStand.location.x, "y": Utilities.levelHeight, "z": armorStand.location.z });
 			if (cameraCanSeeThrough(armorStandLocation)) {
 				let floorBlock = overworld.getBlock({ "x": armorStand.location.x, "y": Utilities.floorCloneHeight, "z": armorStand.location.z })!.typeId;
 				if ("minecraft:air" != floorBlock && floorBlock != "theheist:forcefield_bridge") {
@@ -347,7 +347,7 @@ function updateSonars(player: Player, level: number, playerLevelInformationDataN
 				"closest": 1
 			}
 			var displayCamera = Utilities.dimensions.overworld.getEntities(displayCameraQuery)[0];
-			if (system.currentTick % 3 == 0) disabledSecurityDeviceEffect(Vector.fromV3(displayCamera.location));
+			if (system.currentTick % 3 == 0) disabledSecurityDeviceEffect(Vector.from(displayCamera.location));
 			return false;
 		}
 		if (cameraTrackerDataNode.isStunned) {
@@ -383,8 +383,8 @@ function updateSonars(player: Player, level: number, playerLevelInformationDataN
 		sonarMappingArmorStands.forEach((armorStand) => {
 			// x sin() needs to be inverted to work properly for some reason
 			armorStand.teleport({ "x": armorStand.location.x + -(Utilities.sin(armorStand.getRotation().y) * tpDistance), "y": cameraMappingHeight, "z": armorStand.location.z + (Utilities.cos(armorStand.getRotation().y) * tpDistance) }, { 'dimension': Utilities.dimensions.overworld });
-			let armorStandLocationAbove = Vector.fromV3({ "x": armorStand.location.x, "y": Utilities.levelHeight + 1, "z": armorStand.location.z });
-			let armorStandLocationBelow = Vector.fromV3({ "x": armorStand.location.x, "y": Utilities.cameraMappingHeight - 5, "z": armorStand.location.z });
+			let armorStandLocationAbove = Vector.from({ "x": armorStand.location.x, "y": Utilities.levelHeight + 1, "z": armorStand.location.z });
+			let armorStandLocationBelow = Vector.from({ "x": armorStand.location.x, "y": Utilities.cameraMappingHeight - 5, "z": armorStand.location.z });
 			if (sonarCanSeeThrough(armorStandLocationAbove)) {
 				let floorBlock = overworld.getBlock({ "x": armorStand.location.x, "y": Utilities.floorCloneHeight, "z": armorStand.location.z })!.typeId;
 				if ("minecraft:air" != floorBlock && floorBlock != "theheist:forcefield_bridge")
@@ -411,7 +411,7 @@ function updateSonar360s(player: Player, level: number, playerLevelInformationDa
 				"closest": 1
 			}
 			var displayCamera = Utilities.dimensions.overworld.getEntities(displayCameraQuery)[0];
-			if (system.currentTick % 3 == 0) disabledSecurityDeviceEffect(Vector.fromV3(displayCamera.location));
+			if (system.currentTick % 3 == 0) disabledSecurityDeviceEffect(Vector.from(displayCamera.location));
 			return false;
 		}
 		if (cameraTrackerDataNode.isStunned) {
@@ -464,8 +464,8 @@ function updateSonar360s(player: Player, level: number, playerLevelInformationDa
 		sonarMappingArmorStands.forEach((armorStand) => {
 			// x sin() needs to be inverted to work properly for some reason
 			armorStand.teleport({ "x": armorStand.location.x + -(Utilities.sin(armorStand.getRotation().y) * tpDistance), "y": cameraMappingHeight, "z": armorStand.location.z + (Utilities.cos(armorStand.getRotation().y) * tpDistance) }, { 'dimension': Utilities.dimensions.overworld });
-			let armorStandLocationAbove = Vector.fromV3({ "x": armorStand.location.x, "y": Utilities.levelHeight + 1, "z": armorStand.location.z });
-			let armorStandLocationBelow = Vector.fromV3({ "x": armorStand.location.x, "y": Utilities.cameraMappingHeight - 5, "z": armorStand.location.z });
+			let armorStandLocationAbove = Vector.from({ "x": armorStand.location.x, "y": Utilities.levelHeight + 1, "z": armorStand.location.z });
+			let armorStandLocationBelow = Vector.from({ "x": armorStand.location.x, "y": Utilities.cameraMappingHeight - 5, "z": armorStand.location.z });
 			if (sonarCanSeeThrough(armorStandLocationAbove)) {
 				let floorBlock = overworld.getBlock({ "x": armorStand.location.x, "y": Utilities.floorCloneHeight, "z": armorStand.location.z })!.typeId;
 				if ("minecraft:air" != floorBlock && floorBlock != "theheist:forcefield_bridge")

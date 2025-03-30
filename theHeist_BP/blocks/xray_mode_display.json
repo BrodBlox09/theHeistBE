@@ -1,11 +1,15 @@
 {
-    "format_version": "1.20.60",
+    "format_version": "1.21.70",
     "minecraft:block": {
         "description": {
             "identifier": "theheist:xray_mode_display",
-            "is_experimental": false,
             "states": {
-                "theheist:rotation": [-1, 2, 3, 4, 5]
+                "theheist:rotation": [2, 3, 4, 5]
+            },
+            "traits": {
+                "minecraft:placement_direction": {
+                    "enabled_states": [ "minecraft:cardinal_direction" ]
+                }
             }
         },
         "components": {
@@ -26,17 +30,27 @@
         },
         "permutations": [
             {
-                "condition": "query.block_state('theheist:rotation') == 5",
+                "condition": "query.block_state('minecraft:cardinal_direction') == 'south'",
                 "components": {
                     "minecraft:transformation": {
-                        "rotation": [ 0, 180, 0],
+                        "rotation": [ 0, -90, 0],
                         "scale": [ 0.45, 0.45, 0.45 ],
                         "translation": [ 0, -0.5, 0 ]
                     }
                 }
             },
             {
-                "condition": "query.block_state('theheist:rotation') == 4",
+                "condition": "query.block_state('minecraft:cardinal_direction') == 'north'",
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [ 0, 90, 0],
+                        "scale": [ 0.45, 0.45, 0.45 ],
+                        "translation": [ 0, -0.5, 0 ]
+                    }
+                }
+            },
+            {
+                "condition": "query.block_state('minecraft:cardinal_direction') == 'east'",
                 "components": {
                     "minecraft:transformation": {
                         "rotation": [ 0, 0, 0],
@@ -46,20 +60,10 @@
                 }
             },
             {
-                "condition": "query.block_state('theheist:rotation') == 2",
+                "condition": "query.block_state('minecraft:cardinal_direction') == 'west'",
                 "components": {
                     "minecraft:transformation": {
-                        "rotation": [ 0, 270, 0],
-                        "scale": [ 0.45, 0.45, 0.45 ],
-                        "translation": [ 0, -0.5, 0 ]
-                    }
-                }
-            },
-            {
-                "condition": "query.block_state('theheist:rotation') == 3",
-                "components": {
-                    "minecraft:transformation": {
-                        "rotation": [ 0, 90, 0],
+                        "rotation": [ 0, 180, 0],
                         "scale": [ 0.45, 0.45, 0.45 ],
                         "translation": [ 0, -0.5, 0 ]
                     }

@@ -4,8 +4,7 @@
 		"description": {
             "identifier": "theheist:camera",
             "is_summonable": true,
-            "is_spawnable": false,
-            "is_experimental": false
+            "is_spawnable": false
         },
 		"components": {
             "minecraft:pushable": {

@@ -48,7 +48,7 @@ export default class Utilities {
 		this.dimensions.overworld.setBlockPermutation(location, BlockPermutation.resolve(blockType, permutations));
 	}
 
-	static setBlockState(block: Block, stateName: string, stateValue: boolean | number | string, checkForRedundance: boolean = true) {
+	static setBlockState(block: Block, stateName: string, stateValue: boolean | number | string | undefined, checkForRedundance: boolean = true) {
 		if (checkForRedundance && block.permutation.getState(stateName as keyof BlockStateSuperset) === stateValue) return;
 		block.setPermutation(block.permutation.withState(stateName as keyof BlockStateSuperset, stateValue));
 	}
@@ -123,6 +123,12 @@ export default class Utilities {
 	static clearPlayerInventory(player: Player) {
 		var playerInvContainer = (player.getComponent("inventory") as EntityInventoryComponent).container as Container;
 		playerInvContainer.clearAll();
+		var playerEquippable = player.getComponent("equippable") as EntityEquippableComponent;
+		playerEquippable.setEquipment(EquipmentSlot.Head);
+		playerEquippable.setEquipment(EquipmentSlot.Chest);
+		playerEquippable.setEquipment(EquipmentSlot.Legs);
+		playerEquippable.setEquipment(EquipmentSlot.Feet);
+		playerEquippable.setEquipment(EquipmentSlot.Offhand);
 	}
 
 	static inventoryContainerHasItem(container: Container, item: string): boolean {

@@ -21,13 +21,9 @@ function trapdoorInteract(event: BlockComponentPlayerInteractEvent) {
     let locked = states["theheist:locked"];
     if (locked) return;
     let isOpen = states["theheist:isopen"];
-    if (isOpen) {
-        Utilities.setBlockState(block, "theheist:isopen", false);
-        Utilities.dimensions.overworld.playSound("random.door_close", block.location);
-    } else {
-        Utilities.setBlockState(block, "theheist:isopen", true);
-        Utilities.dimensions.overworld.playSound("random.door_open", block.location);
-    }
+    Utilities.setBlockState(block, "theheist:isopen", !isOpen);
+    if (isOpen) Utilities.dimensions.overworld.playSound("random.door_close", block.location);
+    else Utilities.dimensions.overworld.playSound("random.door_open", block.location);
 }
 
 function bottomDoorLPlace(event: BlockComponentOnPlaceEvent) {
@@ -81,11 +77,11 @@ function bottomDoorInteract(event: BlockComponentPlayerInteractEvent) {
     if (isOpen) {
         Utilities.setBlockState(block, "theheist:open", false);
         Utilities.setBlockState(block.above()!, "theheist:open", false);
-        Utilities.dimensions.overworld.playSound("random.door_close", Vector.fromV3(block.location).add(new Vector(0, 0.5, 0)));
+        Utilities.dimensions.overworld.playSound("random.door_close", Vector.from(block.location).add(new Vector(0, 0.5, 0)));
     } else {
         Utilities.setBlockState(block, "theheist:open", true);
         Utilities.setBlockState(block.above()!, "theheist:open", true);
-        Utilities.dimensions.overworld.playSound("random.door_open", Vector.fromV3(block.location).add(new Vector(0, 0.5, 0)));
+        Utilities.dimensions.overworld.playSound("random.door_open", Vector.from(block.location).add(new Vector(0, 0.5, 0)));
     }
 }
 
@@ -98,28 +94,12 @@ function topDoorInteract(event: BlockComponentPlayerInteractEvent) {
     if (isOpen) {
         Utilities.setBlockState(block, "theheist:open", false);
         Utilities.setBlockState(block.below()!, "theheist:open", false);
-        Utilities.dimensions.overworld.playSound("random.door_close", Vector.fromV3(block.location).add(new Vector(0, -0.5, 0)));
+        Utilities.dimensions.overworld.playSound("random.door_close", Vector.from(block.location).add(new Vector(0, -0.5, 0)));
     } else {
         Utilities.setBlockState(block, "theheist:open", true);
         Utilities.setBlockState(block.below()!, "theheist:open", true);
-        Utilities.dimensions.overworld.playSound("random.door_open", Vector.fromV3(block.location).add(new Vector(0, -0.5, 0)));
+        Utilities.dimensions.overworld.playSound("random.door_open", Vector.from(block.location).add(new Vector(0, -0.5, 0)));
     }
-}
-
-function directionalBlockOnPlaceEvent(event: BlockComponentPlayerPlaceBeforeEvent) {
-    system.runTimeout(() => {
-    let block = event.block;
-    let playerRot = event.player!.getRotation().y;
-        if (-45 < playerRot && playerRot <= 45) { // South
-            Utilities.setBlockState(block, "theheist:rotation", 3);
-        } else if (45 < playerRot && playerRot <= 135) { // West
-            Utilities.setBlockState(block, "theheist:rotation", 4);
-        } else if ((135 < playerRot && playerRot <= 180) || (-180 <= playerRot && playerRot <= -135)) { // North
-            Utilities.setBlockState(block, "theheist:rotation", 2);
-        } else if (-135 < playerRot && playerRot <= -45) { // East
-            Utilities.setBlockState(block, "theheist:rotation", 5);
-        }
-    });
 }
 
 function randBlockNTypes(nTypes: number, event: BlockComponentPlayerPlaceBeforeEvent) {
@@ -127,9 +107,6 @@ function randBlockNTypes(nTypes: number, event: BlockComponentPlayerPlaceBeforeE
 }
 
 world.beforeEvents.worldInitialize.subscribe(event => {
-    event.blockComponentRegistry.registerCustomComponent('theheist:directional_block', {
-        beforeOnPlayerPlace: directionalBlockOnPlaceEvent
-    });
     event.blockComponentRegistry.registerCustomComponent('theheist:3_types', {
         beforeOnPlayerPlace: randBlockNTypes.bind(null, 3)
     });
@@ -137,24 +114,20 @@ world.beforeEvents.worldInitialize.subscribe(event => {
         beforeOnPlayerPlace: randBlockNTypes.bind(null, 6)
     });
     event.blockComponentRegistry.registerCustomComponent('theheist:bottom_door', {
-        beforeOnPlayerPlace: directionalBlockOnPlaceEvent,
         onPlayerDestroy: bottomDoorBreak,
         onPlayerInteract: bottomDoorInteract,
-        onPlace: bottomDoorPlace // This event doesn't run when trying to reset a door...for some reason (on script set block)
+        onPlace: bottomDoorPlace
     });
     event.blockComponentRegistry.registerCustomComponent('theheist:top_door', {
-        beforeOnPlayerPlace: directionalBlockOnPlaceEvent,
         onPlayerDestroy: topDoorBreak,
         onPlayerInteract: topDoorInteract
     });
     event.blockComponentRegistry.registerCustomComponent('theheist:bottom_l_door', {
-        beforeOnPlayerPlace: directionalBlockOnPlaceEvent,
         onPlayerDestroy: bottomDoorBreak,
         onPlayerInteract: bottomDoorInteract,
         onPlace: bottomDoorLPlace
     });
     event.blockComponentRegistry.registerCustomComponent('theheist:bottom_r_door', {
-        beforeOnPlayerPlace: directionalBlockOnPlaceEvent,
         onPlayerDestroy: bottomDoorBreak,
         onPlayerInteract: bottomDoorInteract,
         onPlace: bottomDoorRPlace

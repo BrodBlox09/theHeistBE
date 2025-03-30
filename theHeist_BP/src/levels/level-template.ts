@@ -1,9 +1,7 @@
-import { ItemStack, Player, system, world, DisplaySlotId, BlockInventoryComponent, BlockPermutation, Container, ItemLockMode } from "@minecraft/server";
+import BlockRotation from "../BlockRotation";
 import Vector from "../Vector";
-import DataManager from "../DataManager";
 import Utilities from "../Utilities";
 import LevelConstructor from "./LevelConstructor";
-import VoiceOverManager from "../VoiceOverManager";
 
 const level: ILevel = {
 "levelID": "-X-1",
@@ -15,14 +13,13 @@ const level: ILevel = {
 setup: () => {
 
 {
-    Utilities.setBlock(new Vector(0, 0, 0), "theheist:custom_door_4_bottom_l", { "theheist:rotation": 0, "theheist:unlocked": false });
-    Utilities.setBlock(new Vector(0, 0, 0), "theheist:custom_door_4_bottom_r", { "theheist:rotation": 0, "theheist:unlocked": false });
+    LevelConstructor.door4(new Vector(0, 0, 0), new Vector(0, 0, 0), BlockRotation.NORTH);
     LevelConstructor.keycardReader(new Vector(0, 0, 0), "COLOR", [
         {
-            "type": "set_block", "do": { "x": 0, "y": 0, "z": 0, "block": "theheist:custom_door_4_bottom_l", "permutations": { "theheist:rotation": 0, "theheist:open": true } }, "delay": 40
+            "type": "set_block", "do": { "x": 0, "y": 0, "z": 0, "block": "theheist:custom_door_4_bottom_l", "permutations": { "minecraft:cardinal_direction": "north", "theheist:open": true } }, "delay": 40
         },
         {
-            "type": "set_block", "do": { "x": 0, "y": 0, "z": 0, "block": "theheist:custom_door_4_bottom_r", "permutations": { "theheist:rotation": 0, "theheist:open": true } }, "delay": 40
+            "type": "set_block", "do": { "x": 0, "y": 0, "z": 0, "block": "theheist:custom_door_4_bottom_r", "permutations": { "minecraft:cardinal_direction": "north", "theheist:open": true } }, "delay": 40
         },
         {
             "type": "play_sound", "do": { "soundID": "random.door_open" }, "delay": 40
@@ -32,7 +29,7 @@ setup: () => {
         }
     ]);
     Utilities.setBlock(new Vector(0, 0, 0), "minecraft:lever", { "lever_direction": "north" });
-    LevelConstructor.rechargeStation(new Vector(0, 0, 0), 0);
+    LevelConstructor.rechargeStation(new Vector(0, 0, 0), BlockRotation.NORTH);
 } // End Level Elevator
 
 }
