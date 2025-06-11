@@ -8,60 +8,6 @@ import LevelDefinitions from "./levels/levelDefinitions";
 import GameObjectiveManager from "./GameObjectiveManager";
 
 /**
- * Base player energy tracker data node:
-	{
-	"name": "energyTracker",
-	"energyUnits": gamebandInfo.rechargeMode.level#Max,
-	"recharging": false,
-	"usingRechargerID": -1,
-	"rechargeLevel": #
-	}
- * Base player level information data node:
-	{
-		"name":"levelInformation",
-		"currentModes": [], // A list of the current modes as a ModeData interface in use by the player. Does not include the recharge mode because it has exceptionally special functionality.
-		"information": [
-			{
-				"name":"alarmLevel",
-				"level":0
-			},
-			{
-				"name": "gameLevel",
-				"level": #
-			},
-			{
-				"name": "playerInv",
-				"inventory": [
-					{
-						"slot": #,
-						"typeId": "", // The typeId of the item stack you would like to place in the player's inventory
-						"lockMode": "none"|"inventory"|"slot" // See https://learn.microsoft.com/en-us/minecraft/creator/scriptapi/minecraft/server/itemlockmode?view=minecraft-bedrock-experimental
-					}
-				]
-			}
-		]
-	}
- * Base energy tracker data node:
-	{
-		"name": "energyTracker",
-		"rechargerID": #,
-		"energyUnits": 100.0,
-		"block": {"x": #, "y": #, "z": #, "rotation": #},
-		"actions":[]
-	}
- * Base camera tracker data node:
-	{
-		"name": "cameraTracker",
-		"isRobot": false,
-		"rotation": #,
-		"swing": [#, #]|null,
-		"disabled": false,
-		"cameraID": #,
-		"type": "camera"|"sonar"
-	}
- */
-
-/**
  * Layer information:
  * 20: Level map
  * 0: Hackable consoles
@@ -123,7 +69,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 
 			// Add mandatory data
 			const maxEnergy = Utilities.gamebandInfo.rechargeMode[levelDefinition.rechargeLevel].max;
-			const playerEnergyTrackerDataNode: EnergyTracker = { "name": "energyTracker", "energyUnits": levelDefinition.startEnergyUnits ?? maxEnergy, "recharging": false, "usingRechargerID": -1, "rechargeLevel": levelDefinition.rechargeLevel };
+			const playerEnergyTrackerDataNode: PlayerEnergyTracker = { "name": "playerEnergyTracker", "energyUnits": levelDefinition.startEnergyUnits ?? maxEnergy, "recharging": false, "usingRechargerID": -1, "rechargeLevel": levelDefinition.rechargeLevel };
 			DataManager.setData(player, playerEnergyTrackerDataNode);
 
 			const playerLevelInformationDataNode: LevelInformation = { "name": "levelInformation", "currentModes": [], "information": [{ "name": "alarmLevel", "level": 0, "sonarTimeout": 0 }, { "name": "gameLevel", "level": levelNum }, { "name": "playerInv", "inventory": [] }] };
@@ -146,10 +92,10 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 			if (levelDefinition.customTitle == undefined) player.onScreenDisplay.setTitle(`§o§7Level ${levelNum}`, { "fadeInDuration": 20, "fadeOutDuration": 20, "stayDuration": 160 });
 			else if (levelDefinition.customTitle != "") player.onScreenDisplay.setTitle(levelDefinition.customTitle, { "fadeInDuration": 20, "fadeOutDuration": 20, "stayDuration": 160 });
 			if (!levelDefinition.customLoadingArea) {
-				player.teleport(Vector.from(levelDefinition.loadElevatorLoc).add(new Vector(0, 4, 0)));
+				player.teleport(Vector.from(levelDefinition.loadElevatorLoc).add(new Vector(0, 4, 0)), { rotation: player.getRotation() });
 				elevatorInterval = runElelevatorAnimation(Vector.from(levelDefinition.loadElevatorLoc));
 			} else if (levelDefinition.customLoadingArea.waitForLoadLevel) {
-				player.teleport(levelDefinition.customLoadingArea.playerLoadingLocation);
+				player.teleport(levelDefinition.customLoadingArea.playerLoadingLocation, { rotation: player.getRotation() });
 			} else waitForLoadLevel = false;
 
 			const levelCloneInfo = Utilities.levelCloneInfo[levelNum];

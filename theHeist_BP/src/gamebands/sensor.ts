@@ -7,7 +7,7 @@ const sensingRange = 14;
 const clearRange = 19;
 const overworld = Utilities.dimensions.overworld;
 
-export function tryMap(player: Player, levelInformation: LevelInformation, playerEnergyTracker: EnergyTracker) {
+export function tryMap(player: Player, levelInformation: LevelInformation, playerEnergyTracker: PlayerEnergyTracker) {
     if (!levelInformation) return;
     if (playerEnergyTracker.recharging) return;
     // If sensor mode lvl. 2 or greater, the player can use the sensor mode to see a map of the level
@@ -48,7 +48,7 @@ export function toggleSensorMode(player: Player, lvl: number) {
 function tryStartSensorMode(player: Player, lvl: number, levelInformation: LevelInformation) {
     var costPerSecond = Utilities.gamebandInfo.sensorMode[lvl].cost;
     var costPerTick = costPerSecond / 20;
-    var energyTracker = DataManager.getData(player, "energyTracker")!;
+    var energyTracker = DataManager.getData(player, "playerEnergyTracker")!;
     if (energyTracker.energyUnits < costPerTick) {
         player.sendMessage("§cNot enough energy!");
         return;
@@ -76,7 +76,7 @@ function endSensorMode(player: Player, levelInformation: LevelInformation) {
     system.runTimeout(() => clearSensed(player, levelInformation), 5); // Ensure everything actually gets cleared
 }
 
-export function sensorTick(player: Player, levelInformation: LevelInformation, energyTracker: EnergyTracker) {
+export function sensorTick(player: Player, levelInformation: LevelInformation, energyTracker: PlayerEnergyTracker) {
     var currentModes: ModeData[] = levelInformation.currentModes;
     var sensorModeData = currentModes.find((x) => x.mode == "sensor");
     if (!sensorModeData) return;

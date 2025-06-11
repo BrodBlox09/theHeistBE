@@ -15,7 +15,7 @@ export function tryStunMode(player: Player, lvl: number) {
     if (robots.length == 0) return;
 
     var cost = Utilities.gamebandInfo.stunMode[lvl].cost;
-    var energyTracker = DataManager.getData(player, "energyTracker")!;
+    var energyTracker = DataManager.getData(player, "playerEnergyTracker")!;
     if (energyTracker.energyUnits < cost) {
         player.sendMessage("§cNot enough energy!");
         return;

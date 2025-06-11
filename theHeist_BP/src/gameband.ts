@@ -10,6 +10,7 @@ import * as StealthModeFunc from "./gamebands/stealth";
 import * as StunModeFunc from "./gamebands/stun";
 import * as DrillModeFunc from "./gamebands/drill";
 import VoiceOverManager from "./VoiceOverManager";
+import { SlideshowAction } from "./actionDefinitions";
 
 /**
  * Unfinished objectives color: §c (Red)
@@ -214,7 +215,7 @@ function rechargeMode(lvl: number, player: Player) {
 	const armorStands = overworld.getEntities(query);
 	for (const armorStand of armorStands) {
 		var armorStandEnergyTrackerDataNode = DataManager.getData(armorStand, "energyTracker")!;
-		var playerEnergyTrackerDataNode = DataManager.getData(player, "energyTracker")!;
+		var playerEnergyTrackerDataNode = DataManager.getData(player, "playerEnergyTracker")!;
 		playerEnergyTrackerDataNode.rechargeLevel = lvl;
 		var blockLocation = { "x": armorStandEnergyTrackerDataNode.block.x, "y": armorStandEnergyTrackerDataNode.block.y, "z": armorStandEnergyTrackerDataNode.block.z };
 		if (playerEnergyTrackerDataNode.recharging == false) {
@@ -249,7 +250,7 @@ function rechargeMode(lvl: number, player: Player) {
  * @returns 
  */
 function hackingMode(lvl: number, player: Player) {
-	var playerEnergyTracker = DataManager.getData(player, "energyTracker")!;
+	var playerEnergyTracker = DataManager.getData(player, "playerEnergyTracker")!;
 	const query = {
 		"type": "armor_stand",
 		"location": { "x": player.location.x, "y": consolesHeight, "z": player.location.z },
@@ -260,7 +261,7 @@ function hackingMode(lvl: number, player: Player) {
 	var i = 0;
 	for (const armorStand of armorStands) {
 		i++;
-		var armorStandActionTracker = DataManager.getData(armorStand, 'actionTracker')!;
+		var armorStandActionTracker = DataManager.getData(armorStand, 'actionTracker')! as ActionTracker;
 		if (armorStandActionTracker.used == true || armorStandActionTracker.isKeycardReader) {
 			i--;
 			return;
@@ -272,8 +273,8 @@ function hackingMode(lvl: number, player: Player) {
 			}
 			if (armorStandActionTracker.prereq) { // If there are any prerequisites, ensure they are true here
 				var prereq = armorStandActionTracker.prereq;
-				if (prereq.reqObj) { // An objective must be completed first
-					if (!GameObjectiveManager.objectiveIsComplete(prereq.reqObj)) return;
+				if (prereq.objectives) { // Objective(s) must be completed first
+					if (!prereq.objectives.every(x => GameObjectiveManager.objectiveIsComplete(x))) return;
 				}
 			}
 			player.playSound('map.hack_use');
@@ -325,8 +326,8 @@ function cancelAllModes(player: Player, lvlInfo: LevelInformation) {
 function action(actionInfo: IAction, player: Player) {
 	switch (actionInfo.type) {
 		case "slideshow":
-			player.sendMessage("Running slideshow " + actionInfo.do.slideshowID);
-			var slideshowID = actionInfo.do.slideshowID;
+			let slideshowInfo = actionInfo as SlideshowAction;
+			var slideshowID = slideshowInfo.do.slideshowID;
 			startSlideshow(slideshowID, player);
 			break;
 		case "set_block": {
@@ -393,7 +394,7 @@ function action(actionInfo: IAction, player: Player) {
 
 				try {
 					const molangVarMap = new MolangVariableMap();
-					molangVarMap.setVector3("velocity", { x, y, z });
+					molangVarMap.setVector3("variable.velocity", { x, y, z });
 					overworld.spawnParticle("minecraft:explosion_particle", { x, y, z }, molangVarMap);
 				} catch (err) { }
 
@@ -520,7 +521,7 @@ function action(actionInfo: IAction, player: Player) {
 			DataManager.setData(player, levelInformation);
 			Utilities.reloadPlayerInv(player);
 			if (actionInfo.do.mode == "recharge") {
-				var playerEnergyTracker: EnergyTracker = DataManager.getData(player, "energyTracker")!;
+				var playerEnergyTracker: PlayerEnergyTracker = DataManager.getData(player, "playerEnergyTracker")!;
 				playerEnergyTracker.rechargeLevel = actionInfo.do.level;
 				DataManager.setData(player, playerEnergyTracker);
 			}
@@ -575,7 +576,6 @@ function startSlideshow(slideshowID: number, player: Player) {
 			// Clear player's inventory
 			const playerInvContainer = (player.getComponent('inventory') as EntityInventoryComponent).container as Container;
 			playerInvContainer.clearAll();
-			player.sendMessage('weeeeeeee :)');
 
 			// Start speaking & send subtitles
 			player.playSound('map.001');
@@ -630,7 +630,7 @@ function playerBusted(player: Player, currentLevel: number) {
 	playerLevelInformation.information[0].level = 0;
 	playerLevelInformation.information[2].inventory = [];
 	DataManager.setData(player, playerLevelInformation);
-	var playerEnergyTracker = DataManager.getData(player, "energyTracker")!;
+	var playerEnergyTracker = DataManager.getData(player, "playerEnergyTracker")!;
 	playerEnergyTracker.energyUnits = 0;
 	DataManager.setData(player, playerEnergyTracker);
 	player.playSound("map.alarm");
@@ -754,7 +754,7 @@ system.runInterval(() => {
 	}
 
 	// Set player level to player energy level
-	var playerEnergyTracker = DataManager.getData(player, "energyTracker")!;
+	var playerEnergyTracker = DataManager.getData(player, "playerEnergyTracker")!;
 
 	if (playerEnergyTracker && playerLevelInformation) SensorModeFunc.sensorTick(player, playerLevelInformation, playerEnergyTracker);
 	if (playerEnergyTracker && playerLevelInformation) XRayModeFunc.xrayTick(player, playerLevelInformation, playerEnergyTracker);

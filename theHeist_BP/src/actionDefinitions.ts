@@ -1,6 +1,6 @@
 export class SetBlockAction implements IAction {
 	type = "set_block";
-	do: Record<string, any>;
+	do: { "x": number, "y": number, "z": number, "block": string, "permutations"?: Record<string, any> };
 
 	constructor(location: IVector3, blockType: string, permutations: Record<string, any>) {
 		this.do = { "x": location.x, "y": location.y, "z": location.z, "block": blockType, "permutations": permutations };
@@ -9,7 +9,7 @@ export class SetBlockAction implements IAction {
 
 export class FillBlocksAction implements IAction {
     type = "fill_blocks";
-    do: Record<string, any>;
+    do: { "x1": number, "y1": number, "z1": number, "x2": number, "y2": number, "z2": number, "block": string, "permutations"?: Record<string, any> };
 
     constructor(loc1: IVector3, loc2: IVector3, blockType: string, permutations?: Record<string, any>) {
         this.do = { "x1": loc1.x, "y1": loc1.y, "z1": loc1.z, "x2": loc2.x, "y2": loc2.y, "z2": loc2.z, "block": blockType, "permutations": permutations };
@@ -18,7 +18,7 @@ export class FillBlocksAction implements IAction {
 
 export class PlaySoundAction implements IAction {
     type = "play_sound";
-    do: Record<string, any>;
+    do: { "soundID": string };
 
     constructor(sound: string) {
         this.do = { "soundID": sound };
@@ -27,7 +27,7 @@ export class PlaySoundAction implements IAction {
 
 export class VoiceSaysAction implements IAction {
     type = "voice_says";
-    do: Record<string, any>;
+    do: { "soundID": string };
 
     constructor(soundId: string) {
         this.do = { "soundID": soundId };
@@ -36,7 +36,7 @@ export class VoiceSaysAction implements IAction {
 
 export class RunCommandAction implements IAction {
     type = "run_command";
-    do: Record<string, any>;
+    do: { "command": string };
 
     constructor(command: string) {
         this.do = { "command": command };
@@ -51,7 +51,7 @@ export enum ObjectiveManagementType {
 
 export class ManageObjectiveAction implements IAction {
     type = "manage_objective";
-    do: Record<string, any>;
+    do: { "manageType": ObjectiveManagementType, "objective": string, "sortOrder"?: number };
 
     constructor(objectiveManagementType: ObjectiveManagementType, objective: string, sortOrder?: number) {
         this.do = { "manageType": objectiveManagementType, "objective": objective };
@@ -61,7 +61,7 @@ export class ManageObjectiveAction implements IAction {
 
 export class SlideshowAction implements IAction {
     type = "slideshow";
-    do: Record<string, any>;
+    do: { "slideshowID": number };
 
     constructor(slideshowId: number) {
         this.do = { "slideshowID": slideshowId };
@@ -70,7 +70,7 @@ export class SlideshowAction implements IAction {
 
 export class DisableCameraAction implements IAction {
     type = "disable_camera";
-    do: Record<string, any>;
+    do: { "cameraID": number, "noMessage"?: boolean };
     
     constructor(cameraId: number, sendMessage: boolean = true) {
         this.do = { "cameraID": cameraId };
@@ -80,7 +80,7 @@ export class DisableCameraAction implements IAction {
 
 export class DisplayMailAction implements IAction {
     type = "display_mail";
-    do: Record<string, any>;
+    do: { "mailID": number };
 
     constructor(mailId: number) {
         this.do = { "mailID": mailId };
@@ -89,7 +89,7 @@ export class DisplayMailAction implements IAction {
 
 export class DisplayResearchAction implements IAction {
     type = "display_research";
-    do: Record<string, any>;
+    do: { "researchID": number };
 
     constructor(researchId: number) {
         this.do = { "researchID": researchId };
@@ -98,7 +98,7 @@ export class DisplayResearchAction implements IAction {
 
 export class DisplayTextAction implements IAction {
     type = "display_text";
-    do: Record<string, any>;
+    do: { "text": string };
 
     constructor(text: string) {
         this.do = { "text": text };
@@ -107,7 +107,7 @@ export class DisplayTextAction implements IAction {
 
 export class SetAlarmLevelAction implements IAction {
     type = "set_alarm_level";
-    do: Record<string, any>;
+    do: { "value": number };
 
     constructor(value: number) {
         this.do = { "value": value };
@@ -116,11 +116,11 @@ export class SetAlarmLevelAction implements IAction {
 
 export class NewGamebandAction implements IAction {
     type = "new_gameband";
-    do: Record<string, any>;
+    do: { "displayBlock": IVector3, "mode": string, "modeText": string, "level": number, "slot": number };
 
     constructor(displayBlockLocation: IVector3, mode: string, modeText: string, slot: number) {
         this.do = {
-            "displayBlock": { "x": displayBlockLocation.x, "y": displayBlockLocation.y, "z": displayBlockLocation.z },
+            "displayBlock": displayBlockLocation,
             "mode": mode.toLowerCase(),
             "modeText": modeText,
             "level": 1,

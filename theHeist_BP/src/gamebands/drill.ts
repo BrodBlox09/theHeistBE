@@ -19,7 +19,7 @@ export function tryDrillMode(player: Player, lvl: number) {
     }
     
     var cost = Utilities.gamebandInfo.drillMode[lvl].cost;
-    let energyTracker = DataManager.getData(player, "energyTracker")!;
+    let energyTracker = DataManager.getData(player, "playerEnergyTracker")!;
     if (energyTracker.energyUnits < cost) {
         player.sendMessage("§cNot enough energy!");
         return;

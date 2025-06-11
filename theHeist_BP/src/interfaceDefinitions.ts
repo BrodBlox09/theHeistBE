@@ -3,14 +3,6 @@ interface ModeData {
 	level: number
 }
 
-interface ActionTracker {
-	"name": "actionTracker",
-	"used": boolean,
-	"isKeycardReader": boolean,
-	"level": number,
-	"prereq": Array<string>
-}
-
 interface IAction {
 	type: string;
 	do: any;
@@ -23,6 +15,8 @@ type DataNodeReturnType<T extends string> = T extends keyof DataNodes ? DataNode
 
 type DataNodes =  {
 	"levelInformation": LevelInformation,
+	"playerEnergyTracker": PlayerEnergyTracker,
+	"actionTracker": IActionTracker,
 	"energyTracker": EnergyTracker,
 	"cameraTracker": CameraTracker
 }
@@ -30,6 +24,34 @@ type DataNodes =  {
 
 interface DataNode extends Record<string, any> {
 	"name": string
+}
+
+interface IActionTracker extends DataNode {
+	"name": "actionTracker",
+	"used": boolean,
+	"actions": ActionList,
+	"isKeycardReader"?: boolean,
+	"level"?: number,
+	/**
+	 * @description A list of objectives that must be completed before actions can be run.
+	 */
+	"prereq"?: IPrerequisiteList
+}
+
+interface IPrerequisiteList {
+	"objectives"?: Array<string>
+}
+
+interface ActionTracker extends IActionTracker {
+	"name": "actionTracker",
+	"level": number,
+	"isKeycardReader"?: false
+}
+
+interface KeycardReaderActionTracker extends IActionTracker {
+	"name": "actionTracker",
+	"level"?: undefined,
+	"isKeycardReader": true
 }
 
 interface LevelInformation extends DataNode {
@@ -52,23 +74,35 @@ interface LevelInformation extends DataNode {
 	]
 }
 
-interface EnergyTracker extends DataNode { // Player Energy Tracker, create recharge station energy tracker separate!
-	"name": "energyTracker",
+interface PlayerEnergyTracker extends DataNode {
+	"name": "playerEnergyTracker",
 	"energyUnits": number,
 	"recharging": boolean,
 	"usingRechargerID": number,
 	"rechargeLevel": number
 }
 
+interface EnergyTracker extends DataNode {
+	"name": "energyTracker",
+	"energyUnits": number,
+	"rechargerID": number,
+	"block": IBlockOrientation,
+	"actions": ActionList
+}
+
 interface CameraTracker extends DataNode {
 	"name": "cameraTracker",
-	"isStatic": boolean,
-	"isStunned": boolean,
-	"stunTime": number,
+	"isStatic"?: boolean,
+	"isStunned"?: boolean,
+	"stunTime"?: number,
+	"disabled": boolean,
+	"cameraID": number,
 	"type": "camera" | "sonar" | "sonar360",
-	"swivel": [ number, number, number ],
+	"swivel"?: ICameraSwivel,
 	"rotation": number
 }
+
+type ICameraSwivel = [ number, number, number ];
 
 interface ILevelCloneInfo {
 	"startX": number,
@@ -109,6 +143,12 @@ interface ILevel {
 	 */
 	"onLoadStart"?: (player: any) => any
 }
+
+interface IBlockOrientation extends IVector3 {
+	"rotation": IBlockRotation
+}
+
+type IBlockRotation = "north" | "south" | "east" | "west";
 
 interface IBlockArea {
 	"start": IVector3,

@@ -23,7 +23,7 @@ export function toggleXRayMode(player: Player, lvl: number) {
 function tryStartXRayMode(player: Player, lvl: number, levelInformation: LevelInformation) {
     var costPerSecond = Utilities.gamebandInfo.xrayMode[lvl].cost;
     var costPerTick = costPerSecond / 20;
-    var energyTracker = DataManager.getData(player, "energyTracker")!;
+    var energyTracker = DataManager.getData(player, "playerEnergyTracker")!;
     if (energyTracker.energyUnits < costPerTick) {
         player.sendMessage("§cNot enough energy!");
         return;
@@ -51,7 +51,7 @@ function endXRayMode(player: Player, levelInformation: LevelInformation) {
     system.runTimeout(() => clearXRayDisplay(player, levelInformation), 5); // Ensure everything actually gets cleared
 }
 
-export function xrayTick(player: Player, levelInformation: LevelInformation, energyTracker: EnergyTracker) {
+export function xrayTick(player: Player, levelInformation: LevelInformation, energyTracker: PlayerEnergyTracker) {
     var currentModes: ModeData[] = levelInformation.currentModes;
     var xrayModeData = currentModes.find((x) => x.mode == "xray");
     if (!xrayModeData) return;

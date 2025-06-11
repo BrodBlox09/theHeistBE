@@ -1,4 +1,4 @@
-import { ItemStack, Container } from "@minecraft/server";
+import { ItemStack, Container, Camera } from "@minecraft/server";
 import BlockRotation from "../BlockRotation";
 import Vector from "../Vector";
 import Utilities from "../Utilities";
@@ -51,7 +51,7 @@ export default class LevelConstructor {
             }
         ];
         allActions.push(...actions);
-        const consoleActionTracker = {
+        const consoleActionTracker: ActionTracker = {
             "name": "actionTracker",
             "used": false,
             "level": 0,
@@ -79,7 +79,7 @@ export default class LevelConstructor {
             }
         ];
         allActions.push(...actions);
-        const consoleActionTracker = {
+        const consoleActionTracker: ActionTracker = {
             "name": "actionTracker",
             "used": false,
             "level": 0,
@@ -90,7 +90,7 @@ export default class LevelConstructor {
 
     static keycardReader(loc: Vector, color: string, actions: ActionList) {
         const console = overworld.spawnEntity("armor_stand", { "x": loc.x, "y": Utilities.consolesHeight, "z": loc.z });
-        const consoleActionTracker = {
+        const consoleActionTracker: KeycardReaderActionTracker = {
             "name": "actionTracker",
             "used": false,
             "isKeycardReader": true,
@@ -113,7 +113,7 @@ export default class LevelConstructor {
                 "type": "set_block", "do": { "x": loc.x, "y": loc.y, "z": loc.z, "block": "theheist:keypad", "permutations": { "minecraft:cardinal_direction": blockRot, "theheist:unlocked": 2 } }, "delay": 40
             }
         );
-        const consoleActionTracker = {
+        const consoleActionTracker: ActionTracker = {
             "name": "actionTracker",
             "used": false,
             "level": level,
@@ -122,7 +122,7 @@ export default class LevelConstructor {
         DataManager.setData(console, consoleActionTracker);
     }
 
-    static keypadWithPrereq(loc: Vector, level: number, blockRot: BlockRotation, actions: ActionList, prereq: any, desc: string = "") {
+    static keypadWithPrereq(loc: Vector, level: number, blockRot: BlockRotation, actions: ActionList, prereq: IPrerequisiteList, desc: string = "") {
         const console = overworld.spawnEntity("armor_stand", { "x": loc.x, "y": Utilities.consolesHeight, "z": loc.z });
         Utilities.setBlock(loc, "theheist:keypad", { "minecraft:cardinal_direction": blockRot });
         if (desc.length > 0) overworld.spawnEntity("theheist:hover_text", loc).nameTag = desc;
@@ -135,7 +135,7 @@ export default class LevelConstructor {
                 "type": "set_block", "do": { "x": loc.x, "y": loc.y, "z": loc.z, "block": "theheist:keypad", "permutations": { "minecraft:cardinal_direction": blockRot, "theheist:unlocked": 2 } }, "delay": 40
             }
         );
-        const consoleActionTracker = {
+        const consoleActionTracker: ActionTracker = {
             "name": "actionTracker",
             "used": false,
             "level": level,
@@ -158,7 +158,7 @@ export default class LevelConstructor {
                 "type": "set_block", "do": { "x": loc.x, "y": loc.y, "z": loc.z, "block": "theheist:computer", "permutations": { "minecraft:cardinal_direction": blockRot, "theheist:unlocked": 2 } }, "delay": 40
             }
         );
-        const consoleActionTracker = {
+        const consoleActionTracker: ActionTracker = {
             "name": "actionTracker",
             "used": false,
             "level": 1,
@@ -170,7 +170,7 @@ export default class LevelConstructor {
     static rechargeStation(loc: Vector, blockRot: BlockRotation, energyUnits: number = 100.0, actionList: ActionList = []) {
         const recharge = overworld.spawnEntity("minecraft:armor_stand", new Vector(loc.x, Utilities.rechargeHeight, loc.z));
         Utilities.setBlock(loc, "theheist:recharge_station", { "minecraft:cardinal_direction": blockRot });
-        const rechargeDataNode = {
+        const rechargeDataNode: EnergyTracker = {
             "name": "energyTracker",
             "rechargerID": rechargeStations,
             "energyUnits": energyUnits,
@@ -186,7 +186,7 @@ export default class LevelConstructor {
         var rotationVector = { 'x': 0, 'y': rot };
         camera.setRotation(rotationVector);
         overworld.spawnEntity("theheist:camera", loc).setRotation(rotationVector);
-        const cameraDataNode = {
+        const cameraDataNode: CameraTracker = {
             "name": "cameraTracker",
             "isRobot": false,
             "rotation": rot,
@@ -198,12 +198,12 @@ export default class LevelConstructor {
         cameras++;
     }
 
-    static dynamicCamera(loc: Vector, swivel: Array<number>) {
+    static dynamicCamera(loc: Vector, swivel: ICameraSwivel) {
         const camera = overworld.spawnEntity("armor_stand", new Vector(loc.x, Utilities.cameraHeight, loc.z));
         var rotationVector = { 'x': 0, 'y': swivel[1] };
         camera.setRotation(rotationVector);
         overworld.spawnEntity("theheist:camera", loc).setRotation(rotationVector);
-        const cameraDataNode = {
+        const cameraDataNode: CameraTracker = {
             "name": "cameraTracker",
             "isRobot": false,
             "rotation": swivel[1],
@@ -221,7 +221,7 @@ export default class LevelConstructor {
         var rotationVector = { 'x': 0, 'y': rot };
         sonar.setRotation(rotationVector);
         overworld.spawnEntity("theheist:sonar", loc).setRotation(rotationVector);
-        const sonarDataNode = {
+        const sonarDataNode: CameraTracker = {
             "name": "cameraTracker",
             "isRobot": false,
             "rotation": rot,
@@ -236,7 +236,7 @@ export default class LevelConstructor {
     static sonar360(loc: Vector) {
         const sonar360 = overworld.spawnEntity("armor_stand", new Vector(loc.x, Utilities.cameraHeight, loc.z));
         overworld.spawnEntity("theheist:sonar360", loc);
-        const sonarDataNode = {
+        const sonarDataNode: CameraTracker = {
             "name": "cameraTracker",
             "isRobot": false,
             "rotation": 0,
@@ -253,7 +253,7 @@ export default class LevelConstructor {
         robot.setRotation({ "x": 0, "y": rot });
         robot.addTag("robot");
         overworld.spawnEntity("theheist:camera_robot", loc).setRotation({ "x": 0, "y": rot });
-        const robotDataNode = {
+        const robotDataNode: CameraTracker = {
             "name": "cameraTracker",
             "isRobot": true,
             "isStunned": false,
@@ -271,7 +271,7 @@ export default class LevelConstructor {
         robot.setRotation({ "x": 0, "y": rot });
         robot.addTag("robot");
         overworld.spawnEntity("theheist:camera_robot", loc).setRotation({ "x": 0, "y": rot });
-        const robotDataNode = {
+        const robotDataNode: CameraTracker = {
             "name": "cameraTracker",
             "isRobot": true,
             "isStatic": true,
@@ -290,7 +290,7 @@ export default class LevelConstructor {
         robot.setRotation({ "x": 0, "y": rot });
         robot.addTag("robot");
         overworld.spawnEntity("theheist:sonar_robot", loc).setRotation({ "x": 0, "y": rot });
-        const robotDataNode = {
+        const robotDataNode: CameraTracker = {
             "name": "cameraTracker",
             "isRobot": true,
             "isStunned": false,
@@ -308,7 +308,7 @@ export default class LevelConstructor {
         robot.setRotation({ "x": 0, "y": rot });
         robot.addTag("robot");
         overworld.spawnEntity("theheist:sonar_robot", loc).setRotation({ "x": 0, "y": rot });
-        const robotDataNode = {
+        const robotDataNode: CameraTracker = {
             "name": "cameraTracker",
             "isRobot": true,
             "isStatic": true,

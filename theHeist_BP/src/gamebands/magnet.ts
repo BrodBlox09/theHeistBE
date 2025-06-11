@@ -15,7 +15,7 @@ export function toggleMagnetMode(player: Player, lvl: number) {
 function tryStartMagnetMode(player: Player, lvl: number, levelInformation: LevelInformation) {
     var costPerSecond = Utilities.gamebandInfo.magnetMode[lvl].cost;
     var costPerTick = costPerSecond / 20;
-    var energyTracker = DataManager.getData(player, "energyTracker")!;
+    var energyTracker = DataManager.getData(player, "playerEnergyTracker")!;
     if (energyTracker.energyUnits < costPerTick) {
         player.sendMessage("§cNot enough energy!");
         return;
@@ -54,7 +54,7 @@ function endMagnetMode(player: Player, levelInformation: LevelInformation) {
     Utilities.reloadPlayerInv(player, levelInformation);
 }
 
-export function magnetTick(player: Player, levelInformation: LevelInformation, energyTracker: EnergyTracker) {
+export function magnetTick(player: Player, levelInformation: LevelInformation, energyTracker: PlayerEnergyTracker) {
     var currentModes: ModeData[] = levelInformation.currentModes;
     var magnetModeData = currentModes.find((x) => x.mode == "magnet");
     if (!magnetModeData) return;

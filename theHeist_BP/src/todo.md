@@ -18,7 +18,7 @@
 - [x] recharging is faster in java <!-- This was actually a Java bug, I think they might have put an extra 0 somewhere or forgot a decimal place so instead of 1.0 it was 10 -->
 - [x] when recharging, other gamebands are taken away
 - [ ] there should be a blindness effect in between cutscene scenes
-- [ ] Add elevator recharge station to level -1
+- [x] Add elevator recharge station to level -1
 ### UI
 - [ ] edit inventory UI
 - [ ] Create background panorama

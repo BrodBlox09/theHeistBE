@@ -8,22 +8,12 @@ import "./lvl_loader";
 import "./gameband";
 import "./alarm";
 
-/*world.afterEvents.worldInitialize.subscribe(event => {
-	const def = new DynamicPropertiesDefinition();
-	def.defineString("data", 99999);
-	for (const entityType of EntityTypes.getAll()) {
-		event.propertyRegistry.registerEntityTypeDynamicProperties(def, entityType.id);
-	}
-});*/
-
 world.afterEvents.playerSpawn.subscribe(eventData => {
 	if (!eventData.initialSpawn || !eventData.player.hasTag('loadingLevel')) return;
-	eventData.player.sendMessage("hiii");
 	var levelInfo = DataManager.getData(eventData.player, "levelInformation");
 	if (!levelInfo) return;
 	var gameLevel = levelInfo.information[1].level;
 	Utilities.dimensions.overworld.runCommand(`scriptevent theheist:load-level ${gameLevel}`);
-	eventData.player.sendMessage("RUNNING LOADING OF LEVEL");
 });
 
 // system.beforeEvents.watchdogTerminate.subscribe((event) => {
@@ -67,24 +57,6 @@ system.afterEvents.scriptEventReceive.subscribe(event => { // stable-friendly ve
 			const xRot = player.getRotation().x;
 			const yRot = player.getRotation().y;
 			console.error(`X: ${xRot}, Y: ${yRot}`);
-			break;
-		case "setAlarmLvl":
-			if (!Number.isInteger(Number(args[0]))) {
-				player.sendMessage(`§4The value "${args[0]}" is not an integer.`);
-			}
-			const playerEnergyTag = player.getTags().find((x) => (JSON.parse(x).name == "energyTracker"));
-			if (!playerEnergyTag) return console.error("Player does not have energyTracker tag.");
-			const playerEnergyTagJSON = JSON.parse(playerEnergyTag);
-			const playerLevelInformationTag = player.getTags().find((x) => (JSON.parse(x).name == "levelInformation"));
-			if (!playerLevelInformationTag) return console.error("Player does not have levelInformation tag.");
-			const playerLevelInformationTagJSON = JSON.parse(playerLevelInformationTag);
-			playerLevelInformationTagJSON.information[0].level = Number(args[0]);
-			const newPlayerLevelInformationTag = JSON.stringify(playerLevelInformationTagJSON);
-			system.run(() => {
-				// As of 1.3.0-beta, native function code that changes game states requires 1 tick of wait and then can run, in before events // WOW This is so old XD
-				player.removeTag(playerLevelInformationTag);
-				player.addTag(newPlayerLevelInformationTag);
-			});
 			break;
 		case "clearData":
 			DataManager.clearData(player);

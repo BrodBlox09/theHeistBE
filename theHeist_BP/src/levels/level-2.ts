@@ -150,7 +150,7 @@ setup: () => {
         {
             "type": "manage_objectives", "do": { "manageType": 2, "objective": "Access next level" }, "delay": 40
         }
-    ], { "reqObj": "Read elevator code" });
+    ], { "objectives": ["Read elevator code"] });
     Utilities.setBlock(new Vector(4076.5, -59, 122.5), "lever", { "lever_direction": "east" });
 } // Elevator
 

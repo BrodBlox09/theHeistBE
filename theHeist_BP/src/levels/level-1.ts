@@ -146,7 +146,7 @@ export default level;
 //         // Previous level made use of tags, clear them here
 //         player.getTags().forEach((x) => { if (!persistentTags.includes(x)) player.removeTag(x); });
 //         // Add energyTracker data
-//         const playerEnergyTrackerDataNode: EnergyTracker = { "name": "energyTracker", "energyUnits": 100.0, "recharging": false, "usingRechargerID": -1, "rechargeLevel": 1 };
+//         const playerEnergyTrackerDataNode: EnergyTracker = { "name": "playerEnergyTracker", "energyUnits": 100.0, "recharging": false, "usingRechargerID": -1, "rechargeLevel": 1 };
 //         DataManager.setData(player, playerEnergyTrackerDataNode);
 
 //         if (!bustedCounterObjective.hasParticipant(player)) {

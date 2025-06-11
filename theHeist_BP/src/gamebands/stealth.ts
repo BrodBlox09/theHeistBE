@@ -15,7 +15,7 @@ export function toggleStealthMode(player: Player, lvl: number) {
 function tryStartStealthMode(player: Player, lvl: number, levelInformation: LevelInformation) {
     var costPerSecond = Utilities.gamebandInfo.stealthMode[lvl].cost;
     var costPerTick = costPerSecond / 20;
-    var energyTracker = DataManager.getData(player, "energyTracker")!;
+    var energyTracker = DataManager.getData(player, "playerEnergyTracker")!;
     if (energyTracker.energyUnits < costPerTick) {
         player.sendMessage("§cNot enough energy!");
         return;
@@ -40,7 +40,7 @@ function endStealthMode(player: Player, levelInformation: LevelInformation) {
     player.playSound("mob.zombie.unfect", { "pitch": 2 });
 }
 
-export function stealthTick(player: Player, levelInformation: LevelInformation, energyTracker: EnergyTracker) {
+export function stealthTick(player: Player, levelInformation: LevelInformation, energyTracker: PlayerEnergyTracker) {
     var currentModes: ModeData[] = levelInformation.currentModes;
     var stealthModeData = currentModes.find((x) => x.mode == "stealth");
     if (!stealthModeData) return;
