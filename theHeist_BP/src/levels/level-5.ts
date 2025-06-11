@@ -187,7 +187,7 @@ setup: () => {
 
 {
     Utilities.setBlock(new Vector(6928, -60, 144), "theheist:custom_door_3_bottom", {"theheist:unlocked": false, "minecraft:cardinal_direction": "south"});
-    LevelConstructor.keycardReader(new Vector(6914.5, -60, 143.5), "red", [
+    LevelConstructor.keycardReader(new Vector(6926.5, -60, 143.5), "red", [
         {
             "type": "set_block", "do": { "x": 6928, "y": -60, "z": 144, "block": "theheist:custom_door_3_bottom", "permutations": { "minecraft:cardinal_direction": "south", "theheist:open": true } }
         },

@@ -51,7 +51,7 @@ function updatePlayerAlarmLevel(player: Player, levelInformation: LevelInformati
 	if (playerBlock && playerBlock.typeId == "minecraft:stone_pressure_plate")
 		levelInformation.information[0].level = 100;
 
-	var playerIsStealth = levelInformation.currentModes.some(x => (x.mode == "stealth"));
+	var playerIsStealth = levelInformation.currentMode?.mode == "stealth";
 	if (playerIsStealth) return;
 	// Vision-based security
 	// Sight block stuff

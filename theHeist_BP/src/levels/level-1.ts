@@ -152,7 +152,7 @@ export default level;
 //         if (!bustedCounterObjective.hasParticipant(player)) {
 //             bustedCounterObjective.setScore(player, 0);
 //         }
-//         const playerLevelInformationDataNode: LevelInformation = { "name": "levelInformation", "currentModes": [], "information": [{ "name": "alarmLevel", "level": 0, "sonarTimeout": 0 }, { "name": "gameLevel", "level": -1 }, { "name": "playerInv", "inventory": [{ "slot": 0, "typeId": 'theheist:recharge_mode_lvl_1', "lockMode": "slot" }, { "slot": 1, "typeId": 'theheist:hacking_mode_lvl_1', "lockMode": "slot" }] }] };
+//         const playerLevelInformationDataNode: LevelInformation = { "name": "levelInformation", "currentMode": null, "information": [{ "name": "alarmLevel", "level": 0, "sonarTimeout": 0 }, { "name": "gameLevel", "level": -1 }, { "name": "playerInv", "inventory": [{ "slot": 0, "typeId": 'theheist:recharge_mode_lvl_1', "lockMode": "slot" }, { "slot": 1, "typeId": 'theheist:hacking_mode_lvl_1', "lockMode": "slot" }] }] };
         
 //         DataManager.setData(player, playerLevelInformationDataNode);
 

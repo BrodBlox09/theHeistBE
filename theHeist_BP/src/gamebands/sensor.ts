@@ -2,6 +2,7 @@ import { MolangVariableMap, BlockPermutation, EffectTypes, Vector3, world, syste
 import DataManager from "../DataManager";
 import Utilities from "../Utilities";
 import Vector from "../Vector";
+import GamebandManager from "./GamebandManager";
 
 const sensingRange = 14;
 const clearRange = 19;
@@ -40,12 +41,14 @@ export function tryMap(player: Player, levelInformation: LevelInformation, playe
 
 export function toggleSensorMode(player: Player, lvl: number) {
     var levelInformation = DataManager.getData(player, "levelInformation")!;
-    var currentModes: ModeData[] = levelInformation.currentModes;
-    if (currentModes.some((x) => x.mode == "sensor")) endSensorMode(player, levelInformation);
+    if (playerIsInSensorMode(levelInformation)) endSensorMode(player, levelInformation);
     else tryStartSensorMode(player, lvl, levelInformation);
 }
 
 function tryStartSensorMode(player: Player, lvl: number, levelInformation: LevelInformation) {
+    GamebandManager.cancelMode(player, levelInformation.currentMode);
+    levelInformation = DataManager.getData(player, "levelInformation")!;
+
     var costPerSecond = Utilities.gamebandInfo.sensorMode[lvl].cost;
     var costPerTick = costPerSecond / 20;
     var energyTracker = DataManager.getData(player, "playerEnergyTracker")!;
@@ -54,7 +57,7 @@ function tryStartSensorMode(player: Player, lvl: number, levelInformation: Level
         return;
     }
 
-    levelInformation.currentModes.push({ "mode": "sensor", "level": lvl });
+    levelInformation.currentMode = { "mode": "sensor", "level": lvl };
     levelInformation.information[2].inventory = levelInformation.information[2].inventory.filter((s) => (s.slot != 2));
     levelInformation.information[2].inventory.push({ "slot": 2, "typeId": `theheist:sensor_mode_lvl_${lvl}_enchanted`, "lockMode": "slot" });
     DataManager.setData(player, levelInformation);
@@ -64,11 +67,11 @@ function tryStartSensorMode(player: Player, lvl: number, levelInformation: Level
 }
 
 function endSensorMode(player: Player, levelInformation: LevelInformation) {
-    var currentModes: ModeData[] = levelInformation.currentModes;
-    var sensorModeData = currentModes.find((x) => x.mode == "sensor");
-    levelInformation.currentModes = currentModes.filter((x) => x.mode != "sensor");
+    if (!playerIsInSensorMode(levelInformation)) return;
+    var sensorModeData = levelInformation.currentMode!;
+    levelInformation.currentMode = null;
     levelInformation.information[2].inventory = levelInformation.information[2].inventory.filter((x) => x.slot != 2);
-    levelInformation.information[2].inventory.push({ "slot": 2, "typeId": `theheist:sensor_mode_lvl_${sensorModeData!.level}`, "lockMode": "slot" });
+    levelInformation.information[2].inventory.push({ "slot": 2, "typeId": `theheist:sensor_mode_lvl_${sensorModeData.level}`, "lockMode": "slot" });
     DataManager.setData(player, levelInformation);
     Utilities.reloadPlayerInv(player, levelInformation);
     clearSensed(player, levelInformation);
@@ -77,9 +80,8 @@ function endSensorMode(player: Player, levelInformation: LevelInformation) {
 }
 
 export function sensorTick(player: Player, levelInformation: LevelInformation, energyTracker: PlayerEnergyTracker) {
-    var currentModes: ModeData[] = levelInformation.currentModes;
-    var sensorModeData = currentModes.find((x) => x.mode == "sensor");
-    if (!sensorModeData) return;
+    if (!playerIsInSensorMode(levelInformation)) return;
+    var sensorModeData = levelInformation.currentMode!;
     // Player is currently in sensor mode
     var costPerSecond = Utilities.gamebandInfo.sensorMode[sensorModeData.level].cost;
     var costPerTick = costPerSecond / 20;
@@ -126,6 +128,5 @@ function clearSensed(player: Player, levelInformation: LevelInformation) {
 }
 
 export function playerIsInSensorMode(levelInformation: LevelInformation) {
-    var currentModes: ModeData[] = levelInformation.currentModes;
-    return currentModes.some((x) => x.mode == "sensor");
+    return levelInformation.currentMode?.mode == "sensor";
 }

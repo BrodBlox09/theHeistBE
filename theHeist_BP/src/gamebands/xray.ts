@@ -2,6 +2,7 @@ import { MolangVariableMap, BlockPermutation, EffectTypes, Vector3, world, syste
 import DataManager from "../DataManager";
 import Utilities from "../Utilities";
 import Vector from "../Vector";
+import GamebandManager from "./GamebandManager";
 
 const viewRange = 2;
 const clearRange = 4;
@@ -15,12 +16,14 @@ const overworld = Utilities.dimensions.overworld;
 
 export function toggleXRayMode(player: Player, lvl: number) {
     var levelInformation: LevelInformation = DataManager.getData(player, "levelInformation")!;
-    var currentModes = levelInformation.currentModes;
-    if (currentModes.some((x) => x.mode == "xray")) endXRayMode(player, levelInformation);
+    if (playerIsInXRayMode(levelInformation)) endXRayMode(player, levelInformation);
     else tryStartXRayMode(player, lvl, levelInformation);
 }
 
 function tryStartXRayMode(player: Player, lvl: number, levelInformation: LevelInformation) {
+    GamebandManager.cancelMode(player, levelInformation.currentMode);
+    levelInformation = DataManager.getData(player, "levelInformation")!;
+    
     var costPerSecond = Utilities.gamebandInfo.xrayMode[lvl].cost;
     var costPerTick = costPerSecond / 20;
     var energyTracker = DataManager.getData(player, "playerEnergyTracker")!;
@@ -29,7 +32,7 @@ function tryStartXRayMode(player: Player, lvl: number, levelInformation: LevelIn
         return;
     }
 
-    levelInformation.currentModes.push({ "mode": "xray", "level": lvl });
+    levelInformation.currentMode = { "mode": "xray", "level": lvl };
     levelInformation.information[2].inventory = levelInformation.information[2].inventory.filter((s) => (s.slot != 3));
     levelInformation.information[2].inventory.push({ "slot": 3, "typeId": `theheist:xray_mode_lvl_${lvl}_enchanted`, "lockMode": "slot" });
     DataManager.setData(player, levelInformation);
@@ -39,9 +42,9 @@ function tryStartXRayMode(player: Player, lvl: number, levelInformation: LevelIn
 }
 
 function endXRayMode(player: Player, levelInformation: LevelInformation) {
-    var currentModes: ModeData[] = levelInformation.currentModes;
-    var xrayModeData = currentModes.find((x) => x.mode == "xray");
-    levelInformation.currentModes = currentModes.filter((x) => x.mode != "xray");
+    if (!playerIsInXRayMode(levelInformation)) return;
+    var xrayModeData = levelInformation.currentMode!;
+    levelInformation.currentMode = null;
     levelInformation.information[2].inventory = levelInformation.information[2].inventory.filter((x) => x.slot != 3);
     levelInformation.information[2].inventory.push({ "slot": 3, "typeId": `theheist:xray_mode_lvl_${xrayModeData!.level}`, "lockMode": "slot" });
     DataManager.setData(player, levelInformation);
@@ -52,9 +55,8 @@ function endXRayMode(player: Player, levelInformation: LevelInformation) {
 }
 
 export function xrayTick(player: Player, levelInformation: LevelInformation, energyTracker: PlayerEnergyTracker) {
-    var currentModes: ModeData[] = levelInformation.currentModes;
-    var xrayModeData = currentModes.find((x) => x.mode == "xray");
-    if (!xrayModeData) return;
+    if (!playerIsInXRayMode(levelInformation)) return;
+    var xrayModeData = levelInformation.currentMode!;
     // Player is currently in xray mode
     var costPerSecond = Utilities.gamebandInfo.xrayMode[xrayModeData.level].cost;
     var costPerTick = costPerSecond / 20;
@@ -102,6 +104,5 @@ function clearXRayDisplay(player: Player, levelInformation: LevelInformation) {
 }
 
 export function playerIsInXRayMode(levelInformation: LevelInformation) {
-    var currentModes: ModeData[] = levelInformation.currentModes;
-    return currentModes.some((x) => x.mode == "xray");
+    return levelInformation.currentMode?.mode == "xray";
 }

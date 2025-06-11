@@ -2,17 +2,20 @@ import { MolangVariableMap, BlockPermutation, EffectTypes, Vector3, world, syste
 import DataManager from "../DataManager";
 import Utilities from "../Utilities";
 import Vector from "../Vector";
+import GamebandManager from "./GamebandManager";
 
 const overworld = Utilities.dimensions.overworld;
 
 export function toggleMagnetMode(player: Player, lvl: number) {
     var levelInformation = DataManager.getData(player, "levelInformation")!;
-    var currentModes: ModeData[] = levelInformation.currentModes;
-    if (currentModes.some((x) => x.mode == "magnet")) endMagnetMode(player, levelInformation);
+    if (playerIsInMagnetMode(levelInformation)) endMagnetMode(player, levelInformation);
     else tryStartMagnetMode(player, lvl, levelInformation);
 }
 
 function tryStartMagnetMode(player: Player, lvl: number, levelInformation: LevelInformation) {
+    GamebandManager.cancelMode(player, levelInformation.currentMode);
+    levelInformation = DataManager.getData(player, "levelInformation")!;
+
     var costPerSecond = Utilities.gamebandInfo.magnetMode[lvl].cost;
     var costPerTick = costPerSecond / 20;
     var energyTracker = DataManager.getData(player, "playerEnergyTracker")!;
@@ -27,37 +30,28 @@ function tryStartMagnetMode(player: Player, lvl: number, levelInformation: Level
         player.sendMessage("§cNothing to grab onto!");
         return;
     }
-    levelInformation.currentModes.push({ "mode": "magnet", "level": lvl });
+
+    levelInformation.currentMode = { "mode": "magnet", "level": lvl };
     levelInformation.information[2].inventory = levelInformation.information[2].inventory.filter((s) => (s.slot != 4));
     levelInformation.information[2].inventory.push({ "slot": 4, "typeId": `theheist:magnet_mode_lvl_${lvl}_enchanted`, "lockMode": "slot" });
     DataManager.setData(player, levelInformation);
     Utilities.reloadPlayerInv(player, levelInformation);
 }
 
-function clearBarriers(player: Player) {
-    Utilities.fillBlocksWithOptions(Vector.from(player.location).subtract(new Vector(3, 3, 3)), Vector.from(player.location).add(new Vector(3, 3, 3)), "air", {
-        "blockFilter": {
-            "includeTypes": ["minecraft:barrier"]
-        }
-    });
-}
-
 function endMagnetMode(player: Player, levelInformation: LevelInformation) {
-    var currentModes: ModeData[] = levelInformation.currentModes;
-    var magnetModeData = currentModes.find((x) => x.mode == "magnet");
+    if (!playerIsInMagnetMode(levelInformation)) return;
+    var magnetModeData = levelInformation.currentMode!;
     player.removeEffect(EffectTypes.get("levitation")!);
-    //clearBarriers(player);
-    levelInformation.currentModes = currentModes.filter((x) => x.mode != "magnet");
+    levelInformation.currentMode = null;
     levelInformation.information[2].inventory = levelInformation.information[2].inventory.filter((x) => x.slot != 4);
-    levelInformation.information[2].inventory.push({ "slot": 4, "typeId": `theheist:magnet_mode_lvl_${magnetModeData!.level}`, "lockMode": "slot" });
+    levelInformation.information[2].inventory.push({ "slot": 4, "typeId": `theheist:magnet_mode_lvl_${magnetModeData.level}`, "lockMode": "slot" });
     DataManager.setData(player, levelInformation);
     Utilities.reloadPlayerInv(player, levelInformation);
 }
 
 export function magnetTick(player: Player, levelInformation: LevelInformation, energyTracker: PlayerEnergyTracker) {
-    var currentModes: ModeData[] = levelInformation.currentModes;
-    var magnetModeData = currentModes.find((x) => x.mode == "magnet");
-    if (!magnetModeData) return;
+    if (!playerIsInMagnetMode(levelInformation)) return;
+    var magnetModeData = levelInformation.currentMode!;
     // Player is currently in magnet mode
     var costPerSecond = Utilities.gamebandInfo.magnetMode[magnetModeData.level].cost;
     var costPerTick = costPerSecond / 20;
@@ -78,14 +72,8 @@ export function magnetTick(player: Player, levelInformation: LevelInformation, e
     }
 
     player.addEffect(EffectTypes.get("levitation")!, 10, { 'amplifier': 10, 'showParticles': false });
-    /*clearBarriers(player);
-    var belowBlock = overworld.getBlock(player.location)?.below();
-    if (belowBlock?.typeId == "minecraft:air") {
-        Utilities.setBlock(belowBlock.location, "minecraft:barrier");
-    }*/
 }
 
 export function playerIsInMagnetMode(levelInformation: LevelInformation) {
-    var currentModes: ModeData[] = levelInformation.currentModes;
-    return currentModes.some((x) => x.mode == "magnet");
+    return levelInformation.currentMode?.mode == "magnet";
 }

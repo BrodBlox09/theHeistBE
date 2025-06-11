@@ -2,17 +2,20 @@ import { MolangVariableMap, BlockPermutation, EffectTypes, Vector3, world, syste
 import DataManager from "../DataManager";
 import Utilities from "../Utilities";
 import Vector from "../Vector";
+import GamebandManager from "./GamebandManager";
 
 const overworld = Utilities.dimensions.overworld;
 
 export function toggleStealthMode(player: Player, lvl: number) {
     var levelInformation = DataManager.getData(player, "levelInformation")!;
-    var currentModes: ModeData[] = levelInformation.currentModes;
-    if (currentModes.some((x) => x.mode == "stealth")) endStealthMode(player, levelInformation);
+    if (playerIsInStealthMode(levelInformation)) endStealthMode(player, levelInformation);
     else tryStartStealthMode(player, lvl, levelInformation);
 }
 
 function tryStartStealthMode(player: Player, lvl: number, levelInformation: LevelInformation) {
+    GamebandManager.cancelMode(player, levelInformation.currentMode);
+    levelInformation = DataManager.getData(player, "levelInformation")!;
+    
     var costPerSecond = Utilities.gamebandInfo.stealthMode[lvl].cost;
     var costPerTick = costPerSecond / 20;
     var energyTracker = DataManager.getData(player, "playerEnergyTracker")!;
@@ -21,7 +24,7 @@ function tryStartStealthMode(player: Player, lvl: number, levelInformation: Leve
         return;
     }
 
-    levelInformation.currentModes.push({ "mode": "stealth", "level": lvl });
+    levelInformation.currentMode = { "mode": "stealth", "level": lvl };
     levelInformation.information[2].inventory = levelInformation.information[2].inventory.filter((s) => (s.slot != 5));
     levelInformation.information[2].inventory.push({ "slot": 5, "typeId": `theheist:stealth_mode_lvl_${lvl}_enchanted`, "lockMode": "slot" });
     DataManager.setData(player, levelInformation);
@@ -30,20 +33,19 @@ function tryStartStealthMode(player: Player, lvl: number, levelInformation: Leve
 }
 
 function endStealthMode(player: Player, levelInformation: LevelInformation) {
-    var currentModes: ModeData[] = levelInformation.currentModes;
-    var stealthModeData = currentModes.find((x) => x.mode == "stealth");
-    levelInformation.currentModes = currentModes.filter((x) => x.mode != "stealth");
+    if (!playerIsInStealthMode(levelInformation)) return;
+    var stealthModeData = levelInformation.currentMode!;
+    levelInformation.currentMode = null;
     levelInformation.information[2].inventory = levelInformation.information[2].inventory.filter((x) => x.slot != 5);
-    levelInformation.information[2].inventory.push({ "slot": 5, "typeId": `theheist:stealth_mode_lvl_${stealthModeData!.level}`, "lockMode": "slot" });
+    levelInformation.information[2].inventory.push({ "slot": 5, "typeId": `theheist:stealth_mode_lvl_${stealthModeData.level}`, "lockMode": "slot" });
     DataManager.setData(player, levelInformation);
     Utilities.reloadPlayerInv(player, levelInformation);
     player.playSound("mob.zombie.unfect", { "pitch": 2 });
 }
 
 export function stealthTick(player: Player, levelInformation: LevelInformation, energyTracker: PlayerEnergyTracker) {
-    var currentModes: ModeData[] = levelInformation.currentModes;
-    var stealthModeData = currentModes.find((x) => x.mode == "stealth");
-    if (!stealthModeData) return;
+    if (!playerIsInStealthMode(levelInformation)) return;
+    var stealthModeData = levelInformation.currentMode!;
     // Player is currently in stealth mode
     var costPerSecond = Utilities.gamebandInfo.stealthMode[stealthModeData.level].cost;
     var costPerTick = costPerSecond / 20;
@@ -60,6 +62,5 @@ export function stealthTick(player: Player, levelInformation: LevelInformation, 
 }
 
 export function playerIsInStealthMode(levelInformation: LevelInformation) {
-    var currentModes: ModeData[] = levelInformation.currentModes;
-    return currentModes.some((x) => x.mode == "stealth");
+    return levelInformation.currentMode?.mode == "stealth";
 }

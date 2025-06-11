@@ -11,6 +11,7 @@ import * as StunModeFunc from "./gamebands/stun";
 import * as DrillModeFunc from "./gamebands/drill";
 import VoiceOverManager from "./VoiceOverManager";
 import { SlideshowAction } from "./actionDefinitions";
+import GamebandManager from "./gamebands/GamebandManager";
 
 /**
  * Unfinished objectives color: §c (Red)
@@ -41,7 +42,8 @@ const loreItems = [
 	new loreItem("theheist:xray_mode_lvl_1", "§r§4Xray mode Lvl. 1", ["Use item to §r§6toggle", "Energy: 1.33 units/second"]),
 	new loreItem("theheist:xray_mode_lvl_2", "§r§4Xray mode Lvl. 2", ["Use item to §r§6toggle", "Energy: 0.67 units/second"]),
 	new loreItem("theheist:magnet_mode_lvl_1", "§r§5Magnet mode Lvl. 1", ["Use item to §r§6toggle", "Energy: 1.6 units/second"]),
-	new loreItem("theheist:stealth_mode_lvl_1", "§r§fStealth mode Lvl. 1", ["Use item to §r§6toggle", "Energy: 10 units/second"]),
+	new loreItem("theheist:stealth_mode_lvl_1", "§r§fStealth mode Lvl. 1", ["Use item to §r§6toggle", "Energy: 40 units/second"]),
+	new loreItem("theheist:stealth_mode_lvl_2", "§r§fStealth mode Lvl. 2", ["Use item to §r§6toggle", "Energy: 10 units/second"]),
 	new loreItem("theheist:stun_mode_lvl_1", "§r§eStun mode Lvl. 1", ["Use item to §r§6use", "Energy: 10 units"]),
 	new loreItem("theheist:drill_mode_lvl_1", "§r§3Drill mode Lvl. 1", ["Use item to §r§6use", "Energy: 30 units"]),
 	new loreItem('minecraft:paper', '§oUse Keycard§r', ['Can trigger any Keycard reader', 'for which you own a matching card']),
@@ -113,6 +115,9 @@ function itemUse(event: ItemUseAfterEvent | ItemStartUseOnAfterEvent) {
 			break;
 		case "theheist:stealth_mode_lvl_1":
 			stealthMode(1, player);
+			break;
+		case "theheist:stealth_mode_lvl_2":
+			stealthMode(2, player);
 			break;
 		case "theheist:stun_mode_lvl_1":
 			stunMode(1, player);
@@ -206,6 +211,9 @@ function sensorMode(lvl: number, player: Player) {
  * @returns 
  */
 function rechargeMode(lvl: number, player: Player) {
+	let levelInformation = DataManager.getData(player, "levelInformation")!;
+	GamebandManager.cancelMode(player, levelInformation.currentMode);
+
 	const query = {
 		"type": "armor_stand",
 		"location": new Vector(player.location.x, rechargeHeight, player.location.z),
@@ -250,6 +258,9 @@ function rechargeMode(lvl: number, player: Player) {
  * @returns 
  */
 function hackingMode(lvl: number, player: Player) {
+	let levelInformation = DataManager.getData(player, "levelInformation")!;
+	GamebandManager.cancelMode(player, levelInformation.currentMode);
+
 	var playerEnergyTracker = DataManager.getData(player, "playerEnergyTracker")!;
 	const query = {
 		"type": "armor_stand",
@@ -302,25 +313,6 @@ function hackingMode(lvl: number, player: Player) {
 		player.sendMessage("§cNo console");
 		return;
 	}
-}
-
-function cancelAllModes(player: Player, lvlInfo: LevelInformation) {
-	lvlInfo.currentModes.forEach((mode) => {
-		switch (mode.mode) {
-			case "sensor":
-				SensorModeFunc.toggleSensorMode(player, 0);
-				break;
-			case "magnet":
-				MagnetModeFunc.toggleMagnetMode(player, 0);
-				break;
-			case "stealth":
-				StealthModeFunc.toggleStealthMode(player, 0);
-				break;
-			case "xray":
-				XRayModeFunc.toggleXRayMode(player, 0);
-				break;
-		}
-	})
 }
 
 function action(actionInfo: IAction, player: Player) {
@@ -394,7 +386,7 @@ function action(actionInfo: IAction, player: Player) {
 
 				try {
 					const molangVarMap = new MolangVariableMap();
-					molangVarMap.setVector3("velocity", new Vector(x, y, z));
+					molangVarMap.setVector3("variable.velocity", new Vector(x, y, z));
 					overworld.spawnParticle("minecraft:explosion_particle", { x, y, z }, molangVarMap);
 				} catch (err) { }
 
@@ -509,15 +501,8 @@ function action(actionInfo: IAction, player: Player) {
 			 * actionInfo.do.level: number
 			 */
 			var levelInformation = DataManager.getData(player, "levelInformation")!;
-			var inUse = false;
-			levelInformation.currentModes.forEach((x, i) => {
-				if (x.mode == actionInfo.do.mode) {
-					levelInformation.currentModes[i].level += 1;
-					inUse = true;
-				}
-			});
 			levelInformation.information[2].inventory = levelInformation.information[2].inventory.filter((x: IInventorySlotData) => (x.slot != actionInfo.do.slot));
-			levelInformation.information[2].inventory.push({ "slot": actionInfo.do.slot, "typeId": `theheist:${actionInfo.do.mode}_mode_lvl_${actionInfo.do.level}${inUse ? "_enchanted" : ""}`, "lockMode": "slot" });
+			levelInformation.information[2].inventory.push({ "slot": actionInfo.do.slot, "typeId": `theheist:${actionInfo.do.mode}_mode_lvl_${actionInfo.do.level}`, "lockMode": "slot" });
 			DataManager.setData(player, levelInformation);
 			Utilities.reloadPlayerInv(player);
 			if (actionInfo.do.mode == "recharge") {

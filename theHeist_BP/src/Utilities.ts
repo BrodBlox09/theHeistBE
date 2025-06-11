@@ -177,6 +177,9 @@ export default class Utilities {
 		"stealthMode": {
 			1: {
 				"cost": 40
+			},
+			2: {
+				"cost": 10
 			}
 		},
 		"stunMode": {

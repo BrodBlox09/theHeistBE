@@ -72,7 +72,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 			const playerEnergyTrackerDataNode: PlayerEnergyTracker = { "name": "playerEnergyTracker", "energyUnits": levelDefinition.startEnergyUnits ?? maxEnergy, "recharging": false, "usingRechargerID": -1, "rechargeLevel": levelDefinition.rechargeLevel };
 			DataManager.setData(player, playerEnergyTrackerDataNode);
 
-			const playerLevelInformationDataNode: LevelInformation = { "name": "levelInformation", "currentModes": [], "information": [{ "name": "alarmLevel", "level": 0, "sonarTimeout": 0 }, { "name": "gameLevel", "level": levelNum }, { "name": "playerInv", "inventory": [] }] };
+			const playerLevelInformationDataNode: LevelInformation = { "name": "levelInformation", "currentMode": null, "information": [{ "name": "alarmLevel", "level": 0, "sonarTimeout": 0 }, { "name": "gameLevel", "level": levelNum }, { "name": "playerInv", "inventory": [] }] };
 			if (!levelDefinition.playerNoPhone) levelDefinition.startingItems.push({ "slot": 19, "typeId": 'theheist:phone' });
 			levelDefinition.startingItems.forEach((item) => {
 				playerLevelInformationDataNode.information[2].inventory.push(item);

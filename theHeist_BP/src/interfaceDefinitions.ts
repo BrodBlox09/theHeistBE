@@ -56,7 +56,7 @@ interface KeycardReaderActionTracker extends IActionTracker {
 
 interface LevelInformation extends DataNode {
 	"name": "levelInformation",
-	"currentModes": ModeData[],
+	"currentMode": ModeData | null,
 	"information": [
 		{
 			"name": "alarmLevel",

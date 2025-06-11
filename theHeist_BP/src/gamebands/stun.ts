@@ -2,11 +2,16 @@ import { MolangVariableMap, BlockPermutation, EffectTypes, Vector3, world, syste
 import DataManager from "../DataManager";
 import Utilities from "../Utilities";
 import Vector from "../Vector";
+import GamebandManager from "./GamebandManager";
 
 const overworld = Utilities.dimensions.overworld;
 const range = 2;
 
 export function tryStunMode(player: Player, lvl: number) {
+    let levelInformation = DataManager.getData(player, "levelInformation")!;
+    GamebandManager.cancelMode(player, levelInformation.currentMode);
+    levelInformation = DataManager.getData(player, "levelInformation")!;
+
     let robots = overworld.getEntities({
         "location": new Vector(player.location.x, Utilities.cameraHeight, player.location.z),
         "maxDistance": range,

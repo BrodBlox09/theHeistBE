@@ -2,10 +2,15 @@ import { MolangVariableMap, BlockPermutation, EffectTypes, Vector3, world, syste
 import DataManager from "../DataManager";
 import Utilities from "../Utilities";
 import Vector from "../Vector";
+import GamebandManager from "./GamebandManager";
 
 const overworld = Utilities.dimensions.overworld;
 
 export function tryDrillMode(player: Player, lvl: number) {
+    let levelInformation = DataManager.getData(player, "levelInformation")!;
+    GamebandManager.cancelMode(player, levelInformation.currentMode);
+    levelInformation = DataManager.getData(player, "levelInformation")!;
+    
     let playerRot = player.getRotation().y;
 	if (playerRot < 0) playerRot = 360 + playerRot;
     playerRot = Math.round(playerRot / 90) * 90;
