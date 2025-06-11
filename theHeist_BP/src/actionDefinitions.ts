@@ -1,4 +1,4 @@
-class SetBlockAction implements IAction {
+export class SetBlockAction implements IAction {
 	type = "set_block";
 	do: Record<string, any>;
 
@@ -7,7 +7,7 @@ class SetBlockAction implements IAction {
 	}
 }
 
-class FillBlocksAction implements IAction {
+export class FillBlocksAction implements IAction {
     type = "fill_blocks";
     do: Record<string, any>;
 
@@ -16,7 +16,7 @@ class FillBlocksAction implements IAction {
     }
 }
 
-class PlaySoundAction implements IAction {
+export class PlaySoundAction implements IAction {
     type = "play_sound";
     do: Record<string, any>;
 
@@ -25,7 +25,7 @@ class PlaySoundAction implements IAction {
     }
 }
 
-class VoiceSaysAction implements IAction {
+export class VoiceSaysAction implements IAction {
     type = "voice_says";
     do: Record<string, any>;
 
@@ -34,7 +34,7 @@ class VoiceSaysAction implements IAction {
     }
 }
 
-class RunCommandAction implements IAction {
+export class RunCommandAction implements IAction {
     type = "run_command";
     do: Record<string, any>;
 
@@ -43,13 +43,13 @@ class RunCommandAction implements IAction {
     }
 }
 
-enum ObjectiveManagementType {
+export enum ObjectiveManagementType {
     ADD_OBJECTIVE = 1,
     COMPLETE_OBJECTIVE = 2,
     REMOVE_OBJECTIVE = 3
 }
 
-class ManageObjectiveAction implements IAction {
+export class ManageObjectiveAction implements IAction {
     type = "manage_objective";
     do: Record<string, any>;
 
@@ -59,7 +59,7 @@ class ManageObjectiveAction implements IAction {
     }
 }
 
-class SlideshowAction implements IAction {
+export class SlideshowAction implements IAction {
     type = "slideshow";
     do: Record<string, any>;
 
@@ -68,7 +68,7 @@ class SlideshowAction implements IAction {
     }
 }
 
-class DisableCameraAction implements IAction {
+export class DisableCameraAction implements IAction {
     type = "disable_camera";
     do: Record<string, any>;
     
@@ -78,7 +78,7 @@ class DisableCameraAction implements IAction {
     }
 }
 
-class DisplayMailAction implements IAction {
+export class DisplayMailAction implements IAction {
     type = "display_mail";
     do: Record<string, any>;
 
@@ -87,7 +87,7 @@ class DisplayMailAction implements IAction {
     }
 }
 
-class DisplayResearchAction implements IAction {
+export class DisplayResearchAction implements IAction {
     type = "display_research";
     do: Record<string, any>;
 
@@ -96,7 +96,7 @@ class DisplayResearchAction implements IAction {
     }
 }
 
-class DisplayTextAction implements IAction {
+export class DisplayTextAction implements IAction {
     type = "display_text";
     do: Record<string, any>;
 
@@ -105,7 +105,7 @@ class DisplayTextAction implements IAction {
     }
 }
 
-class SetAlarmLevelAction implements IAction {
+export class SetAlarmLevelAction implements IAction {
     type = "set_alarm_level";
     do: Record<string, any>;
 
@@ -114,7 +114,7 @@ class SetAlarmLevelAction implements IAction {
     }
 }
 
-class NewGamebandAction implements IAction {
+export class NewGamebandAction implements IAction {
     type = "new_gameband";
     do: Record<string, any>;
 

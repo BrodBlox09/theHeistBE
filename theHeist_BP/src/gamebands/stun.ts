@@ -15,7 +15,7 @@ export function tryStunMode(player: Player, lvl: number) {
     if (robots.length == 0) return;
 
     var cost = Utilities.gamebandInfo.stunMode[lvl].cost;
-    var energyTracker = DataManager.getData(player, "energyTracker");
+    var energyTracker = DataManager.getData(player, "energyTracker")!;
     if (energyTracker.energyUnits < cost) {
         player.sendMessage("§cNot enough energy!");
         return;
@@ -25,7 +25,7 @@ export function tryStunMode(player: Player, lvl: number) {
     player.playSound("map.shock", { "pitch": 1 });
 
     robots.forEach(robot => {
-        var cameraTracker = DataManager.getData(robot, "cameraTracker");
+        var cameraTracker = DataManager.getData(robot, "cameraTracker")!;
         cameraTracker.isStunned = true;
         cameraTracker.stunTimer = 200;
         DataManager.setData(robot, cameraTracker);

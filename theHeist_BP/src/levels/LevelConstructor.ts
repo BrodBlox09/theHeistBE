@@ -167,14 +167,15 @@ export default class LevelConstructor {
         DataManager.setData(console, consoleActionTracker);
     }
 
-    static rechargeStation(loc: Vector, blockRot: BlockRotation) {
+    static rechargeStation(loc: Vector, blockRot: BlockRotation, energyUnits: number = 100.0, actionList: ActionList = []) {
         const recharge = overworld.spawnEntity("minecraft:armor_stand", new Vector(loc.x, Utilities.rechargeHeight, loc.z));
         Utilities.setBlock(loc, "theheist:recharge_station", { "minecraft:cardinal_direction": blockRot });
         const rechargeDataNode = {
             "name": "energyTracker",
             "rechargerID": rechargeStations,
-            "energyUnits": 100.0,
-            "block": { "x": loc.x, "y": loc.y, "z": loc.z, "rotation": blockRot }
+            "energyUnits": energyUnits,
+            "block": { "x": loc.x, "y": loc.y, "z": loc.z, "rotation": blockRot },
+            "actions": actionList
         };
         DataManager.setData(recharge, rechargeDataNode);
         rechargeStations++;

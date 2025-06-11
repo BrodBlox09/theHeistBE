@@ -4,7 +4,7 @@ import Utilities from "../Utilities";
 import LevelConstructor from "./LevelConstructor";
 
 const level: ILevel = {
-"levelID": "-4-1",
+"levelID": "-4",
 "loadElevatorLoc": new Vector(5887, -50, 105),
 "startPlayerLoc": new Vector(5887, -60, 105),
 "startingItems": [{ "slot": 0, "typeId": 'theheist:recharge_mode_lvl_2', "lockMode": "slot" }, { "slot": 1, "typeId": 'theheist:hacking_mode_lvl_2', "lockMode": "slot" }, { "slot": 2, "typeId": 'theheist:sensor_mode_lvl_2', "lockMode": "slot" }, { "slot": 3, "typeId": 'theheist:xray_mode_lvl_1', "lockMode": "slot" }, { "slot": 4, "typeId": 'theheist:magnet_mode_lvl_1', "lockMode": "slot" }, { "slot": 5, "typeId": 'theheist:stealth_mode_lvl_1', "lockMode": "slot" }],

@@ -4,7 +4,7 @@ import Utilities from "../Utilities";
 import LevelConstructor from "./LevelConstructor";
 
 const level: ILevel = {
-"levelID": "-1-1",
+"levelID": "-1",
 "loadElevatorLoc": new Vector(3099, -59, 109),
 "startPlayerLoc": new Vector(3086, -60, 110),
 "startingItems": [{ "slot": 0, "typeId": 'theheist:recharge_mode_lvl_1', "lockMode": "slot" }, { "slot": 1, "typeId": 'theheist:hacking_mode_lvl_1', "lockMode": "slot" }],
@@ -785,7 +785,7 @@ export default level;
 //             // 	"name": "energyTracker",
 //             // 	"rechargerID": 4,
 //             // 	"energyUnits": 100.0,
-//             // 	"block": { "x": 3091, "y": -60, "z": 128, "rotation": 5 }
+//             // 	"block": { "x": 3091, "y": -60, "z": 128, "rotation": "east" }
 //             // };
 //             // DataManager.setData(recharge4, recharge4DataNode);
 

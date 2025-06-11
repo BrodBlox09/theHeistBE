@@ -21,7 +21,7 @@ export function tryMap(player: Player, levelInformation: LevelInformation, playe
     var typeId = sensorModeSlot.typeId;
     if (playerIsLookingDown && typeId.startsWith("theheist:sensor_mode_lvl_") && parseInt(typeId.charAt("theheist:sensor_mode_lvl_".length)) >= 2) { // Player does have a lvl 2 or greater sensor mode
         var playerInvContainer = player.getComponent("minecraft:inventory")?.container;
-        var map = overworld.getBlock(Utilities.levelCloneInfo[`level_${levelInformation.information[1].level}`].mapLoc)?.getComponent("minecraft:inventory")?.container?.getItem(0);
+        var map = overworld.getBlock(Utilities.levelCloneInfo[levelInformation.information[1].level].mapLoc)?.getComponent("minecraft:inventory")?.container?.getItem(0);
         if (!map) return;
         map.lockMode = ItemLockMode.slot;
         playerInvContainer?.setItem(2, map);
@@ -39,7 +39,7 @@ export function tryMap(player: Player, levelInformation: LevelInformation, playe
 }
 
 export function toggleSensorMode(player: Player, lvl: number) {
-    var levelInformation: LevelInformation = DataManager.getData(player, "levelInformation");
+    var levelInformation = DataManager.getData(player, "levelInformation")!;
     var currentModes: ModeData[] = levelInformation.currentModes;
     if (currentModes.some((x) => x.mode == "sensor")) endSensorMode(player, levelInformation);
     else tryStartSensorMode(player, lvl, levelInformation);
@@ -48,7 +48,7 @@ export function toggleSensorMode(player: Player, lvl: number) {
 function tryStartSensorMode(player: Player, lvl: number, levelInformation: LevelInformation) {
     var costPerSecond = Utilities.gamebandInfo.sensorMode[lvl].cost;
     var costPerTick = costPerSecond / 20;
-    var energyTracker = DataManager.getData(player, "energyTracker");
+    var energyTracker = DataManager.getData(player, "energyTracker")!;
     if (energyTracker.energyUnits < costPerTick) {
         player.sendMessage("§cNot enough energy!");
         return;

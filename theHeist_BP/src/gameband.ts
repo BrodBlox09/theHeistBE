@@ -213,8 +213,8 @@ function rechargeMode(lvl: number, player: Player) {
 	}
 	const armorStands = overworld.getEntities(query);
 	for (const armorStand of armorStands) {
-		var armorStandEnergyTrackerDataNode = DataManager.getData(armorStand, "energyTracker");
-		var playerEnergyTrackerDataNode: EnergyTracker = DataManager.getData(player, "energyTracker");
+		var armorStandEnergyTrackerDataNode = DataManager.getData(armorStand, "energyTracker")!;
+		var playerEnergyTrackerDataNode = DataManager.getData(player, "energyTracker")!;
 		playerEnergyTrackerDataNode.rechargeLevel = lvl;
 		var blockLocation = { "x": armorStandEnergyTrackerDataNode.block.x, "y": armorStandEnergyTrackerDataNode.block.y, "z": armorStandEnergyTrackerDataNode.block.z };
 		if (playerEnergyTrackerDataNode.recharging == false) {
@@ -236,7 +236,7 @@ function rechargeMode(lvl: number, player: Player) {
 			Utilities.setBlock(blockLocation, "theheist:recharge_station", { "minecraft:cardinal_direction": armorStandEnergyTrackerDataNode.block.rotation, "theheist:state": 1 });
 			playerEnergyTrackerDataNode.usingRechargerID = -1;
 			// Bring back player's items
-			resetPlayerInventory(player);
+			Utilities.reloadPlayerInv(player);
 		}
 		DataManager.setData(player, playerEnergyTrackerDataNode);
 	}
@@ -249,7 +249,7 @@ function rechargeMode(lvl: number, player: Player) {
  * @returns 
  */
 function hackingMode(lvl: number, player: Player) {
-	var playerEnergyTracker = DataManager.getData(player, "energyTracker");
+	var playerEnergyTracker = DataManager.getData(player, "energyTracker")!;
 	const query = {
 		"type": "armor_stand",
 		"location": { "x": player.location.x, "y": consolesHeight, "z": player.location.z },
@@ -260,7 +260,7 @@ function hackingMode(lvl: number, player: Player) {
 	var i = 0;
 	for (const armorStand of armorStands) {
 		i++;
-		var armorStandActionTracker = DataManager.getData(armorStand, 'actionTracker');
+		var armorStandActionTracker = DataManager.getData(armorStand, 'actionTracker')!;
 		if (armorStandActionTracker.used == true || armorStandActionTracker.isKeycardReader) {
 			i--;
 			return;
@@ -303,22 +303,6 @@ function hackingMode(lvl: number, player: Player) {
 	}
 }
 
-/**
- * @description Resets player's inventory to what it should be set to, based of of the player's inventory data from the levelInformation data node.
- * @param player 
- * @returns 
- */
-function resetPlayerInventory(player: Player) {
-	var playerInvContainer = (player.getComponent("inventory") as EntityInventoryComponent).container as Container;
-	var playerInvData = DataManager.getData(player, "levelInformation").information[2].inventory;
-	playerInvContainer.clearAll();
-	playerInvData.forEach((invSlotData: any) => {
-		var itemStack = new ItemStack(invSlotData.typeId);
-		if (invSlotData.lockMode) itemStack.lockMode = ItemLockMode[invSlotData.lockMode as keyof typeof ItemLockMode];
-		playerInvContainer.setItem(invSlotData.slot, itemStack);
-	});
-}
-
 function cancelAllModes(player: Player, lvlInfo: LevelInformation) {
 	lvlInfo.currentModes.forEach((mode) => {
 		switch (mode.mode) {
@@ -341,6 +325,7 @@ function cancelAllModes(player: Player, lvlInfo: LevelInformation) {
 function action(actionInfo: IAction, player: Player) {
 	switch (actionInfo.type) {
 		case "slideshow":
+			player.sendMessage("Running slideshow " + actionInfo.do.slideshowID);
 			var slideshowID = actionInfo.do.slideshowID;
 			startSlideshow(slideshowID, player);
 			break;
@@ -387,7 +372,7 @@ function action(actionInfo: IAction, player: Player) {
 				return (x.location.y == cameraHeight && cameraTrackerDataNode && cameraTrackerDataNode.disabled == false && cameraTrackerDataNode.cameraID == cameraID);
 			})[0];
 			if (cameraArmorStand == undefined) return;
-			var cameraTrackerDataNode = DataManager.getData(cameraArmorStand, "cameraTracker");
+			var cameraTrackerDataNode = DataManager.getData(cameraArmorStand, "cameraTracker")!;
 			cameraTrackerDataNode.disabled = true;
 			DataManager.setData(cameraArmorStand, cameraTrackerDataNode);
 			var displayCameraLocation = { "x": cameraArmorStand.location.x, "y": -57, "z": cameraArmorStand.location.z };
@@ -436,7 +421,7 @@ function action(actionInfo: IAction, player: Player) {
 				"closest": 1
 			};
 			var armorStand = overworld.getEntities(query)[0];
-			var actionTracker = DataManager.getData(armorStand, "actionTracker");
+			var actionTracker = DataManager.getData(armorStand, "actionTracker")!;
 			actionTracker.actions.forEach((x: IAction) => {
 				if (x.type == "hack_console") return;
 				if (!x.delay) {
@@ -464,7 +449,7 @@ function action(actionInfo: IAction, player: Player) {
 			player.sendMessage(text);
 			break;
 		case "set_alarm_level":
-			var lvlInfo = DataManager.getData(player, "levelInformation");
+			var lvlInfo = DataManager.getData(player, "levelInformation")!;
 			lvlInfo.information[0].level = actionInfo.do.value;
 			DataManager.setData(player, lvlInfo);
 			if (actionInfo.do.value == 0) {
@@ -506,7 +491,7 @@ function action(actionInfo: IAction, player: Player) {
 			 * actionInfo.do.modeText: string
 			 * actionInfo.do.level: number
 			 */
-			var levelInformation: LevelInformation = DataManager.getData(player, "levelInformation");
+			var levelInformation = DataManager.getData(player, "levelInformation")!;
 			levelInformation.information[2].inventory.push({ "slot": actionInfo.do.slot, "typeId": `theheist:${actionInfo.do.mode}_mode_lvl_${actionInfo.do.level}`, "lockMode": "slot" });
 			DataManager.setData(player, levelInformation);
 			Utilities.reloadPlayerInv(player);
@@ -522,7 +507,7 @@ function action(actionInfo: IAction, player: Player) {
 			 * actionInfo.do.modeText: string
 			 * actionInfo.do.level: number
 			 */
-			var levelInformation: LevelInformation = DataManager.getData(player, "levelInformation");
+			var levelInformation = DataManager.getData(player, "levelInformation")!;
 			var inUse = false;
 			levelInformation.currentModes.forEach((x, i) => {
 				if (x.mode == actionInfo.do.mode) {
@@ -535,7 +520,7 @@ function action(actionInfo: IAction, player: Player) {
 			DataManager.setData(player, levelInformation);
 			Utilities.reloadPlayerInv(player);
 			if (actionInfo.do.mode == "recharge") {
-				var playerEnergyTracker: EnergyTracker = DataManager.getData(player, "energyTracker");
+				var playerEnergyTracker: EnergyTracker = DataManager.getData(player, "energyTracker")!;
 				playerEnergyTracker.rechargeLevel = actionInfo.do.level;
 				DataManager.setData(player, playerEnergyTracker);
 			}
@@ -590,6 +575,7 @@ function startSlideshow(slideshowID: number, player: Player) {
 			// Clear player's inventory
 			const playerInvContainer = (player.getComponent('inventory') as EntityInventoryComponent).container as Container;
 			playerInvContainer.clearAll();
+			player.sendMessage('weeeeeeee :)');
 
 			// Start speaking & send subtitles
 			player.playSound('map.001');
@@ -631,7 +617,7 @@ function startSlideshow(slideshowID: number, player: Player) {
 			system.runTimeout(() => {
 				system.clearRun(hideHud);
 				player.camera.clear();
-				overworld.runCommand("scriptevent theheist:load-level 0-1");
+				overworld.runCommand("scriptevent theheist:load-level 1");
 			}, SECOND * 30.5);
 			break;
 	}
@@ -639,53 +625,27 @@ function startSlideshow(slideshowID: number, player: Player) {
 
 function playerBusted(player: Player, currentLevel: number) {
 	player.addTag('loadingLevel');
-	switch (currentLevel) {
-		case 0: {
-			var playerLevelInformation: LevelInformation = DataManager.getData(player, "levelInformation");
-			bustedCounterObjective.setScore(player, (bustedCounterObjective.getScore(player) ?? 0) + 1);
-			playerLevelInformation.information[0].level = 0;
-			DataManager.setData(player, playerLevelInformation);
-			player.playSound("map.alarm");
-			player.addTag("BUSTED");
-			(player.getComponent("inventory") as EntityInventoryComponent).container?.clearAll();
-			player.onScreenDisplay.setTitle("§r§e§lBusted", { "subtitle": "You got detected. Try again!", "fadeInDuration": 20, "fadeOutDuration": 20, "stayDuration": 160 });
-			overworld.fillBlocks(new BlockVolume({ "x": 2029.50, "y": -59.00, "z": 56.50 }, { "x": 2029.50, "y": -59.00, "z": 61.50 }), BlockPermutation.resolve("minecraft:air"));
-			system.runTimeout(() => {
-				stopAllSound();
-				player.teleport({ "x": 2037.5, "y": -59, "z": 59.5 });
-				player.sendMessage(`You got busted §c§l${bustedCounterObjective.getScore(player)}§r time(s)`);
-			}, SECOND * 3);
-			system.runTimeout(() => {
-				player.removeTag("BUSTED");
-				overworld.runCommand('scriptevent theheist:load-level 0-2');
-			}, SECOND * (3 + 5));
-			break;
-		}
-		default: {
-			var playerLevelInformation: LevelInformation = DataManager.getData(player, "levelInformation");
-			bustedCounterObjective.setScore(player, (bustedCounterObjective.getScore(player) ?? 0) + 1);
-			playerLevelInformation.information[0].level = 0;
-			playerLevelInformation.information[2].inventory = [];
-			DataManager.setData(player, playerLevelInformation);
-			var playerEnergyTracker: EnergyTracker = DataManager.getData(player, "energyTracker");
-			playerEnergyTracker.energyUnits = 0;
-			DataManager.setData(player, playerEnergyTracker);
-			player.playSound("map.alarm");
-			player.addTag("BUSTED");
-			player.onScreenDisplay.setTitle("§r§e§lBusted", { "subtitle": "You got detected. Try again!", "fadeInDuration": 20, "fadeOutDuration": 20, "stayDuration": 160 });
-			(player.getComponent("inventory") as EntityInventoryComponent).container?.clearAll();
-			system.runTimeout(() => {
-				stopAllSound();
-				player.teleport(Utilities.levelCloneInfo[`level_${currentLevel}`].prisonLoc);
-				player.sendMessage(`You got busted §c§l${bustedCounterObjective.getScore(player)}§r time(s)`);
-			}, SECOND * 3);
-			system.runTimeout(() => {
-				player.removeTag("BUSTED");
-				overworld.runCommand(`scriptevent theheist:load-level ${currentLevel}-1`);
-			}, SECOND * (3 + 5));
-			break;
-		}
-	}
+	var playerLevelInformation = DataManager.getData(player, "levelInformation")!;
+	bustedCounterObjective.setScore(player, (bustedCounterObjective.getScore(player) ?? 0) + 1);
+	playerLevelInformation.information[0].level = 0;
+	playerLevelInformation.information[2].inventory = [];
+	DataManager.setData(player, playerLevelInformation);
+	var playerEnergyTracker = DataManager.getData(player, "energyTracker")!;
+	playerEnergyTracker.energyUnits = 0;
+	DataManager.setData(player, playerEnergyTracker);
+	player.playSound("map.alarm");
+	player.addTag("BUSTED");
+	player.onScreenDisplay.setTitle("§r§e§lBusted", { "subtitle": "You got detected. Try again!", "fadeInDuration": 20, "fadeOutDuration": 20, "stayDuration": 160 });
+	(player.getComponent("inventory") as EntityInventoryComponent).container?.clearAll();
+	system.runTimeout(() => {
+		stopAllSound();
+		player.teleport(Utilities.levelCloneInfo[currentLevel].prisonLoc);
+		player.sendMessage(`You got busted §c§l${bustedCounterObjective.getScore(player)}§r time(s)`);
+	}, SECOND * 3);
+	system.runTimeout(() => {
+		player.removeTag("BUSTED");
+		overworld.runCommandAsync(`scriptevent theheist:load-level ${currentLevel}`);
+	}, SECOND * (3 + 5));
 }
 
 function stopAllSound() {
@@ -728,7 +688,7 @@ system.runInterval(() => {
 	if (player == undefined) return;
 
 	
-	var playerLevelInformation: LevelInformation = DataManager.getData(player, "levelInformation");
+	var playerLevelInformation = DataManager.getData(player, "levelInformation")!;
 	
 	{
 		var itemEntity = overworld.getEntities({
@@ -794,7 +754,7 @@ system.runInterval(() => {
 	}
 
 	// Set player level to player energy level
-	var playerEnergyTracker: EnergyTracker = DataManager.getData(player, "energyTracker");
+	var playerEnergyTracker = DataManager.getData(player, "energyTracker")!;
 
 	if (playerEnergyTracker && playerLevelInformation) SensorModeFunc.sensorTick(player, playerLevelInformation, playerEnergyTracker);
 	if (playerEnergyTracker && playerLevelInformation) XRayModeFunc.xrayTick(player, playerLevelInformation, playerEnergyTracker);
@@ -826,7 +786,7 @@ system.runInterval(() => {
 		const armorStands = overworld.getEntities(query);
 		var i = 0;
 		for (const armorStand of armorStands) {
-			var armorStandEnergyTracker = DataManager.getData(armorStand, "energyTracker");
+			var armorStandEnergyTracker = DataManager.getData(armorStand, "energyTracker")!;
 			if (armorStandEnergyTracker.rechargerID != playerEnergyTracker.usingRechargerID) continue;
 			if (armorStandEnergyTracker.block.y - 1 > player.location.y) continue;
 			i++;
@@ -834,7 +794,7 @@ system.runInterval(() => {
 		if (i == 0) {
 			// Player has left range, so stop the player from recharging
 			playerEnergyTracker.recharging = false;
-			resetPlayerInventory(player);
+			Utilities.reloadPlayerInv(player);
 			const subQuery = {
 				"type": "armor_stand",
 				"location": { 'x': player.location.x, 'y': rechargeHeight, 'z': player.location.z },
@@ -842,7 +802,7 @@ system.runInterval(() => {
 			}
 			const subArmorStands = overworld.getEntities(subQuery);
 			for (const subArmorStand of subArmorStands) {
-				var armorStandEnergyTracker = DataManager.getData(subArmorStand, "energyTracker");
+				var armorStandEnergyTracker = DataManager.getData(subArmorStand, "energyTracker")!;
 				if (armorStandEnergyTracker.rechargerID != playerEnergyTracker.usingRechargerID) continue;
 				Utilities.setBlock({ x: armorStandEnergyTracker.block.x, y: armorStandEnergyTracker.block.y, z: armorStandEnergyTracker.block.z }, "theheist:recharge_station", { "minecraft:cardinal_direction": armorStandEnergyTracker.block.rotation, "theheist:state": 1 });
 				playerEnergyTracker.usingRechargerID = -1;
@@ -853,7 +813,7 @@ system.runInterval(() => {
 			addEnergy /= 20;
 			playerEnergyTracker.energyUnits = Math.min(playerEnergyTracker.energyUnits + addEnergy, Utilities.gamebandInfo.rechargeMode[playerEnergyTracker.rechargeLevel].max);
 			for (const armorStand of armorStands) {
-				var armorStandEnergyTracker = DataManager.getData(armorStand, "energyTracker");
+				var armorStandEnergyTracker = DataManager.getData(armorStand, "energyTracker")!;
 				if (armorStandEnergyTracker.rechargerID != playerEnergyTracker.usingRechargerID) continue;
 
 				armorStandEnergyTracker.energyUnits -= addEnergy;
@@ -865,7 +825,7 @@ system.runInterval(() => {
 					Utilities.setBlock({ x: armorStandEnergyTracker.block.x, y: armorStandEnergyTracker.block.y, z: armorStandEnergyTracker.block.z }, "theheist:recharge_station", { "minecraft:cardinal_direction": armorStandEnergyTracker.block.rotation, "theheist:state": 3 });
 					playerEnergyTracker.recharging = false;
 					playerEnergyTracker.usingRechargerID = -1;
-					resetPlayerInventory(player);
+					Utilities.reloadPlayerInv(player);
 					if (armorStandEnergyTracker.actions) {
 						// Energy tracker has actions to run
 						armorStandEnergyTracker.actions.forEach((x: IAction) => {

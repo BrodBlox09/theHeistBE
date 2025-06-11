@@ -113,10 +113,11 @@ system.runInterval(() => {
 
 	updateRobots(player, level, playerLevelInformationDataNode);
 	updateCameras(player, level, playerLevelInformationDataNode);
-	Utilities.fillBlocks(new Vector(Utilities.levelCloneInfo["level_" + level].startX, Utilities.cameraMappingHeight - 5, Utilities.levelCloneInfo["level_" + level].startZ), new Vector(Utilities.levelCloneInfo["level_" + level].endX, Utilities.cameraMappingHeight - 5, Utilities.levelCloneInfo["level_" + level].endZ), "air");
+	let levelCI = Utilities.levelCloneInfo[level];
+	Utilities.fillBlocks(new Vector(levelCI.startX, Utilities.cameraMappingHeight - 5, levelCI.startZ), new Vector(levelCI.endX, Utilities.cameraMappingHeight - 5, levelCI.endZ), "air");
 	updateSonars(player, level, playerLevelInformationDataNode);
 	updateSonar360s(player, level, playerLevelInformationDataNode);
-	SensorModeFunc.updateSensorDisplay(player, DataManager.getData(player, "levelInformation"));
+	SensorModeFunc.updateSensorDisplay(player, DataManager.getData(player, "levelInformation")!);
 	updatePlayerAlarmLevel(player, playerLevelInformationDataNode);
 
 	// Toggle below to see your velocity at all times, very useful when testing sonars
@@ -144,7 +145,7 @@ function updateRobots(player: Player, level: number, levelInformation: LevelInfo
 
 	cameraRobotArmorStands.forEach((cameraRobotArmorStand) => {
 		try {
-			var cameraDataNode = DataManager.getData(cameraRobotArmorStand, "cameraTracker");
+			var cameraDataNode = DataManager.getData(cameraRobotArmorStand, "cameraTracker")!;
 			if (cameraDataNode.isStunned) {
 				cameraDataNode.stunTimer -= 1;
 				if (cameraDataNode.stunTimer <= 0) cameraDataNode.isStunned = false;
@@ -260,7 +261,7 @@ function updateCameras(player: Player, level: number, playerLevelInformationData
 			armorStand.kill();
 		});
 		cameraArmorStands.forEach((armorStand) => {
-			var cameraTrackerDataNode = DataManager.getData(armorStand, "cameraTracker");
+			var cameraTrackerDataNode = DataManager.getData(armorStand, "cameraTracker")!;
 			if (cameraTrackerDataNode.swivel) {
 				// The camera rotates
 				var rotateMode = cameraTrackerDataNode.swivel[0];
@@ -311,8 +312,9 @@ function updateCameras(player: Player, level: number, playerLevelInformationData
 			// Before we save the mapped out camera sight area, make sure we remove the block below the camera if there is one
 			Utilities.setBlock({ "x": armorStand.location.x, "y": cameraMappingHeight - 2, "z": armorStand.location.z }, "air");
 		});
-		Utilities.dimensions.overworld.runCommand(`clone ${Utilities.levelCloneInfo["level_" + level].startX} ${cameraMappingHeight - 2} ${Utilities.levelCloneInfo["level_" + level].startZ} ${Utilities.levelCloneInfo["level_" + level].endX} ${cameraMappingHeight - 2} ${Utilities.levelCloneInfo["level_" + level].endZ} ${Utilities.levelCloneInfo["level_" + level].startX} ${cameraMappingHeight - 3} ${Utilities.levelCloneInfo["level_" + level].startZ}`);
-		Utilities.dimensions.overworld.runCommand(`fill ${Utilities.levelCloneInfo["level_" + level].startX} ${cameraMappingHeight - 2} ${Utilities.levelCloneInfo["level_" + level].startZ} ${Utilities.levelCloneInfo["level_" + level].endX} ${cameraMappingHeight - 2} ${Utilities.levelCloneInfo["level_" + level].endZ} air`);
+		let levelCI = Utilities.levelCloneInfo[level];
+		Utilities.dimensions.overworld.runCommand(`clone ${levelCI.startX} ${cameraMappingHeight - 2} ${levelCI.startZ} ${levelCI.endX} ${cameraMappingHeight - 2} ${levelCI.endZ} ${levelCI.startX} ${cameraMappingHeight - 3} ${levelCI.startZ}`);
+		Utilities.dimensions.overworld.runCommand(`fill ${levelCI.startX} ${cameraMappingHeight - 2} ${levelCI.startZ} ${levelCI.endX} ${cameraMappingHeight - 2} ${levelCI.endZ} air`);
 	} else {
 		const tpDistance = 0.55;
 		cameraMappingArmorStands.forEach((armorStand) => {

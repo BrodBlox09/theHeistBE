@@ -4,7 +4,7 @@ import Utilities from "../Utilities";
 import LevelConstructor from "./LevelConstructor";
 
 const level: ILevel = {
-"levelID": "-X-1",
+"levelID": "X",
 "loadElevatorLoc": new Vector(0, 0, 0),
 "startPlayerLoc": new Vector(0, 0, 0),
 "startingItems": [],

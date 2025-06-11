@@ -1,10 +1,13 @@
+import level2 from './level2';
+import level1 from './level1';
+import level0 from './level0';
 import levelN1 from './level-1';
 import levelN2 from './level-2';
 import levelN3 from './level-3';
 import levelN4 from './level-4';
 import levelN5 from './level-5';
 
-const levels: ILevel[] = [ levelN1, levelN2, levelN3, levelN4, levelN5 ];
+const levels: ILevel[] = [ level2, level1, level0, levelN1, levelN2, levelN3, levelN4, levelN5 ];
 
 export default class LevelDefinitions {
     /**

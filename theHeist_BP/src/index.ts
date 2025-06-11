@@ -18,11 +18,11 @@ import "./alarm";
 
 world.afterEvents.playerSpawn.subscribe(eventData => {
 	if (!eventData.initialSpawn || !eventData.player.hasTag('loadingLevel')) return;
-	var levelInfo: LevelInformation = DataManager.getData(eventData.player, "levelInformation");
+	eventData.player.sendMessage("hiii");
+	var levelInfo = DataManager.getData(eventData.player, "levelInformation");
+	if (!levelInfo) return;
 	var gameLevel = levelInfo.information[1].level;
-	if (gameLevel == 0.5) Utilities.dimensions.overworld.runCommand(`scriptevent theheist:load-level 0-1`);
-	if (gameLevel == 0) Utilities.dimensions.overworld.runCommand(`scriptevent theheist:load-level 0-2`);
-	else Utilities.dimensions.overworld.runCommand(`scriptevent theheist:load-level ${gameLevel}-1`);
+	Utilities.dimensions.overworld.runCommand(`scriptevent theheist:load-level ${gameLevel}`);
 	eventData.player.sendMessage("RUNNING LOADING OF LEVEL");
 });
 
@@ -31,9 +31,9 @@ world.afterEvents.playerSpawn.subscribe(eventData => {
 // });
 
 const levelLocations: Record<string, Vector3> = {
-	"2": { 'x': 0.5, 'y': -50, 'z': 56.5 },
-	"1": { 'x': -22.5, 'y': -50, 'z': 56.5 },
-	"0.5": { 'x': 1000.5, 'y': -50, 'z': 56.5 },
+	"3": { 'x': 0.5, 'y': -50, 'z': 56.5 },
+	"2": { 'x': -22.5, 'y': -50, 'z': 56.5 },
+	"1": { 'x': 1000.5, 'y': -50, 'z': 56.5 },
 	"0": { 'x': 2000.5, 'y': -50, 'z': 56.5 },
 	"-1": {'x': 3075.5, 'y': -50, 'z': 100.5},
 	"-2": { 'x': 4101, 'y': -47, 'z': 131 },
@@ -128,7 +128,7 @@ system.afterEvents.scriptEventReceive.subscribe(event => { // stable-friendly ve
 		}
 		case "fillLarge": {
 			system.run(() => {
-				const lvlCI = Utilities.levelCloneInfo["level_-5"];
+				const lvlCI = Utilities.levelCloneInfo["-5"];
 				Utilities.fillBlocks(new Vector(lvlCI.startX, parseInt(args[0]), lvlCI.startZ), new Vector(lvlCI.endX, parseInt(args[0]), lvlCI.endZ), args[1]);
 			});
 			break;
@@ -143,7 +143,7 @@ system.afterEvents.scriptEventReceive.subscribe(event => { // stable-friendly ve
 			break;
 		}
 		case "myData": {
-			world.sendMessage(DataManager.GetDataRaw(player) as string);
+			world.sendMessage(DataManager.GetDataRaw(player) ?? "no data");
 			break;
 		}
 		case "lvlData": {

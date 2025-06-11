@@ -18,14 +18,6 @@ export default class Utilities {
 		return ret;
 	}
 
-	static levelToLevelID: Record<number, string> = {
-		1: "1-1",
-		0.5: "0-1",
-		0: "0-2"
-	}
-
-	static levelIDToLevel: Record<string, number> = this.swapKVPs(this.levelToLevelID);
-
 	static sin(d: number): number {
 		return Math.sin(d * Math.PI / 180);
 	}
@@ -100,7 +92,7 @@ export default class Utilities {
 	 */
 	static savePlayerInventory(player: Player, stripEnchants: Boolean = false): LevelInformation {
 		var playerInvContainer = (player.getComponent("inventory") as EntityInventoryComponent).container as Container;
-		var playerLevelData: LevelInformation = DataManager.getData(player, "levelInformation");
+		var playerLevelData: LevelInformation = DataManager.getData(player, "levelInformation")!;
 		var newPlayerInvData = [];
 		for (var i = 0; i < playerInvContainer.size; i++) {
 			var itemStack = playerInvContainer.getItem(i);
@@ -210,15 +202,15 @@ export default class Utilities {
 	}
 
 	static levelCloneInfo: Record<string, ILevelCloneInfo> = {
-		"level_0": {
+		"0": {
 			"startX": 1975,
 			"startZ": 42,
 			"endX": 2022,
 			"endZ": 77,
-			"prisonLoc": new Vector(0,0,0),
+			"prisonLoc": new Vector(2037.5, -59, 59.5),
 			"mapLoc": new Vector(0,0,0)
 		},
-		"level_-1": {
+		"-1": {
 			"startX": 3028,
 			"startZ": 97,
 			"endX": 3109,
@@ -226,7 +218,7 @@ export default class Utilities {
 			"prisonLoc": new Vector(3109.5, -59, 91.5),
 			"mapLoc": new Vector(0,0,0)
 		},
-		"level_-2": {
+		"-2": {
 			"startX": 4060,
 			"startZ": 91,
 			"endX": 4133,
@@ -234,7 +226,7 @@ export default class Utilities {
 			"prisonLoc": new Vector(4075.5, -59, 151.5),
 			"mapLoc": new Vector(4098, -55, 115)
 		},
-		"level_-3": {
+		"-3": {
 			"startX": 4963,
 			"startZ": 89,
 			"endX": 5031,
@@ -242,7 +234,7 @@ export default class Utilities {
 			"prisonLoc": new Vector(5011.5, -59, 151.5),
 			"mapLoc": new Vector(4986, -55, 131)
 		},
-		"level_-4": {
+		"-4": {
 			"startX": 5843,
 			"startZ": 99,
 			"endX": 5928,
@@ -250,7 +242,7 @@ export default class Utilities {
 			"prisonLoc": new Vector(5916.5, -59, 99.5),
 			"mapLoc": new Vector(5906, -55, 141)
 		},
-		"level_-5": {
+		"-5": {
 			"startX": 6864,
 			"startZ": 69,
 			"endX": 6948,

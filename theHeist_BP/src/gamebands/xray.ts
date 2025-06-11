@@ -14,8 +14,8 @@ export const solidToTransparent = [
 const overworld = Utilities.dimensions.overworld;
 
 export function toggleXRayMode(player: Player, lvl: number) {
-    var levelInformation: LevelInformation = DataManager.getData(player, "levelInformation");
-    var currentModes: ModeData[] = levelInformation.currentModes;
+    var levelInformation: LevelInformation = DataManager.getData(player, "levelInformation")!;
+    var currentModes = levelInformation.currentModes;
     if (currentModes.some((x) => x.mode == "xray")) endXRayMode(player, levelInformation);
     else tryStartXRayMode(player, lvl, levelInformation);
 }
@@ -23,7 +23,7 @@ export function toggleXRayMode(player: Player, lvl: number) {
 function tryStartXRayMode(player: Player, lvl: number, levelInformation: LevelInformation) {
     var costPerSecond = Utilities.gamebandInfo.xrayMode[lvl].cost;
     var costPerTick = costPerSecond / 20;
-    var energyTracker = DataManager.getData(player, "energyTracker");
+    var energyTracker = DataManager.getData(player, "energyTracker")!;
     if (energyTracker.energyUnits < costPerTick) {
         player.sendMessage("§cNot enough energy!");
         return;
