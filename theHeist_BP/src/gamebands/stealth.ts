@@ -6,7 +6,7 @@ import Vector from "../Vector";
 const overworld = Utilities.dimensions.overworld;
 
 export function toggleStealthMode(player: Player, lvl: number) {
-    var levelInformation: LevelInformation = DataManager.getData(player, "levelInformation");
+    var levelInformation = DataManager.getData(player, "levelInformation")!;
     var currentModes: ModeData[] = levelInformation.currentModes;
     if (currentModes.some((x) => x.mode == "stealth")) endStealthMode(player, levelInformation);
     else tryStartStealthMode(player, lvl, levelInformation);
@@ -15,7 +15,7 @@ export function toggleStealthMode(player: Player, lvl: number) {
 function tryStartStealthMode(player: Player, lvl: number, levelInformation: LevelInformation) {
     var costPerSecond = Utilities.gamebandInfo.stealthMode[lvl].cost;
     var costPerTick = costPerSecond / 20;
-    var energyTracker = DataManager.getData(player, "energyTracker");
+    var energyTracker = DataManager.getData(player, "energyTracker")!;
     if (energyTracker.energyUnits < costPerTick) {
         player.sendMessage("§cNot enough energy!");
         return;

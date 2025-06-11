@@ -14,8 +14,8 @@ export const solidToTransparent = [
 const overworld = Utilities.dimensions.overworld;
 
 export function toggleXRayMode(player: Player, lvl: number) {
-    var levelInformation: LevelInformation = DataManager.getData(player, "levelInformation");
-    var currentModes: ModeData[] = levelInformation.currentModes;
+    var levelInformation: LevelInformation = DataManager.getData(player, "levelInformation")!;
+    var currentModes = levelInformation.currentModes;
     if (currentModes.some((x) => x.mode == "xray")) endXRayMode(player, levelInformation);
     else tryStartXRayMode(player, lvl, levelInformation);
 }
@@ -23,7 +23,7 @@ export function toggleXRayMode(player: Player, lvl: number) {
 function tryStartXRayMode(player: Player, lvl: number, levelInformation: LevelInformation) {
     var costPerSecond = Utilities.gamebandInfo.xrayMode[lvl].cost;
     var costPerTick = costPerSecond / 20;
-    var energyTracker = DataManager.getData(player, "energyTracker");
+    var energyTracker = DataManager.getData(player, "energyTracker")!;
     if (energyTracker.energyUnits < costPerTick) {
         player.sendMessage("§cNot enough energy!");
         return;
@@ -74,7 +74,7 @@ export function updateXRayDisplay(player: Player, levelInformation: LevelInforma
     // Update ground to show where the camera sight blocks are
     if (!playerIsInXRayMode(levelInformation)) return; // Player is not in xray mode
     clearXRayDisplay(player, levelInformation);
-    var loc = Vector.fromV3(player.location);
+    var loc = Vector.from(player.location);
     var corner1 = loc.subtract(new Vector(viewRange, viewRange, viewRange));
     var corner2 = loc.add(new Vector(viewRange, viewRange, viewRange));
     solidToTransparent.forEach((x) => {
@@ -88,7 +88,7 @@ export function updateXRayDisplay(player: Player, levelInformation: LevelInforma
 }
 
 function clearXRayDisplay(player: Player, levelInformation: LevelInformation) {
-    var loc = Vector.fromV3(player.location);
+    var loc = Vector.from(player.location);
     loc.y = Utilities.levelHeight; // Ensure xray does not go below the level
     var corner1 = loc.subtract(new Vector(clearRange, clearRange, clearRange));
     var corner2 = loc.add(new Vector(clearRange, clearRange, clearRange));

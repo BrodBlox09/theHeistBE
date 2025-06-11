@@ -19,7 +19,7 @@ export function tryDrillMode(player: Player, lvl: number) {
     }
     
     var cost = Utilities.gamebandInfo.drillMode[lvl].cost;
-    let energyTracker = DataManager.getData(player, "energyTracker");
+    let energyTracker = DataManager.getData(player, "energyTracker")!;
     if (energyTracker.energyUnits < cost) {
         player.sendMessage("§cNot enough energy!");
         return;
@@ -27,6 +27,6 @@ export function tryDrillMode(player: Player, lvl: number) {
     energyTracker.energyUnits -= cost;
     DataManager.setData(player, energyTracker);
 
-    overworld.runCommandAsync(`clone ${facingBlockLoc.x} ${facingBlockLoc.y} ${facingBlockLoc.z} ${facingBlockLocAbove.x} ${facingBlockLocAbove.y} ${facingBlockLocAbove.z} ${facingBlockLoc.x} ${Utilities.drilledBlocksHeight} ${facingBlockLoc.z}`);
-    overworld.runCommandAsync(`fill ${facingBlockLoc.x} ${facingBlockLoc.y} ${facingBlockLoc.z} ${facingBlockLocAbove.x} ${facingBlockLocAbove.y} ${facingBlockLocAbove.z} air destroy`);
+    overworld.runCommand(`clone ${facingBlockLoc.x} ${facingBlockLoc.y} ${facingBlockLoc.z} ${facingBlockLocAbove.x} ${facingBlockLocAbove.y} ${facingBlockLocAbove.z} ${facingBlockLoc.x} ${Utilities.drilledBlocksHeight} ${facingBlockLoc.z}`);
+    overworld.runCommand(`fill ${facingBlockLoc.x} ${facingBlockLoc.y} ${facingBlockLoc.z} ${facingBlockLocAbove.x} ${facingBlockLocAbove.y} ${facingBlockLocAbove.z} air destroy`);
 }

@@ -1,7 +1,7 @@
 import { Entity, world } from '@minecraft/server';
 
 export default class DataManager {
-	static getData(entity: Entity, dataNodeName: string) {
+	static getData<T extends string>(entity: Entity, dataNodeName: T): DataNodeReturnType<T> | undefined {
 		const dataStr = entity.getDynamicProperty('data') as string;
 		if (!dataStr) return;
 		const dataNodes = JSON.parse(dataStr);
@@ -16,14 +16,14 @@ export default class DataManager {
 		return dataStr;
 	}
 
-	static setData(entity: Entity, object: Record<string, any>) {
+	static setData(entity: Entity, object: DataNode) {
 		const dataStr = entity.getDynamicProperty('data') as string;
 		if (!dataStr) {
 			entity.setDynamicProperty('data', JSON.stringify([object]));
 			return true;
 		}
 		const dataNodes = JSON.parse(dataStr);
-		const dataNodeIndex = dataNodes.findIndex((x: Record<string, any>) => (x.name == object.name));
+		const dataNodeIndex = dataNodes.findIndex((x: DataNode) => (x.name == object.name));
 		if (dataNodeIndex == -1) {
 			dataNodes.push(object);
 			entity.setDynamicProperty('data', JSON.stringify(dataNodes));

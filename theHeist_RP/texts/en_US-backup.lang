@@ -46,6 +46,7 @@ item.dye.red.name=Red Keycard
 item.dye.yellow.name=Yellow Keycard
 item.dye.green.name=Green Keycard
 item.dye.blue.name=Blue Keycard
+container.dropper=Drawer
 
 map.sub.001.A=Ok thief. Let's go over this one more time so you don't mess up. Your job is to steal valuable research and prototypes. To do this, you must enter the building. It's pretty simple at first. Walk up the stairs until you get to the roof. Then enter the ventilation system. From there you should decent to the ground floor.
 map.sub.001.B=At which point you should get out and begin searching. Be careful of the security systems. If you get caught, the whole place will go on lockdown. Assuming that doesn't happen, and you manage to work your way out of the building, meet me here. We drive off and you get your 70 percent cut. So, what are you waiting for? Get going.

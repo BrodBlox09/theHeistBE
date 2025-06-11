@@ -2,8 +2,7 @@
     "format_version": "1.21.30",
     "minecraft:block": {
         "description": {
-            "identifier": "theheist:magnet_mode_lvl_1_enchanted",
-            "is_experimental": false
+            "identifier": "theheist:magnet_mode_lvl_1_enchanted"
         },
         "components": {
             "minecraft:geometry": "geometry.magnet_mode",

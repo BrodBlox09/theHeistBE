@@ -1,14 +1,18 @@
 {
-    "format_version": "1.21.30",
+    "format_version": "1.21.70",
     "minecraft:block": {
         "description": {
             "identifier": "theheist:projector",
-            "is_experimental": false,
             "menu_category": {
                 "category": "construction"
             },
             "states": {
                 "theheist:rotation": [2, 3, 4, 5]
+            },
+            "traits": {
+                "minecraft:placement_direction": {
+                    "enabled_states": [ "minecraft:cardinal_direction" ]
+                }
             }
         },
         "components": {
@@ -26,34 +30,31 @@
                     "texture": "projector",
                     "ambient_occlusion": false
                 }
-            },
-            "minecraft:custom_components": [
-                "theheist:directional_block"
-            ]
+            }
         },
         "permutations": [
             {
-                "condition": "query.block_state('theheist:rotation') == 2",
+                "condition": "query.block_state('minecraft:cardinal_direction') == 'north'",
                 "components": {
                     "minecraft:transformation": { "rotation": [0, 180, 0] }
                 }
             },
             {
-                "condition": "query.block_state('theheist:rotation') == 3",
+                "condition": "query.block_state('minecraft:cardinal_direction') == 'east'",
+                "components": {
+                    "minecraft:transformation": { "rotation": [0, 90, 0] }
+                }
+            },
+            {
+                "condition": "query.block_state('minecraft:cardinal_direction') == 'south'",
                 "components": {
                     "minecraft:transformation": { "rotation": [0, 0, 0] }
                 }
             },
             {
-                "condition": "query.block_state('theheist:rotation') == 4",
+                "condition": "query.block_state('minecraft:cardinal_direction') == 'west'",
                 "components": {
-                    "minecraft:transformation": { "rotation": [0, 270, 0] }
-                }
-            },
-            {
-                "condition": "query.block_state('theheist:rotation') == 5",
-                "components": {
-                    "minecraft:transformation": { "rotation": [0, 90, 0] }
+                    "minecraft:transformation": { "rotation": [0, -90, 0] }
                 }
             }
         ]

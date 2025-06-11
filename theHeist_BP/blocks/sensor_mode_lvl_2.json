@@ -2,8 +2,7 @@
     "format_version": "1.21.30",
     "minecraft:block": {
         "description": {
-            "identifier": "theheist:sensor_mode_lvl_2",
-            "is_experimental": false
+            "identifier": "theheist:sensor_mode_lvl_2"
         },
         "components": {
             "minecraft:geometry": "geometry.sensor_mode",

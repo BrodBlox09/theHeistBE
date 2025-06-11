@@ -1,11 +1,10 @@
-import { ItemStack, Player, system, world, DisplaySlotId, BlockInventoryComponent, BlockPermutation, Container, ItemLockMode } from "@minecraft/server";
+import BlockRotation from "../BlockRotation";
 import Vector from "../Vector";
-import DataManager from "../DataManager";
 import Utilities from "../Utilities";
 import LevelConstructor from "./LevelConstructor";
 
 const level: ILevel = {
-"levelID": "-1-1",
+"levelID": "-1",
 "loadElevatorLoc": new Vector(3099, -59, 109),
 "startPlayerLoc": new Vector(3086, -60, 110),
 "startingItems": [{ "slot": 0, "typeId": 'theheist:recharge_mode_lvl_1', "lockMode": "slot" }, { "slot": 1, "typeId": 'theheist:hacking_mode_lvl_1', "lockMode": "slot" }],
@@ -24,27 +23,27 @@ LevelConstructor.dynamicCamera(new Vector(3045.5, -58, 115.5), [1, -62, -16]);
 LevelConstructor.cameraRobot(new Vector(3088.5, -59.25, 134.5), -90);
 LevelConstructor.cameraRobot(new Vector(3055.5, -59.25, 124.5), -180);
 
-LevelConstructor.keypad(new Vector(3079.5, -59, 107.5), 1, 2, [{
-    "type": "set_door", "do": { "x": 3078, "y": -60, "z": 106, "doorNumber": 1, "permutations": { "theheist:rotation": 2, "theheist:unlocked": true } }, "delay": 40
+LevelConstructor.keypad(new Vector(3079.5, -59, 107.5), 1, BlockRotation.NORTH, [{
+    "type": "set_block", "do": { "x": 3078, "y": -60, "z": 106, "block": "theheist:custom_door_1_bottom", "permutations": { "minecraft:cardinal_direction": "north", "theheist:unlocked": true } }, "delay": 40
 }]);
-LevelConstructor.computer(new Vector(3072.5, -59, 105.5), "Research info", 3, [{
+LevelConstructor.computer(new Vector(3072.5, -59, 105.5), "Research info", BlockRotation.SOUTH, [{
     "type": "display_research", "do": { "researchID": 100 }, "delay": 40
 }]);
-LevelConstructor.newGameband(new Vector(3074.5, -59, 100.5), "sensor", "§6§lSensor", 2, 2, []);
-LevelConstructor.keypad(new Vector(3074.5, -59, 116.5), 3, 5, []);
-LevelConstructor.keypad(new Vector(3052.5, -59, 115.5), 1, 2, [{
-    "type": "set_door", "do": { "x": 3051, "y": -60, "z": 114, "doorNumber": 1, "permutations": { "theheist:rotation": 2, "theheist:unlocked": true } }, "delay": 40
+LevelConstructor.newGameband(new Vector(3074.5, -59, 100.5), "sensor", "§6§lSensor", 2, BlockRotation.NORTH, []);
+LevelConstructor.keypad(new Vector(3074.5, -59, 116.5), 3, BlockRotation.EAST, []);
+LevelConstructor.keypad(new Vector(3052.5, -59, 115.5), 1, BlockRotation.NORTH, [{
+    "type": "set_block", "do": { "x": 3051, "y": -60, "z": 114, "block": "theheist:custom_door_1_bottom", "permutations": { "minecraft:cardinal_direction": "north", "theheist:unlocked": true } }, "delay": 40
 }]);
-LevelConstructor.computer(new Vector(3045.5, -59, 111.5), "Mail", 4, [{
+LevelConstructor.computer(new Vector(3045.5, -59, 111.5), "Mail", BlockRotation.WEST, [{
     "type": "display_mail", "do": { "mailID": 103 }, "delay": 40
 }]);
-LevelConstructor.keypad(new Vector(3074.5, -59, 139.5), 1, 5, [{
-    "type": "set_door", "do": { "x": 3075, "y": -60, "z": 140, "doorNumber": 1, "permutations": { "theheist:rotation": 5, "theheist:unlocked": true } }, "delay": 40
+LevelConstructor.keypad(new Vector(3074.5, -59, 139.5), 1, BlockRotation.EAST, [{
+    "type": "set_block", "do": { "x": 3075, "y": -60, "z": 140, "block": "theheist:custom_door_1_bottom", "permutations": { "minecraft:cardinal_direction": "east", "theheist:unlocked": true } }, "delay": 40
 }]);
-LevelConstructor.computer(new Vector(3080.5, -59, 142.5), "Clear alarm status", 3, [{
+LevelConstructor.computer(new Vector(3080.5, -59, 142.5), "Clear alarm status", BlockRotation.SOUTH, [{
     "type": "set_alarm_level", "do": { "value": 0 }, "delay": 40
 }]);
-LevelConstructor.computer(new Vector(3082.5, -59, 118.5), "Mail", 5, [{
+LevelConstructor.computer(new Vector(3082.5, -59, 118.5), "Mail", BlockRotation.EAST, [{
     "type": "display_mail", "do": { "mailID": 104 }, "delay": 40
 },
 {
@@ -53,40 +52,40 @@ LevelConstructor.computer(new Vector(3082.5, -59, 118.5), "Mail", 5, [{
 {
     "type": "manage_objectives", "do": { "manageType": 1, "objective": "Find Green Keycard", "sortOrder": 0 }, "delay": 40
 }]);
-LevelConstructor.keypad(new Vector(3104.5, -59, 116.5), 2, 4, [{
-    "type": "set_door", "do": { "x": 3103, "y": -60, "z": 115, "doorNumber": 2, "permutations": { "theheist:rotation": 4, "theheist:unlocked": true } }, "delay": 40
+LevelConstructor.keypad(new Vector(3104.5, -59, 116.5), 2, BlockRotation.WEST, [{
+    "type": "set_block", "do": { "x": 3103, "y": -60, "z": 115, "block": "theheist:custom_door_2_bottom", "permutations": { "minecraft:cardinal_direction": "west", "theheist:unlocked": true } }, "delay": 40
 },
 {
     "type": "hack_console", "do": { "x": 3097, "z": 123 }, "delay": 40
 }]);
-LevelConstructor.keypad(new Vector(3097.5, -59, 123.5), 2, 2, [{
-    "type": "set_door", "do": { "x": 3096, "y": -60, "z": 122, "doorNumber": 2, "permutations": { "theheist:rotation": 2, "theheist:unlocked": true } }, "delay": 40
+LevelConstructor.keypad(new Vector(3097.5, -59, 123.5), 2, BlockRotation.NORTH, [{
+    "type": "set_block", "do": { "x": 3096, "y": -60, "z": 122, "block": "theheist:custom_door_2_bottom", "permutations": { "minecraft:cardinal_direction": "north", "theheist:unlocked": true } }, "delay": 40
 },
 {
     "type": "hack_console", "do": { "x": 3104, "z": 116 }, "delay": 40
 }]);
-LevelConstructor.computer(new Vector(3097.5, -59, 114.5), "Research info", 2, [{
+LevelConstructor.computer(new Vector(3097.5, -59, 114.5), "Research info", BlockRotation.NORTH, [{
     "type": "display_research", "do": { "researchID": 101 }, "delay": 40
 }]);
-LevelConstructor.gamebandUpgrade(new Vector(3106.5, -59, 117.5), "hacking", "§2§lHacking Lvl. 2", 2, 1, 5, []);
-LevelConstructor.keypad(new Vector(3062.5, -59, 150.5), 2, 3, [{
-    "type": "set_door", "do": { "x": 3061, "y": -60, "z": 151, "doorNumber": 2, "permutations": { "theheist:rotation": 3, "theheist:unlocked": true } }, "delay": 40
+LevelConstructor.gamebandUpgrade(new Vector(3106.5, -59, 117.5), "hacking", "§2§lHacking Lvl. 2", 2, 1, BlockRotation.EAST, []);
+LevelConstructor.keypad(new Vector(3062.5, -59, 150.5), 2, BlockRotation.SOUTH, [{
+    "type": "set_block", "do": { "x": 3061, "y": -60, "z": 151, "block": "theheist:custom_door_2_bottom", "permutations": { "minecraft:cardinal_direction": "south", "theheist:unlocked": true } }, "delay": 40
 }]);
-LevelConstructor.computer(new Vector(3058.5, -59, 156.5), "Research info", 4, [{
+LevelConstructor.computer(new Vector(3058.5, -59, 156.5), "Research info", BlockRotation.WEST, [{
     "type": "display_research", "do": { "researchID": 102 }, "delay": 40
 }]);
-LevelConstructor.gamebandUpgrade(new Vector(3063.5, -59, 159.5), "recharge", "§1§lRecharge Lvl. 2", 2, 0, 3, []);
+LevelConstructor.gamebandUpgrade(new Vector(3063.5, -59, 159.5), "recharge", "§1§lRecharge Lvl. 2", 2, 0, BlockRotation.SOUTH, []);
 LevelConstructor.keycardReader(new Vector(3039.5, -59, 129.5), "yellow", [{
-    "type": "set_door", "do": { "x": 3038, "y": -60, "z": 131, "doorNumber": 2, "permutations": { "theheist:rotation": 4, "theheist:unlocked": true, "theheist:open": true } }
+    "type": "set_block", "do": { "x": 3038, "y": -60, "z": 131, "block": "theheist:custom_door_2_bottom", "permutations": { "minecraft:cardinal_direction": "west", "theheist:unlocked": true, "theheist:open": true } }
 },
 {
     "type": "play_sound", "do": { "soundID": "random.door_open" }
 }]);
 LevelConstructor.keycardReader(new Vector(3087.5, -59, 131.5), "green", [{
-    "type": "set_door", "do": { "x": 3089, "y": -60, "z": 130, "doorNumber": 4, "side": "l", "permutations": { "theheist:rotation": 2, "theheist:unlocked": true, "theheist:open": true } }
+    "type": "set_block", "do": { "x": 3089, "y": -60, "z": 130, "block": "theheist:custom_door_4_bottom_l", "permutations": { "minecraft:cardinal_direction": "north", "theheist:unlocked": true, "theheist:open": true } }
 },
 {
-    "type": "set_door", "do": { "x": 3090, "y": -60, "z": 130, "doorNumber": 4, "side": "r", "permutations": { "theheist:rotation": 2, "theheist:unlocked": true, "theheist:open": true  } }
+    "type": "set_block", "do": { "x": 3090, "y": -60, "z": 130, "block": "theheist:custom_door_4_bottom_r", "permutations": { "minecraft:cardinal_direction": "north", "theheist:unlocked": true, "theheist:open": true  } }
 },
 {
     "type": "play_sound", "do": { "soundID": "random.door_open" }
@@ -97,24 +96,24 @@ LevelConstructor.keycardReader(new Vector(3087.5, -59, 131.5), "green", [{
 {
     "type": "voice_says", "do": { "soundID": 204 }
 }]);
-LevelConstructor.computer(new Vector(3081.5, -59, 137.5), "Disable nearby camera", 2, [{
+LevelConstructor.computer(new Vector(3081.5, -59, 137.5), "Disable nearby camera", BlockRotation.NORTH, [{
     "type": "disable_camera", "do": { "cameraID": 4 }, "delay": 40
 }]);
 
-LevelConstructor.door1(new Vector(3078, -60, 106), { "theheist:rotation": 2, "theheist:unlocked": false });
-LevelConstructor.door1(new Vector(3051, -60, 114), { "theheist:rotation": 2, "theheist:unlocked": false });
-LevelConstructor.door1(new Vector(3075, -60, 140), { "theheist:rotation": 5, "theheist:unlocked": false });
-LevelConstructor.door2(new Vector(3103, -60, 115), { "theheist:rotation": 4, "theheist:unlocked": false });
-LevelConstructor.door2(new Vector(3096, -60, 122), { "theheist:rotation": 2, "theheist:unlocked": false });
-LevelConstructor.door2(new Vector(3061, -60, 151), { "theheist:rotation": 3, "theheist:unlocked": false });
-LevelConstructor.door2(new Vector(3038, -60, 131), { "theheist:rotation": 4, "theheist:unlocked": false });
-LevelConstructor.door4(new Vector(3089, -60, 130), new Vector(3090, -60, 130), { "theheist:rotation": 2, "theheist:unlocked": false });
+LevelConstructor.door1(new Vector(3078, -60, 106), BlockRotation.NORTH);
+LevelConstructor.door1(new Vector(3051, -60, 114), BlockRotation.NORTH);
+LevelConstructor.door1(new Vector(3075, -60, 140), BlockRotation.EAST);
+LevelConstructor.door2(new Vector(3103, -60, 115), BlockRotation.WEST);
+LevelConstructor.door2(new Vector(3096, -60, 122), BlockRotation.NORTH);
+LevelConstructor.door2(new Vector(3061, -60, 151), BlockRotation.SOUTH);
+LevelConstructor.door2(new Vector(3038, -60, 131), BlockRotation.WEST);
+LevelConstructor.door4(new Vector(3089, -60, 130), new Vector(3090, -60, 130), BlockRotation.NORTH);
 
-LevelConstructor.rechargeStation(new Vector(3070.5, -60, 110.5), 4);
-LevelConstructor.rechargeStation(new Vector(3100.5, -60, 121.5), 3);
-LevelConstructor.rechargeStation(new Vector(3061.5, -60, 138.5), 2);
-LevelConstructor.rechargeStation(new Vector(3077.5, -60, 119.5), 3);
-LevelConstructor.rechargeStation(new Vector(3091.5, -60, 128.5), 5);
+LevelConstructor.rechargeStation(new Vector(3070.5, -60, 110.5), BlockRotation.WEST);
+LevelConstructor.rechargeStation(new Vector(3100.5, -60, 121.5), BlockRotation.SOUTH);
+LevelConstructor.rechargeStation(new Vector(3061.5, -60, 138.5), BlockRotation.NORTH);
+LevelConstructor.rechargeStation(new Vector(3077.5, -60, 119.5), BlockRotation.SOUTH);
+LevelConstructor.rechargeStation(new Vector(3091.5, -60, 128.5), BlockRotation.EAST);
 
 LevelConstructor.keycardDrawer(new Vector(3058, -60, 157), "yellow")
 LevelConstructor.keycardDrawer(new Vector(3033, -60, 130), "green")
@@ -171,8 +170,8 @@ export default level;
 //         var elevatorInterval =  runElelevatorAnimation(new Vector(3099.0, -60, 109.0));
 
 //         // Ensure parts far away are loaded
-//         overworld.runCommandAsync('tickingarea remove_all');
-//         overworld.runCommandAsync('tickingarea add 3032 -61 128 3040 -14 133 "t1" true');
+//         overworld.runCommand('tickingarea remove_all');
+//         overworld.runCommand('tickingarea add 3032 -61 128 3040 -14 133 "t1" true');
 
 //         system.runTimeout(() => { // After 10 seconds bring the player out of the elevator and end the interval
 //             overworld.runCommand('tickingarea remove_all');
@@ -189,8 +188,8 @@ export default level;
 //             // Clear sensor residue
 //             const levelCloneInfo = Utilities.levelCloneInfo[`level_-1`];
 //             Utilities.fillBlocks(new Vector(levelCloneInfo.startX, Utilities.cameraMappingHeight - 4, levelCloneInfo.startZ), new Vector(levelCloneInfo.endX, Utilities.cameraMappingHeight - 4, levelCloneInfo.endZ), "air");
-//             overworld.runCommandAsync(`fill ${levelCloneInfo.startX} ${Utilities.levelHeight} ${levelCloneInfo.startZ} ${levelCloneInfo.endX} ${Utilities.levelHeight} ${levelCloneInfo.endZ} air replace theheist:robot_path`);
-//             overworld.runCommandAsync(`clone ${levelCloneInfo.startX} ${Utilities.floorCloneHeight} ${levelCloneInfo.startZ} ${levelCloneInfo.endX} ${Utilities.floorCloneHeight} ${levelCloneInfo.endZ} ${levelCloneInfo.startX} ${Utilities.levelHeight - 1} ${levelCloneInfo.startZ}`);
+//             overworld.runCommand(`fill ${levelCloneInfo.startX} ${Utilities.levelHeight} ${levelCloneInfo.startZ} ${levelCloneInfo.endX} ${Utilities.levelHeight} ${levelCloneInfo.endZ} air replace theheist:robot_path`);
+//             overworld.runCommand(`clone ${levelCloneInfo.startX} ${Utilities.floorCloneHeight} ${levelCloneInfo.startZ} ${levelCloneInfo.endX} ${Utilities.floorCloneHeight} ${levelCloneInfo.endZ} ${levelCloneInfo.startX} ${Utilities.levelHeight - 1} ${levelCloneInfo.startZ}`);
 
 //             // // Camera 0
 //             // const camera0 = overworld.spawnEntity("armor_stand", { "x": 3066.5, "y": cameraHeight, "z": 105.5 });
@@ -322,29 +321,29 @@ export default level;
 //             {
 //             // // Console 0 (Type: Keypad)
 //             // const console0 = overworld.spawnEntity("armor_stand", { "x": 3079.5, "y": consolesHeight, "z": 107.5 });
-//             // Utilities.setBlock({ x: 3079, y: -59, z: 107 }, "theheist:keypad", { "theheist:rotation": 2 });
+//             // Utilities.setBlock({ x: 3079, y: -59, z: 107 }, "theheist:keypad", { "minecraft:cardinal_direction": "north" });
 //             // overworld.spawnEntity("theheist:hover_text", { x: 3079.5, y: -59, z: 107.5 }).nameTag = "Lvl. 1";
-//             // Utilities.setBlock({ x: 3078, y: -60, z: 106 }, "theheist:custom_door_1_bottom", { "theheist:rotation": 2, "theheist:unlocked": false });
+//             // Utilities.setBlock({ x: 3078, y: -60, z: 106 }, "theheist:custom_door_1_bottom", { "minecraft:cardinal_direction": "north", "theheist:unlocked": false });
 //             // const console0ActionTracker = {
 //             // 	"name": "actionTracker",
 //             // 	"used": false,
 //             // 	"level": 1,
 //             // 	"actions": [
 //             // 		{
-//             // 			"type": "set_block", "do": { "x": 3079, "y": -59, "z": 107, "block": "theheist:keypad", "permutations": { "theheist:rotation": 2, "theheist:unlocked": 1 } }
+//             // 			"type": "set_block", "do": { "x": 3079, "y": -59, "z": 107, "block": "theheist:keypad", "permutations": { "minecraft:cardinal_direction": "north", "theheist:unlocked": 1 } }
 //             // 		},
 //             // 		{
-//             // 			"type": "set_block", "do": { "x": 3079, "y": -59, "z": 107, "block": "theheist:keypad", "permutations": { "theheist:rotation": 2, "theheist:unlocked": 2 } }, "delay": 40
+//             // 			"type": "set_block", "do": { "x": 3079, "y": -59, "z": 107, "block": "theheist:keypad", "permutations": { "minecraft:cardinal_direction": "north", "theheist:unlocked": 2 } }, "delay": 40
 //             // 		},
 //             // 		{
-//             // 			"type": "set_block", "do": { "x": 3078, "y": -60, "z": 106, "block": "theheist:custom_door_1_bottom", "permutations": { "theheist:rotation": 2, "theheist:unlocked": true } }, "delay": 40
+//             // 			"type": "set_block", "do": { "x": 3078, "y": -60, "z": 106, "block": "theheist:custom_door_1_bottom", "permutations": { "minecraft:cardinal_direction": "north", "theheist:unlocked": true } }, "delay": 40
 //             // 		}
 //             // 	]
 //             // };
 //             // DataManager.setData(console0, console0ActionTracker);
 //             // // Console 1 (Type: Computer)
 //             // const console1 = overworld.spawnEntity("armor_stand", { "x": 3072.5, "y": consolesHeight, "z": 105.5 });
-//             // Utilities.setBlock({ x: 3072, y: -59, z: 105 }, "theheist:computer", { "theheist:rotation": 3 });
+//             // Utilities.setBlock({ x: 3072, y: -59, z: 105 }, "theheist:computer", { "minecraft:cardinal_direction": "south" });
 //             // overworld.spawnEntity("theheist:hover_text", { x: 3072.5, y: -59, z: 105.5 }).nameTag = "Research info";
 //             // const console1ActionTracker = {
 //             // 	"name": "actionTracker",
@@ -352,10 +351,10 @@ export default level;
 //             // 	"level": 1,
 //             // 	"actions": [
 //             // 		{
-//             // 			"type": "set_block", "do": { "x": 3072, "y": -59, "z": 105, "block": "theheist:computer", "permutations": { "theheist:rotation": 3, "theheist:unlocked": 1 } }
+//             // 			"type": "set_block", "do": { "x": 3072, "y": -59, "z": 105, "block": "theheist:computer", "permutations": { "minecraft:cardinal_direction": "south", "theheist:unlocked": 1 } }
 //             // 		},
 //             // 		{
-//             // 			"type": "set_block", "do": { "x": 3072, "y": -59, "z": 105, "block": "theheist:computer", "permutations": { "theheist:rotation": 3, "theheist:unlocked": 2 } }, "delay": 40
+//             // 			"type": "set_block", "do": { "x": 3072, "y": -59, "z": 105, "block": "theheist:computer", "permutations": { "minecraft:cardinal_direction": "south", "theheist:unlocked": 2 } }, "delay": 40
 //             // 		},
 //             // 		{
 //             // 			"type": "display_research", "do": { "researchID": 100 }, "delay": 40
@@ -365,7 +364,7 @@ export default level;
 //             // DataManager.setData(console1, console1ActionTracker);
 //             // // Console 2 (Type: New Gameband)
 //             // const console2 = overworld.spawnEntity("armor_stand", { "x": 3074.5, "y": consolesHeight, "z": 100.5 });
-//             // Utilities.setBlock({ x: 3074, y: -59, z: 100 }, "theheist:sensor_mode_display", { "theheist:rotation": 2 });
+//             // Utilities.setBlock({ x: 3074, y: -59, z: 100 }, "theheist:sensor_mode_display", { "minecraft:cardinal_direction": "north" });
 //             // const console2ActionTracker = {
 //             // 	"name": "actionTracker",
 //             // 	"used": false,
@@ -388,7 +387,7 @@ export default level;
 //             // DataManager.setData(console2, console2ActionTracker);
 //             // // Console 3 (Type: Keypad)
 //             // const console3 = overworld.spawnEntity("armor_stand", { "x": 3074.5, "y": consolesHeight, "z": 116.5 });
-//             // Utilities.setBlock({ x: 3074, y: -59, z: 116 }, "theheist:keypad", { "theheist:rotation": 5 });
+//             // Utilities.setBlock({ x: 3074, y: -59, z: 116 }, "theheist:keypad", { "minecraft:cardinal_direction": "east" });
 //             // overworld.spawnEntity("theheist:hover_text", { x: 3074.5, y: -59, z: 116.5 }).nameTag = "Lvl. 3";
 //             // const console3ActionTracker = {
 //             // 	"name": "actionTracker",
@@ -399,29 +398,29 @@ export default level;
 //             // DataManager.setData(console3, console3ActionTracker);
 //             // // Console 4 (Type: Keypad)
 //             // const console4 = overworld.spawnEntity("armor_stand", { "x": 3052.5, "y": consolesHeight, "z": 115.5 });
-//             // Utilities.setBlock({ x: 3052, y: -59, z: 115 }, "theheist:keypad", { "theheist:rotation": 2 });
+//             // Utilities.setBlock({ x: 3052, y: -59, z: 115 }, "theheist:keypad", { "minecraft:cardinal_direction": "north" });
 //             // overworld.spawnEntity("theheist:hover_text", { x: 3052.5, y: -59, z: 115.5 }).nameTag = "Lvl. 1";
-//             // Utilities.setBlock({ x: 3051, y: -60, z: 114 }, "theheist:custom_door_1_bottom", { "theheist:rotation": 2, "theheist:unlocked": false });
+//             // Utilities.setBlock({ x: 3051, y: -60, z: 114 }, "theheist:custom_door_1_bottom", { "minecraft:cardinal_direction": "north", "theheist:unlocked": false });
 //             // const console4ActionTracker = {
 //             // 	"name": "actionTracker",
 //             // 	"used": false,
 //             // 	"level": 1,
 //             // 	"actions": [
 //             // 		{
-//             // 			"type": "set_block", "do": { "x": 3052, "y": -59, "z": 115, "block": "theheist:keypad", "permutations": { "theheist:rotation": 2, "theheist:unlocked": 1 } }
+//             // 			"type": "set_block", "do": { "x": 3052, "y": -59, "z": 115, "block": "theheist:keypad", "permutations": { "minecraft:cardinal_direction": "north", "theheist:unlocked": 1 } }
 //             // 		},
 //             // 		{
-//             // 			"type": "set_block", "do": { "x": 3052, "y": -59, "z": 115, "block": "theheist:keypad", "permutations": { "theheist:rotation": 2, "theheist:unlocked": 2 } }, "delay": 40
+//             // 			"type": "set_block", "do": { "x": 3052, "y": -59, "z": 115, "block": "theheist:keypad", "permutations": { "minecraft:cardinal_direction": "north", "theheist:unlocked": 2 } }, "delay": 40
 //             // 		},
 //             // 		{
-//             // 			"type": "set_block", "do": { "x": 3051, "y": -60, "z": 114, "block": "theheist:custom_door_1_bottom", "permutations": { "theheist:rotation": 2, "theheist:unlocked": true } }, "delay": 40
+//             // 			"type": "set_block", "do": { "x": 3051, "y": -60, "z": 114, "block": "theheist:custom_door_1_bottom", "permutations": { "minecraft:cardinal_direction": "north", "theheist:unlocked": true } }, "delay": 40
 //             // 		}
 //             // 	]
 //             // };
 //             // DataManager.setData(console4, console4ActionTracker);
 //             // // Console 5 (Type: Computer)
 //             // const console5 = overworld.spawnEntity("armor_stand", { "x": 3045.5, "y": consolesHeight, "z": 111.5 });
-//             // Utilities.setBlock({ x: 3045, y: -59, z: 111 }, "theheist:computer", { "theheist:rotation": 4 });
+//             // Utilities.setBlock({ x: 3045, y: -59, z: 111 }, "theheist:computer", { "minecraft:cardinal_direction": "west" });
 //             // overworld.spawnEntity("theheist:hover_text", { x: 3045.5, y: -59, z: 111.5 }).nameTag = "Mail";
 //             // const console5ActionTracker = {
 //             // 	"name": "actionTracker",
@@ -429,10 +428,10 @@ export default level;
 //             // 	"level": 1,
 //             // 	"actions": [
 //             // 		{
-//             // 			"type": "set_block", "do": { "x": 3045, "y": -59, "z": 111, "block": "theheist:computer", "permutations": { "theheist:rotation": 4, "theheist:unlocked": 1 } }
+//             // 			"type": "set_block", "do": { "x": 3045, "y": -59, "z": 111, "block": "theheist:computer", "permutations": { "minecraft:cardinal_direction": "west", "theheist:unlocked": 1 } }
 //             // 		},
 //             // 		{
-//             // 			"type": "set_block", "do": { "x": 3045, "y": -59, "z": 111, "block": "theheist:computer", "permutations": { "theheist:rotation": 4, "theheist:unlocked": 2 } }, "delay": 40
+//             // 			"type": "set_block", "do": { "x": 3045, "y": -59, "z": 111, "block": "theheist:computer", "permutations": { "minecraft:cardinal_direction": "west", "theheist:unlocked": 2 } }, "delay": 40
 //             // 		},
 //             // 		{
 //             // 			"type": "display_mail", "do": { "mailID": 103 }, "delay": 40
@@ -442,29 +441,29 @@ export default level;
 //             // DataManager.setData(console5, console5ActionTracker);
 //             // // Console 6 (Type: Keypad)
 //             // const console6 = overworld.spawnEntity("armor_stand", { "x": 3074.5, "y": consolesHeight, "z": 139.5 });
-//             // Utilities.setBlock({ x: 3074, y: -59, z: 139 }, "theheist:keypad", { "theheist:rotation": 5 });
+//             // Utilities.setBlock({ x: 3074, y: -59, z: 139 }, "theheist:keypad", { "minecraft:cardinal_direction": "east" });
 //             // overworld.spawnEntity("theheist:hover_text", { x: 3074.5, y: -59, z: 139.5 }).nameTag = "Lvl. 1";
-//             // Utilities.setBlock({ x: 3075, y: -60, z: 140 }, "theheist:custom_door_1_bottom", { "theheist:rotation": 5, "theheist:unlocked": false });
+//             // Utilities.setBlock({ x: 3075, y: -60, z: 140 }, "theheist:custom_door_1_bottom", { "minecraft:cardinal_direction": "east", "theheist:unlocked": false });
 //             // const console6ActionTracker = {
 //             // 	"name": "actionTracker",
 //             // 	"used": false,
 //             // 	"level": 1,
 //             // 	"actions": [
 //             // 		{
-//             // 			"type": "set_block", "do": { "x": 3074, "y": -59, "z": 139, "block": "theheist:keypad", "permutations": { "theheist:rotation": 5, "theheist:unlocked": 1 } }
+//             // 			"type": "set_block", "do": { "x": 3074, "y": -59, "z": 139, "block": "theheist:keypad", "permutations": { "minecraft:cardinal_direction": "east", "theheist:unlocked": 1 } }
 //             // 		},
 //             // 		{
-//             // 			"type": "set_block", "do": { "x": 3074, "y": -59, "z": 139, "block": "theheist:keypad", "permutations": { "theheist:rotation": 5, "theheist:unlocked": 2 } }, "delay": 40
+//             // 			"type": "set_block", "do": { "x": 3074, "y": -59, "z": 139, "block": "theheist:keypad", "permutations": { "minecraft:cardinal_direction": "east", "theheist:unlocked": 2 } }, "delay": 40
 //             // 		},
 //             // 		{
-//             // 			"type": "set_block", "do": { "x": 3075, "y": -60, "z": 140, "block": "theheist:custom_door_1_bottom", "permutations": { "theheist:rotation": 5, "theheist:unlocked": true } }, "delay": 40
+//             // 			"type": "set_block", "do": { "x": 3075, "y": -60, "z": 140, "block": "theheist:custom_door_1_bottom", "permutations": { "minecraft:cardinal_direction": "east", "theheist:unlocked": true } }, "delay": 40
 //             // 		}
 //             // 	]
 //             // };
 //             // DataManager.setData(console6, console6ActionTracker);
 //             // // Console 7 (Type: Computer)
 //             // const console7 = overworld.spawnEntity("armor_stand", { "x": 3080.5, "y": consolesHeight, "z": 142.5 });
-//             // Utilities.setBlock({ x: 3080, y: -59, z: 142 }, "theheist:computer", { "theheist:rotation": 3 });
+//             // Utilities.setBlock({ x: 3080, y: -59, z: 142 }, "theheist:computer", { "minecraft:cardinal_direction": "south" });
 //             // overworld.spawnEntity("theheist:hover_text", { x: 3080.5, y: -59, z: 142.5 }).nameTag = "Clear alarm status";
 //             // const console7ActionTracker = {
 //             // 	"name": "actionTracker",
@@ -472,10 +471,10 @@ export default level;
 //             // 	"level": 1,
 //             // 	"actions": [
 //             // 		{
-//             // 			"type": "set_block", "do": { "x": 3080, "y": -59, "z": 142, "block": "theheist:computer", "permutations": { "theheist:rotation": 3, "theheist:unlocked": 1 } }
+//             // 			"type": "set_block", "do": { "x": 3080, "y": -59, "z": 142, "block": "theheist:computer", "permutations": { "minecraft:cardinal_direction": "south", "theheist:unlocked": 1 } }
 //             // 		},
 //             // 		{
-//             // 			"type": "set_block", "do": { "x": 3080, "y": -59, "z": 142, "block": "theheist:computer", "permutations": { "theheist:rotation": 3, "theheist:unlocked": 2 } }, "delay": 40
+//             // 			"type": "set_block", "do": { "x": 3080, "y": -59, "z": 142, "block": "theheist:computer", "permutations": { "minecraft:cardinal_direction": "south", "theheist:unlocked": 2 } }, "delay": 40
 //             // 		},
 //             // 		{
 //             // 			"type": "set_alarm_level", "do": { "value": 0 }, "delay": 40
@@ -485,7 +484,7 @@ export default level;
 //             // DataManager.setData(console7, console7ActionTracker);
 //             // // Console 8 (Type: Computer)
 //             // const console8 = overworld.spawnEntity("armor_stand", { "x": 3082.5, "y": consolesHeight, "z": 118.5 });
-//             // Utilities.setBlock({ x: 3082, y: -59, z: 118 }, "theheist:computer", { "theheist:rotation": 5 });
+//             // Utilities.setBlock({ x: 3082, y: -59, z: 118 }, "theheist:computer", { "minecraft:cardinal_direction": "east" });
 //             // overworld.spawnEntity("theheist:hover_text", { x: 3082.5, y: -59, z: 118.5 }).nameTag = "Mail";
 //             // const console8ActionTracker = {
 //             // 	"name": "actionTracker",
@@ -493,10 +492,10 @@ export default level;
 //             // 	"level": 1,
 //             // 	"actions": [
 //             // 		{
-//             // 			"type": "set_block", "do": { "x": 3082, "y": -59, "z": 118, "block": "theheist:computer", "permutations": { "theheist:rotation": 5, "theheist:unlocked": 1 } }
+//             // 			"type": "set_block", "do": { "x": 3082, "y": -59, "z": 118, "block": "theheist:computer", "permutations": { "minecraft:cardinal_direction": "east", "theheist:unlocked": 1 } }
 //             // 		},
 //             // 		{
-//             // 			"type": "set_block", "do": { "x": 3082, "y": -59, "z": 118, "block": "theheist:computer", "permutations": { "theheist:rotation": 5, "theheist:unlocked": 2 } }, "delay": 40
+//             // 			"type": "set_block", "do": { "x": 3082, "y": -59, "z": 118, "block": "theheist:computer", "permutations": { "minecraft:cardinal_direction": "east", "theheist:unlocked": 2 } }, "delay": 40
 //             // 		},
 //             // 		{
 //             // 			"type": "display_mail", "do": { "mailID": 104 }, "delay": 40
@@ -512,22 +511,22 @@ export default level;
 //             // DataManager.setData(console8, console8ActionTracker);
 //             // // Console 9 (Type: Keypad)
 //             // const console9 = overworld.spawnEntity("armor_stand", { "x": 3104.5, "y": consolesHeight, "z": 116.5 });
-//             // Utilities.setBlock({ x: 3104, y: -59, z: 116 }, "theheist:keypad", { "theheist:rotation": 4 });
+//             // Utilities.setBlock({ x: 3104, y: -59, z: 116 }, "theheist:keypad", { "minecraft:cardinal_direction": "west" });
 //             // overworld.spawnEntity("theheist:hover_text", { x: 3104.5, y: -59, z: 116.5 }).nameTag = "Lvl. 2";
-//             // Utilities.setBlock({ x: 3103, y: -60, z: 115 }, "theheist:custom_door_2_bottom", { "theheist:rotation": 4, "theheist:unlocked": false });
+//             // Utilities.setBlock({ x: 3103, y: -60, z: 115 }, "theheist:custom_door_2_bottom", { "minecraft:cardinal_direction": "west", "theheist:unlocked": false });
 //             // const console9ActionTracker = {
 //             // 	"name": "actionTracker",
 //             // 	"used": false,
 //             // 	"level": 2,
 //             // 	"actions": [
 //             // 		{
-//             // 			"type": "set_block", "do": { "x": 3104, "y": -59, "z": 116, "block": "theheist:keypad", "permutations": { "theheist:rotation": 4, "theheist:unlocked": 1 } }
+//             // 			"type": "set_block", "do": { "x": 3104, "y": -59, "z": 116, "block": "theheist:keypad", "permutations": { "minecraft:cardinal_direction": "west", "theheist:unlocked": 1 } }
 //             // 		},
 //             // 		{
-//             // 			"type": "set_block", "do": { "x": 3104, "y": -59, "z": 116, "block": "theheist:keypad", "permutations": { "theheist:rotation": 4, "theheist:unlocked": 2 } }, "delay": 40
+//             // 			"type": "set_block", "do": { "x": 3104, "y": -59, "z": 116, "block": "theheist:keypad", "permutations": { "minecraft:cardinal_direction": "west", "theheist:unlocked": 2 } }, "delay": 40
 //             // 		},
 //             // 		{
-//             // 			"type": "set_block", "do": { "x": 3103, "y": -60, "z": 115, "block": "theheist:custom_door_2_bottom", "permutations": { "theheist:rotation": 4, "theheist:unlocked": true } }, "delay": 40
+//             // 			"type": "set_block", "do": { "x": 3103, "y": -60, "z": 115, "block": "theheist:custom_door_2_bottom", "permutations": { "minecraft:cardinal_direction": "west", "theheist:unlocked": true } }, "delay": 40
 //             // 		},
 //             // 		{
 //             // 			"type": "hack_console", "do": { "x": 3097, "z": 123 }, "delay": 40
@@ -538,22 +537,22 @@ export default level;
 //             }
 //             // // Console 10 (Type: Keypad)
 //             // const console10 = overworld.spawnEntity("armor_stand", { "x": 3097.5, "y": consolesHeight, "z": 123.5 });
-//             // Utilities.setBlock({ x: 3097, y: -59, z: 123 }, "theheist:keypad", { "theheist:rotation": 2 });
+//             // Utilities.setBlock({ x: 3097, y: -59, z: 123 }, "theheist:keypad", { "minecraft:cardinal_direction": "north" });
 //             // overworld.spawnEntity("theheist:hover_text", { x: 3097.5, y: -59, z: 123.5 }).nameTag = "Lvl. 2";
-//             // Utilities.setBlock({ x: 3096, y: -60, z: 122 }, "theheist:custom_door_2_bottom", { "theheist:rotation": 2, "theheist:unlocked": false });
+//             // Utilities.setBlock({ x: 3096, y: -60, z: 122 }, "theheist:custom_door_2_bottom", { "minecraft:cardinal_direction": "north", "theheist:unlocked": false });
 //             // const console10ActionTracker = {
 //             // 	"name": "actionTracker",
 //             // 	"used": false,
 //             // 	"level": 2,
 //             // 	"actions": [
 //             // 		{
-//             // 			"type": "set_block", "do": { "x": 3097, "y": -59, "z": 123, "block": "theheist:keypad", "permutations": { "theheist:rotation": 2, "theheist:unlocked": 1 } }
+//             // 			"type": "set_block", "do": { "x": 3097, "y": -59, "z": 123, "block": "theheist:keypad", "permutations": { "minecraft:cardinal_direction": "north", "theheist:unlocked": 1 } }
 //             // 		},
 //             // 		{
-//             // 			"type": "set_block", "do": { "x": 3097, "y": -59, "z": 123, "block": "theheist:keypad", "permutations": { "theheist:rotation": 2, "theheist:unlocked": 2 } }, "delay": 40
+//             // 			"type": "set_block", "do": { "x": 3097, "y": -59, "z": 123, "block": "theheist:keypad", "permutations": { "minecraft:cardinal_direction": "north", "theheist:unlocked": 2 } }, "delay": 40
 //             // 		},
 //             // 		{
-//             // 			"type": "set_block", "do": { "x": 3096, "y": -60, "z": 122, "block": "theheist:custom_door_2_bottom", "permutations": { "theheist:rotation": 2, "theheist:unlocked": true } }, "delay": 40
+//             // 			"type": "set_block", "do": { "x": 3096, "y": -60, "z": 122, "block": "theheist:custom_door_2_bottom", "permutations": { "minecraft:cardinal_direction": "north", "theheist:unlocked": true } }, "delay": 40
 //             // 		},
 //             // 		{
 //             // 			"type": "hack_console", "do": { "x": 3104, "z": 116 }, "delay": 40
@@ -563,7 +562,7 @@ export default level;
 //             // DataManager.setData(console10, console10ActionTracker);
 //             // // Console 11 (Type: Computer)
 //             // const console11 = overworld.spawnEntity("armor_stand", { "x": 3097.5, "y": consolesHeight, "z": 114.5 });
-//             // Utilities.setBlock({ x: 3097, y: -59, z: 114 }, "theheist:computer", { "theheist:rotation": 2 });
+//             // Utilities.setBlock({ x: 3097, y: -59, z: 114 }, "theheist:computer", { "minecraft:cardinal_direction": "north" });
 //             // overworld.spawnEntity("theheist:hover_text", { x: 3097.5, y: -59, z: 114.5 }).nameTag = "Research info";
 //             // const console11ActionTracker = {
 //             // 	"name": "actionTracker",
@@ -571,10 +570,10 @@ export default level;
 //             // 	"level": 1,
 //             // 	"actions": [
 //             // 		{
-//             // 			"type": "set_block", "do": { "x": 3097, "y": -59, "z": 114, "block": "theheist:computer", "permutations": { "theheist:rotation": 2, "theheist:unlocked": 1 } }
+//             // 			"type": "set_block", "do": { "x": 3097, "y": -59, "z": 114, "block": "theheist:computer", "permutations": { "minecraft:cardinal_direction": "north", "theheist:unlocked": 1 } }
 //             // 		},
 //             // 		{
-//             // 			"type": "set_block", "do": { "x": 3097, "y": -59, "z": 114, "block": "theheist:computer", "permutations": { "theheist:rotation": 2, "theheist:unlocked": 2 } }, "delay": 40
+//             // 			"type": "set_block", "do": { "x": 3097, "y": -59, "z": 114, "block": "theheist:computer", "permutations": { "minecraft:cardinal_direction": "north", "theheist:unlocked": 2 } }, "delay": 40
 //             // 		},
 //             // 		{
 //             // 			"type": "display_research", "do": { "researchID": 101 }, "delay": 40
@@ -584,7 +583,7 @@ export default level;
 //             // DataManager.setData(console11, console11ActionTracker);
 //             // // Console 12 (Type: Gameband Upgrade)
 //             // const console12 = overworld.spawnEntity("armor_stand", { "x": 3105.5, "y": consolesHeight, "z": 117.5 });
-//             // Utilities.setBlock({ x: 3106, y: -59, z: 117 }, "theheist:hacking_mode_display", { "theheist:rotation": 5 });
+//             // Utilities.setBlock({ x: 3106, y: -59, z: 117 }, "theheist:hacking_mode_display", { "minecraft:cardinal_direction": "east" });
 //             // const console12ActionTracker = {
 //             // 	"name": "actionTracker",
 //             // 	"used": false,
@@ -607,29 +606,29 @@ export default level;
 //             // DataManager.setData(console12, console12ActionTracker);
 //             // // Console 13 (Type: Keypad)
 //             // const console13 = overworld.spawnEntity("armor_stand", { "x": 3062.5, "y": consolesHeight, "z": 150.5 });
-//             // Utilities.setBlock({ x: 3062, y: -59, z: 150 }, "theheist:keypad", { "theheist:rotation": 3 });
+//             // Utilities.setBlock({ x: 3062, y: -59, z: 150 }, "theheist:keypad", { "minecraft:cardinal_direction": "south" });
 //             // overworld.spawnEntity("theheist:hover_text", { x: 3062.5, y: -59, z: 150.5 }).nameTag = "Lvl. 2";
-//             // Utilities.setBlock({ x: 3061, y: -60, z: 151 }, "theheist:custom_door_2_bottom", { "theheist:rotation": 3, "theheist:unlocked": false });
+//             // Utilities.setBlock({ x: 3061, y: -60, z: 151 }, "theheist:custom_door_2_bottom", { "minecraft:cardinal_direction": "south", "theheist:unlocked": false });
 //             // const console13ActionTracker = {
 //             // 	"name": "actionTracker",
 //             // 	"used": false,
 //             // 	"level": 2,
 //             // 	"actions": [
 //             // 		{
-//             // 			"type": "set_block", "do": { "x": 3062, "y": -59, "z": 150, "block": "theheist:keypad", "permutations": { "theheist:rotation": 3, "theheist:unlocked": 1 } }
+//             // 			"type": "set_block", "do": { "x": 3062, "y": -59, "z": 150, "block": "theheist:keypad", "permutations": { "minecraft:cardinal_direction": "south", "theheist:unlocked": 1 } }
 //             // 		},
 //             // 		{
-//             // 			"type": "set_block", "do": { "x": 3062, "y": -59, "z": 150, "block": "theheist:keypad", "permutations": { "theheist:rotation": 3, "theheist:unlocked": 2 } }, "delay": 40
+//             // 			"type": "set_block", "do": { "x": 3062, "y": -59, "z": 150, "block": "theheist:keypad", "permutations": { "minecraft:cardinal_direction": "south", "theheist:unlocked": 2 } }, "delay": 40
 //             // 		},
 //             // 		{
-//             // 			"type": "set_block", "do": { "x": 3061, "y": -60, "z": 151, "block": "theheist:custom_door_2_bottom", "permutations": { "theheist:rotation": 3, "theheist:unlocked": true } }, "delay": 40
+//             // 			"type": "set_block", "do": { "x": 3061, "y": -60, "z": 151, "block": "theheist:custom_door_2_bottom", "permutations": { "minecraft:cardinal_direction": "south", "theheist:unlocked": true } }, "delay": 40
 //             // 		}
 //             // 	]
 //             // };
 //             // DataManager.setData(console13, console13ActionTracker);
 //             // // Console 14 (Type: Computer)
 //             // const console14 = overworld.spawnEntity("armor_stand", { "x": 3058.5, "y": consolesHeight, "z": 156.5 });
-//             // Utilities.setBlock({ x: 3058, y: -59, z: 156 }, "theheist:computer", { "theheist:rotation": 4 });
+//             // Utilities.setBlock({ x: 3058, y: -59, z: 156 }, "theheist:computer", { "minecraft:cardinal_direction": "west" });
 //             // overworld.spawnEntity("theheist:hover_text", { x: 3058.5, y: -59, z: 156.5 }).nameTag = "Research info";
 //             // const console14ActionTracker = {
 //             // 	"name": "actionTracker",
@@ -637,10 +636,10 @@ export default level;
 //             // 	"level": 1,
 //             // 	"actions": [
 //             // 		{
-//             // 			"type": "set_block", "do": { "x": 3058, "y": -59, "z": 156, "block": "theheist:computer", "permutations": { "theheist:rotation": 4, "theheist:unlocked": 1 } }
+//             // 			"type": "set_block", "do": { "x": 3058, "y": -59, "z": 156, "block": "theheist:computer", "permutations": { "minecraft:cardinal_direction": "west", "theheist:unlocked": 1 } }
 //             // 		},
 //             // 		{
-//             // 			"type": "set_block", "do": { "x": 3058, "y": -59, "z": 156, "block": "theheist:computer", "permutations": { "theheist:rotation": 4, "theheist:unlocked": 2 } }, "delay": 40
+//             // 			"type": "set_block", "do": { "x": 3058, "y": -59, "z": 156, "block": "theheist:computer", "permutations": { "minecraft:cardinal_direction": "west", "theheist:unlocked": 2 } }, "delay": 40
 //             // 		},
 //             // 		{
 //             // 			"type": "display_research", "do": { "researchID": 102 }, "delay": 40
@@ -650,7 +649,7 @@ export default level;
 //             // DataManager.setData(console14, console14ActionTracker);
 //             // // Console 15 (Type: Gameband Upgrade)
 //             // const console15 = overworld.spawnEntity("armor_stand", { "x": 3063.5, "y": consolesHeight, "z": 159.5 });
-//             // Utilities.setBlock({ x: 3063, y: -59, z: 159 }, "theheist:recharge_mode_display", { "theheist:rotation": 3 });
+//             // Utilities.setBlock({ x: 3063, y: -59, z: 159 }, "theheist:recharge_mode_display", { "minecraft:cardinal_direction": "south" });
 //             // const console15ActionTracker = {
 //             // 	"name": "actionTracker",
 //             // 	"used": false,
@@ -673,7 +672,7 @@ export default level;
 //             // DataManager.setData(console15, console15ActionTracker);
 //             // // Console 16 (Type: Keycard Reader)
 //             // const console16 = overworld.spawnEntity("armor_stand", { "x": 3039.5, "y": consolesHeight, "z": 129.5 });
-//             // Utilities.setBlock({ x: 3038, y: -60, z: 131 }, "theheist:custom_door_2_bottom", { "theheist:rotation": 4, "theheist:unlocked": false });
+//             // Utilities.setBlock({ x: 3038, y: -60, z: 131 }, "theheist:custom_door_2_bottom", { "minecraft:cardinal_direction": "west", "theheist:unlocked": false });
 //             // const console16ActionTracker = {
 //             // 	"name": "actionTracker",
 //             // 	"used": false,
@@ -681,7 +680,7 @@ export default level;
 //             // 	"keycardType": "yellow",
 //             // 	"actions": [
 //             // 		{
-//             // 			"type": "set_block", "do": { "x": 3038, "y": -60, "z": 131, "block": "theheist:custom_door_2_bottom", "permutations": { "theheist:rotation": 4, "theheist:unlocked": true, "theheist:open": true } }
+//             // 			"type": "set_block", "do": { "x": 3038, "y": -60, "z": 131, "block": "theheist:custom_door_2_bottom", "permutations": { "minecraft:cardinal_direction": "west", "theheist:unlocked": true, "theheist:open": true } }
 //             // 		},
 //             // 		{
 //             // 			"type": "play_sound", "do": { "soundID": "random.door_open" }
@@ -691,8 +690,8 @@ export default level;
 //             // DataManager.setData(console16, console16ActionTracker);
 //             // // Console 17 (Type: Keycard Reader)
 //             // const console17 = overworld.spawnEntity("armor_stand", { "x": 3087.5, "y": consolesHeight, "z": 131.5 });
-//             // Utilities.setBlock(new Vector(3089, -60, 130), "theheist:custom_door_4_bottom_l", { "theheist:rotation": 2, "theheist:unlocked": false });
-//             // Utilities.setBlock(new Vector(3090, -60, 130), "theheist:custom_door_4_bottom_r", { "theheist:rotation": 2, "theheist:unlocked": false });
+//             // Utilities.setBlock(new Vector(3089, -60, 130), "theheist:custom_door_4_bottom_l", { "minecraft:cardinal_direction": "north", "theheist:unlocked": false });
+//             // Utilities.setBlock(new Vector(3090, -60, 130), "theheist:custom_door_4_bottom_r", { "minecraft:cardinal_direction": "north", "theheist:unlocked": false });
 //             // const console17ActionTracker = {
 //             // 	"name": "actionTracker",
 //             // 	"used": false,
@@ -700,10 +699,10 @@ export default level;
 //             // 	"keycardType": "green",
 //             // 	"actions": [
 //             // 		{
-//             // 			"type": "set_block", "do": { "x": 3089, "y": -60, "z": 130, "block": "theheist:custom_door_4_bottom_l", "permutations": { "theheist:rotation": 2, "theheist:unlocked": true, "theheist:open": true } }
+//             // 			"type": "set_block", "do": { "x": 3089, "y": -60, "z": 130, "block": "theheist:custom_door_4_bottom_l", "permutations": { "minecraft:cardinal_direction": "north", "theheist:unlocked": true, "theheist:open": true } }
 //             // 		},
 //             // 		{
-//             // 			"type": "set_block", "do": { "x": 3090, "y": -60, "z": 130, "block": "theheist:custom_door_4_bottom_r", "permutations": { "theheist:rotation": 2, "theheist:unlocked": true, "theheist:open": true  } }
+//             // 			"type": "set_block", "do": { "x": 3090, "y": -60, "z": 130, "block": "theheist:custom_door_4_bottom_r", "permutations": { "minecraft:cardinal_direction": "north", "theheist:unlocked": true, "theheist:open": true  } }
 //             // 		},
 //             // 		{
 //             // 			"type": "play_sound", "do": { "soundID": "random.door_open" }
@@ -719,7 +718,7 @@ export default level;
 //             // DataManager.setData(console17, console17ActionTracker);
 //             // // Console 18 (Type: Computer)
 //             // const console18 = overworld.spawnEntity("armor_stand", { "x": 3081.5, "y": consolesHeight, "z": 137.5 });
-//             // Utilities.setBlock({ x: 3081, y: -59, z: 137 }, "theheist:computer", { "theheist:rotation": 2 });
+//             // Utilities.setBlock({ x: 3081, y: -59, z: 137 }, "theheist:computer", { "minecraft:cardinal_direction": "north" });
 //             // overworld.spawnEntity("theheist:hover_text", { x: 3081.5, y: -59, z: 137.5 }).nameTag = "Disable nearby camera";
 //             // const console18ActionTracker = {
 //             // 	"name": "actionTracker",
@@ -727,10 +726,10 @@ export default level;
 //             // 	"level": 1,
 //             // 	"actions": [
 //             // 		{
-//             // 			"type": "set_block", "do": { "x": 3081, "y": -59, "z": 137, "block": "theheist:computer", "permutations": { "theheist:rotation": 2, "theheist:unlocked": 1 } }
+//             // 			"type": "set_block", "do": { "x": 3081, "y": -59, "z": 137, "block": "theheist:computer", "permutations": { "minecraft:cardinal_direction": "north", "theheist:unlocked": 1 } }
 //             // 		},
 //             // 		{
-//             // 			"type": "set_block", "do": { "x": 3081, "y": -59, "z": 137, "block": "theheist:computer", "permutations": { "theheist:rotation": 2, "theheist:unlocked": 2 } }, "delay": 40
+//             // 			"type": "set_block", "do": { "x": 3081, "y": -59, "z": 137, "block": "theheist:computer", "permutations": { "minecraft:cardinal_direction": "north", "theheist:unlocked": 2 } }, "delay": 40
 //             // 		},
 //             // 		{
 //             // 			"type": "disable_camera", "do": { "cameraID": 4 }, "delay": 40
@@ -741,7 +740,7 @@ export default level;
 
 //             // // Recharge Station 0
 //             // const recharge0 = overworld.spawnEntity("minecraft:armor_stand", new Vector(3070.5, rechargeHeight, 110.5));
-//             // Utilities.setBlock({ x: 3070, y: -60, z: 110 }, "theheist:recharge_station", { "theheist:rotation": 4 });
+//             // Utilities.setBlock({ x: 3070, y: -60, z: 110 }, "theheist:recharge_station", { "minecraft:cardinal_direction": "west" });
 //             // const recharge0DataNode = {
 //             // 	"name": "energyTracker",
 //             // 	"rechargerID": 0,
@@ -751,7 +750,7 @@ export default level;
 //             // DataManager.setData(recharge0, recharge0DataNode);
 //             // // Recharge Station 1
 //             // const recharge1 = overworld.spawnEntity("minecraft:armor_stand", new Vector(3100.5, rechargeHeight, 121.5));
-//             // Utilities.setBlock({ x: 3100, y: -60, z: 121 }, "theheist:recharge_station", { "theheist:rotation": 3 });
+//             // Utilities.setBlock({ x: 3100, y: -60, z: 121 }, "theheist:recharge_station", { "minecraft:cardinal_direction": "south" });
 //             // const recharge1DataNode = {
 //             // 	"name": "energyTracker",
 //             // 	"rechargerID": 1,
@@ -761,7 +760,7 @@ export default level;
 //             // DataManager.setData(recharge1, recharge1DataNode);
 //             // // Recharge Station 2
 //             // const recharge2 = overworld.spawnEntity("minecraft:armor_stand", new Vector(3061.5, rechargeHeight, 138.5));
-//             // Utilities.setBlock({ x: 3061, y: -60, z: 138 }, "theheist:recharge_station", { "theheist:rotation": 2 });
+//             // Utilities.setBlock({ x: 3061, y: -60, z: 138 }, "theheist:recharge_station", { "minecraft:cardinal_direction": "north" });
 //             // const recharge2DataNode = {
 //             // 	"name": "energyTracker",
 //             // 	"rechargerID": 2,
@@ -771,7 +770,7 @@ export default level;
 //             // DataManager.setData(recharge2, recharge2DataNode);
 //             // // Recharge Station 3
 //             // const recharge3 = overworld.spawnEntity("minecraft:armor_stand", new Vector(3077.5, rechargeHeight, 119.5));
-//             // Utilities.setBlock({ x: 3077, y: -60, z: 119 }, "theheist:recharge_station", { "theheist:rotation": 3 });
+//             // Utilities.setBlock({ x: 3077, y: -60, z: 119 }, "theheist:recharge_station", { "minecraft:cardinal_direction": "south" });
 //             // const recharge3DataNode = {
 //             // 	"name": "energyTracker",
 //             // 	"rechargerID": 3,
@@ -781,12 +780,12 @@ export default level;
 //             // DataManager.setData(recharge3, recharge3DataNode);
 //             // // Recharge Station 4
 //             // const recharge4 = overworld.spawnEntity("minecraft:armor_stand", new Vector(3091.5, rechargeHeight, 128.5));
-//             // Utilities.setBlock({ x: 3091, y: -60, z: 128 }, "theheist:recharge_station", { "theheist:rotation": 5 });
+//             // Utilities.setBlock({ x: 3091, y: -60, z: 128 }, "theheist:recharge_station", { "minecraft:cardinal_direction": "east" });
 //             // const recharge4DataNode = {
 //             // 	"name": "energyTracker",
 //             // 	"rechargerID": 4,
 //             // 	"energyUnits": 100.0,
-//             // 	"block": { "x": 3091, "y": -60, "z": 128, "rotation": 5 }
+//             // 	"block": { "x": 3091, "y": -60, "z": 128, "rotation": "east" }
 //             // };
 //             // DataManager.setData(recharge4, recharge4DataNode);
 

@@ -1,4 +1,4 @@
-import { system, world, Vector3, Player, EntityQueryOptions } from "@minecraft/server";
+import { system, world, Vector3, Player, EntityQueryOptions, BlockVolume, BlockPermutation, GameMode } from "@minecraft/server";
 import VoiceOverManager from "./VoiceOverManager";
 import DataManager from "./DataManager";
 import Utilities from "./Utilities";
@@ -18,11 +18,11 @@ import "./alarm";
 
 world.afterEvents.playerSpawn.subscribe(eventData => {
 	if (!eventData.initialSpawn || !eventData.player.hasTag('loadingLevel')) return;
-	var levelInfo: LevelInformation = DataManager.getData(eventData.player, "levelInformation");
+	eventData.player.sendMessage("hiii");
+	var levelInfo = DataManager.getData(eventData.player, "levelInformation");
+	if (!levelInfo) return;
 	var gameLevel = levelInfo.information[1].level;
-	if (gameLevel == 0.5) Utilities.dimensions.overworld.runCommand(`scriptevent theheist:load-level 0-1`);
-	if (gameLevel == 0) Utilities.dimensions.overworld.runCommand(`scriptevent theheist:load-level 0-2`);
-	else Utilities.dimensions.overworld.runCommand(`scriptevent theheist:load-level ${gameLevel}-1`);
+	Utilities.dimensions.overworld.runCommand(`scriptevent theheist:load-level ${gameLevel}`);
 	eventData.player.sendMessage("RUNNING LOADING OF LEVEL");
 });
 
@@ -31,9 +31,9 @@ world.afterEvents.playerSpawn.subscribe(eventData => {
 // });
 
 const levelLocations: Record<string, Vector3> = {
-	"2": { 'x': 0.5, 'y': -50, 'z': 56.5 },
-	"1": { 'x': -22.5, 'y': -50, 'z': 56.5 },
-	"0.5": { 'x': 1000.5, 'y': -50, 'z': 56.5 },
+	"3": { 'x': 0.5, 'y': -50, 'z': 56.5 },
+	"2": { 'x': -22.5, 'y': -50, 'z': 56.5 },
+	"1": { 'x': 1000.5, 'y': -50, 'z': 56.5 },
 	"0": { 'x': 2000.5, 'y': -50, 'z': 56.5 },
 	"-1": {'x': 3075.5, 'y': -50, 'z': 100.5},
 	"-2": { 'x': 4101, 'y': -47, 'z': 131 },
@@ -108,21 +108,15 @@ system.afterEvents.scriptEventReceive.subscribe(event => { // stable-friendly ve
 			});
 			break;
 		case 'start': {
-			system.runTimeout(() => {
-				player.dimension.runCommand(`time set 20000`)
-				player.runCommand(`gamemode a`)
-				player.teleport({
-					x: 0.5,
-					y: -59,
-					z: 61.5
-				}, {
-					dimension: Utilities.dimensions.overworld,
-					rotation: {
-						x: 0,
-						y: 90
-					}
-				})
-			}, 0);
+			player.dimension.runCommand(`time set 20000`)
+			player.setGameMode(GameMode.adventure);
+			Utilities.clearPlayerInventory(player);
+			DataManager.clearData(player);
+			player.resetLevel();
+			player.teleport(new Vector(44.5, -59, 70.5), {
+				dimension: Utilities.dimensions.overworld,
+				rotation: { x: 0, y: 90 }
+			});
 			break;
 		}
 		case 'playVoice': {
@@ -134,7 +128,7 @@ system.afterEvents.scriptEventReceive.subscribe(event => { // stable-friendly ve
 		}
 		case "fillLarge": {
 			system.run(() => {
-				const lvlCI = Utilities.levelCloneInfo["level_-5"];
+				const lvlCI = Utilities.levelCloneInfo["-5"];
 				Utilities.fillBlocks(new Vector(lvlCI.startX, parseInt(args[0]), lvlCI.startZ), new Vector(lvlCI.endX, parseInt(args[0]), lvlCI.endZ), args[1]);
 			});
 			break;
@@ -149,7 +143,7 @@ system.afterEvents.scriptEventReceive.subscribe(event => { // stable-friendly ve
 			break;
 		}
 		case "myData": {
-			world.sendMessage(DataManager.GetDataRaw(player) as string);
+			world.sendMessage(DataManager.GetDataRaw(player) ?? "no data");
 			break;
 		}
 		case "lvlData": {
@@ -162,15 +156,36 @@ system.afterEvents.scriptEventReceive.subscribe(event => { // stable-friendly ve
 			console.warn(block.typeId);
 			break;
 		}
-		case "setDoor": {
-			Utilities.setBlock(Vector.fromV3(player.getBlockFromViewDirection()!.block.location).above(), "air");
-			Utilities.setBlock(Vector.fromV3(player.getBlockFromViewDirection()!.block.location).above(), "theheist:custom_door_1_bottom");
-			break;
-		}
 		case "spawnJeb": {
 			system.run(() => {
 				Utilities.dimensions.overworld.spawnEntity("minecraft:sheep", player.location).nameTag = "jeb_";
 			});
+		}
+		case "updateABRS": {
+			var loc = Vector.from(player.location);
+			var size = new Vector(200, 20, 200);
+			var min = loc.subtract(size);
+			var max = loc.add(size);
+			Utilities.dimensions.overworld.runCommand(`tickingarea add ${min.toString()} ${max.toString()} level-wide-abrs true`);
+			system.run(() => {
+				var blockLocations = Utilities.dimensions.overworld.getBlocks(new BlockVolume(min, max), {}, true);
+				for (var blockLocation of blockLocations.getBlockLocationIterator()) {
+					// @ts-ignore
+					var block = Utilities.dimensions.overworld.getBlock(blockLocation);
+					if (!block) continue;
+					var rot = Utilities.getBlockState(block, "theheist:rotation") as number | undefined;
+					if (!rot) continue;
+					var cardinal = { 2: "north", 3: "south", 4: "west", 5: "east" }[rot];
+					Utilities.setBlockState(block, "minecraft:cardinal_direction", cardinal);
+				}
+				Utilities.dimensions.overworld.runCommand(`tickingarea remove level-wide-abrs`);
+				player.sendMessage("Done");
+			});
+		}
+		case "blockPermutationData": {
+			var block = player.getBlockFromViewDirection()!.block;
+			var states = block.permutation.getAllStates();
+			player.sendMessage(JSON.stringify(states));
 		}
 	}
 });

@@ -2,8 +2,7 @@
     "format_version": "1.21.30",
     "minecraft:block": {
         "description": {
-            "identifier": "theheist:xray_mode_lvl_1",
-            "is_experimental": false
+            "identifier": "theheist:xray_mode_lvl_1"
         },
         "components": {
             "minecraft:geometry": "geometry.xray_mode",
