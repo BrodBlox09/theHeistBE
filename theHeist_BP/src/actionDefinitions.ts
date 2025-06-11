@@ -116,14 +116,28 @@ export class SetAlarmLevelAction implements IAction {
 
 export class NewGamebandAction implements IAction {
     type = "new_gameband";
-    do: { "displayBlock": IVector3, "mode": string, "modeText": string, "level": number, "slot": number };
+    do: { "displayBlock": IVector3, "mode": string, "modeText": string, "slot": number };
 
     constructor(displayBlockLocation: IVector3, mode: string, modeText: string, slot: number) {
         this.do = {
             "displayBlock": displayBlockLocation,
             "mode": mode.toLowerCase(),
             "modeText": modeText,
-            "level": 1,
+            "slot": slot
+        };
+    }
+}
+
+export class UpgradeGamebandAction implements IAction {
+    type = "upgrade_gameband";
+    do: { "displayBlock": IVector3, "mode": string, "modeText": string, "level": number, "slot": number };
+
+    constructor(displayBlockLocation: IVector3, mode: string, modeText: string, slot: number, level: number) {
+        this.do = {
+            "displayBlock": displayBlockLocation,
+            "mode": mode.toLowerCase(),
+            "modeText": modeText,
+            "level": level,
             "slot": slot
         };
     }

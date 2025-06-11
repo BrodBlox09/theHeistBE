@@ -5,10 +5,6 @@ import DataManager from "./DataManager";
 import Utilities from "./Utilities";
 import Vector from "./Vector";
 
-/**
- * The alarm XP bar texture can sometimes, seemingly at random, break and use a strange default-looking one. Just reload the world until you get the custom xp bar.
- */
-
 const cameraHeight = Utilities.cameraHeight;
 const cameraMappingHeight = Utilities.cameraMappingHeight;
 const robotPathHeight = -49;
@@ -123,7 +119,7 @@ system.runInterval(() => {
 	// Toggle below to see your velocity at all times, very useful when testing sonars
 	// let playerVelocityV3 = player.getVelocity();
 	// let playerVelocity: number = Math.abs(playerVelocityV3.x) + Math.abs(playerVelocityV3.y) + Math.abs(playerVelocityV3.z);
-	// playerVelocity *= 100; // Because the player's velocity is a small number, raise it
+	// playerVelocity *= 100; // Because the player's velocity is a small number, increase it
 	// playerVelocity = Math.round(playerVelocity * 100) / 100;
 	// player.onScreenDisplay.setActionBar(`Velocity: ${playerVelocity}`);
 });
@@ -167,7 +163,7 @@ function updateRobots(player: Player, level: number, levelInformation: LevelInfo
 			var currRot = cameraRobotArmorStand.getRotation().y;
 			if (Math.abs(cameraRobotArmorStand.location.x % 1 - 0.5) > 0.15) tryRotate = false; // Ensure the robot only turns near the center
 			if (Math.abs(cameraRobotArmorStand.location.z % 1 - 0.5) > 0.15) tryRotate = false;
-			if (tryRotate && pathLevelBlock.typeId == "minecraft:stone_brick_stairs") { // Terrible solution but works, see if it can be made better later
+			if (tryRotate && pathLevelBlock.typeId == "minecraft:stone_brick_stairs") {
 				var reqRot = getRotFromWeirdoDir(pathLevelBlock.permutation.getState("weirdo_direction") as number);
 				if (reqRot < 0 && currRot > 90) reqRot = 270;
 				if (reqRot > 0 && currRot < 0) currRot = 360 + currRot;

@@ -233,7 +233,7 @@ function rechargeMode(lvl: number, player: Player) {
 			player.playSound("portal.travel", { "volume": 0.1, "pitch": 2 });
 			Utilities.setBlock(blockLocation, "theheist:recharge_station", { "minecraft:cardinal_direction": armorStandEnergyTrackerDataNode.block.rotation, "theheist:state": 2 });
 			playerEnergyTrackerDataNode.usingRechargerID = armorStandEnergyTrackerDataNode.rechargerID;
-			// Enter "1 mode only" state
+			// Remove all gamebands except recharge mode
 			var playerInvContainer = (player.getComponent("inventory") as EntityInventoryComponent).container as Container;
 			playerInvContainer.clearAll();
 			var rechargeModeItemStack = new ItemStack(`theheist:recharge_mode_lvl_${lvl}_enchanted`);
@@ -244,7 +244,7 @@ function rechargeMode(lvl: number, player: Player) {
 			playerEnergyTrackerDataNode.recharging = false;
 			Utilities.setBlock(blockLocation, "theheist:recharge_station", { "minecraft:cardinal_direction": armorStandEnergyTrackerDataNode.block.rotation, "theheist:state": 1 });
 			playerEnergyTrackerDataNode.usingRechargerID = -1;
-			// Bring back player's items
+			// Bring back the player's items
 			Utilities.reloadPlayerInv(player);
 		}
 		DataManager.setData(player, playerEnergyTrackerDataNode);
@@ -302,7 +302,6 @@ function hackingMode(lvl: number, player: Player) {
 			});
 			// Player hacked the device, now disable it
 			armorStandActionTracker.used = true;
-			// Remove old data & add the modified data
 			DataManager.setData(armorStand, armorStandActionTracker);
 		} else {
 			player.sendMessage("§cConsole is too complicated");
@@ -336,7 +335,6 @@ function action(actionInfo: IAction, player: Player) {
 				"closest": 1
 			};
 			var hoverText = overworld.getEntities(query)[0];
-			// To not show the death particles
 			hoverText?.remove();
 			break;
 		}
@@ -477,15 +475,8 @@ function action(actionInfo: IAction, player: Player) {
 			}
 			break;
 		case "new_gameband": {
-			/**
-			 * actionInfo.do.displayBlock: Vector3
-			 * actionInfo.do.mode: string
-			 * actionInfo.do.slot: number
-			 * actionInfo.do.modeText: string
-			 * actionInfo.do.level: number
-			 */
 			var levelInformation = DataManager.getData(player, "levelInformation")!;
-			levelInformation.information[2].inventory.push({ "slot": actionInfo.do.slot, "typeId": `theheist:${actionInfo.do.mode}_mode_lvl_${actionInfo.do.level}`, "lockMode": "slot" });
+			levelInformation.information[2].inventory.push({ "slot": actionInfo.do.slot, "typeId": `theheist:${actionInfo.do.mode}_mode_lvl_1`, "lockMode": "slot" });
 			DataManager.setData(player, levelInformation);
 			Utilities.reloadPlayerInv(player);
 			Utilities.dimensions.overworld.getBlock(actionInfo.do.displayBlock)?.setType("minecraft:air");
