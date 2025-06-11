@@ -271,7 +271,7 @@ function hackingMode(lvl: number, player: Player) {
 				player.sendMessage("§cNot enough energy!");
 				return;
 			}
-			if (armorStandActionTracker.prereq) { // If there are any prerequisites, ensure they are true here
+			if (armorStandActionTracker.prereq) { // If there are prerequisites, ensure they are true here
 				var prereq = armorStandActionTracker.prereq;
 				if (prereq.objectives) { // Objective(s) must be completed first
 					if (!prereq.objectives.every(x => GameObjectiveManager.objectiveIsComplete(x))) return;
@@ -394,7 +394,7 @@ function action(actionInfo: IAction, player: Player) {
 
 				try {
 					const molangVarMap = new MolangVariableMap();
-					molangVarMap.setVector3("variable.velocity", { x, y, z });
+					molangVarMap.setVector3("velocity", new Vector(x, y, z));
 					overworld.spawnParticle("minecraft:explosion_particle", { x, y, z }, molangVarMap);
 				} catch (err) { }
 
@@ -807,11 +807,9 @@ system.runInterval(() => {
 				Utilities.setBlock({ x: armorStandEnergyTracker.block.x, y: armorStandEnergyTracker.block.y, z: armorStandEnergyTracker.block.z }, "theheist:recharge_station", { "minecraft:cardinal_direction": armorStandEnergyTracker.block.rotation, "theheist:state": 1 });
 				playerEnergyTracker.usingRechargerID = -1;
 			}
-		} else if (playerEnergyTracker.energyUnits < Utilities.gamebandInfo.rechargeMode[playerEnergyTracker.rechargeLevel].max) {
-			var addEnergy = Utilities.gamebandInfo.rechargeMode[playerEnergyTracker.rechargeLevel].speed;
-			// Divided by ticks in a second, because this is happening every tick (1/20th of a second)
-			addEnergy /= 20;
-			playerEnergyTracker.energyUnits = Math.min(playerEnergyTracker.energyUnits + addEnergy, Utilities.gamebandInfo.rechargeMode[playerEnergyTracker.rechargeLevel].max);
+		} else if (playerEnergyTracker.energyUnits < Utilities.rechargeGamebandInfo[playerEnergyTracker.rechargeLevel].max) {
+			var addEnergy = 1; // Amount of energy to add per tick
+			playerEnergyTracker.energyUnits = Math.min(playerEnergyTracker.energyUnits + addEnergy, Utilities.rechargeGamebandInfo[playerEnergyTracker.rechargeLevel].max);
 			for (const armorStand of armorStands) {
 				var armorStandEnergyTracker = DataManager.getData(armorStand, "energyTracker")!;
 				if (armorStandEnergyTracker.rechargerID != playerEnergyTracker.usingRechargerID) continue;

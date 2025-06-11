@@ -122,7 +122,7 @@ system.runInterval(() => {
 
 	// Toggle below to see your velocity at all times, very useful when testing sonars
 	// let playerVelocityV3 = player.getVelocity();
-	// let playerVelocity: any = Math.abs(playerVelocityV3.x) + Math.abs(playerVelocityV3.y) + Math.abs(playerVelocityV3.z);
+	// let playerVelocity: number = Math.abs(playerVelocityV3.x) + Math.abs(playerVelocityV3.y) + Math.abs(playerVelocityV3.z);
 	// playerVelocity *= 100; // Because the player's velocity is a small number, raise it
 	// playerVelocity = Math.round(playerVelocity * 100) / 100;
 	// player.onScreenDisplay.setActionBar(`Velocity: ${playerVelocity}`);

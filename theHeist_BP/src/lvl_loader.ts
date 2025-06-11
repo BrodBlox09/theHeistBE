@@ -68,7 +68,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 			const levelNum = parseInt(levelDefinition.levelID.substring(0, levelDefinition.levelID.length));
 
 			// Add mandatory data
-			const maxEnergy = Utilities.gamebandInfo.rechargeMode[levelDefinition.rechargeLevel].max;
+			const maxEnergy = Utilities.rechargeGamebandInfo[levelDefinition.rechargeLevel].max;
 			const playerEnergyTrackerDataNode: PlayerEnergyTracker = { "name": "playerEnergyTracker", "energyUnits": levelDefinition.startEnergyUnits ?? maxEnergy, "recharging": false, "usingRechargerID": -1, "rechargeLevel": levelDefinition.rechargeLevel };
 			DataManager.setData(player, playerEnergyTrackerDataNode);
 

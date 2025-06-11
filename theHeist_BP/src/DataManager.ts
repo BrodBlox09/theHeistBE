@@ -5,7 +5,7 @@ export default class DataManager {
 		const dataStr = entity.getDynamicProperty('data') as string;
 		if (!dataStr) return;
 		const dataNodes = JSON.parse(dataStr);
-		const dataNode = dataNodes.find((x: any) => (x.name == dataNodeName));
+		const dataNode = dataNodes.find((x: DataNode) => (x.name == dataNodeName));
 		if (!dataNode) return;
 		else return dataNode;
 	}

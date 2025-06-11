@@ -10,14 +10,6 @@ export default class Utilities {
 		the_end: world.getDimension("the_end")
 	}
 
-	static swapKVPs(json: Record<any, any>) {
-		var ret: Record<any, any> = {};
-		for (var key in json) {
-			ret[json[key]] = key;
-		}
-		return ret;
-	}
-
 	static sin(d: number): number {
 		return Math.sin(d * Math.PI / 180);
 	}
@@ -36,7 +28,7 @@ export default class Utilities {
 	}
 
 	static setBlock(location: Vector3, blockType: string, permutations?: Record<string, string | number | boolean>) {
-		this.dimensions.overworld.setBlockType(location, "air"); // Ensure any onPlace events run when the actual block is placed
+		this.dimensions.overworld.setBlockType(location, "air"); // Ensure onPlace events run when the actual block is placed
 		this.dimensions.overworld.setBlockPermutation(location, BlockPermutation.resolve(blockType, permutations));
 	}
 
@@ -70,12 +62,12 @@ export default class Utilities {
 		this.dimensions.overworld.fillBlocks(new BlockVolume(location1, location2), BlockPermutation.resolve(block, permutations), options);
 	}
 
-	static reloadPlayerInv(player: Player, levelData: any = null) {
-		if (levelData == null) levelData = DataManager.getData(player, "levelInformation");
+	static reloadPlayerInv(player: Player, levelData?: LevelInformation) {
+		if (levelData == null) levelData = DataManager.getData(player, "levelInformation")!;
 		var playerInvContainer = (player.getComponent("inventory") as EntityInventoryComponent).container as Container;
 		playerInvContainer.clearAll();
-		var playerInvData = levelData!.information[2].inventory; // Array of player inventory slots
-		playerInvData.forEach((invSlotData: any) => {
+		var playerInvData = levelData.information[2].inventory; // Array of player inventory slots
+		playerInvData.forEach((invSlotData: IInventorySlotData) => {
 			var itemStack: ItemStack = new ItemStack(invSlotData.typeId);
 			itemStack.keepOnDeath = true;
 			if (invSlotData.lockMode) itemStack.lockMode = ItemLockMode[invSlotData.lockMode as keyof typeof ItemLockMode];
@@ -137,21 +129,19 @@ export default class Utilities {
 		return null;
 	}
 
-	static gamebandInfo: Record<string, Record<number, Record<string, any>>> = {
-		"rechargeMode": {
-			1: {
-				"speed": 20.0,
-				"max": 100.0
-			},
-			2: {
-				"speed": 20.0,
-				"max": 150.0
-			},
-			3: {
-				"speed": 20.0,
-				"max": 200.0
-			}
+	static rechargeGamebandInfo: RechargeGamebandDataList = {
+		1: {
+			"max": 100.0
 		},
+		2: {
+			"max": 150.0
+		},
+		3: {
+			"max": 200.0
+		}
+	}
+
+	static gamebandInfo: GamebandDataList = {
 		"hackingMode": {
 			1: {
 				"cost": 15.0

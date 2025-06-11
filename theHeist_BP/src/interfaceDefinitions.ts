@@ -171,3 +171,17 @@ interface IInventorySlotData {
 	"typeId": string,
 	"lockMode"?: "none"|"inventory"|"slot"
 }
+
+interface GamebandDataList extends Record<string, GamebandDataEntry> {}
+
+interface GamebandDataEntry extends Record<number, GamebandLevelData> {}
+
+interface GamebandLevelData {
+	"cost": number
+}
+
+interface RechargeGamebandDataList extends Record<number, GamebandRechargeLevelData> {}
+
+interface GamebandRechargeLevelData {
+	"max": number
+}
