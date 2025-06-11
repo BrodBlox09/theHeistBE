@@ -7,7 +7,6 @@
                 "category": "construction"
             },
             "states": {
-                "theheist:rotation": [2, 3, 4, 5],
                 "theheist:type": [0, 1, 2]
             },
             "traits": {

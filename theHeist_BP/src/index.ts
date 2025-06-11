@@ -133,27 +133,6 @@ system.afterEvents.scriptEventReceive.subscribe(event => { // stable-friendly ve
 				Utilities.dimensions.overworld.spawnEntity("minecraft:sheep", player.location).nameTag = "jeb_";
 			});
 		}
-		case "updateABRS": {
-			var loc = Vector.from(player.location);
-			var size = new Vector(200, 20, 200);
-			var min = loc.subtract(size);
-			var max = loc.add(size);
-			Utilities.dimensions.overworld.runCommand(`tickingarea add ${min.toString()} ${max.toString()} level-wide-abrs true`);
-			system.run(() => {
-				var blockLocations = Utilities.dimensions.overworld.getBlocks(new BlockVolume(min, max), {}, true);
-				for (var blockLocation of blockLocations.getBlockLocationIterator()) {
-					// @ts-ignore
-					var block = Utilities.dimensions.overworld.getBlock(blockLocation);
-					if (!block) continue;
-					var rot = Utilities.getBlockState(block, "theheist:rotation") as number | undefined;
-					if (!rot) continue;
-					var cardinal = { 2: "north", 3: "south", 4: "west", 5: "east" }[rot];
-					Utilities.setBlockState(block, "minecraft:cardinal_direction", cardinal);
-				}
-				Utilities.dimensions.overworld.runCommand(`tickingarea remove level-wide-abrs`);
-				player.sendMessage("Done");
-			});
-		}
 		case "blockPermutationData": {
 			var block = player.getBlockFromViewDirection()!.block;
 			var states = block.permutation.getAllStates();

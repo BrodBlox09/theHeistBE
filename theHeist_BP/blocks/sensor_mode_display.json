@@ -4,7 +4,6 @@
         "description": {
             "identifier": "theheist:sensor_mode_display",
             "states": {
-                "theheist:rotation": [2, 3, 4, 5]
             },
             "traits": {
                 "minecraft:placement_direction": {

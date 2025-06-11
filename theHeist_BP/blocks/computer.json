@@ -7,7 +7,6 @@
                 "category": "equipment"
             },
             "states": {
-                "theheist:rotation": [2, 3, 4, 5],
                 "theheist:unlocked": [0, 1, 2],
                 "theheist:screensaver": [0, 1, 2, 3, 4, 5, 6]
             },

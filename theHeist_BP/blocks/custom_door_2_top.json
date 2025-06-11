@@ -4,7 +4,6 @@
         "description": {
             "identifier": "theheist:custom_door_2_top",
             "states": {
-                "theheist:rotation": [2, 3, 4, 5],
                 "theheist:unlocked": [true, false],
                 "theheist:open": [false, true]
             },
