@@ -14,7 +14,7 @@
 ### Backend
 - [ ] Separate the functionality of each gameband into separate files <!-- Almost, still need to do Hacking and Recharge -->
 - [x] For level 0 ensure all toggleable blocks are reset each run
-- [ ] For level -1 ensure all toggleable blocks are reset each run
+- [x] For level -1 ensure all toggleable blocks are reset each run
 - [ ] For level -2 ensure all toggleable blocks are reset each run
 - [ ] For level -3 ensure all toggleable blocks are reset each run
 - [ ] For level -4 ensure all toggleable blocks are reset each run

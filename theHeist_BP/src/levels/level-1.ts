@@ -115,21 +115,32 @@ LevelConstructor.rechargeStation(new Vector(3061.5, -60, 138.5), BlockRotation.N
 LevelConstructor.rechargeStation(new Vector(3077.5, -60, 119.5), BlockRotation.SOUTH);
 LevelConstructor.rechargeStation(new Vector(3091.5, -60, 128.5), BlockRotation.EAST);
 
-LevelConstructor.keycardDrawer(new Vector(3058, -60, 157), "yellow")
-LevelConstructor.keycardDrawer(new Vector(3033, -60, 130), "green")
+LevelConstructor.keycardDrawer(new Vector(3058, -60, 157), "yellow");
+LevelConstructor.keycardDrawer(new Vector(3033, -60, 130), "green");
+
+Utilities.setBlock(new Vector(3066, -60, 118), "minecraft:wooden_door", { "minecraft:cardinal_direction": BlockRotation.WEST });
+Utilities.setBlock(new Vector(3065, -60, 114), "minecraft:wooden_door", { "minecraft:cardinal_direction": BlockRotation.EAST });
+Utilities.setBlock(new Vector(3067, -60, 114), "minecraft:wooden_door", { "minecraft:cardinal_direction": BlockRotation.EAST });
+Utilities.setBlock(new Vector(3062, -60, 118), "minecraft:wooden_door", { "minecraft:cardinal_direction": BlockRotation.WEST });
+Utilities.setBlock(new Vector(3059, -60, 114), "minecraft:wooden_door", { "minecraft:cardinal_direction": BlockRotation.EAST });
+Utilities.setBlock(new Vector(3061, -60, 114), "minecraft:wooden_door", { "minecraft:cardinal_direction": BlockRotation.EAST });
+Utilities.setBlock(new Vector(3063, -60, 114), "minecraft:wooden_door", { "minecraft:cardinal_direction": BlockRotation.EAST, "door_hinge_bit": true });
+Utilities.setBlock(new Vector(3079, -57, 139), "theheist:white_trapdoor", { "minecraft:cardinal_direction": BlockRotation.SOUTH });
+Utilities.setBlock(new Vector(3107, -60, 125), "minecraft:wooden_door", { "minecraft:cardinal_direction": BlockRotation.WEST });
+Utilities.setBlock(new Vector(3107, -57, 119), "theheist:white_trapdoor", { "minecraft:cardinal_direction": BlockRotation.SOUTH });
+LevelConstructor.door1(new Vector(3079, -60, 114), BlockRotation.WEST, true);
+LevelConstructor.door1(new Vector(3080, -60, 114), BlockRotation.EAST, true);
+LevelConstructor.door1(new Vector(3081, -60, 114), BlockRotation.WEST, true);
+LevelConstructor.door1(new Vector(3082, -60, 114), BlockRotation.SOUTH, true);
 
 Utilities.dimensions.overworld.setBlockType(new Vector(3073, -55, 127), "minecraft:redstone_block");
 Utilities.setBlock(new Vector(3090, -59, 124), "minecraft:lever", { "lever_direction": "south" });
 Utilities.dimensions.overworld.spawnEntity("theheist:camera_robot", new Vector(3053.5, -59, 110.5)).setRotation({ "x": 0, "y": 180 });
-const decorativeCamera0 = Utilities.dimensions.overworld.spawnEntity("theheist:camera", new Vector(3034.5, -59, 141.5));
-decorativeCamera0.setRotation({ "x": 0, "y": 180 });
-decorativeCamera0.triggerEvent("theheist:disable");
-const decorativeCamera1 = Utilities.dimensions.overworld.spawnEntity("theheist:camera", new Vector(3035.5, -59, 141.5));
-decorativeCamera1.setRotation({ "x": 0, "y": 180 });
-decorativeCamera1.triggerEvent("theheist:disable");
-const decorativeCamera2 = Utilities.dimensions.overworld.spawnEntity("theheist:camera", new Vector(3036.5, -59, 141.5));
-decorativeCamera2.setRotation({ "x": 0, "y": 180 });
-decorativeCamera2.triggerEvent("theheist:disable");
+[new Vector(3034.5, -59, 141.5), new Vector(3035.5, -59, 141.5), new Vector(3036.5, -59, 141.5)].forEach(vector => {
+    const decorativeCamera = Utilities.dimensions.overworld.spawnEntity("theheist:camera", vector);
+    decorativeCamera.setRotation({ "x": 0, "y": 180 });
+    decorativeCamera.triggerEvent("theheist:disable");
+});
 
 }
 };
