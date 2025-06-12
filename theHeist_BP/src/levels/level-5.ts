@@ -320,6 +320,16 @@ setup: () => {
 } // Advanced Cryptography
 
 {
+    // Men's
+    Utilities.setBlock(new Vector(6902, -60, 121), "minecraft:wooden_door", { "minecraft:cardinal_direction": BlockRotation.WEST });
+    Utilities.setBlock(new Vector(6901, -60, 117), "minecraft:wooden_door", { "minecraft:cardinal_direction": BlockRotation.EAST });
+    // Women's
+    Utilities.setBlock(new Vector(6909, -60, 114), "minecraft:wooden_door", { "minecraft:cardinal_direction": BlockRotation.SOUTH });
+    Utilities.setBlock(new Vector(6905, -60, 115), "minecraft:wooden_door", { "minecraft:cardinal_direction": BlockRotation.NORTH });
+    Utilities.setBlock(new Vector(6905, -60, 113), "minecraft:wooden_door", { "minecraft:cardinal_direction": BlockRotation.NORTH });
+} // Bathrooms
+
+{
     Utilities.setBlock(new Vector(6878, -60, 156), "theheist:custom_door_4_bottom_l", { "minecraft:cardinal_direction": "west", "theheist:unlocked": false });
     Utilities.setBlock(new Vector(6878, -60, 155), "theheist:custom_door_4_bottom_r", { "minecraft:cardinal_direction": "west", "theheist:unlocked": false });
     LevelConstructor.keycardReader(new Vector(6879.5, -59, 153.5), "green", [

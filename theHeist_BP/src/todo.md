@@ -18,7 +18,7 @@
 - [x] For level -2 ensure all toggleable blocks are reset each run
 - [x] For level -3 ensure all toggleable blocks are reset each run
 - [x] For level -4 ensure all toggleable blocks are reset each run
-- [ ] For level -5 ensure all toggleable blocks are reset each run
+- [x] For level -5 ensure all toggleable blocks are reset each run
 ## Level -6
 ### World
 - [ ] Port level -6's build to Bedrock and replace blocks that have special models/textures

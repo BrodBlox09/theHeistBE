@@ -128,7 +128,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 			}, waitForLoadLevel ? SECOND * 7.5 : 0); // After 7.5 seconds load level objects
 			system.runTimeout(() => { // After 10 seconds bring the player out of the elevator and end the interval
 				if (elevatorInterval) system.clearRun(elevatorInterval);
-				player.teleport(levelDefinition.startPlayerLoc, { rotation: { 'x': 0, 'y': levelDefinition.startPlayerRot ?? 0 } });
+				player.teleport(levelDefinition.startPlayerLoc, { rotation: levelDefinition.startPlayerRot ? { 'x': 0, 'y': levelDefinition.startPlayerRot } : player.getRotation() });
 				if (levelDefinition.onStart) levelDefinition.onStart(player);
 				player.removeTag('loadingLevel');
 			}, waitForLoadLevel ? SECOND * 10 : 0);
