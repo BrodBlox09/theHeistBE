@@ -31,7 +31,7 @@
                         "target": "self",
                         "filters": {
                             "test": "distance_to_nearest_player",
-                            "value": 2.5,
+                            "value": 2,
                             "operator": "<="
                         }
                     },
@@ -40,7 +40,7 @@
                         "target": "self",
                         "filters": {
                             "test": "distance_to_nearest_player",
-                            "value": 2.5,
+                            "value": 2,
                             "operator": ">"
                         }
                     }

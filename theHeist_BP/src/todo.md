@@ -16,7 +16,7 @@
 - [x] For level 0 ensure all toggleable blocks are reset each run
 - [x] For level -1 ensure all toggleable blocks are reset each run
 - [x] For level -2 ensure all toggleable blocks are reset each run
-- [ ] For level -3 ensure all toggleable blocks are reset each run
+- [x] For level -3 ensure all toggleable blocks are reset each run
 - [ ] For level -4 ensure all toggleable blocks are reset each run
 - [ ] For level -5 ensure all toggleable blocks are reset each run
 ## Level -6
