@@ -184,6 +184,19 @@ setup: () => {
 } // X-Ray Lvl. 2 Research
 
 {
+    // Women's
+    Utilities.setBlock(new Vector(5882, -60, 137), "minecraft:wooden_door", { "minecraft:cardinal_direction": BlockRotation.NORTH });
+    Utilities.setBlock(new Vector(5886, -60, 135), "minecraft:wooden_door", { "minecraft:cardinal_direction": BlockRotation.SOUTH });
+    Utilities.setBlock(new Vector(5886, -60, 137), "minecraft:wooden_door", { "minecraft:cardinal_direction": BlockRotation.SOUTH });
+    Utilities.setBlock(new Vector(5886, -60, 139), "minecraft:wooden_door", { "minecraft:cardinal_direction": BlockRotation.SOUTH });
+    Utilities.setBlock(new Vector(5885, -57, 137), "theheist:white_trapdoor", { "minecraft:cardinal_direction": BlockRotation.EAST });
+    // Men's
+    Utilities.setBlock(new Vector(5876, -60, 137), "minecraft:wooden_door", { "minecraft:cardinal_direction": BlockRotation.SOUTH });
+    Utilities.setBlock(new Vector(5872, -60, 135), "minecraft:wooden_door", { "minecraft:cardinal_direction": BlockRotation.NORTH });
+    Utilities.setBlock(new Vector(5873, -57, 137), "theheist:white_trapdoor", { "minecraft:cardinal_direction": BlockRotation.SOUTH });
+} // Bathrooms
+
+{
     LevelConstructor.keypad(new Vector(5877.5, -59, 139.5), 3, BlockRotation.WEST, []);
     LevelConstructor.keypad(new Vector(5875.5, -59, 145.5), 3, BlockRotation.SOUTH, []);
 
