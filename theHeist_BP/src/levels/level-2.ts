@@ -23,6 +23,7 @@ setup: () => {
     LevelConstructor.rechargeStation(new Vector(4086.5, -60, 104.5), BlockRotation.SOUTH);
     LevelConstructor.rechargeStation(new Vector(4088.5, -60, 101.5), BlockRotation.EAST);
     LevelConstructor.rechargeStation(new Vector(4088.5, -60, 99.5), BlockRotation.EAST);
+    Utilities.setBlock(new Vector(4085, -57, 101), "theheist:white_trapdoor", { "minecraft:cardinal_direction": BlockRotation.SOUTH });
 } // Engineering Workshop
 
 {
@@ -37,7 +38,6 @@ setup: () => {
             "type": "set_alarm_level", "do": { "value": 0 }, "delay": 40
         }
     ]);
-    //
 } // Security Office
 
 {
@@ -50,7 +50,12 @@ setup: () => {
             "type": "play_sound", "do": { "soundID": "random.door_open" }
         }
     ]);
+    Utilities.setBlock(new Vector(4111, -56, 118), "theheist:white_trapdoor", { "minecraft:cardinal_direction": BlockRotation.NORTH });
 } // Ventilation Pump Room
+
+{
+    Utilities.setBlock(new Vector(4112, -57, 130), "theheist:white_trapdoor", { "minecraft:cardinal_direction": BlockRotation.EAST });
+} // Boiler Room
 
 {
     LevelConstructor.computer(new Vector(4088.5, -59, 130.5), "Mail", BlockRotation.NORTH, [
@@ -60,7 +65,8 @@ setup: () => {
         {
             "type": "manage_objectives", "do": { "manageType": 1, "objective": "Find Red Keycard", "sortOrder": 2 }, "delay": 40
         }
-    ])
+    ]);
+    Utilities.setBlock(new Vector(4091, -57, 134), "theheist:white_trapdoor", { "minecraft:cardinal_direction": BlockRotation.EAST });
 } // Server Room
 
 {
@@ -77,6 +83,7 @@ setup: () => {
             "type": "display_mail", "do": { "mailID": 202 }, "delay": 40
         }
     ]);
+    Utilities.setBlock(new Vector(4077, -57, 129), "theheist:white_trapdoor", { "minecraft:cardinal_direction": BlockRotation.WEST });
 } // Web Development
 
 {
@@ -88,6 +95,7 @@ setup: () => {
         "type": "display_research", "do": { "researchID": 204 }, "delay": 40
     }]);
     LevelConstructor.gamebandUpgrade(new Vector(4062.5, -59, 133.5), "sensor", "§6§lSensor Lvl. 2", 2, 2, BlockRotation.WEST, []);
+    Utilities.setBlock(new Vector(4064, -57, 135), "theheist:white_trapdoor", { "minecraft:cardinal_direction": BlockRotation.SOUTH });
 } // Sensor Lvl.2 Research
 
 {
@@ -101,6 +109,8 @@ setup: () => {
         "type": "manage_objectives", "do": { "manageType": 1, "objective": "Find Green Keycard", "sortOrder": 1 }, "delay": 40
     }]);
     LevelConstructor.keycardDrawer(new Vector(4104, -60, 158), "red");
+    Utilities.setBlock(new Vector(4103, -57, 152), "theheist:white_trapdoor", { "minecraft:cardinal_direction": BlockRotation.NORTH });
+    Utilities.setBlock(new Vector(4092, -57, 152), "theheist:white_trapdoor", { "minecraft:cardinal_direction": BlockRotation.NORTH });
 } // Customer Service
 
 {
@@ -120,6 +130,9 @@ setup: () => {
     ]);
     LevelConstructor.rechargeStation(new Vector(4122.5, -60, 146.5), BlockRotation.WEST);
     LevelConstructor.newGameband(new Vector(4131.5, -59, 146.5), "xray", "§4§lXRay", 3, BlockRotation.EAST, []);
+    Utilities.setBlock(new Vector(4127, -57, 145), "theheist:white_trapdoor", { "minecraft:cardinal_direction": BlockRotation.SOUTH });
+    Utilities.setBlock(new Vector(4127, -60, 140), "minecraft:wooden_door", { "minecraft:cardinal_direction": BlockRotation.WEST });
+    Utilities.setBlock(new Vector(4126, -57, 136), "theheist:white_trapdoor", { "minecraft:cardinal_direction": BlockRotation.SOUTH });
 } // Xray Research
 
 {
@@ -133,6 +146,23 @@ setup: () => {
     LevelConstructor.cameraRobot(new Vector(4119.5, -59.25, 129.5), 0);
     LevelConstructor.cameraRobot(new Vector(4072.5, -59.25, 116.5), 0);
 } // Security Stuffs
+
+{
+    Utilities.setBlock(new Vector(4085, -57, 109), "theheist:white_trapdoor", { "minecraft:cardinal_direction": BlockRotation.EAST });
+} // Bar
+
+{
+    // Women's
+    Utilities.setBlock(new Vector(4086, -60, 122), "minecraft:wooden_door", { "minecraft:cardinal_direction": BlockRotation.NORTH });
+    Utilities.setBlock(new Vector(4087, -60, 121), "minecraft:wooden_door", { "minecraft:cardinal_direction": BlockRotation.EAST });
+    Utilities.setBlock(new Vector(4089, -60, 121), "minecraft:wooden_door", { "minecraft:cardinal_direction": BlockRotation.EAST });
+    Utilities.setBlock(new Vector(4091, -60, 121), "minecraft:wooden_door", { "minecraft:cardinal_direction": BlockRotation.EAST, "door_hinge_bit": true });
+    Utilities.setBlock(new Vector(4089, -57, 122), "theheist:white_trapdoor", { "minecraft:cardinal_direction": BlockRotation.SOUTH });
+    // Men's
+    Utilities.setBlock(new Vector(4086, -60, 126), "minecraft:wooden_door", { "minecraft:cardinal_direction": BlockRotation.NORTH });
+    Utilities.setBlock(new Vector(4090, -60, 125), "minecraft:wooden_door", { "minecraft:cardinal_direction": BlockRotation.SOUTH });
+    Utilities.setBlock(new Vector(4088, -57, 126), "theheist:white_trapdoor", { "minecraft:cardinal_direction": BlockRotation.EAST });
+} // Restrooms
 
 {
     Utilities.setBlock(new Vector(4081, -60, 123), "theheist:custom_door_4_bottom_l", { "minecraft:cardinal_direction": "west", "theheist:unlocked": false });
