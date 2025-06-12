@@ -351,6 +351,15 @@ const drawer0InventoryContainer = (overworld.getBlock({ "x": 2002.5, "y": -60, "
 drawer0InventoryContainer.clearAll();
 drawer0InventoryContainer.setItem(4, new ItemStack("yellow_dye"));
 // Set doors and trapdoors
+Utilities.setBlock(new Vector(2007, -57, 56), "theheist:white_trapdoor", { "minecraft:cardinal_direction": "north" });
+Utilities.setBlock(new Vector(2006, -60, 57), "minecraft:wooden_door", { "minecraft:cardinal_direction": "north" });
+Utilities.setBlock(new Vector(2006, -60, 55), "minecraft:wooden_door", { "minecraft:cardinal_direction": "north" });
+Utilities.setBlock(new Vector(2010, -60, 56), "minecraft:wooden_door", { "minecraft:cardinal_direction": "south" });
+Utilities.setBlock(new Vector(2015, -60, 56), "minecraft:wooden_door", { "minecraft:cardinal_direction": "south" });
+Utilities.setBlock(new Vector(2010, -60, 60), "minecraft:wooden_door", { "minecraft:cardinal_direction": "south" });
+Utilities.setBlock(new Vector(2006, -60, 62), "minecraft:wooden_door", { "minecraft:cardinal_direction": "north" });
+Utilities.setBlock(new Vector(2007, -57, 60), "theheist:white_trapdoor", { "minecraft:cardinal_direction": "west" });
+Utilities.setBlock(new Vector(1985, -60, 51), "minecraft:wooden_door", { "minecraft:cardinal_direction": "south" });
 
 // Reset end level doors
 Utilities.setBlock(new Vector(1988, -60, 68), "theheist:custom_door_4_bottom_l", { "minecraft:cardinal_direction": "south", "theheist:unlocked": false });

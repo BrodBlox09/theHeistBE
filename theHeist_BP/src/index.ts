@@ -123,11 +123,6 @@ system.afterEvents.scriptEventReceive.subscribe(event => { // stable-friendly ve
 			world.sendMessage(JSON.stringify(data));
 			break;
 		}
-		case "getBlockPermutation": {
-			var block = Utilities.dimensions.overworld.getBlock(player.location)!;
-			console.warn(block.typeId);
-			break;
-		}
 		case "spawnJeb": {
 			system.run(() => {
 				Utilities.dimensions.overworld.spawnEntity("minecraft:sheep", player.location).nameTag = "jeb_";
@@ -136,6 +131,7 @@ system.afterEvents.scriptEventReceive.subscribe(event => { // stable-friendly ve
 		case "blockPermutationData": {
 			var block = player.getBlockFromViewDirection()!.block;
 			var states = block.permutation.getAllStates();
+			player.sendMessage(block.typeId);
 			player.sendMessage(JSON.stringify(states));
 		}
 	}
