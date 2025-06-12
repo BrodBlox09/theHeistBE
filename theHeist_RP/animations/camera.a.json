@@ -3,7 +3,6 @@
 	"animations": {
 		"animation.camera.default": {
 			"loop": true
-			//Do something with Eye bone when figured out
 		},
 		"animation.camera.disable": {
 			"loop": "hold_on_last_frame",
