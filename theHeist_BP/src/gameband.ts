@@ -484,13 +484,6 @@ function action(actionInfo: IAction, player: Player) {
 			break;
 		}
 		case "upgrade_gameband": {
-			/**
-			 * actionInfo.do.displayBlock: Vector3
-			 * actionInfo.do.mode: string
-			 * actionInfo.do.slot: number
-			 * actionInfo.do.modeText: string
-			 * actionInfo.do.level: number
-			 */
 			var levelInformation = DataManager.getData(player, "levelInformation")!;
 			levelInformation.information[2].inventory = levelInformation.information[2].inventory.filter((x: IInventorySlotData) => (x.slot != actionInfo.do.slot));
 			levelInformation.information[2].inventory.push({ "slot": actionInfo.do.slot, "typeId": `theheist:${actionInfo.do.mode}_mode_lvl_${actionInfo.do.level}`, "lockMode": "slot" });
