@@ -185,5 +185,9 @@
         "atlas_tile": "forcefield",
         "ticks_per_frame": 2,
         "blend_frames": false
+    },
+    {
+        "flipbook_texture": "textures/blocks/projector",
+        "atlas_tile": "projector"
     }
 ]
