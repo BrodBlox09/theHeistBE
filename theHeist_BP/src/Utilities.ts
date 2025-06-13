@@ -242,6 +242,14 @@ export default class Utilities {
 			"endZ": 166,
 			"prisonLoc": new Vector(6966.5, -59, 82.5),
 			"mapLoc": new Vector(6911, -55, 131)
+		},
+		"-6": {
+			"startX": 7872,
+			"startZ": 63,
+			"endX": 7999,
+			"endZ": 191,
+			"prisonLoc": new Vector(7916.5, -59, 94.5),
+			"mapLoc": new Vector(7940, -54, 99)
 		}
 	}
 
