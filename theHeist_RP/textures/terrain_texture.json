@@ -99,9 +99,6 @@
         "file_cabinet": {
             "textures": "textures/blocks/file_cabinet"
         },
-        "chair": {
-            "textures": "textures/blocks/chair"
-        },
         "recharge_mode": {
             "textures": "textures/blocks/recharge_mode"
         },

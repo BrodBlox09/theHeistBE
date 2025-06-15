@@ -213,6 +213,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 function endDemo(player: Player) {
 	Utilities.clearPlayerInventory(player);
 	DataManager.clearData(player);
+	player.resetLevel();
 	player.onScreenDisplay.setHudVisibility(HudVisibility.Hide);
 	player.camera.fade({"fadeTime":{"holdTime": 5,"fadeInTime":0.5,"fadeOutTime":0.5}});
 	player.onScreenDisplay.setTitle("Thanks for playing!", {
