@@ -3,7 +3,7 @@
 	"minecraft:geometry": [
 		{
 			"description": {
-				"identifier": "geometry.computer_with_screensaver",
+				"identifier": "geometry.computer_screensaver_cube_gif",
 				"texture_width": 16,
 				"texture_height": 16,
 				"visible_bounds_width": 3,
@@ -53,11 +53,11 @@
 							}
 						},
 						{
-							"origin": [-20, 3.75, -7],
+							"origin": [-19.9375, 3.75, -7],
 							"size": [0.0625, 9.6875, 14],
 							"uv": {
-								"east": {"uv": [1, 2.5625], "uv_size": [14, 9.6875], "material_instance": "screen"},
-								"west": {"uv": [1, 2.5625], "uv_size": [14, 9.6875], "material_instance": "screen"}
+								"east": {"uv": [0, 0], "uv_size": [16, 12], "material_instance": "screen"},
+								"west": {"uv": [0, 0], "uv_size": [16, 12], "material_instance": "screen"}
 							}
 						},
 						{
