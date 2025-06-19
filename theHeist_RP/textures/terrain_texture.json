@@ -24,15 +24,6 @@
         "gray_base": {
             "textures": "textures/blocks/gameband-displays/gray_base"
         },
-        "keypad_base": {
-            "textures": "textures/blocks/keypad_base"
-        },
-        "keypad_base_animated": {
-            "textures": "textures/blocks/keypad_base_animated"
-        },
-        "keypad_base_animated_hack": {
-            "textures": "textures/blocks/keypad_base_animated_hack"
-        },
         "locked_screen": {
             "textures": "textures/blocks/redstone_block_animated"
         },
@@ -269,6 +260,15 @@
         },
         "iron_block_animated": {
             "textures": "textures/blocks/iron_block_animated"
+        },
+        "anvil_base_animated": {
+            "textures": "textures/blocks/anvil_base_animated"
+        },
+        "numpad": {
+            "textures": "textures/blocks/numpad"
+        },
+        "numpad_hacking": {
+            "textures": "textures/blocks/numpad_hacking"
         }
     }
 }

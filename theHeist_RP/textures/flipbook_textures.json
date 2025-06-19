@@ -28,17 +28,6 @@
         "ticks_per_frame": 14
     },
     {
-        "flipbook_texture": "textures/blocks/keypad_base_animated",
-        "atlas_tile": "keypad_base_animated",
-        "ticks_per_frame": 14
-    },
-    {
-        "flipbook_texture": "textures/blocks/keypad_base_animated_hack",
-        "atlas_tile": "keypad_base_animated_hack",
-        "ticks_per_frame": 2,
-        "blend_frames": false
-    },
-    {
         "flipbook_texture": "textures/blocks/noise",
         "atlas_tile": "noise",
         "ticks_per_frame": 1,
@@ -215,6 +204,17 @@
     {
         "flipbook_texture": "textures/blocks/iron_block_animated",
         "atlas_tile": "iron_block_animated",
+        "ticks_per_frame": 14
+    },
+    {
+        "flipbook_texture": "textures/blocks/numpad_hacking",
+        "atlas_tile": "numpad_hacking",
+        "ticks_per_frame": 2,
+        "blend_frames": false
+    },
+    {
+        "flipbook_texture": "textures/blocks/anvil_base_animated",
+        "atlas_tile": "anvil_base_animated",
         "ticks_per_frame": 14
     }
 ]
