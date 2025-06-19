@@ -45,9 +45,6 @@
         "noise": {
             "textures": "textures/blocks/noise"
         },
-        "fake_iron_block": {
-            "textures": "textures/blocks/iron_block"
-        },
         "green_block": {
             "textures": "textures/blocks/green_block"
         },

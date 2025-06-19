@@ -23,7 +23,7 @@
                     "texture": "door_iron_lower_old"
                 },
                 "iron_block": {
-                    "texture": "fake_iron_block"
+                    "texture": "iron_block"
                 },
                 "*": {
                     "texture": "anvil_base"

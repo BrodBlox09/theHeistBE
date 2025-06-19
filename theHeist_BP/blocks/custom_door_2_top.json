@@ -20,7 +20,7 @@
                     "render_method": "alpha_test"
                 },
                 "iron_block": {
-                    "texture": "fake_iron_block",
+                    "texture": "iron_block",
                     "render_method": "alpha_test"
                 },
                 "glass": {
