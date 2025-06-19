@@ -1,0 +1,131 @@
+{
+    "format_version": "1.21.70",
+    "minecraft:block": {
+        "description": {
+            "identifier": "theheist:new_computer",
+            "states": {
+                "theheist:computer_screensaver": [ 1, 2, 3, 4, 5, 6 ]
+            }
+        },
+        "components": {
+            "minecraft:geometry": "geometry.computer_with_screensaver"
+        },
+        "permutations": [
+            {
+                "condition": "q.block_state('theheist:computer_screensaver') == 1",
+                "components": {
+                    "minecraft:material_instances": {
+                        "iron_block": {
+                            "texture": "iron_block"
+                        },
+                        "door_iron_lower_a": {
+                            "texture": "door_iron_lower_a"
+                        },
+                        "screen": {
+                            "texture": "computer_screen_gameband"
+                        },
+                        "*": {
+                            "texture": "iron_block"
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('theheist:computer_screensaver') == 2",
+                "components": {
+                    "minecraft:material_instances": {
+                        "iron_block": {
+                            "texture": "iron_block"
+                        },
+                        "door_iron_lower_a": {
+                            "texture": "door_iron_lower_a"
+                        },
+                        "screen": {
+                            "texture": "computer_screen_gameband_gif"
+                        },
+                        "*": {
+                            "texture": "iron_block"
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('theheist:computer_screensaver') == 3",
+                "components": {
+                    "minecraft:geometry": "geometry.computer_with_screensaver_cube_gif",
+                    "minecraft:material_instances": {
+                        "iron_block": {
+                            "texture": "iron_block"
+                        },
+                        "door_iron_lower_a": {
+                            "texture": "door_iron_lower_a"
+                        },
+                        "screen": {
+                            "texture": "computer_screen_cube_gif"
+                        },
+                        "*": {
+                            "texture": "iron_block"
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('theheist:computer_screensaver') == 4",
+                "components": {
+                    "minecraft:material_instances": {
+                        "iron_block": {
+                            "texture": "iron_block"
+                        },
+                        "door_iron_lower_a": {
+                            "texture": "door_iron_lower_a"
+                        },
+                        "screen": {
+                            "texture": "computer_screen_chicken_gif"
+                        },
+                        "*": {
+                            "texture": "iron_block"
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('theheist:computer_screensaver') == 5",
+                "components": {
+                    "minecraft:material_instances": {
+                        "iron_block": {
+                            "texture": "iron_block"
+                        },
+                        "door_iron_lower_a": {
+                            "texture": "door_iron_lower_a"
+                        },
+                        "screen": {
+                            "texture": "computer_screen_minecraft"
+                        },
+                        "*": {
+                            "texture": "iron_block"
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('theheist:computer_screensaver') == 6",
+                "components": {
+                    "minecraft:material_instances": {
+                        "iron_block": {
+                            "texture": "iron_block"
+                        },
+                        "door_iron_lower_a": {
+                            "texture": "door_iron_lower_a"
+                        },
+                        "screen": {
+                            "texture": "computer_screen_pixel_furnace_gif"
+                        },
+                        "*": {
+                            "texture": "iron_block"
+                        }
+                    }
+                }
+            }
+        ]
+    }
+}

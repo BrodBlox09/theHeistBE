@@ -269,6 +269,24 @@
         },
         "bridge_end_front": {
             "textures": "textures/blocks/bridge_end_front"
+        },
+        "computer_screen_gameband": {
+            "textures": "textures/blocks/computers/gameband"
+        },
+        "computer_screen_gameband_gif": {
+            "textures": "textures/blocks/computers/gameband_gif"
+        },
+        "computer_screen_chicken_gif": {
+            "textures": "textures/blocks/computers/chicken_gif"
+        },
+        "computer_screen_cube_gif": {
+            "textures": "textures/blocks/computers/cube_gif"
+        },
+        "computer_screen_minecraft": {
+            "textures": "textures/blocks/computers/minecraft"
+        },
+        "computer_screen_pixel_furnace_gif": {
+            "textures": "textures/blocks/computers/pixel_furnace_gif"
         }
     }
 }
