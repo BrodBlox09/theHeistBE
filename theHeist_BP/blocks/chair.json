@@ -67,13 +67,10 @@
             {
                 "condition": "query.block_state('theheist:style') == 2",
                 "components": {
-                    "minecraft:collision_box": {
-                        "origin": [-8, 0, -8],
-                        "size": [16, 1, 16]
-                    },
+                    "minecraft:collision_box": false,
                     "minecraft:selection_box": {
-                        "origin": [-8, 0, -8],
-                        "size": [16, 1, 16]
+                        "origin": [-5, 0, -5],
+                        "size": [10, 9, 10]
                     },
                     "minecraft:geometry": "geometry.stool",
                     "minecraft:material_instances": {
