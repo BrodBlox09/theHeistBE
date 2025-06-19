@@ -20,17 +20,17 @@
     {
         "flipbook_texture": "textures/blocks/reinforced_iron_block",
         "atlas_tile": "reinforced_iron_block",
-        "ticks_per_frame": 10
+        "ticks_per_frame": 14
     },
     {
         "flipbook_texture": "textures/blocks/redstone_block_animated",
         "atlas_tile": "locked_screen",
-        "ticks_per_frame": 20
+        "ticks_per_frame": 14
     },
     {
         "flipbook_texture": "textures/blocks/keypad_base_animated",
         "atlas_tile": "keypad_base_animated",
-        "ticks_per_frame": 20
+        "ticks_per_frame": 14
     },
     {
         "flipbook_texture": "textures/blocks/keypad_base_animated_hack",
@@ -206,5 +206,15 @@
         "atlas_tile": "computer_screen_pixel_furnace_gif",
         "ticks_per_frame": 3,
         "blend_frames": false
+    },
+    {
+        "flipbook_texture": "textures/blocks/door_iron_lower_animated",
+        "atlas_tile": "door_iron_lower_animated",
+        "ticks_per_frame": 14
+    },
+    {
+        "flipbook_texture": "textures/blocks/iron_block_animated",
+        "atlas_tile": "iron_block_animated",
+        "ticks_per_frame": 14
     }
 ]

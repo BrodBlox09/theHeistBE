@@ -33,12 +33,6 @@
         "keypad_base_animated_hack": {
             "textures": "textures/blocks/keypad_base_animated_hack"
         },
-        "computer_base": {
-            "textures": "textures/blocks/computer_base"
-        },
-        "computer_base_animated": {
-            "textures": "textures/blocks/computer_base_animated"
-        },
         "locked_screen": {
             "textures": "textures/blocks/redstone_block_animated"
         },
@@ -269,6 +263,12 @@
         },
         "computer_screen_pixel_furnace_gif": {
             "textures": "textures/blocks/computers/pixel_furnace_gif"
+        },
+        "door_iron_lower_animated": {
+            "textures": "textures/blocks/door_iron_lower_animated"
+        },
+        "iron_block_animated": {
+            "textures": "textures/blocks/iron_block_animated"
         }
     }
 }

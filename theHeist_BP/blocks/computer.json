@@ -66,10 +66,10 @@
                 "components": {
                     "minecraft:material_instances": {
                         "iron_block": {
-                            "texture": "iron_block"
+                            "texture": "iron_block_animated"
                         },
                         "door_iron_lower_old": {
-                            "texture": "door_iron_lower_old"
+                            "texture": "door_iron_lower_animated"
                         },
                         "screen": {
                             "texture": "locked_screen"
