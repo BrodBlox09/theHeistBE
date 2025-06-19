@@ -28,7 +28,7 @@
                     "render_method": "alpha_test"
                 },
                 "*": {
-                    "texture": "door_iron_lower_a",
+                    "texture": "door_iron_lower_old",
                     "render_method": "alpha_test"
                 }
             },

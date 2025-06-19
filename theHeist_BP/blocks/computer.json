@@ -68,8 +68,8 @@
                         "iron_block": {
                             "texture": "iron_block"
                         },
-                        "door_iron_lower_a": {
-                            "texture": "door_iron_lower_a"
+                        "door_iron_lower_old": {
+                            "texture": "door_iron_lower_old"
                         },
                         "screen": {
                             "texture": "locked_screen"
@@ -87,8 +87,8 @@
                         "iron_block": {
                             "texture": "iron_block"
                         },
-                        "door_iron_lower_a": {
-                            "texture": "door_iron_lower_a"
+                        "door_iron_lower_old": {
+                            "texture": "door_iron_lower_old"
                         },
                         "screen": {
                             "texture": "noise"
@@ -106,8 +106,8 @@
                         "iron_block": {
                             "texture": "iron_block"
                         },
-                        "door_iron_lower_a": {
-                            "texture": "door_iron_lower_a"
+                        "door_iron_lower_old": {
+                            "texture": "door_iron_lower_old"
                         },
                         "screen": {
                             "texture": "unlocked_screen"
@@ -125,8 +125,8 @@
                         "iron_block": {
                             "texture": "iron_block"
                         },
-                        "door_iron_lower_a": {
-                            "texture": "door_iron_lower_a"
+                        "door_iron_lower_old": {
+                            "texture": "door_iron_lower_old"
                         },
                         "screen": {
                             "texture": "computer_screen_gameband"
@@ -144,8 +144,8 @@
                         "iron_block": {
                             "texture": "iron_block"
                         },
-                        "door_iron_lower_a": {
-                            "texture": "door_iron_lower_a"
+                        "door_iron_lower_old": {
+                            "texture": "door_iron_lower_old"
                         },
                         "screen": {
                             "texture": "computer_screen_gameband_gif"
@@ -164,8 +164,8 @@
                         "iron_block": {
                             "texture": "iron_block"
                         },
-                        "door_iron_lower_a": {
-                            "texture": "door_iron_lower_a"
+                        "door_iron_lower_old": {
+                            "texture": "door_iron_lower_old"
                         },
                         "screen": {
                             "texture": "computer_screen_cube_gif"
@@ -183,8 +183,8 @@
                         "iron_block": {
                             "texture": "iron_block"
                         },
-                        "door_iron_lower_a": {
-                            "texture": "door_iron_lower_a"
+                        "door_iron_lower_old": {
+                            "texture": "door_iron_lower_old"
                         },
                         "screen": {
                             "texture": "computer_screen_chicken_gif"
@@ -202,8 +202,8 @@
                         "iron_block": {
                             "texture": "iron_block"
                         },
-                        "door_iron_lower_a": {
-                            "texture": "door_iron_lower_a"
+                        "door_iron_lower_old": {
+                            "texture": "door_iron_lower_old"
                         },
                         "screen": {
                             "texture": "computer_screen_minecraft"
@@ -221,8 +221,8 @@
                         "iron_block": {
                             "texture": "iron_block"
                         },
-                        "door_iron_lower_a": {
-                            "texture": "door_iron_lower_a"
+                        "door_iron_lower_old": {
+                            "texture": "door_iron_lower_old"
                         },
                         "screen": {
                             "texture": "computer_screen_pixel_furnace_gif"
