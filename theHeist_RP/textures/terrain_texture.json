@@ -48,24 +48,6 @@
         "redstone_block_old": {
             "textures": "textures/blocks/redstone_block_old"
         },
-        "computer_screensaver_1": {
-            "textures": "textures/blocks/computer_screensaver_1"
-        },
-        "computer_screensaver_2": {
-            "textures": "textures/blocks/computer_screensaver_2"
-        },
-        "computer_screensaver_3": {
-            "textures": "textures/blocks/computer_screensaver_3"
-        },
-        "computer_screensaver_4": {
-            "textures": "textures/blocks/computer_screensaver_4"
-        },
-        "computer_screensaver_5": {
-            "textures": "textures/blocks/computer_screensaver_5"
-        },
-        "computer_screensaver_6": {
-            "textures": "textures/blocks/computer_screensaver_6"
-        },
         "custom_door_1_bottom": {
             "textures": "textures/blocks/door_dark_oak_lower"
         },

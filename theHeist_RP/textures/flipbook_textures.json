@@ -28,11 +28,6 @@
         "ticks_per_frame": 20
     },
     {
-        "flipbook_texture": "textures/blocks/computer_base_animated",
-        "atlas_tile": "computer_base_animated",
-        "ticks_per_frame": 20
-    },
-    {
         "flipbook_texture": "textures/blocks/keypad_base_animated",
         "atlas_tile": "keypad_base_animated",
         "ticks_per_frame": 20
