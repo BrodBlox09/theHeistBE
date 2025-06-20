@@ -17,7 +17,6 @@
         },
         "components": {
             "minecraft:collision_box": false,
-            "minecraft:selection_box": true,
             "minecraft:material_instances": {
                 "laser": {
                     "texture": "laser",
