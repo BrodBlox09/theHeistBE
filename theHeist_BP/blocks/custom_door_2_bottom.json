@@ -18,6 +18,7 @@
             }
         },
         "components": {
+            "tag:door": {},
             "minecraft:material_instances": {
                 "anvil_base": {
                     "texture": "anvil_base",

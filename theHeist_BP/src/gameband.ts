@@ -72,6 +72,12 @@ world.afterEvents.itemStartUseOn.subscribe(itemUse);
 world.afterEvents.itemUse.subscribe(itemUse);
 
 function itemUse(event: ItemUseAfterEvent | ItemStartUseOnAfterEvent) {
+	if (event instanceof ItemStartUseOnAfterEvent) {
+		if (event.block.typeId == "minecraft:wooden_door" ||
+			event.block.typeId == "minecraft:wooden_trapdoor") return;
+		if (event.block.hasTag("door") && Utilities.getBlockState(event.block, "theheist:unlocked")) return;
+		if (event.block.typeId == "theheist:white_trapdoor" && !Utilities.getBlockState(event.block, "theheist:locked")) return;
+	}
 	const player = event.source;
 	var itemStack = event.itemStack;
 	if (!itemStack) return;
@@ -275,17 +281,17 @@ function hackingMode(lvl: number, player: Player) {
 		var armorStandActionTracker = DataManager.getData(armorStand, 'actionTracker')! as ActionTracker;
 		if (armorStandActionTracker.used == true || armorStandActionTracker.isKeycardReader) {
 			i--;
-			return;
+			continue;
 		}
 		if (armorStandActionTracker.level <= lvl) {
 			if (Utilities.gamebandInfo.hackingMode[lvl].cost > playerEnergyTracker.energyUnits) {
 				player.sendMessage("§cNot enough energy!");
-				return;
+				continue;
 			}
 			if (armorStandActionTracker.prereq) { // If there are prerequisites, ensure they are true here
 				var prereq = armorStandActionTracker.prereq;
 				if (prereq.objectives) { // Objective(s) must be completed first
-					if (!prereq.objectives.every(x => GameObjectiveManager.objectiveIsComplete(x))) return;
+					if (!prereq.objectives.every(x => GameObjectiveManager.objectiveIsComplete(x))) continue;
 				}
 			}
 			player.playSound('map.hack_use');
