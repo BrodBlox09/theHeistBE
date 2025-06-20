@@ -45,9 +45,6 @@
         "noise": {
             "textures": "textures/blocks/noise"
         },
-        "green_block": {
-            "textures": "textures/blocks/green_block"
-        },
         "camera_sight": {
             "textures": "textures/blocks/camera_sight"
         },
@@ -266,6 +263,24 @@
         },
         "numpad_hacking": {
             "textures": "textures/blocks/numpad_hacking"
+        },
+        "green_block0": {
+            "textures": "textures/blocks/green_block/0"
+        },
+        "green_block1": {
+            "textures": "textures/blocks/green_block/1"
+        },
+        "green_block2": {
+            "textures": "textures/blocks/green_block/2"
+        },
+        "green_block3": {
+            "textures": "textures/blocks/green_block/3"
+        },
+        "green_block4": {
+            "textures": "textures/blocks/green_block/4"
+        },
+        "green_block5": {
+            "textures": "textures/blocks/green_block/5"
         }
     }
 }
