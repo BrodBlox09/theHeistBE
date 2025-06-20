@@ -13,6 +13,8 @@ import VoiceOverManager from "./VoiceOverManager";
 import { SlideshowAction } from "./actionDefinitions";
 import GamebandManager from "./gamebands/GamebandManager";
 
+// let lastTickTime = Date.now();
+
 /**
  * Unfinished objectives color: §c (Red)
  * Finished objectives color: §a (Green)
@@ -813,4 +815,6 @@ system.runInterval(() => {
 	}
 
 	if (playerEnergyTracker && playerLevelInformation) SensorModeFunc.tryMap(player, playerLevelInformation, playerEnergyTracker);
+	// player.onScreenDisplay.setActionBar(`TPS: ${Math.round(1 / ((Date.now() - lastTickTime) / 1000))}`);
+	// lastTickTime = Date.now();
 });
