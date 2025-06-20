@@ -74,7 +74,8 @@ world.afterEvents.itemUse.subscribe(itemUse);
 function itemUse(event: ItemUseAfterEvent | ItemStartUseOnAfterEvent) {
 	if (event instanceof ItemStartUseOnAfterEvent) {
 		if (event.block.typeId == "minecraft:wooden_door" ||
-			event.block.typeId == "minecraft:wooden_trapdoor") return;
+			event.block.typeId == "minecraft:wooden_trapdoor" ||
+			event.block.typeId == "minecraft:dropper") return;
 		if (event.block.hasTag("door") && Utilities.getBlockState(event.block, "theheist:unlocked")) return;
 		if (event.block.typeId == "theheist:white_trapdoor" && !Utilities.getBlockState(event.block, "theheist:locked")) return;
 	}

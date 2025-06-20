@@ -25,10 +25,7 @@
                     "texture": "door_iron_lower_old"
                 }
             },
-            "minecraft:collision_box": {
-                "origin": [ -8, 0, -8 ],
-                "size": [ 16, 1, 16 ]
-            },
+            "minecraft:collision_box": false,
             "minecraft:selection_box": {
                 "origin": [ -8, 0, -8 ],
                 "size": [ 16, 1, 16 ]
