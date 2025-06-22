@@ -102,6 +102,7 @@ function topDoorInteract(event: BlockComponentPlayerInteractEvent) {
     }
 }
 
+// Remove this component when building is done and we can publish the map
 function randBlockNTypes(nTypes: number, event: BlockComponentPlayerPlaceBeforeEvent) {
     event.permutationToPlace = Utilities.permutationWithState(event.permutationToPlace, "theheist:type", Utilities.getRandInt(0, nTypes));
 }
