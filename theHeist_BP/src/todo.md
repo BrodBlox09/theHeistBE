@@ -21,7 +21,8 @@
 - [ ] Make one primary loop in index and remove the multiple loops currently in use
 ## Level -6
 ### World
-- [ ] Port level -6's build to Bedrock and replace blocks that have special models/textures
+- [x] Port level -6's build to Bedrock and replace blocks that have special models/textures
+- [ ] Add level -6 definition file and add block functionality
 ### Backend
 - [ ] Implement timer for levels
 - [ ] Allow for one-time cutscenes before levels

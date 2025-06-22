@@ -29,7 +29,8 @@ const levelLocations: Record<string, Vector3> = {
 	"-2": { 'x': 4101, 'y': -47, 'z': 131 },
 	"-3": { 'x': 4996, 'y': -44, 'z': 126 },
 	"-4": { 'x': 5893, 'y': -44, 'z': 129 },
-	"-5": { 'x': 6939, 'y': -54, 'z': 71 }
+	"-5": { 'x': 6939, 'y': -54, 'z': 71 },
+	"-6": { 'x': 7939, 'y': -54, 'z': 71 }
 }
 
 const objectivesObjective = world.scoreboard.getObjective("objectives") ?? world.scoreboard.addObjective("objectives", "Objectives");
@@ -98,10 +99,9 @@ system.afterEvents.scriptEventReceive.subscribe(event => { // stable-friendly ve
 			}, 0);
 			break;
 		}
-		case "fillLarge": {
+		case "fillBlocks": {
 			system.run(() => {
-				const lvlCI = Utilities.levelCloneInfo["-5"];
-				Utilities.fillBlocks(new Vector(lvlCI.startX, parseInt(args[0]), lvlCI.startZ), new Vector(lvlCI.endX, parseInt(args[0]), lvlCI.endZ), args[1]);
+				Utilities.fillBlocks(new Vector(parseInt(args[0]), parseInt(args[1]), parseInt(args[2])), new Vector(parseInt(args[3]), parseInt(args[4]), parseInt(args[5])), args[6]);
 			});
 			break;
 		}
