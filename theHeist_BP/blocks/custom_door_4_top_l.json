@@ -14,12 +14,13 @@
             }
         },
         "components": {
+            "tag:door": {},
             "minecraft:material_instances": {
                 "anvil_base": {
                     "texture": "anvil_base"
                 },
                 "*": {
-                    "texture": "door_iron_lower_a"
+                    "texture": "door_iron_lower_old"
                 }
             },
             "minecraft:collision_box": {

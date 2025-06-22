@@ -14,6 +14,7 @@
             }
         },
         "components": {
+            "tag:door": {},
             "minecraft:material_instances": {
                 "*": {
                     "texture": "custom_door_1_top"

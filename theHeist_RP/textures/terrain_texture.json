@@ -24,21 +24,6 @@
         "gray_base": {
             "textures": "textures/blocks/gameband-displays/gray_base"
         },
-        "keypad_base": {
-            "textures": "textures/blocks/keypad_base"
-        },
-        "keypad_base_animated": {
-            "textures": "textures/blocks/keypad_base_animated"
-        },
-        "keypad_base_animated_hack": {
-            "textures": "textures/blocks/keypad_base_animated_hack"
-        },
-        "computer_base": {
-            "textures": "textures/blocks/computer_base"
-        },
-        "computer_base_animated": {
-            "textures": "textures/blocks/computer_base_animated"
-        },
         "locked_screen": {
             "textures": "textures/blocks/redstone_block_animated"
         },
@@ -47,24 +32,6 @@
         },
         "redstone_block_old": {
             "textures": "textures/blocks/redstone_block_old"
-        },
-        "computer_screensaver_1": {
-            "textures": "textures/blocks/computer_screensaver_1"
-        },
-        "computer_screensaver_2": {
-            "textures": "textures/blocks/computer_screensaver_2"
-        },
-        "computer_screensaver_3": {
-            "textures": "textures/blocks/computer_screensaver_3"
-        },
-        "computer_screensaver_4": {
-            "textures": "textures/blocks/computer_screensaver_4"
-        },
-        "computer_screensaver_5": {
-            "textures": "textures/blocks/computer_screensaver_5"
-        },
-        "computer_screensaver_6": {
-            "textures": "textures/blocks/computer_screensaver_6"
         },
         "custom_door_1_bottom": {
             "textures": "textures/blocks/door_dark_oak_lower"
@@ -77,12 +44,6 @@
         },
         "noise": {
             "textures": "textures/blocks/noise"
-        },
-        "fake_iron_block": {
-            "textures": "textures/blocks/iron_block"
-        },
-        "green_block": {
-            "textures": "textures/blocks/green_block"
         },
         "camera_sight": {
             "textures": "textures/blocks/camera_sight"
@@ -195,8 +156,8 @@
         "projector": {
             "textures": "textures/blocks/projector"
         },
-        "door_iron_lower_a": {
-            "textures": "textures/blocks/door_iron_lower_a"
+        "door_iron_lower_old": {
+            "textures": "textures/blocks/door_iron_lower_old"
         },
         "oak_log": {
             "textures": "textures/blocks/log_oak"
@@ -266,6 +227,57 @@
         },
         "bridge_end_front": {
             "textures": "textures/blocks/bridge_end_front"
+        },
+        "computer_screen_gameband": {
+            "textures": "textures/blocks/computers/gameband"
+        },
+        "computer_screen_gameband_gif": {
+            "textures": "textures/blocks/computers/gameband_gif"
+        },
+        "computer_screen_chicken_gif": {
+            "textures": "textures/blocks/computers/chicken_gif"
+        },
+        "computer_screen_cube_gif": {
+            "textures": "textures/blocks/computers/cube_gif"
+        },
+        "computer_screen_minecraft": {
+            "textures": "textures/blocks/computers/minecraft"
+        },
+        "computer_screen_pixel_furnace_gif": {
+            "textures": "textures/blocks/computers/pixel_furnace_gif"
+        },
+        "door_iron_lower_animated": {
+            "textures": "textures/blocks/door_iron_lower_animated"
+        },
+        "iron_block_animated": {
+            "textures": "textures/blocks/iron_block_animated"
+        },
+        "anvil_base_animated": {
+            "textures": "textures/blocks/anvil_base_animated"
+        },
+        "numpad": {
+            "textures": "textures/blocks/numpad"
+        },
+        "numpad_hacking": {
+            "textures": "textures/blocks/numpad_hacking"
+        },
+        "green_block0": {
+            "textures": "textures/blocks/green_block/0"
+        },
+        "green_block1": {
+            "textures": "textures/blocks/green_block/1"
+        },
+        "green_block2": {
+            "textures": "textures/blocks/green_block/2"
+        },
+        "green_block3": {
+            "textures": "textures/blocks/green_block/3"
+        },
+        "green_block4": {
+            "textures": "textures/blocks/green_block/4"
+        },
+        "green_block5": {
+            "textures": "textures/blocks/green_block/5"
         }
     }
 }

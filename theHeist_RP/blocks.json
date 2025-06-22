@@ -10,7 +10,7 @@
 
     },
     "theheist:fake_iron_block": {
-        "textures": "fake_iron_block"
+        "textures": "iron_block"
     },
     "theheist:green_block": {
         "textures": "green_block"

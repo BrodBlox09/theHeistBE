@@ -7,8 +7,6 @@
                 "category": "construction"
             }
         },
-        "components": {
-            "minecraft:selection_box": true
-        }
+        "components": {}
     }
 }

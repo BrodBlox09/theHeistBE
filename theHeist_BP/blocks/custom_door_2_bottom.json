@@ -18,13 +18,14 @@
             }
         },
         "components": {
+            "tag:door": {},
             "minecraft:material_instances": {
                 "anvil_base": {
                     "texture": "anvil_base",
                     "render_method": "alpha_test"
                 },
                 "iron_block": {
-                    "texture": "fake_iron_block",
+                    "texture": "iron_block",
                     "render_method": "alpha_test"
                 },
                 "glass": {
@@ -32,7 +33,7 @@
                     "render_method": "alpha_test"
                 },
                 "*": {
-                    "texture": "door_iron_lower_a",
+                    "texture": "door_iron_lower_old",
                     "render_method": "alpha_test"
                 }
             },

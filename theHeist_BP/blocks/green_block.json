@@ -5,10 +5,75 @@
             "identifier": "theheist:green_block",
             "menu_category": {
                 "category": "construction"
+            },
+            "states": {
+                "theheist:type": [0, 1, 2, 3, 4, 5]
             }
         },
         "components": {
-            "minecraft:selection_box": true
-        }
+            "minecraft:geometry": "geometry.normal"
+        },
+        "permutations": [
+            {
+                "condition": "q.block_state('theheist:type') == 0",
+                "components": {
+                    "minecraft:material_instances": {
+                        "*": {
+                            "texture": "green_block0"
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('theheist:type') == 1",
+                "components": {
+                    "minecraft:material_instances": {
+                        "*": {
+                            "texture": "green_block1"
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('theheist:type') == 2",
+                "components": {
+                    "minecraft:material_instances": {
+                        "*": {
+                            "texture": "green_block2"
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('theheist:type') == 3",
+                "components": {
+                    "minecraft:material_instances": {
+                        "*": {
+                            "texture": "green_block3"
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('theheist:type') == 4",
+                "components": {
+                    "minecraft:material_instances": {
+                        "*": {
+                            "texture": "green_block4"
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('theheist:type') == 5",
+                "components": {
+                    "minecraft:material_instances": {
+                        "*": {
+                            "texture": "green_block5"
+                        }
+                    }
+                }
+            }
+        ]
     }
 }

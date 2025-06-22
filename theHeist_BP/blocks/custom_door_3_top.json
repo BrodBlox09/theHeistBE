@@ -14,9 +14,10 @@
             }
         },
         "components": {
+            "tag:door": {},
             "minecraft:material_instances": {
                 "door_iron_lower": {
-                    "texture": "door_iron_lower_a"
+                    "texture": "door_iron_lower_old"
                 },
                 "*": {
                     "texture": "anvil_base"

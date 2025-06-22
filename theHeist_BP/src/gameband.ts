@@ -1,4 +1,4 @@
-import { MolangVariableMap, BlockPermutation, EffectTypes, world, system, Player, EntityInventoryComponent, ScoreboardObjective, Container, ItemStack, ItemLockMode, Entity, ItemUseAfterEvent, BlockVolume, EntityEquippableComponent, EquipmentSlot, EntityItemComponent, ItemStartUseOnAfterEvent } from "@minecraft/server";
+import { MolangVariableMap, BlockPermutation, EffectTypes, world, system, Player, EntityInventoryComponent, ScoreboardObjective, Container, ItemStack, ItemLockMode, Entity, ItemUseAfterEvent, BlockVolume, EntityEquippableComponent, EquipmentSlot, EntityItemComponent, ItemStartUseOnAfterEvent, EntityQueryOptions } from "@minecraft/server";
 import Vector from "./Vector";
 import DataManager from "./DataManager";
 import Utilities from "./Utilities";
@@ -12,6 +12,8 @@ import * as DrillModeFunc from "./gamebands/drill";
 import VoiceOverManager from "./VoiceOverManager";
 import { SlideshowAction } from "./actionDefinitions";
 import GamebandManager from "./gamebands/GamebandManager";
+
+// let lastTickTime = Date.now();
 
 /**
  * Unfinished objectives color: §c (Red)
@@ -72,6 +74,13 @@ world.afterEvents.itemStartUseOn.subscribe(itemUse);
 world.afterEvents.itemUse.subscribe(itemUse);
 
 function itemUse(event: ItemUseAfterEvent | ItemStartUseOnAfterEvent) {
+	if (event instanceof ItemStartUseOnAfterEvent) {
+		if (event.block.typeId == "minecraft:wooden_door" ||
+			event.block.typeId == "minecraft:wooden_trapdoor" ||
+			event.block.typeId == "minecraft:dropper") return;
+		if (event.block.hasTag("door") && Utilities.getBlockState(event.block, "theheist:unlocked")) return;
+		if (event.block.typeId == "theheist:white_trapdoor" && !Utilities.getBlockState(event.block, "theheist:locked")) return;
+	}
 	const player = event.source;
 	var itemStack = event.itemStack;
 	if (!itemStack) return;
@@ -262,30 +271,30 @@ function hackingMode(lvl: number, player: Player) {
 	GamebandManager.cancelMode(player, levelInformation.currentMode);
 
 	var playerEnergyTracker = DataManager.getData(player, "playerEnergyTracker")!;
-	const query = {
+	const query: EntityQueryOptions = {
 		"type": "armor_stand",
 		"location": { "x": player.location.x, "y": consolesHeight, "z": player.location.z },
-		"maxDistance": 2,
-		"closest": 1
+		"maxDistance": 2
 	}
 	const armorStands = overworld.getEntities(query);
 	var i = 0;
+	let errorMessage = null;
 	for (const armorStand of armorStands) {
 		i++;
 		var armorStandActionTracker = DataManager.getData(armorStand, 'actionTracker')! as ActionTracker;
 		if (armorStandActionTracker.used == true || armorStandActionTracker.isKeycardReader) {
 			i--;
-			return;
+			continue;
 		}
 		if (armorStandActionTracker.level <= lvl) {
 			if (Utilities.gamebandInfo.hackingMode[lvl].cost > playerEnergyTracker.energyUnits) {
-				player.sendMessage("§cNot enough energy!");
-				return;
+				errorMessage = "Not enough energy!";
+				continue;
 			}
 			if (armorStandActionTracker.prereq) { // If there are prerequisites, ensure they are true here
 				var prereq = armorStandActionTracker.prereq;
 				if (prereq.objectives) { // Objective(s) must be completed first
-					if (!prereq.objectives.every(x => GameObjectiveManager.objectiveIsComplete(x))) return;
+					if (!prereq.objectives.every(x => GameObjectiveManager.objectiveIsComplete(x))) continue;
 				}
 			}
 			player.playSound('map.hack_use');
@@ -303,15 +312,14 @@ function hackingMode(lvl: number, player: Player) {
 			// Player hacked the device, now disable it
 			armorStandActionTracker.used = true;
 			DataManager.setData(armorStand, armorStandActionTracker);
+			errorMessage = null;
 		} else {
-			player.sendMessage("§cConsole is too complicated");
-			return;
+			errorMessage = "Console is too complicated";
+			continue;
 		}
 	}
-	if (i == 0) {
-		player.sendMessage("§cNo console");
-		return;
-	}
+	if (i == 0) errorMessage = "No console";
+	if (errorMessage) player.sendMessage("§c" + errorMessage);
 }
 
 function action(actionInfo: IAction, player: Player) {
@@ -807,4 +815,6 @@ system.runInterval(() => {
 	}
 
 	if (playerEnergyTracker && playerLevelInformation) SensorModeFunc.tryMap(player, playerLevelInformation, playerEnergyTracker);
+	// player.onScreenDisplay.setActionBar(`TPS: ${Math.round(1 / ((Date.now() - lastTickTime) / 1000))}`);
+	// lastTickTime = Date.now();
 });
