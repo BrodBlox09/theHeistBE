@@ -65,6 +65,7 @@ system.afterEvents.scriptEventReceive.subscribe(event => { // stable-friendly ve
 				player.getTags().forEach((x) => { if (x != "developer") player.removeTag(x); });
 			});
 			system.run(() => Utilities.dimensions.overworld.runCommand('tickingarea remove_all'));
+			player.sendMessage("Data cleared");
 			break;
 		case "rotateCam":
 			system.run(() => {
