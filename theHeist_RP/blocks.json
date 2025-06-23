@@ -7,19 +7,25 @@
         "textures": "server_side"
     },
     "theheist:computer": {
-
+        "textures": "iron_block"
+    },
+    "theheist:bridge_end": {
+        "textures": "bridge_end_side"
     },
     "theheist:fake_iron_block": {
         "textures": "iron_block"
     },
     "theheist:green_block": {
-        "textures": "green_block"
+        "textures": "green_block0"
     },
     "theheist:camera_sight": {
-        
+        "textures": "camera_sight"
+    },
+    "theheist:sonar_sight": {
+        "textures": "sonar_sight"
     },
     "theheist:white_trapdoor": {
-
+        "textures": "white_trapdoor"
     },
     "theheist:reinforced_iron_block": {
         "textures": "reinforced_iron_block"
