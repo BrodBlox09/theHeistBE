@@ -25,6 +25,8 @@
                 "width": 0
             },
             "minecraft:environment_sensor": {
+                // Find a way to make this more accurate where it only shows when the user
+                // is within 2 blocks on the X and Z axies (flat circle) extended to 2 blocks within the Y axis (making a cylinder with radius 2 and height of 4)
                 "triggers": [
                     {
                         "event": "theheist:show_text",
