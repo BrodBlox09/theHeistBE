@@ -8,7 +8,7 @@
 			{
 				"control_name": "armor_grid",
 				"operation": "replace",
-				"value": { "@inventory_display.armor_grid_head_only": {} }
+				"value": { "armor_grid@inventory_display.armor_grid_head_only": {} }
 			},
 			{
 				"control_name": "offhand_grid",

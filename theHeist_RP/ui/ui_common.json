@@ -4,16 +4,8 @@
 		"modifications": [
 			{
 				"control_name": "inventory_grid",
-				"operation": "remove"
-			},
-			{
-				"array_name": "controls",
-				"operation": "insert_front",
-				"value": [
-					{
-						"@inventory_display.desktop_inventory": {}
-					}
-				]
+				"operation": "replace",
+				"value": { "inventory_grid@inventory_display.desktop_inventory": {} }
 			}
 		]
 	}
