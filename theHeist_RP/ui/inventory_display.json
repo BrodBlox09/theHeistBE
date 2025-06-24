@@ -72,3 +72,19 @@
 	}
 ]
 */
+
+/* Conditional variable declaration:
+"variables": [
+	{
+		"requires": "$desktop_screen",
+		"$screen_content": "chest.barrel_panel",
+		"$screen_bg_content": "common.screen_background",
+		"$screen_background_alpha": 0.4
+	},
+	{
+		"requires": "$pocket_screen",
+		"$use_custom_pocket_toast": true,
+		"$screen_content": "pocket_containers.barrel_panel"
+	}
+]
+*/
