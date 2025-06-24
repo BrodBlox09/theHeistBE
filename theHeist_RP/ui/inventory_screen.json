@@ -1,0 +1,26 @@
+{
+	"namespace": "crafting",
+	"player_armor_panel": {
+		"anchor_to": "top_middle",
+		"anchor_from": "top_middle",
+		"offset": [ -8, 0 ],
+		"modifications": [
+			{
+				"control_name": "armor_grid",
+				"operation": "remove"
+			},
+			{
+				"control_name": "offhand_grid",
+				"operation": "remove"
+			},
+			{
+				"array_name": "controls",
+				"operation": "insert_front",
+				"value": [ { "@inventory_display.armor_grid_head_only": {} } ]
+			}
+		]
+	},
+	"crafting_panel_2x2": {
+		"visible": false
+	}
+}
