@@ -73,7 +73,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 			DataManager.setData(player, playerEnergyTrackerDataNode);
 
 			const playerLevelInformationDataNode: LevelInformation = { "name": "levelInformation", "currentMode": null, "information": [{ "name": "alarmLevel", "level": 0, "sonarTimeout": 0 }, { "name": "gameLevel", "level": levelNum }, { "name": "playerInv", "inventory": [] }] };
-			if (!levelDefinition.playerNoPhone) levelDefinition.startingItems.push({ "slot": 19, "typeId": 'theheist:phone' });
+			if (!levelDefinition.playerNoPhone) levelDefinition.startingItems.push({ "slot": 9, "typeId": 'theheist:phone' });
 			levelDefinition.startingItems.forEach((item) => {
 				playerLevelInformationDataNode.information[2].inventory.push(item);
 			});
@@ -150,13 +150,13 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 			const player = world.getPlayers().filter((x) => (x != undefined))[0];
 			var playerInvContainer = player.getComponent("inventory")!.container as Container;
 			var index = Utilities.inventoryContainerIndexOf(playerInvContainer, keycardItemTypeId);
-			var i2 = 21; //19
-			while (playerInvContainer.getItem(i2) && i2 < playerInvContainer.size) i2++;
-			if (index) playerInvContainer.setItem(index); // If item is in slot, clear slot (avoids errors)
+			var i = 10;
+			while (playerInvContainer.getItem(i) && i < playerInvContainer.size) i++;
+			if (index) playerInvContainer.setItem(index); // If item is in a slot already, clear the slot
 			var itemStack = new ItemStack(keycardItemTypeId);
 			itemStack.lockMode = ItemLockMode.slot;
-			playerInvContainer.setItem(i2, itemStack);
-			var itemStack2 = new ItemStack("minecraft:paper");
+			playerInvContainer.setItem(i, itemStack);
+			var itemStack2 = new ItemStack("minecraft:paper"); // Set universal keycard
 			itemStack2.lockMode = ItemLockMode.slot;
 			playerInvContainer.setItem(8, itemStack2);
 			Utilities.savePlayerInventory(player);
