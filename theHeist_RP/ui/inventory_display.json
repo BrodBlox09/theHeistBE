@@ -17,9 +17,9 @@
 			}
 		]
 	},
-	"pocket_inventory@crafting.scroll_grid": {
-		"maximum_grid_items": 5,
-        "bindings": []
+	"pocket_inventory@crafting.tab_content": {
+		"$scrolling_pane_control": "crafting_pocket.survival_scroll_panel",
+    	"$navigation_tab_name": "survival_tab_toggle"
 	},
 	"armor_grid_head_only": {
 		"type": "grid",
@@ -46,98 +46,145 @@
 		]
 	},
 	"pocket_equipment_and_renderer_head_only": {
+		"type": "stack_panel",
+		"orientation": "horizontal",
+		"size": [
+			"100%",
+			140
+		],
+		"controls": [
+			{
+				"equipment": {
 					"type": "stack_panel",
-					"orientation": "horizontal",
-					"size": [ "100%", 140 ],
+					"orientation": "vertical",
+					"size": [
+						28,
+						"100%"
+					],
 					"controls": [
 						{
-							"equipment": {
-								"type": "stack_panel",
-								"orientation": "vertical",
-								"size": [ 28, "100%" ],
+							"armor_grid": {
+								"type": "grid",
+								"layer": 4,
+								"size": [
+									28,
+									112
+								],
+								"anchor_from": "top_left",
+								"anchor_to": "top_left",
+								"grid_dimensions": [
+									1,
+									1
+								],
+								"$item_collection_name": "armor_items",
+								"collection_name": "$item_collection_name",
+								"$item_renderer_panel_size": [
+									28,
+									28
+								],
+								"$item_renderer_size": [
+									24,
+									24
+								],
+								"$durability_bar_size": [
+									18,
+									1
+								],
+								"$durability_bar_offset": [
+									0,
+									8
+								],
+								"$armor_overlay_size": [
+									24,
+									24
+								],
 								"controls": [
 									{
-										"armor_grid": {
-											"type": "grid",
-											"layer": 4,
-											"size": [ 28, 112 ],
-											"anchor_from": "top_left",
-											"anchor_to": "top_left",
-											"grid_dimensions": [ 1, 1 ],
-											"$item_collection_name": "armor_items",
-											"collection_name": "$item_collection_name",
-											"$item_renderer_panel_size": [ 28, 28 ],
-											"$item_renderer_size": [ 24, 24 ],
-											"$durability_bar_size": [ 18, 1 ],
-											"$durability_bar_offset": [ 0, 8 ],
-											"$armor_overlay_size": [ 24, 24 ],
-											"controls": [
-												{
-													"head_grid_item@common.pocket_ui_container_item": {
-														"size": [ 28, 28 ],
-														"grid_position": [ 0, 0 ],
-														"$cell_image_size": [ 28, 28 ],
-														"$cell_overlay_ref": "crafting.armor_overlay_helmet",
-														"$button_ref": "crafting.no_coalesce_container_slot_button"
-													}
-												}
-											]
+										"head_grid_item@common.pocket_ui_container_item": {
+											"size": [
+												28,
+												28
+											],
+											"grid_position": [
+												0,
+												0
+											],
+											"$cell_image_size": [
+												28,
+												28
+											],
+											"$cell_overlay_ref": "crafting.armor_overlay_helmet",
+											"$button_ref": "crafting.no_coalesce_container_slot_button"
 										}
 									}
 								]
 							}
-						},
+						}
+					]
+				}
+			},
+			{
+				"armor_panel": {
+					"type": "panel",
+					"size": [
+						"fill",
+						"100%"
+					],
+					"controls": [
 						{
-							"armor_panel": {
+							"armor_and_player": {
 								"type": "panel",
-								"size": [ "fill", "100%" ],
+								"anchor_from": "center",
+								"anchor_to": "center",
 								"controls": [
 									{
-										"armor_and_player": {
-											"type": "panel",
+										"player_preview_border": {
+											"type": "image",
+											"texture": "textures/ui/player_preview_border",
+											"size": [
+												"100%",
+												"100%"
+											],
+											"layer": 2,
 											"anchor_from": "center",
 											"anchor_to": "center",
 											"controls": [
 												{
-													"player_preview_border": {
+													"player_bg": {
 														"type": "image",
-														"texture": "textures/ui/player_preview_border",
-														"size": [ "100%", "100%" ],
+														"texture": "textures/ui/Black",
+														"size": [
+															"100% - 2px",
+															"100% - 2px"
+														],
 														"layer": 2,
-														"anchor_from": "center",
-														"anchor_to": "center",
 														"controls": [
 															{
-																"player_bg": {
-																	"type": "image",
-																	"texture": "textures/ui/Black",
-																	"size": [ "100% - 2px", "100% - 2px" ],
-																	"layer": 2,
+																"player_renderer_panel": {
+																	"type": "panel",
+																	"size": [
+																		"40%",
+																		"40%"
+																	],
+																	"offset": [
+																		0,
+																		"-20%"
+																	],
 																	"controls": [
 																		{
-																			"player_renderer_panel": {
-																				"type": "panel",
-																				"size": [ "40%", "40%" ],
-																				"offset": [ 0, "-20%" ],
-
-																				"controls": [
-																					{
-																						"player_renderer": {
-																							"type": "custom",
-																							"renderer": "live_player_renderer",
-																							"animation_reset_name": "screen_animation_reset",
-																							"anims": [
-																								"@common.screen_exit_size_animation_push",
-																								"@common.screen_exit_size_animation_pop",
-																								"@common.screen_entrance_size_animation_push",
-																								"@common.screen_entrance_size_animation_pop"
-																							],
-																							"layer": 20,
-																							"anchor_from": "center",
-																							"anchor_to": "center"
-																						}
-																					}
-																				]
+																			"player_renderer": {
+																				"type": "custom",
+																				"renderer": "live_player_renderer",
+																				"animation_reset_name": "screen_animation_reset",
+																				"anims": [
+																					"@common.screen_exit_size_animation_push",
+																					"@common.screen_exit_size_animation_pop",
+																					"@common.screen_entrance_size_animation_push",
+																					"@common.screen_entrance_size_animation_pop"
+																				],
+																				"layer": 20,
+																				"anchor_from": "center",
+																				"anchor_to": "center"
 																			}
 																		}
 																	]
@@ -154,11 +201,33 @@
 						}
 					]
 				}
+			}
+		]
+	},
+	"label": {
+		"type": "label",
+		"color": "$title_text_color",
+		"text_alignment": "center"
+	},
+	"pocket_crafting_panel": {
+		"type": "panel",
+		"controls": [
+			{
+				"select_equipment_label@inventory_display.label": {
+					"text": "Select the armor icon to view your equipment",
+					"size": [ "80%", "default" ],
+					"layer": 2
+				}
+			}
+		]
+	}
 }
 
-/*"bindings": [
-                  {
-                    "binding_name": "#is_creative_mode",
-                    "binding_name_override": "#visible"
-                  }
-                ]*/
+/* Show on creative:
+"bindings": [
+	{
+		"binding_name": "#is_creative_mode",
+		"binding_name_override": "#visible"
+	}
+]
+*/

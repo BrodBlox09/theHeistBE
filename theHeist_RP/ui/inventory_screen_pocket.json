@@ -1,16 +1,32 @@
 {
 	"namespace": "crafting_pocket",
-	"left_tab": {
-		"visible": false
+	"left_panel/recipe_book_tab_content": {
+		"controls": [
+			{
+				"select_inventory_label@inventory_display.label": {
+					"text": "Select the chest icon to view your inventory",
+					"size": [ "80%", "default" ]
+				}
+			}
+		]
 	},
-	"crafting_tab": {
+	"left_tab": {
 		"visible": false
 	},
 	"inventory_tab": {
 		"visible": true
 	},
-	"survival_panel_pocket": {
+	"survival_panel_pocket@inventory_display.pocket_crafting_panel": {}, // 2x2 grid in the inventory
+	"survival_panel_crafting_pocket@inventory_display.pocket_crafting_panel": {}, // 3x3 grid in the crafting table GUI
+	"crafting_tab": {
 		"visible": false
+	},
+	"inventory_tab_content": {
+		"controls": [
+			{
+				"@inventory_display.pocket_inventory": {}
+			}
+		]
 	},
 	"pocket_armor_tab_content": {
 		"modifications": [
@@ -20,16 +36,8 @@
 			},
 			{
 				"control_name": "equipment_and_renderer",
-				"operation": "remove"
-			},
-			{
-				"array_name": "controls",
-				"operation": "insert_front",
-				"value": [
-					{
-						"@inventory_display.pocket_equipment_and_renderer_head_only": {}
-					}
-				]
+				"operation": "replace",
+				"value": { "@inventory_display.pocket_equipment_and_renderer_head_only": {} }
 			}
 		]
 	}
