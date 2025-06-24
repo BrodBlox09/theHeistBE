@@ -47,6 +47,7 @@ item.dye.red.name=Red Keycard
 item.dye.yellow.name=Yellow Keycard
 item.dye.green.name=Green Keycard
 item.dye.blue.name=Blue Keycard
+tile.dropper.name=Drawer
 container.dropper=Drawer
 
 map.sub.forgot_prototypes=Hey dumb dumb, you forgot some of the prototypes!
