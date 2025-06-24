@@ -28,16 +28,27 @@
 			}
 		]
 	},
-	"pocket_armor_tab_content": {
+	"pocket_armor_tab_content/equipment_and_renderer/equipment": {
 		"modifications": [
 			{
-				"control_name": "label_and_renderer",
+				"control_name": "offhand_grid",
+				"operation": "remove"
+			}
+		]
+	},
+	"pocket_armor_tab_content/equipment_and_renderer/equipment/armor_grid": {
+		"modifications": [
+			{
+				"control_name": "chest_grid_item",
 				"operation": "remove"
 			},
 			{
-				"control_name": "equipment_and_renderer",
-				"operation": "replace",
-				"value": { "@inventory_display.pocket_equipment_and_renderer_head_only": {} }
+				"control_name": "legs_grid_item",
+				"operation": "remove"
+			},
+			{
+				"control_name": "feet_grid_item",
+				"operation": "remove"
 			}
 		]
 	}
