@@ -7,14 +7,6 @@
                 "category": "construction"
             }
         },
-        "components": {
-            "minecraft:collision_box": true,
-            "minecraft:geometry": "geometry.normal",
-            "minecraft:material_instances": {
-                "*": {
-                    "texture": "camera_sight"
-                }
-            }
-        }
+        "components": { }
     }
 }

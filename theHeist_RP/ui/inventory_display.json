@@ -1,0 +1,90 @@
+{
+	"namespace": "inventory_display",
+	"desktop_inventory": {
+		"type": "panel",
+		"size": [ "100%", "100% - 27px" ],
+		"anchor_from": "bottom_middle",
+		"anchor_to": "bottom_middle",
+		"offset": [ 0, -27 ],
+		"controls": [
+			{
+				"inventory_grid": {
+					"type": "grid",
+					"grid_dimensions": [ 5, 1 ],
+					"grid_item_template": "common.grid_item_for_inventory",
+					"collection_name": "inventory_items"
+				}
+			}
+		]
+	},
+	"pocket_inventory@crafting.tab_content": {
+		"$scrolling_pane_control": "crafting_pocket.survival_scroll_panel",
+    	"$navigation_tab_name": "survival_tab_toggle"
+	},
+	"armor_grid_head_only": {
+		"type": "grid",
+		"layer": 1,
+		"size": [ 18, 72 ],
+		"anchor_from": "top_left",
+		"anchor_to": "top_left",
+		"offset": [ 7, 7 ],
+		"grid_dimensions": [ 1, 1 ],
+		"$item_collection_name": "armor_items",
+		"collection_name": "$item_collection_name",
+		"controls": [
+			{
+				"head_grid_item@common.container_item": {
+					"grid_position": [ 0, 0 ],
+					"$cell_overlay_ref": "crafting.armor_overlay_helmet",
+					"$button_ref": "crafting.no_coalesce_container_slot_button",
+					"$focus_id_binding_type": "none",
+					"$focus_id": "armor_item_head",
+					"$focus_override_right_binding_type": "none",
+					"$focus_override_right": "crafting_input_top_left"
+				}
+			}
+		]
+	},
+	"label": {
+		"type": "label",
+		"color": "$title_text_color",
+		"text_alignment": "center"
+	},
+	"pocket_crafting_panel": {
+		"type": "panel",
+		"controls": [
+			{
+				"select_equipment_label@inventory_display.label": {
+					"text": "Select the armor icon to view your equipment",
+					"size": [ "80%", "default" ],
+					"layer": 2
+				}
+			}
+		]
+	}
+}
+
+/* Show on creative:
+"bindings": [
+	{
+		"binding_name": "#is_creative_mode",
+		"binding_name_override": "#visible"
+	}
+]
+*/
+
+/* Conditional variable declaration:
+"variables": [
+	{
+		"requires": "$desktop_screen",
+		"$screen_content": "chest.barrel_panel",
+		"$screen_bg_content": "common.screen_background",
+		"$screen_background_alpha": 0.4
+	},
+	{
+		"requires": "$pocket_screen",
+		"$use_custom_pocket_toast": true,
+		"$screen_content": "pocket_containers.barrel_panel"
+	}
+]
+*/

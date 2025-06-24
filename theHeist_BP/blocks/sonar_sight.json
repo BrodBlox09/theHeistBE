@@ -8,13 +8,6 @@
             }
         },
         "components": {
-            "minecraft:collision_box": true,
-            "minecraft:geometry": "geometry.normal",
-            "minecraft:material_instances": {
-                "*": {
-                    "texture": "sonar_sight"
-                }
-            },
             "minecraft:map_color": [51, 76, 178]
         }
     }

@@ -1,0 +1,20 @@
+{
+	"namespace": "common",
+	"inventory_panel": { // Desktop inventory panel
+		"modifications": [
+			{
+				"control_name": "inventory_grid",
+				"operation": "remove"
+			},
+			{
+				"array_name": "controls",
+				"operation": "insert_front",
+				"value": [
+					{
+						"@inventory_display.desktop_inventory": {}
+					}
+				]
+			}
+		]
+	}
+}

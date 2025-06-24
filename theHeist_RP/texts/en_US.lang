@@ -32,6 +32,7 @@ tile.theheist:sensor_mode_lvl_2=Sensor Mode Lvl. 2
 tile.theheist:xray_mode_lvl_1=X-Ray Mode Lvl. 1
 tile.theheist:chair.name=Chair
 tile.theheist:server.name=Server
+tile.theheist:server_nodeco.name=Server Without Screen
 tile.theheist:recharge_station.name=Recharge Station
 tile.theheist:projector.name=Projector
 tile.theheist:drawer_decoration.name=Drawer Decoration
@@ -46,7 +47,9 @@ item.dye.red.name=Red Keycard
 item.dye.yellow.name=Yellow Keycard
 item.dye.green.name=Green Keycard
 item.dye.blue.name=Blue Keycard
+tile.dropper.name=Drawer
 container.dropper=Drawer
+craftingScreen.tab.armor=Equipment
 
 map.sub.forgot_prototypes=Hey dumb dumb, you forgot some of the prototypes!
 

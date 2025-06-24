@@ -1,4 +1,7 @@
 {
+    // When this is set to 0 or 1 it allows theheist:computer to have animations that work from far away, but also make the rest of the world look kind of grainy. Is there
+    // an alternative solution for this?
+    "num_mip_levels": 1,
     "texture_data": {
         "power_green": {
             "textures": "textures/blocks/gameband-displays/power_green"
@@ -9,7 +12,7 @@
         "power_blank": {
             "textures": "textures/blocks/gameband-displays/power_blank"
         },
-            "quartz_theme_side": {
+        "quartz_theme_side": {
             "textures": "textures/blocks/gameband-displays/quartz_theme_side"
         },
         "forcefield": {
