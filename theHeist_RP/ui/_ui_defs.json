@@ -1,5 +1,6 @@
 {
     "ui_defs": [
-        "ui/bg.json"
+        "ui/bg.json",
+        "ui/inventory_display.json"
     ]
 }

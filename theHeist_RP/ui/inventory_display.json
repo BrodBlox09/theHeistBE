@@ -1,0 +1,20 @@
+{
+  "namespace": "inventory_display",
+  "desktop_inventory": {
+    "type": "panel",
+    "size": [ "100%", "100% - 27px" ],
+    "anchor_from": "bottom_middle",
+    "anchor_to": "bottom_middle",
+    "offset": [ 0, -27 ],
+    "controls": [
+      {
+        "inventory_grid": {
+          "type": "grid",
+          "grid_dimensions": [ 5, 1 ],
+          "grid_item_template": "common.grid_item_for_inventory",
+          "collection_name": "inventory_items"
+        }
+      }
+    ]
+  }
+}
