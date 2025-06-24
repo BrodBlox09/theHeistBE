@@ -1,0 +1,36 @@
+{
+	"namespace": "crafting_pocket",
+	"left_tab": {
+		"visible": false
+	},
+	"crafting_tab": {
+		"visible": false
+	},
+	"inventory_tab": {
+		"visible": true
+	},
+	"survival_panel_pocket": {
+		"visible": false
+	},
+	"pocket_armor_tab_content": {
+		"modifications": [
+			{
+				"control_name": "label_and_renderer",
+				"operation": "remove"
+			},
+			{
+				"control_name": "equipment_and_renderer",
+				"operation": "remove"
+			},
+			{
+				"array_name": "controls",
+				"operation": "insert_front",
+				"value": [
+					{
+						"@inventory_display.pocket_equipment_and_renderer_head_only": {}
+					}
+				]
+			}
+		]
+	}
+}

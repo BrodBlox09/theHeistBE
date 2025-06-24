@@ -22,5 +22,9 @@
 	},
 	"crafting_panel_2x2": {
 		"visible": false
-	}
+	},
+    "scroll_grid": {
+        "maximum_grid_items": 5,
+        "bindings": []
+    }
 }
