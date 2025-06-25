@@ -23,10 +23,6 @@
 			}
 		]
 	},
-	"pocket_inventory@crafting.tab_content": {
-		"$scrolling_pane_control": "crafting_pocket.survival_scroll_panel",
-    	"$navigation_tab_name": "survival_tab_toggle"
-	},
 	"label": {
 		"type": "label",
 		"color": "$title_text_color",
@@ -40,6 +36,30 @@
 					"text": "Select the armor icon to view your equipment",
 					"size": [ "80%", "default" ],
 					"layer": 2
+				}
+			}
+		]
+	},
+	"pocket_inventory_tab_content@crafting_pocket.inventory_tab_content": {
+		"$scrolling_pane_control": "inventory_display.pocket_inventory_scroll_panel",
+		"$show_when_creative|default": true,
+		"bindings": [
+			{
+				"binding_name": "(#is_creative_mode = $show_when_creative)",
+				"binding_name_override": "#visible"
+			}
+		]
+	},
+	"pocket_inventory_scroll_panel@crafting_pocket.survival_scroll_panel": {
+		"$scrolling_content": "inventory_display.pocket_inventory_grid"
+	},
+	"pocket_inventory_grid@crafting_pocket.survival_inventory_grid": {
+		"controls": [
+			{
+				"limited_inventory_grid@crafting.scroll_grid": {
+					"$maximum_grid_items|default": 27,
+					"maximum_grid_items": "$maximum_grid_items",
+					"bindings": []
 				}
 			}
 		]

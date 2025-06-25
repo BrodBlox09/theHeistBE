@@ -20,12 +20,20 @@
 			}
 		]
 	},
-	"survival_inventory_grid": { // For some reason I am unable to access the grid control directly, so overwrite it here
-		"controls": [
+	"left_panel": {
+		"modifications": [
 			{
-				"limited_inventory_grid@crafting.scroll_grid": {
-					"maximum_grid_items": 5,
-					"bindings": []
+				"control_name": "inventory_tab_content",
+				"operation": "replace",
+				"value": {
+					"inventory_tab_content_not_creative@inventory_display.pocket_inventory_tab_content": { "$maximum_grid_items": 5, "$show_when_creative": false }
+				}
+			},
+			{
+				"array_name": "controls",
+				"operation": "insert_front",
+				"value": {
+					"inventory_tab_content_creative@inventory_display.pocket_inventory_tab_content": {}
 				}
 			}
 		]
