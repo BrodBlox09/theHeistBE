@@ -3,19 +3,58 @@
 	"player_armor_panel": {
 		"anchor_to": "top_middle",
 		"anchor_from": "top_middle",
-		"offset": [ -8, 0 ],
+		"offset": [ -8, 0 ]
+	},
+	"player_armor_panel/armor_grid/chest_grid_item": {
 		"modifications": [
 			{
-				"control_name": "armor_grid",
-				"operation": "replace",
-				"value": { "armor_grid@inventory_display.armor_grid_head_only": {} }
-			},
-			{
-				"control_name": "offhand_grid",
-				"operation": "remove"
+				"array_name": "bindings",
+				"operation": "insert_front",
+				"value": {
+					"binding_name": "#is_creative_mode",
+					"binding_name_override": "#visible"
+				}
 			}
 		]
 	},
+	"player_armor_panel/armor_grid/legs_grid_item": {
+		"modifications": [
+			{
+				"array_name": "bindings",
+				"operation": "insert_front",
+				"value": {
+					"binding_name": "#is_creative_mode",
+					"binding_name_override": "#visible"
+				}
+			}
+		]
+	},
+	"player_armor_panel/armor_grid/feet_grid_item": {
+		"modifications": [
+			{
+				"array_name": "bindings",
+				"operation": "insert_front",
+				"value": {
+					"binding_name": "#is_creative_mode",
+					"binding_name_override": "#visible"
+				}
+			}
+		]
+	},
+	"player_armor_panel/offhand_grid": {
+		"modifications": [
+			{
+				"array_name": "bindings",
+				"operation": "insert_front",
+				"value": {
+					"binding_name": "#is_creative_mode",
+					"binding_name_override": "#visible"
+				}
+			}
+		]
+	},
+	// Doing this makes this entire file's changes to the UI revert...
+	// "player_armor_panel/armor_grid/legs_grid_item@inventory_display.show_when_creative": {},
 	"crafting_panel_2x2": {
 		"visible": false
 	}
