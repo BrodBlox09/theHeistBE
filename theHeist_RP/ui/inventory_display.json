@@ -32,30 +32,6 @@
 		"color": "$title_text_color",
 		"text_alignment": "center"
 	},
-	"hide_when_creative": {
-		"modifications": [
-			{
-				"array_name": "bindings",
-				"operation": "insert_front",
-				"value": {
-					"binding_name": "(not #is_creative_mode)",
-					"binding_name_override": "#visible"
-				}
-			}
-		]
-	},
-	"show_when_creative": {
-		"modifications": [
-			{
-				"array_name": "bindings",
-				"operation": "insert_front",
-				"value": {
-					"binding_name": "#is_creative_mode",
-					"binding_name_override": "#visible"
-				}
-			}
-		]
-	},
 	"pocket_crafting_panel": {
 		"type": "panel",
 		"controls": [
