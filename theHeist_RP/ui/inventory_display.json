@@ -15,6 +15,12 @@
 					"collection_name": "inventory_items"
 				}
 			}
+		],
+		"bindings": [
+			{
+				"binding_name": "(not #is_creative_mode)",
+				"binding_name_override": "#visible"
+			}
 		]
 	},
 	"pocket_inventory@crafting.tab_content": {
