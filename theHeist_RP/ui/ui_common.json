@@ -10,15 +10,6 @@
 		]
 	},
 	"inventory_panel/inventory_grid": {
-		"modifications": [
-			{
-				"array_name": "bindings",
-				"operation": "insert_front",
-				"value": {
-					"binding_name": "#is_creative_mode",
-					"binding_name_override": "#visible"
-				}
-			}
-		]
+		"visible": "$show_dev_view"
 	}
 }

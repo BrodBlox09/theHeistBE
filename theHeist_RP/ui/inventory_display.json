@@ -16,12 +16,7 @@
 				}
 			}
 		],
-		"bindings": [
-			{
-				"binding_name": "(not #is_creative_mode)",
-				"binding_name_override": "#visible"
-			}
-		]
+		"visible": "(not $show_dev_view)"
 	},
 	"label": {
 		"type": "label",
@@ -42,13 +37,8 @@
 	},
 	"pocket_inventory_tab_content@crafting_pocket.inventory_tab_content": {
 		"$scrolling_pane_control": "inventory_display.pocket_inventory_scroll_panel",
-		"$show_when_creative|default": true,
-		"bindings": [
-			{
-				"binding_name": "(#is_creative_mode = $show_when_creative)",
-				"binding_name_override": "#visible"
-			}
-		]
+		"$show_when_dev_view|default": true,
+		"visible": "($show_dev_view = $show_when_dev_view)"
 	},
 	"pocket_inventory_scroll_panel@crafting_pocket.survival_scroll_panel": {
 		"$scrolling_content": "inventory_display.pocket_inventory_grid"
@@ -65,28 +55,3 @@
 		]
 	}
 }
-
-/* Show on creative:
-"bindings": [
-	{
-		"binding_name": "#is_creative_mode",
-		"binding_name_override": "#visible"
-	}
-]
-*/
-
-/* Conditional variable declaration:
-"variables": [
-	{
-		"requires": "$desktop_screen",
-		"$screen_content": "chest.barrel_panel",
-		"$screen_bg_content": "common.screen_background",
-		"$screen_background_alpha": 0.4
-	},
-	{
-		"requires": "$pocket_screen",
-		"$use_custom_pocket_toast": true,
-		"$screen_content": "pocket_containers.barrel_panel"
-	}
-]
-*/

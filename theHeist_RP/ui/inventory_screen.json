@@ -6,52 +6,16 @@
 		"offset": [ -8, 0 ]
 	},
 	"player_armor_panel/armor_grid/chest_grid_item": {
-		"modifications": [
-			{
-				"array_name": "bindings",
-				"operation": "insert_front",
-				"value": {
-					"binding_name": "#is_creative_mode",
-					"binding_name_override": "#visible"
-				}
-			}
-		]
+		"visible": "$show_dev_view"
 	},
 	"player_armor_panel/armor_grid/legs_grid_item": {
-		"modifications": [
-			{
-				"array_name": "bindings",
-				"operation": "insert_front",
-				"value": {
-					"binding_name": "#is_creative_mode",
-					"binding_name_override": "#visible"
-				}
-			}
-		]
+		"visible": "$show_dev_view"
 	},
 	"player_armor_panel/armor_grid/feet_grid_item": {
-		"modifications": [
-			{
-				"array_name": "bindings",
-				"operation": "insert_front",
-				"value": {
-					"binding_name": "#is_creative_mode",
-					"binding_name_override": "#visible"
-				}
-			}
-		]
+		"visible": "$show_dev_view"
 	},
 	"player_armor_panel/offhand_grid": {
-		"modifications": [
-			{
-				"array_name": "bindings",
-				"operation": "insert_front",
-				"value": {
-					"binding_name": "#is_creative_mode",
-					"binding_name_override": "#visible"
-				}
-			}
-		]
+		"visible": "$show_dev_view"
 	},
 	// Doing this makes this entire file's changes to the UI revert...
 	// "player_armor_panel/offhand_grid@inventory_display.show_when_creative": {},
