@@ -33,9 +33,7 @@
 			}
 		]
 	},
-	"left_tab": {
-		"visible": "$show_dev_view"
-	},
+	"left_tab": { "visible": "$show_dev_view" },
 	// Unfortunately this tab cannot be removed because if the player starts out on a different tab there would
 	// be no way to select the inventory (unless inventory tab is always shown... but this would have to also
 	// track that the player is not in creative mode)
@@ -48,16 +46,8 @@
 		"visible": false
 	},
 	// Set chest, legs, feet, and offhand cells to only be visible when player is in creative mode
-	"pocket_armor_tab_content/equipment_and_renderer/equipment/armor_grid/chest_grid_item": {
-		"visible": "$show_dev_view"
-	},
-	"pocket_armor_tab_content/equipment_and_renderer/equipment/armor_grid/legs_grid_item": {
-		"visible": "$show_dev_view"
-	},
-	"pocket_armor_tab_content/equipment_and_renderer/equipment/armor_grid/feet_grid_item": {
-		"visible": "$show_dev_view"
-	},
-	"pocket_armor_tab_content/equipment_and_renderer/equipment/offhand_grid": {
-		"visible": "$show_dev_view"
-	}
+	"pocket_armor_tab_content/equipment_and_renderer/equipment/armor_grid/chest_grid_item": { "visible": "$show_dev_view" },
+	"pocket_armor_tab_content/equipment_and_renderer/equipment/armor_grid/legs_grid_item": { "visible": "$show_dev_view" },
+	"pocket_armor_tab_content/equipment_and_renderer/equipment/armor_grid/feet_grid_item": { "visible": "$show_dev_view" },
+	"pocket_armor_tab_content/equipment_and_renderer/equipment/offhand_grid": { "visible": "$show_dev_view" }
 }

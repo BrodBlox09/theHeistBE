@@ -9,7 +9,5 @@
 			}
 		]
 	},
-	"inventory_panel/inventory_grid": {
-		"visible": "$show_dev_view"
-	}
+	"inventory_panel/inventory_grid": { "visible": "$show_dev_view" }
 }
