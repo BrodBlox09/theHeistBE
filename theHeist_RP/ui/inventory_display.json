@@ -58,7 +58,6 @@
 	"pocket_inventory_half_screen@pocket_containers.half_screen": {
 		"$container_size": 5,
 		"$pane_collection": "inventory_items",
-		// "$pane_collection": "inventory_items",
 		// Required, otherwise it tries to get inventory_panel@inventory_display.inventory_panel and SILENTLY FAILS, NO ERRORS,
 		// because pocket_containers defines it as "inventory_panel@inventory_panel" instead of "inventory_panel@pocket_containers.inventory_panel"
 		"controls": [
