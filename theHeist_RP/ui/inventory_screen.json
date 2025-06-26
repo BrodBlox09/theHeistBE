@@ -10,9 +10,7 @@
 	"player_armor_panel/armor_grid/legs_grid_item": { "visible": "$show_dev_view" },
 	"player_armor_panel/armor_grid/feet_grid_item": { "visible": "$show_dev_view" },
 	"player_armor_panel/offhand_grid": { "visible": "$show_dev_view" },
-	"crafting_panel_2x2": {
-		"visible": false
-	},
+	"crafting_panel_2x2": { "visible": false },
 	"recipe_inventory_screen_content/content_stack_panel/recipe_book": {
 		"controls": [
 			{
@@ -32,8 +30,5 @@
 	"toolbar_panel/toolbar_background/toolbar_stack_panel/recipe_book_layout_toggle_panel_survival": { "visible": "$show_dev_view", "bindings": [] },
 	"toolbar_panel/toolbar_background/toolbar_stack_panel/recipe_book_layout_toggle_panel_creative": { "visible": "$show_dev_view", "bindings": [] },
 	"toolbar_panel/toolbar_background/toolbar_stack_panel/padding_2": { "visible": "$show_dev_view", "bindings": [] },
-	"crafting_screen": {
-		"$show_head_grid_item": false,
-		"$top_half_variant": "crafting.survival_panel_top_half"
-	}
+	"crafting_screen": { "$show_head_grid_item": false, "$top_half_variant": "crafting.survival_panel_top_half" }
 }
