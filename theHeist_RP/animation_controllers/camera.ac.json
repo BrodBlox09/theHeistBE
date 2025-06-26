@@ -4,13 +4,13 @@
 		"controller.animation.camera.base": {
 			"states": {
 				"default": {
-                    "animations": ["default"],
-                    "transitions": [
-                        {
-                            "disable": "(query.variant == 2)"
-                        }
-                    ]
-                },
+					"animations": ["default"],
+					"transitions": [
+						{
+							"disable": "(query.variant == 2)"
+						}
+					]
+				},
 				"disable": {
 					"animations": ["disable"]
 				}
