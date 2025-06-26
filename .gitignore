@@ -1,4 +1,5 @@
-/theHeist_BP/node_modules
-/theHeist_BP/package-lock.json
-/theHeist_BP/scripts
-/theHeist_BP/.vscode
+theHeist_BP/node_modules
+theHeist_BP/package-lock.json
+theHeist_BP/scripts
+theHeist_BP/.vscode
+mklinkcmd.bat
