@@ -114,7 +114,13 @@ interface ILevelCloneInfo {
 }
 
 interface ILevel {
+	/**
+	 * @description This is the bottom-most center of the loading elevator structure
+	 */
 	"loadElevatorLoc": IVector3,
+	/**
+	 * @description This is the location the player will be teleported to after the level has finished loading
+	 */
 	"startPlayerLoc": IVector3,
 	"startPlayerRot"?: number,
 	"noAutoCleanup"?: boolean,
