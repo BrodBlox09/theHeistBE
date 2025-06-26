@@ -10,7 +10,7 @@
 	"player_armor_panel/armor_grid/feet_grid_item": { "visible": "$show_dev_view" },
 	"player_armor_panel/offhand_grid": { "visible": "$show_dev_view" },
 	// Doing this makes this entire file's changes to the UI revert...
-	// "player_armor_panel/offhand_grid@inventory_display.show_when_creative": {},
+	// "player_armor_panel/offhand_grid@inventory_display.show_when_dev_view": {},
 	"crafting_panel_2x2": {
 		"visible": false
 	}

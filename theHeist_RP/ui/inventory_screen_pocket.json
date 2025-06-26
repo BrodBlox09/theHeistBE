@@ -21,14 +21,14 @@
 				"control_name": "inventory_tab_content",
 				"operation": "replace",
 				"value": {
-					"inventory_tab_content_not_creative@inventory_display.pocket_inventory_tab_content": { "$maximum_grid_items": 5, "$show_when_dev_view": false }
+					"inventory_tab_content_not_dev_view@inventory_display.pocket_inventory_tab_content": { "$maximum_grid_items": 5, "$show_when_dev_view": false }
 				}
 			},
 			{
 				"array_name": "controls",
 				"operation": "insert_front",
 				"value": {
-					"inventory_tab_content_creative@inventory_display.pocket_inventory_tab_content": {}
+					"inventory_tab_content_dev_view@inventory_display.pocket_inventory_tab_content": {}
 				}
 			}
 		]
@@ -36,7 +36,7 @@
 	"left_tab": { "visible": "$show_dev_view" },
 	// Unfortunately this tab cannot be removed because if the player starts out on a different tab there would
 	// be no way to select the inventory (unless inventory tab is always shown... but this would have to also
-	// track that the player is not in creative mode)
+	// track that the player is not in dev_view mode)
 	"inventory_tab": {
 		"visible": true
 	},
@@ -45,7 +45,7 @@
 	"crafting_tab": {
 		"visible": false
 	},
-	// Set chest, legs, feet, and offhand cells to only be visible when player is in creative mode
+	// Set chest, legs, feet, and offhand cells to only be visible when player is in dev_view mode
 	"pocket_armor_tab_content/equipment_and_renderer/equipment/armor_grid/chest_grid_item": { "visible": "$show_dev_view" },
 	"pocket_armor_tab_content/equipment_and_renderer/equipment/armor_grid/legs_grid_item": { "visible": "$show_dev_view" },
 	"pocket_armor_tab_content/equipment_and_renderer/equipment/armor_grid/feet_grid_item": { "visible": "$show_dev_view" },
