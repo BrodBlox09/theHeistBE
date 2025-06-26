@@ -1,0 +1,14 @@
+{
+	"namespace": "pocket_containers",
+	"panel": {
+		"modifications": [
+			{
+				"control_name": "inventory",
+				"operation": "replace",
+				"value": {
+					"inventory@inventory_display.pocket_inventory_half_screen": {}
+				}
+			}
+		]
+	}
+}
