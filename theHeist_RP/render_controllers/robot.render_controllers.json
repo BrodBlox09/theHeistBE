@@ -1,14 +1,14 @@
 {
-    "format_version": "1.8.0",
-    "render_controllers": {
-        "controller.render.robot": {
-            "geometry": "Geometry.default",
-            "materials": [ { "*": "Material.default" } ],
-            "textures": [ "Texture.default" ],
-            "uv_anim": {
-            "offset": [ 0.0, "math.mod(math.floor(q.life_time * 12),32) / 32" ],
-            "scale": [ 1.0, "1 / 32" ]
-        }
-        }
-    }
+	"format_version": "1.8.0",
+	"render_controllers": {
+		"controller.render.robot": {
+			"geometry": "Geometry.default",
+			"materials": [ { "*": "Material.default" } ],
+			"textures": [ "Texture.default" ],
+			"uv_anim": {
+			"offset": [ 0.0, "math.mod(math.floor(q.life_time * 12),32) / 32" ],
+			"scale": [ 1.0, "1 / 32" ]
+		}
+		}
+	}
 }

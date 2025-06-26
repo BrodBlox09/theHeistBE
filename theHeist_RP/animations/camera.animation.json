@@ -18,16 +18,17 @@
 		},
 		"animation.camera.disable": {
 			"loop": "hold_on_last_frame",
-			"animation_length": 0.75,
 			"bones": {
 				"eye": {
 					"position": {
-						"0.0": [0, 0, 0],
-						"0.5": [0, -48, 0]
+						"0.0": ["v.x", "v.y", 0],
+						"0.75": ["v.x", "v.y - 48", 0]
 					},
 					"scale": {
-						"0.4688": [1, 1, 1],
-						"0.5": [0, 0, 0]
+						"0.75": {
+							"pre": [ 1, 1, 1 ],
+							"post": [ 0, 0, 0 ]
+						}
 					}
 				}
 			}

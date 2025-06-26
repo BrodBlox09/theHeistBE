@@ -12,7 +12,11 @@
 					]
 				},
 				"disable": {
-					"animations": ["disable"]
+					"animations": ["disable"],
+					"variables": {
+						"x": { "input": "math.clamp(math.min_angle(query.body_y_rotation - query.rotation_to_camera(1)) / 22.5, -0.9, 0.9)" },
+						"y": { "input": "math.clamp(math.min_angle(query.body_x_rotation - query.rotation_to_camera(0)) / 22.5, -0.4, 0.4)" }
+					}
 				}
 			}
 		}
