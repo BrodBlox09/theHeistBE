@@ -3,20 +3,32 @@
 	"player_armor_panel": {
 		"anchor_to": "top_middle",
 		"anchor_from": "top_middle",
-		"offset": [ -8, 0 ],
-		"modifications": [
+		"offset": [ -8, 0 ]
+	},
+	"player_armor_panel/armor_grid/head_grid_item": { "$show_head_grid_item|default": true, "visible": "$show_head_grid_item" },
+	"player_armor_panel/armor_grid/chest_grid_item": { "visible": "$show_dev_view" },
+	"player_armor_panel/armor_grid/legs_grid_item": { "visible": "$show_dev_view" },
+	"player_armor_panel/armor_grid/feet_grid_item": { "visible": "$show_dev_view" },
+	"player_armor_panel/offhand_grid": { "visible": "$show_dev_view" },
+	"crafting_panel_2x2": { "visible": false },
+	"recipe_inventory_screen_content/content_stack_panel/recipe_book": {
+		"controls": [
 			{
-				"control_name": "armor_grid",
-				"operation": "replace",
-				"value": { "@inventory_display.armor_grid_head_only": {} }
+				"bg@common.common_panel": { "$show_close_button": false }
 			},
 			{
-				"control_name": "offhand_grid",
-				"operation": "remove"
+				"select_equipment_label@inventory_display.label": {
+					"text": "Select the chest icon to view your equipment",
+					"size": [ "80%", "default" ],
+					"layer": 2
+				}
 			}
 		]
 	},
-	"crafting_panel_2x2": {
-		"visible": false
-	}
+	"toolbar_panel/toolbar_background/toolbar_stack_panel/creative_layout_toggle_panel": { "visible": "$show_dev_view", "bindings": [] },
+	"toolbar_panel/toolbar_background/toolbar_stack_panel/padding_1": { "visible": "$show_dev_view", "bindings": [] },
+	"toolbar_panel/toolbar_background/toolbar_stack_panel/recipe_book_layout_toggle_panel_survival": { "visible": "$show_dev_view", "bindings": [] },
+	"toolbar_panel/toolbar_background/toolbar_stack_panel/recipe_book_layout_toggle_panel_creative": { "visible": "$show_dev_view", "bindings": [] },
+	"toolbar_panel/toolbar_background/toolbar_stack_panel/padding_2": { "visible": "$show_dev_view", "bindings": [] },
+	"crafting_screen": { "$show_head_grid_item": false, "$top_half_variant": "crafting.survival_panel_top_half" }
 }

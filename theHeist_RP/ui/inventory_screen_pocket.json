@@ -9,62 +9,45 @@
 					"select_inventory_label@inventory_display.label": {
 						"text": "Select the chest icon to view your inventory",
 						"size": [ "80%", "default" ],
-						"bindings": [
-							{
-								"binding_name": "(not #is_creative_mode)",
-								"binding_name_override": "#visible"
-							}
-						]
+						"visible": "(not $show_dev_view)"
 					}
 				}
 			}
 		]
 	},
-	"survival_inventory_grid": { // For some reason I am unable to access the grid control directly, so overwrite it here
-		"controls": [
-      		{ "inventory_grid@crafting.scroll_grid": { "maximum_grid_items": 5, "bindings": [] } }
-    	]
-	},
-	"left_tab": {
-		"bindings": [
+	"left_panel": {
+		"modifications": [
 			{
-				"binding_name": "#is_creative_mode",
-				"binding_name_override": "#visible"
+				"control_name": "inventory_tab_content",
+				"operation": "replace",
+				"value": {
+					"inventory_tab_content_not_dev_view@inventory_display.pocket_inventory_tab_content": { "$maximum_grid_items": 5, "$show_when_dev_view": false }
+				}
+			},
+			{
+				"array_name": "controls",
+				"operation": "insert_front",
+				"value": {
+					"inventory_tab_content_dev_view@inventory_display.pocket_inventory_tab_content": {}
+				}
 			}
 		]
 	},
+	"left_tab": { "visible": "$show_dev_view" },
 	// Unfortunately this tab cannot be removed because if the player starts out on a different tab there would
-	// be no way to select the inventory (unless inventory tab is always shown...)
+	// be no way to select the inventory (unless inventory tab is always shown... but this would have to also
+	// track that the player is not in dev_view mode)
 	"inventory_tab": {
-		"bindings": []
+		"visible": true
 	},
-	"survival_panel_pocket@inventory_display.pocket_crafting_panel": {}, // 2x2 grid in the inventory
-	"survival_panel_crafting_pocket@inventory_display.pocket_crafting_panel": {}, // 3x3 grid in the crafting table GUI
+	"survival_panel_pocket@inventory_display.pocket_crafting_panel": {}, // Hide the 2x2 grid in the inventory
+	"survival_panel_crafting_pocket@inventory_display.pocket_crafting_panel": {}, // Hide the 3x3 grid in the crafting table GUI
 	"crafting_tab": {
 		"visible": false
 	},
-	"pocket_armor_tab_content/equipment_and_renderer/equipment": {
-		"modifications": [
-			{
-				"control_name": "offhand_grid",
-				"operation": "remove"
-			}
-		]
-	},
-	"pocket_armor_tab_content/equipment_and_renderer/equipment/armor_grid": {
-		"modifications": [
-			{
-				"control_name": "chest_grid_item",
-				"operation": "remove"
-			},
-			{
-				"control_name": "legs_grid_item",
-				"operation": "remove"
-			},
-			{
-				"control_name": "feet_grid_item",
-				"operation": "remove"
-			}
-		]
-	}
+	// Set chest, legs, feet, and offhand cells to only be visible when player is in dev_view mode
+	"pocket_armor_tab_content/equipment_and_renderer/equipment/armor_grid/chest_grid_item": { "visible": "$show_dev_view" },
+	"pocket_armor_tab_content/equipment_and_renderer/equipment/armor_grid/legs_grid_item": { "visible": "$show_dev_view" },
+	"pocket_armor_tab_content/equipment_and_renderer/equipment/armor_grid/feet_grid_item": { "visible": "$show_dev_view" },
+	"pocket_armor_tab_content/equipment_and_renderer/equipment/offhand_grid": { "visible": "$show_dev_view" }
 }
