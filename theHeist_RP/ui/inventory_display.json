@@ -31,12 +31,21 @@
 					"layer": 2
 				}
 			}
+		],
+		"bindings": [
+			{
+				"binding_type": "view",
+				"source_control_name": "content",
+				"resolve_sibling_scope": true,
+				"source_property_name": "(not #needs_crafting_table)",
+				"target_property_name": "#visible"
+			}
 		]
 	},
 	"pocket_inventory_tab_content@crafting_pocket.inventory_tab_content": {
 		"$scrolling_pane_control": "inventory_display.pocket_inventory_scroll_panel",
-		"$show_when_dev_view|default": true,
-		"visible": "($show_dev_view = $show_when_dev_view)"
+		"$visible|default": true,
+		"visible": "$visible"
 	},
 	"pocket_inventory_scroll_panel@crafting_pocket.survival_scroll_panel": {
 		"$scrolling_content": "inventory_display.pocket_inventory_grid"

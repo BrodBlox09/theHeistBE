@@ -1,17 +1,28 @@
 {
 	"namespace": "crafting_pocket",
 	"left_panel/recipe_book_tab_content": {
-		"modifications": [
+		"controls": [
 			{
-				"array_name": "controls",
-				"operation": "insert_back",
-				"value": {
-					"select_inventory_label@inventory_display.label": {
-						"text": "Select the chest icon to view your inventory",
-						"size": [ "80%", "default" ],
-						"visible": "(not $show_dev_view)"
-					}
+				"select_inventory_panel": {
+					"type": "panel",
+					"visible": "(not $show_dev_view)",
+					"layer": 6,
+					"controls": [
+						{
+							"select_inventory_label@inventory_display.label": {
+								"text": "Select the chest icon to view your inventory",
+								"text_alignment": "center",
+								"size": [
+									"80%",
+									"default"
+								]
+							}
+						}
+					]
 				}
+			},
+			{
+				"recipe_book_tab_content@crafting_pocket.recipe_book_tab_content": { "visible": "$show_dev_view" }
 			}
 		]
 	},
@@ -20,16 +31,27 @@
 			{
 				"control_name": "inventory_tab_content",
 				"operation": "replace",
-				"value": {
-					"inventory_tab_content_not_dev_view@inventory_display.pocket_inventory_tab_content": { "$maximum_grid_items": 5, "$show_when_dev_view": false }
-				}
-			},
-			{
-				"array_name": "controls",
-				"operation": "insert_front",
-				"value": {
-					"inventory_tab_content_dev_view@inventory_display.pocket_inventory_tab_content": {}
-				}
+				"value": [{
+					"inventory_tab_content": {
+						"type": "panel",
+						"controls": [
+							{
+								"inventory_tab_content_not_dev_view@inventory_display.pocket_inventory_tab_content": { "$maximum_grid_items": 5, "$visible": "(not $show_dev_view)" }
+							},
+							{
+								"inventory_tab_content_dev_view@inventory_display.pocket_inventory_tab_content": { "$visible": "$show_dev_view" }
+							}
+						],
+						// "visible": "#is_left_tab_inventory"
+						"bindings": [
+            				{
+            					"binding_type": "global",
+            					"binding_name": "#is_left_tab_inventory",
+            					"binding_name_override": "#visible"
+            				}
+          				]
+					}
+				}]
 			}
 		]
 	},
