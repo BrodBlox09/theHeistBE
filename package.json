@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@minecraft/server": "^2.4.0-rc.1.21.130-preview.22"
+  }
+}

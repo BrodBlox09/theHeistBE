@@ -6,6 +6,7 @@ import VoiceOverManager from "./VoiceOverManager";
 import LevelConstructor from "./levels/LevelConstructor";
 import LevelDefinitions from "./levels/levelDefinitions";
 import GameObjectiveManager from "./GameObjectiveManager";
+import PlayerBustedManager from "./PlayerBustedManager";
 
 /**
  * Layer information:
@@ -26,11 +27,6 @@ const levelHeight = -60;
 // Second in ticks
 const SECOND = 20;
 
-const objectivesObjective = world.scoreboard.getObjective("objectives")!;
-const bustedCounterObjective = world.scoreboard.getObjective("bustedCounter")!;
-
-const overworld = Utilities.dimensions.overworld;
-
 const persistentEntities = ["minecraft:player","minecraft:painting","minecraft:chicken","theheist:driver","theheist:rideable"];
 const persistentTags = ["loadingLevel","developer"];
 
@@ -39,7 +35,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 	const msg = event.message;
 	switch (id) {
 		case "theheist:load-level": {
-			const entities = overworld.getEntities();
+			const entities = Utilities.dimensions.overworld.getEntities();
 			for (const entity of entities) {
 				if (!persistentEntities.includes(entity.typeId) && !entity.hasTag("persistent")) entity.remove();
 			}
@@ -49,18 +45,12 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 				return;
 			}
 			player.addTag('loadingLevel');
-			if (!bustedCounterObjective.hasParticipant(player)) {
-				bustedCounterObjective.setScore(player, 0);
-			}
 			// Clear all data on player
 			DataManager.clearData(player);
 			player.getTags().forEach((x) => { if (!persistentTags.includes(x)) player.removeTag(x); });
-			if (!bustedCounterObjective.hasParticipant(player)) {
-				bustedCounterObjective.setScore(player, 0);
-			}
 
 			// Ensure player is in correct game mode
-			player.setGameMode(GameMode.adventure);
+			player.setGameMode(GameMode.Adventure);
 
 			// Get level definition
 			const levelDefinition = LevelDefinitions.getLevelDefinitionByID(msg);
@@ -80,11 +70,10 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 			DataManager.setData(player, playerLevelInformationDataNode);
 			Utilities.reloadPlayerInv(player, playerLevelInformationDataNode);
 
-			clearObjectives();
+			GameObjectiveManager.removeAllObjectives();
 			levelDefinition.startObjectives.forEach((objData) => {
-				addUnfinishedObjective(objData.name, objData.sortOrder);
+				GameObjectiveManager.addObjective(objData.name, objData.sortOrder, false);
 			});
-			reloadSidebarDisplay();
 			if (levelDefinition.onLoadStart) levelDefinition.onLoadStart(player);
 
 			var elevatorInterval: number;
@@ -100,26 +89,26 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 
 			const levelCloneInfo = Utilities.levelCloneInfo[levelNum];
 			// Ensure parts far away are loaded
-			overworld.runCommandAsync('tickingarea remove_all');
+			Utilities.dimensions.overworld.runCommand('tickingarea remove_all');
 			if (levelCloneInfo) system.runTimeout(() => {
 				// Ticking area doesn't depend on Y level and it uses rounded X and Z coordinates
-				overworld.runCommandAsync(`tickingarea add ${levelCloneInfo.startX} 0 ${levelCloneInfo.startZ} ${levelCloneInfo.endX} 0 ${levelCloneInfo.endZ} level-wide`);
+				Utilities.dimensions.overworld.runCommand(`tickingarea add ${levelCloneInfo.startX} 0 ${levelCloneInfo.startZ} ${levelCloneInfo.endX} 0 ${levelCloneInfo.endZ} level-wide`);
 			}, waitForLoadLevel ? 2 : 0); // Ensure this ticking area isn't removed
 
 			system.runTimeout(() => {
 				if (!levelDefinition.noAutoCleanup) {
-					const entities = overworld.getEntities();
+					const entities = Utilities.dimensions.overworld.getEntities();
 					for (const entity of entities) {
 						if (!persistentEntities.includes(entity.typeId) && !entity.hasTag("persistent")) entity.remove();
 					}
 					// Clear sensor mode residue
 					if (levelCloneInfo) {
 						Utilities.fillBlocks(new Vector(levelCloneInfo.startX, Utilities.cameraMappingHeight - 4, levelCloneInfo.startZ), new Vector(levelCloneInfo.endX, Utilities.cameraMappingHeight - 4, levelCloneInfo.endZ), "air");
-						overworld.runCommandAsync(`fill ${levelCloneInfo.startX} ${Utilities.levelHeight} ${levelCloneInfo.startZ} ${levelCloneInfo.endX} ${Utilities.levelHeight} ${levelCloneInfo.endZ} air replace theheist:robot_path`);
-						overworld.runCommandAsync(`clone ${levelCloneInfo.startX} ${Utilities.floorCloneHeight} ${levelCloneInfo.startZ} ${levelCloneInfo.endX} ${Utilities.floorCloneHeight} ${levelCloneInfo.endZ} ${levelCloneInfo.startX} ${Utilities.levelHeight - 1} ${levelCloneInfo.startZ}`);
+						Utilities.dimensions.overworld.runCommand(`fill ${levelCloneInfo.startX} ${Utilities.levelHeight} ${levelCloneInfo.startZ} ${levelCloneInfo.endX} ${Utilities.levelHeight} ${levelCloneInfo.endZ} air replace theheist:robot_path`);
+						Utilities.dimensions.overworld.runCommand(`clone ${levelCloneInfo.startX} ${Utilities.floorCloneHeight} ${levelCloneInfo.startZ} ${levelCloneInfo.endX} ${Utilities.floorCloneHeight} ${levelCloneInfo.endZ} ${levelCloneInfo.startX} ${Utilities.levelHeight - 1} ${levelCloneInfo.startZ}`);
 						// Move drilled areas back into position
-						overworld.runCommandAsync(`clone ${levelCloneInfo.startX} ${Utilities.drilledBlocksHeight} ${levelCloneInfo.startZ} ${levelCloneInfo.endX} ${Utilities.drilledBlocksHeight + 1} ${levelCloneInfo.endZ} ${levelCloneInfo.startX} ${Utilities.levelHeight} ${levelCloneInfo.startZ} filtered normal minecraft:hardened_clay`);
-						overworld.runCommandAsync(`clone ${levelCloneInfo.startX} ${Utilities.drilledBlocksHeight} ${levelCloneInfo.startZ} ${levelCloneInfo.endX} ${Utilities.drilledBlocksHeight + 1} ${levelCloneInfo.endZ} ${levelCloneInfo.startX} ${Utilities.levelHeight + 1} ${levelCloneInfo.startZ} filtered move minecraft:hardened_clay`);
+						Utilities.dimensions.overworld.runCommand(`clone ${levelCloneInfo.startX} ${Utilities.drilledBlocksHeight} ${levelCloneInfo.startZ} ${levelCloneInfo.endX} ${Utilities.drilledBlocksHeight + 1} ${levelCloneInfo.endZ} ${levelCloneInfo.startX} ${Utilities.levelHeight} ${levelCloneInfo.startZ} filtered normal minecraft:hardened_clay`);
+						Utilities.dimensions.overworld.runCommand(`clone ${levelCloneInfo.startX} ${Utilities.drilledBlocksHeight} ${levelCloneInfo.startZ} ${levelCloneInfo.endX} ${Utilities.drilledBlocksHeight + 1} ${levelCloneInfo.endZ} ${levelCloneInfo.startX} ${Utilities.levelHeight + 1} ${levelCloneInfo.startZ} filtered move minecraft:hardened_clay`);
 					}
 				}
 
@@ -181,24 +170,24 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 			const nextLevel = valueArray[5];
 			const player = world.getPlayers().filter((player) => (player != undefined && player != null))[0];
 			if (player == undefined) return;
-			const objectives = objectivesObjective.getParticipants().map((obj) => {
-				return obj.displayName;
-			});
-			if (objectives.some((obj) => (obj.startsWith("§c") && (obj.includes("upgrade") || obj.includes("mode"))))) { // If the objective text includes "upgrade" then the objective is talking about upgrading a gameband. If "mode", then the objective is talking about gaining a new gameband
+			const objectives = GameObjectiveManager.getAllObjectives();
+			// If the objective text includes "upgrade" then the objective is talking about upgrading a gameband. If "mode", then the objective is talking about gaining a new gameband
+			// May want to rework objective system to allow for required and optional objectives
+			if (objectives.some((obj) => (obj.startsWith("§c") && (obj.includes("upgrade") || obj.includes("mode"))))) {
 				// Player hasn't finished all the gameband-related objectives yet
 				VoiceOverManager.play(player, "forgot_prototypes");
 				Utilities.setBlock({ x: Number(x), y: Number(y), z: Number(z) }, "minecraft:lever", { "lever_direction": rotation });
 				return;
 			}
-			bustedCounterObjective.setScore(player, 0);
+			PlayerBustedManager.setTimesBusted(player, 0);
 
 			if (!nextLevel) {
-				if (currLevel != -5) overworld.runCommandAsync(`scriptevent theheist:load-level ${currLevel - 1}`);
+				if (currLevel != -5) system.sendScriptEvent("theheist:load-level", `${currLevel - 1}`);
 				else endDemo(player);
 			} else if (nextLevel == "end") {
 				endDemo(player);
 			} else {
-				overworld.runCommandAsync(`scriptevent theheist:load-level ${nextLevel}`);
+				system.sendScriptEvent("theheist:load-level", `${nextLevel}`)
 			}
 			break;
 		}
@@ -251,24 +240,4 @@ function runElelevatorAnimation(middleBottomPos: Vector): number {
 		elevatorIndex = elevatorIndex % 3;
 	}, 10); // Every 0.5 seconds update the elevator
 	return elevatorInterval;
-}
-
-/**
- * Add an unfinished objective to the objective sidebar
- * @param objective The description of the objective.
- * @param sortOrder The sort index of the objective. Objectives are sorted from highest to lowest.
- */
-function addUnfinishedObjective(objective: string, sortOrder: number) {
-	objectivesObjective.setScore(`§c${objective}§r`, sortOrder);
-}
-
-function clearObjectives() {
-	objectivesObjective.getParticipants().forEach((participant) => {
-		objectivesObjective.removeParticipant(participant);
-	});
-}
-
-function reloadSidebarDisplay() {
-	world.scoreboard.clearObjectiveAtDisplaySlot(DisplaySlotId.Sidebar);
-	world.scoreboard.setObjectiveAtDisplaySlot(DisplaySlotId.Sidebar, { "objective": objectivesObjective });
 }

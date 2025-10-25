@@ -1,5 +1,6 @@
 import { system, world, Vector3, Player, EntityQueryOptions, BlockVolume, BlockPermutation, GameMode } from "@minecraft/server";
 import VoiceOverManager from "./VoiceOverManager";
+import GameObjectiveManager from "./GameObjectiveManager";
 import DataManager from "./DataManager";
 import Utilities from "./Utilities";
 import Vector from "./Vector";
@@ -13,7 +14,7 @@ world.afterEvents.playerSpawn.subscribe(eventData => {
 	var levelInfo = DataManager.getData(eventData.player, "levelInformation");
 	if (!levelInfo) return;
 	var gameLevel = levelInfo.information[1].level;
-	Utilities.dimensions.overworld.runCommand(`scriptevent theheist:load-level ${gameLevel}`);
+	system.sendScriptEvent("theheist:load-level", `${gameLevel}`);
 });
 
 // system.beforeEvents.watchdogTerminate.subscribe((event) => {
@@ -32,8 +33,6 @@ const levelLocations: Record<string, Vector3> = {
 	"-5": { 'x': 6939, 'y': -54, 'z': 71 },
 	"-6": { 'x': 7939, 'y': -54, 'z': 71 }
 }
-
-const objectivesObjective = world.scoreboard.getObjective("objectives") ?? world.scoreboard.addObjective("objectives", "Objectives");
 
 system.afterEvents.scriptEventReceive.subscribe(event => { // stable-friendly version of world.beforeEvents.chatSend
 	if (event.id != "theheist:run_cmd") return;
@@ -83,7 +82,7 @@ system.afterEvents.scriptEventReceive.subscribe(event => { // stable-friendly ve
 			break;
 		case 'start': {
 			player.dimension.runCommand(`time set 20000`)
-			player.setGameMode(GameMode.adventure);
+			player.setGameMode(GameMode.Adventure);
 			Utilities.clearPlayerInventory(player);
 			DataManager.clearData(player);
 			player.resetLevel();
@@ -134,6 +133,10 @@ system.afterEvents.scriptEventReceive.subscribe(event => { // stable-friendly ve
 			var states = block.permutation.getAllStates();
 			player.sendMessage(block.typeId);
 			player.sendMessage(JSON.stringify(states));
+		}
+		case "clearObjectives": {
+			GameObjectiveManager.removeAllObjectives();
+			console.log("objectives cleared");
 		}
 	}
 });

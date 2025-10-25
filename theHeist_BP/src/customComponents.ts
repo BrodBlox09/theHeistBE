@@ -1,4 +1,4 @@
-import { BlockComponentPlayerDestroyEvent, BlockComponentPlayerPlaceBeforeEvent, BlockComponentPlayerInteractEvent, world, system, BlockComponentOnPlaceEvent, BlockPermutation, BlockComponentTickEvent } from "@minecraft/server";
+import { BlockComponentPlayerBreakEvent, BlockComponentPlayerPlaceBeforeEvent, BlockComponentPlayerInteractEvent, world, system, BlockComponentOnPlaceEvent, BlockPermutation, BlockComponentTickEvent, BlockComponentRegistry } from "@minecraft/server";
 import Utilities from "./Utilities";
 import Vector from "./Vector";
 
@@ -60,11 +60,11 @@ function bottomDoorPlace(event: BlockComponentOnPlaceEvent) {
     });
 }
 
-function bottomDoorBreak(event: BlockComponentPlayerDestroyEvent) {
+function bottomDoorBreak(event: BlockComponentPlayerBreakEvent) {
     event.block.above()?.setType("minecraft:air");
 }
 
-function topDoorBreak(event: BlockComponentPlayerDestroyEvent) {
+function topDoorBreak(event: BlockComponentPlayerBreakEvent) {
     event.block.below()?.setType("minecraft:air");
 }
 
@@ -107,7 +107,7 @@ function randBlockNTypes(nTypes: number, event: BlockComponentPlayerPlaceBeforeE
     event.permutationToPlace = Utilities.permutationWithState(event.permutationToPlace, "theheist:type", Utilities.getRandInt(0, nTypes));
 }
 
-world.beforeEvents.worldInitialize.subscribe(event => {
+system.beforeEvents.startup.subscribe(event => {
     event.blockComponentRegistry.registerCustomComponent('theheist:3_types', {
         beforeOnPlayerPlace: randBlockNTypes.bind(null, 3)
     });
@@ -115,21 +115,21 @@ world.beforeEvents.worldInitialize.subscribe(event => {
         beforeOnPlayerPlace: randBlockNTypes.bind(null, 6)
     });
     event.blockComponentRegistry.registerCustomComponent('theheist:bottom_door', {
-        onPlayerDestroy: bottomDoorBreak,
+        onPlayerBreak: bottomDoorBreak,
         onPlayerInteract: bottomDoorInteract,
         onPlace: bottomDoorPlace
     });
     event.blockComponentRegistry.registerCustomComponent('theheist:top_door', {
-        onPlayerDestroy: topDoorBreak,
+        onPlayerBreak: topDoorBreak,
         onPlayerInteract: topDoorInteract
     });
     event.blockComponentRegistry.registerCustomComponent('theheist:bottom_l_door', {
-        onPlayerDestroy: bottomDoorBreak,
+        onPlayerBreak: bottomDoorBreak,
         onPlayerInteract: bottomDoorInteract,
         onPlace: bottomDoorLPlace
     });
     event.blockComponentRegistry.registerCustomComponent('theheist:bottom_r_door', {
-        onPlayerDestroy: bottomDoorBreak,
+        onPlayerBreak: bottomDoorBreak,
         onPlayerInteract: bottomDoorInteract,
         onPlace: bottomDoorRPlace
     });

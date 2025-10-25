@@ -1,4 +1,4 @@
-import { MolangVariableMap, BlockPermutation, EffectTypes, Vector3, world, system, Player, EntityInventoryComponent, EffectType, DisplaySlotId, ScoreboardObjective, Container, ItemStack, ItemLockMode, Entity, Dimension, ItemUseAfterEvent } from "@minecraft/server";
+import { system, Player, ItemStack, ItemLockMode } from "@minecraft/server";
 import DataManager from "../DataManager";
 import Utilities from "../Utilities";
 import Vector from "../Vector";
@@ -6,7 +6,6 @@ import GamebandManager from "./GamebandManager";
 
 const sensingRange = 14;
 const clearRange = 19;
-const overworld = Utilities.dimensions.overworld;
 
 export function tryMap(player: Player, levelInformation: LevelInformation, playerEnergyTracker: PlayerEnergyTracker) {
     if (!levelInformation) return;
@@ -22,7 +21,7 @@ export function tryMap(player: Player, levelInformation: LevelInformation, playe
     var typeId = sensorModeSlot.typeId;
     if (playerIsLookingDown && typeId.startsWith("theheist:sensor_mode_lvl_") && parseInt(typeId.charAt("theheist:sensor_mode_lvl_".length)) >= 2) { // Player does have a lvl 2 or greater sensor mode
         var playerInvContainer = player.getComponent("minecraft:inventory")?.container;
-        var map = overworld.getBlock(Utilities.levelCloneInfo[levelInformation.information[1].level].mapLoc)?.getComponent("minecraft:inventory")?.container?.getItem(0);
+        var map = Utilities.dimensions.overworld.getBlock(Utilities.levelCloneInfo[levelInformation.information[1].level].mapLoc)?.getComponent("minecraft:inventory")?.container?.getItem(0);
         if (!map) return;
         map.lockMode = ItemLockMode.slot;
         playerInvContainer?.setItem(2, map);
@@ -108,9 +107,9 @@ export function updateSensorDisplay(player: Player, levelInformation: LevelInfor
     corner1Floor.y = Utilities.levelHeight - 1; // To get floor height
     // Hopefully below can be replaced and changed into a script API function
     //Utilities.cameraMappingHeight - 4
-    overworld.runCommand(`clone ${corner1Top.x} ${corner1Top.y} ${corner1Top.z} ${corner2Top.x} ${corner2Top.y} ${corner2Top.z} ${corner1Floor.x} ${corner1Floor.y} ${corner1Floor.z} filtered normal theheist:camera_sight`);
-    overworld.runCommand(`clone ${corner1Top.x} ${corner1Top.y - 2} ${corner1Top.z} ${corner2Top.x} ${corner2Top.y - 2} ${corner2Top.z} ${corner1Floor.x} ${corner1Floor.y} ${corner1Floor.z} filtered normal theheist:sonar_sight`);
-    overworld.runCommand(`clone ${corner1Top.x} ${Utilities.cameraMappingHeight - 4} ${corner1Top.z} ${corner2Top.x} ${Utilities.cameraMappingHeight - 4} ${corner2Top.z} ${corner1Floor.x} ${Utilities.levelHeight} ${corner1Floor.z} filtered normal theheist:robot_path`);
+    Utilities.dimensions.overworld.runCommand(`clone ${corner1Top.x} ${corner1Top.y} ${corner1Top.z} ${corner2Top.x} ${corner2Top.y} ${corner2Top.z} ${corner1Floor.x} ${corner1Floor.y} ${corner1Floor.z} filtered normal theheist:camera_sight`);
+    Utilities.dimensions.overworld.runCommand(`clone ${corner1Top.x} ${corner1Top.y - 2} ${corner1Top.z} ${corner2Top.x} ${corner2Top.y - 2} ${corner2Top.z} ${corner1Floor.x} ${corner1Floor.y} ${corner1Floor.z} filtered normal theheist:sonar_sight`);
+    Utilities.dimensions.overworld.runCommand(`clone ${corner1Top.x} ${Utilities.cameraMappingHeight - 4} ${corner1Top.z} ${corner2Top.x} ${Utilities.cameraMappingHeight - 4} ${corner2Top.z} ${corner1Floor.x} ${Utilities.levelHeight} ${corner1Floor.z} filtered normal theheist:robot_path`);
 }
 
 function clearSensed(player: Player, levelInformation: LevelInformation) {
@@ -120,11 +119,11 @@ function clearSensed(player: Player, levelInformation: LevelInformation) {
     var corner2 = loc.add(new Vector(clearRange, 0, clearRange));
     var corner3 = loc.subtract(new Vector(clearRange, 0, clearRange));
     corner3.y = Utilities.levelHeight - 1;
-    overworld.runCommand(`clone ${corner1.x} ${corner1.y} ${corner1.z} ${corner2.x} ${corner2.y} ${corner2.z} ${corner3.x} ${corner3.y} ${corner3.z}`);
-    /*overworld.fillBlocks(corner1, corner2, floorBlock, {
+    Utilities.dimensions.overworld.runCommand(`clone ${corner1.x} ${corner1.y} ${corner1.z} ${corner2.x} ${corner2.y} ${corner2.z} ${corner3.x} ${corner3.y} ${corner3.z}`);
+    /*Utilities.dimensions.overworld.fillBlocks(corner1, corner2, floorBlock, {
         "matchingBlock": BlockPermutation.resolve("theheist:camera_sight")
     });*/
-    overworld.runCommand(`fill ${corner1.x} ${Utilities.levelHeight} ${corner1.z} ${corner2.x} ${Utilities.levelHeight} ${corner2.z} air replace theheist:robot_path`);
+    Utilities.dimensions.overworld.runCommand(`fill ${corner1.x} ${Utilities.levelHeight} ${corner1.z} ${corner2.x} ${Utilities.levelHeight} ${corner2.z} air replace theheist:robot_path`);
 }
 
 export function playerIsInSensorMode(levelInformation: LevelInformation) {

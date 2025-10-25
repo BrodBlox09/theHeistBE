@@ -1,9 +1,15 @@
-import { DisplaySlotId, world } from '@minecraft/server';
+import { DisplaySlotId, ScoreboardObjective, ScoreboardIdentity, Entity, world } from '@minecraft/server';
 
-const objectivesObjective = world.scoreboard.getObjective('objectives') ?? world.scoreboard.addObjective('objectives', 'Objectives');
+let objectivesObjective: ScoreboardObjective;
+
+world.afterEvents.worldLoad.subscribe(event => {
+	objectivesObjective = world.scoreboard.getObjective('objectives') ?? world.scoreboard.addObjective('objectives', 'Objectives');
+});
+
+type ScoreboardParticipant = string | ScoreboardIdentity | Entity;
 
 export default class GameObjectiveManager {
-	static addObjective(objective: string, sortOrder: number, sendMessage: boolean = true) {
+	static addObjective(objective: ScoreboardParticipant, sortOrder: number, sendMessage: boolean = true) {
 		if (objectivesObjective.hasParticipant(`§a${objective}§r`)) return; // Ensure no duplicate objectives are made
 		if (objectivesObjective.hasParticipant(`§c${objective}§r`)) return;
 		objectivesObjective.setScore(`§c${objective}§r`, sortOrder);
@@ -11,7 +17,7 @@ export default class GameObjectiveManager {
 		this.reloadSidebar();
 	}
 
-	static completeObjective(objective: string) {
+	static completeObjective(objective: ScoreboardParticipant) {
 		if (!objectivesObjective.hasParticipant(`§c${objective}§r`)) return; // Ensure no errors are thrown
 		var sortOrder: number = objectivesObjective.getScore(`§c${objective}§r`) as number;
 		objectivesObjective.removeParticipant(`§c${objective}§r`);
@@ -20,7 +26,7 @@ export default class GameObjectiveManager {
 		this.reloadSidebar();
 	}
 
-	static completeObjectiveNonStrict(objective: string, sortOrder: number) {
+	static completeObjectiveNonStrict(objective: ScoreboardParticipant, sortOrder: number) {
 		if (objectivesObjective.hasParticipant(`§a${objective}§r`)) return; // Ensure this objective is not set to complete multiple times
 		if (!objectivesObjective.hasParticipant(`§c${objective}§r`)) this.addObjective(objective, sortOrder, false); // Ensure objective is made
 		objectivesObjective.removeParticipant(`§c${objective}§r`);
@@ -29,19 +35,30 @@ export default class GameObjectiveManager {
 		this.reloadSidebar();
 	}
 
-	static removeObjective(objective: string) {
+	static removeObjective(objective: ScoreboardParticipant) {
 		objectivesObjective.removeParticipant(`§c${objective}§r`);
 		objectivesObjective.removeParticipant(`§a${objective}§r`);
+		objectivesObjective.removeParticipant(objective);
 		this.reloadSidebar();
 	}
 
-	static objectiveIsComplete(objective: string) {
+	static objectiveIsComplete(objective: ScoreboardParticipant) {
 		var objectives = objectivesObjective.getParticipants().map(x => x.displayName);
 		var objComplete = false;
 		objectives.forEach((obj) => {
 			if (obj.startsWith("§a") && obj.slice(2, obj.length - 2) == objective) objComplete = true;
 		});
 		return objComplete;
+	}
+
+	static getAllObjectives() {
+		return objectivesObjective.getParticipants().map(x => x.displayName);
+	}
+
+	static removeAllObjectives() {
+		objectivesObjective.getParticipants().forEach(participant => {
+			this.removeObjective(participant);
+		});
 	}
 
 	static reloadSidebar() {

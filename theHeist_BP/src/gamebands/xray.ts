@@ -1,4 +1,4 @@
-import { MolangVariableMap, BlockPermutation, EffectTypes, Vector3, world, system, Player, EntityInventoryComponent, EffectType, DisplaySlotId, ScoreboardObjective, Container, ItemStack, ItemLockMode, Entity, Dimension, ItemUseAfterEvent } from "@minecraft/server";
+import { BlockPermutation, system, Player } from "@minecraft/server";
 import DataManager from "../DataManager";
 import Utilities from "../Utilities";
 import Vector from "../Vector";
@@ -11,8 +11,6 @@ export const solidToTransparent = [
     { "solid": "minecraft:hardened_clay", "transparent": "minecraft:brown_stained_glass" },
     { "solid": "minecraft:polished_andesite", "transparent": "minecraft:light_gray_stained_glass", "minLevel": 2 }
 ];
-
-const overworld = Utilities.dimensions.overworld;
 
 export function toggleXRayMode(player: Player, lvl: number) {
     var levelInformation: LevelInformation = DataManager.getData(player, "levelInformation")!;

@@ -1,14 +1,10 @@
-import { BlockPermutation, Vector3, Block, world, Player, Container, EntityInventoryComponent, ItemStack, ItemLockMode, BlockVolume, BlockType, BlockFillOptions, Entity, EntityEquippableComponent, EquipmentSlot } from "@minecraft/server";
+import { BlockPermutation, Vector3, Block, world, Player, Container, EntityInventoryComponent, ItemStack, ItemLockMode, BlockVolume, BlockFillOptions, Entity, EntityEquippableComponent, EquipmentSlot, EntityType, Dimension } from "@minecraft/server";
 import DataManager from "./DataManager";
 import Vector from "./Vector";
 import { BlockStateSuperset } from "@minecraft/vanilla-data";
 
 export default class Utilities {
-	static dimensions = {
-		overworld: world.getDimension("overworld"),
-		nether: world.getDimension("nether"),
-		the_end: world.getDimension("the_end")
-	}
+	static dimensions: Record<string, Dimension> = {}
 
 	static sin(d: number): number {
 		return Math.sin(d * Math.PI / 180);
@@ -23,7 +19,7 @@ export default class Utilities {
 		return Math.floor(Math.random() * (max - min) + min);
 	}
 
-	static spawnEntity(location: Vector3, identitifier: string): Entity {
+	static spawnEntity(location: Vector3, identitifier: EntityType | string): Entity {
 		return this.dimensions.overworld.spawnEntity(identitifier, location);
 	}
 
@@ -263,3 +259,9 @@ export default class Utilities {
 	static magnetModeMagnetBlocksHeight = -51;
 	static levelHeight = -60;
 }
+
+world.afterEvents.worldLoad.subscribe(event => {
+	Utilities.dimensions.overworld = world.getDimension("overworld");
+	Utilities.dimensions.nether = world.getDimension("nether");
+	Utilities.dimensions.the_end = world.getDimension("the_end");
+});

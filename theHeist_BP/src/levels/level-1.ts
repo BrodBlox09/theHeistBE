@@ -135,13 +135,12 @@ LevelConstructor.door1(new Vector(3082, -60, 114), BlockRotation.SOUTH, true);
 
 Utilities.dimensions.overworld.setBlockType(new Vector(3073, -55, 127), "minecraft:redstone_block");
 Utilities.setBlock(new Vector(3090, -59, 124), "minecraft:lever", { "lever_direction": "south" });
-Utilities.dimensions.overworld.spawnEntity("theheist:camera_robot", new Vector(3053.5, -59, 110.5)).setRotation({ "x": 0, "y": 180 });
+Utilities.spawnEntity(new Vector(3053.5, -59, 110.5), "theheist:camera_robot").setRotation({ "x": 0, "y": 180 });
 [new Vector(3034.5, -59, 141.5), new Vector(3035.5, -59, 141.5), new Vector(3036.5, -59, 141.5)].forEach(vector => {
-    const decorativeCamera = Utilities.dimensions.overworld.spawnEntity("theheist:camera", vector);
+    const decorativeCamera = Utilities.spawnEntity(vector, "theheist:camera");
     decorativeCamera.setRotation({ "x": 0, "y": 180 });
     decorativeCamera.triggerEvent("theheist:disable");
 });
-
 }
 };
 

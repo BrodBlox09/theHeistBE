@@ -1,10 +1,8 @@
-import { MolangVariableMap, BlockPermutation, EffectTypes, Vector3, world, system, Player, EntityInventoryComponent, EffectType, DisplaySlotId, ScoreboardObjective, Container, ItemStack, ItemLockMode, Entity, Dimension, ItemUseAfterEvent } from "@minecraft/server";
+import { Player } from "@minecraft/server";
 import DataManager from "../DataManager";
 import Utilities from "../Utilities";
 import Vector from "../Vector";
 import GamebandManager from "./GamebandManager";
-
-const overworld = Utilities.dimensions.overworld;
 
 export function tryDrillMode(player: Player, lvl: number) {
     let levelInformation = DataManager.getData(player, "levelInformation")!;
@@ -15,9 +13,9 @@ export function tryDrillMode(player: Player, lvl: number) {
 	if (playerRot < 0) playerRot = 360 + playerRot;
     playerRot = Math.round(playerRot / 90) * 90;
     let facingBlockLoc = new Vector(player.location.x - Utilities.sin(playerRot), player.location.y, player.location.z + Utilities.cos(playerRot));
-    let facingBlockLocTID = overworld.getBlock(facingBlockLoc)!.typeId;
+    let facingBlockLocTID = Utilities.dimensions.overworld.getBlock(facingBlockLoc)!.typeId;
     let facingBlockLocAbove = facingBlockLoc.add(Vector.up);
-    let facingBlockLocAboveTID = overworld.getBlock(facingBlockLocAbove)!.typeId;
+    let facingBlockLocAboveTID = Utilities.dimensions.overworld.getBlock(facingBlockLocAbove)!.typeId;
     if (facingBlockLocTID != "minecraft:hardened_clay" || facingBlockLocAboveTID != "minecraft:hardened_clay") {
         player.sendMessage("§cCan't drill here!");
         return;
@@ -32,6 +30,6 @@ export function tryDrillMode(player: Player, lvl: number) {
     energyTracker.energyUnits -= cost;
     DataManager.setData(player, energyTracker);
 
-    overworld.runCommand(`clone ${facingBlockLoc.x} ${facingBlockLoc.y} ${facingBlockLoc.z} ${facingBlockLocAbove.x} ${facingBlockLocAbove.y} ${facingBlockLocAbove.z} ${facingBlockLoc.x} ${Utilities.drilledBlocksHeight} ${facingBlockLoc.z}`);
-    overworld.runCommand(`fill ${facingBlockLoc.x} ${facingBlockLoc.y} ${facingBlockLoc.z} ${facingBlockLocAbove.x} ${facingBlockLocAbove.y} ${facingBlockLocAbove.z} air destroy`);
+    Utilities.dimensions.overworld.runCommand(`clone ${facingBlockLoc.x} ${facingBlockLoc.y} ${facingBlockLoc.z} ${facingBlockLocAbove.x} ${facingBlockLocAbove.y} ${facingBlockLocAbove.z} ${facingBlockLoc.x} ${Utilities.drilledBlocksHeight} ${facingBlockLoc.z}`);
+    Utilities.dimensions.overworld.runCommand(`fill ${facingBlockLoc.x} ${facingBlockLoc.y} ${facingBlockLoc.z} ${facingBlockLocAbove.x} ${facingBlockLocAbove.y} ${facingBlockLocAbove.z} air destroy`);
 }

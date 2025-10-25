@@ -153,9 +153,9 @@ setup: () => {
     LevelConstructor.keypad(new Vector(5889.5, -59, 166.5), 2, BlockRotation.SOUTH, [{
         "type": "set_block", "do": { 'x': 5890, 'y': -60, 'z': 167, "block": "theheist:custom_door_2_bottom", "permutations": { "minecraft:cardinal_direction": "south" } }, "delay": 40
     }]);
-    Utilities.dimensions.overworld.spawnEntity("theheist:sonar_robot", new Vector(5889.5, -59, 174.5)).setRotation({'x': 0, 'y': 180});
-    Utilities.dimensions.overworld.spawnEntity("theheist:sonar_robot", new Vector(5887.5, -59, 176.5)).setRotation({'x': 0, 'y': 180});
-    Utilities.dimensions.overworld.spawnEntity("theheist:sonar_robot", new Vector(5885.5, -59, 178.5)).setRotation({'x': 0, 'y': 180});
+    Utilities.spawnEntity(new Vector(5889.5, -59, 174.5), "theheist:sonar_robot").setRotation({'x': 0, 'y': 180});
+    Utilities.spawnEntity(new Vector(5887.5, -59, 176.5), "theheist:sonar_robot").setRotation({'x': 0, 'y': 180});
+    Utilities.spawnEntity(new Vector(5885.5, -59, 178.5), "theheist:sonar_robot").setRotation({'x': 0, 'y': 180});
     LevelConstructor.computer(new Vector(5879.5, -59, 172.5), "Mail", BlockRotation.WEST, [
         {
             "type": "display_mail", "do": { "mailID": 405 }, "delay": 40

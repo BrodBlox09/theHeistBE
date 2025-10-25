@@ -3,6 +3,7 @@ import Vector from "./Vector";
 import DataManager from "./DataManager";
 import Utilities from "./Utilities";
 import GameObjectiveManager from "./GameObjectiveManager";
+import PlayerBustedManager from "./PlayerBustedManager";
 import * as SensorModeFunc from "./gamebands/sensor";
 import * as XRayModeFunc from "./gamebands/xray";
 import * as MagnetModeFunc from "./gamebands/magnet";
@@ -57,8 +58,6 @@ const loreItems = [
 	new loreItem('theheist:nv_glasses', '§oNV Goggles§r', ['Drop to regain items'])
 ]
 
-const bustedCounterObjective: ScoreboardObjective = world.scoreboard.getObjective("bustedCounter")!;
-
 const levelMapHeight = 20;
 const consolesHeight = -15;
 const rechargeHeight = -20;
@@ -67,8 +66,6 @@ const cameraMappingHeight = -30;
 
 // 1 second in ticks
 const SECOND = 20;
-
-const overworld = world.getDimension("overworld");
 
 world.afterEvents.itemStartUseOn.subscribe(itemUse);
 world.afterEvents.itemUse.subscribe(itemUse);
@@ -229,7 +226,7 @@ function rechargeMode(lvl: number, player: Player) {
 		"maxDistance": 2,
 		"closest": 1
 	}
-	const armorStands = overworld.getEntities(query);
+	const armorStands = Utilities.dimensions.overworld.getEntities(query);
 	for (const armorStand of armorStands) {
 		var armorStandEnergyTrackerDataNode = DataManager.getData(armorStand, "energyTracker")!;
 		var playerEnergyTrackerDataNode = DataManager.getData(player, "playerEnergyTracker")!;
@@ -276,7 +273,7 @@ function hackingMode(lvl: number, player: Player) {
 		"location": { "x": player.location.x, "y": consolesHeight, "z": player.location.z },
 		"maxDistance": 2
 	}
-	const armorStands = overworld.getEntities(query);
+	const armorStands = Utilities.dimensions.overworld.getEntities(query);
 	var i = 0;
 	let errorMessage = null;
 	for (const armorStand of armorStands) {
@@ -342,7 +339,7 @@ function action(actionInfo: IAction, player: Player) {
 				"maxDistance": 1,
 				"closest": 1
 			};
-			var hoverText = overworld.getEntities(query)[0];
+			var hoverText = Utilities.dimensions.overworld.getEntities(query)[0];
 			hoverText?.remove();
 			break;
 		}
@@ -366,7 +363,7 @@ function action(actionInfo: IAction, player: Player) {
 				"location": { 'x': player.location.x, 'y': cameraHeight, 'z': player.location.z },
 				"maxDistance": 50
 			};
-			var cameraArmorStand = overworld.getEntities(cameraQuery).filter((x: Entity) => {
+			var cameraArmorStand = Utilities.dimensions.overworld.getEntities(cameraQuery).filter((x: Entity) => {
 				var cameraTrackerDataNode = DataManager.getData(x, "cameraTracker");
 				return (x.location.y == cameraHeight && cameraTrackerDataNode && cameraTrackerDataNode.disabled == false && cameraTrackerDataNode.cameraID == cameraID);
 			})[0];
@@ -380,7 +377,7 @@ function action(actionInfo: IAction, player: Player) {
 				"location": displayCameraLocation,
 				"maxDistance": 1
 			};
-			var displayCamera = overworld.getEntities(displayCameraQuery)[0];
+			var displayCamera = Utilities.dimensions.overworld.getEntities(displayCameraQuery)[0];
 			displayCamera.triggerEvent("theheist:disable");
 			if (!actionInfo.do.noMessage) player.sendMessage([{ "translate": `map.console.${cameraTrackerDataNode.type != "sonar360" ? cameraTrackerDataNode.type : "sonar"}` }]);
 			var maxParticles = 10;
@@ -393,7 +390,7 @@ function action(actionInfo: IAction, player: Player) {
 				try {
 					const molangVarMap = new MolangVariableMap();
 					molangVarMap.setVector3("variable.velocity", new Vector(x, y, z));
-					overworld.spawnParticle("minecraft:explosion_particle", { x, y, z }, molangVarMap);
+					Utilities.dimensions.overworld.spawnParticle("minecraft:explosion_particle", { x, y, z }, molangVarMap);
 				} catch (err) { }
 
 			}
@@ -408,7 +405,7 @@ function action(actionInfo: IAction, player: Player) {
 			break;
 		case "run_command":
 			var command = actionInfo.do.command;
-			overworld.runCommand(command);
+			Utilities.dimensions.overworld.runCommand(command);
 			break;
 		case "hack_console": {
 			var x = actionInfo.do.x;
@@ -419,7 +416,7 @@ function action(actionInfo: IAction, player: Player) {
 				"maxDistance": 2,
 				"closest": 1
 			};
-			var armorStand = overworld.getEntities(query)[0];
+			var armorStand = Utilities.dimensions.overworld.getEntities(query)[0];
 			var actionTracker = DataManager.getData(armorStand, "actionTracker")!;
 			actionTracker.actions.forEach((x: IAction) => {
 				if (x.type == "hack_console") return;
@@ -511,7 +508,7 @@ function action(actionInfo: IAction, player: Player) {
 
 function keycard(keycardType: string, player: Player) {
 	var playerHeadLocation = player.getHeadLocation();
-	var blockRaycastHit = overworld.getBlockFromRay(new Vector(playerHeadLocation.x, playerHeadLocation.y + 0.1, playerHeadLocation.z), player.getViewDirection(), { maxDistance: 2 });
+	var blockRaycastHit = Utilities.dimensions.overworld.getBlockFromRay(new Vector(playerHeadLocation.x, playerHeadLocation.y + 0.1, playerHeadLocation.z), player.getViewDirection(), { maxDistance: 2 });
 	if (!blockRaycastHit) return;
 	var block = blockRaycastHit.block;
 	if (block.typeId != "theheist:keycard_reader") return;
@@ -521,7 +518,7 @@ function keycard(keycardType: string, player: Player) {
 		"maxDistance": 2,
 		"closest": 1
 	}
-	var armorStand = overworld.getEntities(query)[0];
+	var armorStand = Utilities.dimensions.overworld.getEntities(query)[0];
 	if (!armorStand) return;
 	var actionTracker = DataManager.getData(armorStand, "actionTracker");
 	if (!actionTracker || !actionTracker.isKeycardReader || actionTracker.used == true || (actionTracker.keycardType != keycardType && keycardType != "all")) return;
@@ -564,7 +561,7 @@ function startSlideshow(slideshowID: number, player: Player) {
 			}, 0)
 
 			// First TP
-			player.teleport({ x: 998.5, y: -60, z: 112.5 }, { 'dimension': overworld });
+			player.teleport({ x: 998.5, y: -60, z: 112.5 }, { 'dimension': Utilities.dimensions.overworld });
 			player.camera.setCamera('minecraft:free', {
 				location: { x: 1030.5, y: -57.25, z: 107.5 },
 				rotation: { x: 0, y: 180 }
@@ -594,7 +591,7 @@ function startSlideshow(slideshowID: number, player: Player) {
 			system.runTimeout(() => {
 				system.clearRun(hideHud);
 				player.camera.clear();
-				overworld.runCommand("scriptevent theheist:load-level 1");
+				system.sendScriptEvent("theheist:load-level", "1");
 			}, SECOND * 30.5);
 			break;
 	}
@@ -603,7 +600,7 @@ function startSlideshow(slideshowID: number, player: Player) {
 function playerBusted(player: Player, currentLevel: number) {
 	player.addTag('loadingLevel');
 	var playerLevelInformation = DataManager.getData(player, "levelInformation")!;
-	bustedCounterObjective.setScore(player, (bustedCounterObjective.getScore(player) ?? 0) + 1);
+	PlayerBustedManager.playerBusted(player);
 	playerLevelInformation.information[0].level = 0;
 	playerLevelInformation.information[2].inventory = [];
 	DataManager.setData(player, playerLevelInformation);
@@ -617,16 +614,16 @@ function playerBusted(player: Player, currentLevel: number) {
 	system.runTimeout(() => {
 		stopAllSound();
 		player.teleport(Utilities.levelCloneInfo[currentLevel].prisonLoc);
-		player.sendMessage(`You got busted §c§l${bustedCounterObjective.getScore(player)}§r time(s)`);
+		player.sendMessage(`You got busted §c§l${PlayerBustedManager.getTimesBustedFromPlayer(player)}§r time(s)`);
 	}, SECOND * 3);
 	system.runTimeout(() => {
 		player.removeTag("BUSTED");
-		overworld.runCommandAsync(`scriptevent theheist:load-level ${currentLevel}`);
+		system.sendScriptEvent("theheist:load-level", `${currentLevel}`);
 	}, SECOND * (3 + 5));
 }
 
 function stopAllSound() {
-	overworld.getEntities({ "excludeTypes": ["minecraft:armor_stand", "theheist:hover_text"] }).forEach((e) => { try { e.runCommand('stopsound @s'); } catch { } });
+	Utilities.dimensions.overworld.getEntities({ "excludeTypes": ["minecraft:armor_stand", "theheist:hover_text"] }).forEach((e) => { try { e.runCommand('stopsound @s'); } catch { } });
 }
 
 function cloneFloor(loc: Vector) {
@@ -637,8 +634,8 @@ function cloneFloor(loc: Vector) {
 	corner2.y = Utilities.levelHeight - 1;
 	var corner3 = loc.subtract(new Vector(range, 0, range));
 	corner3.y = Utilities.floorCloneHeight;
-	overworld.runCommand(`clone ${corner1.x} ${corner1.y} ${corner1.z} ${corner2.x} ${corner2.y} ${corner2.z} ${corner3.x} ${corner3.y} ${corner3.z}`);
-	//overworld.runCommand(`fill ${corner1.x} ${Utilities.floorCloneHeight + 1} ${corner1.z} ${corner2.x} ${Utilities.floorCloneHeight + 1} ${corner2.z} air`);
+	Utilities.dimensions.overworld.runCommand(`clone ${corner1.x} ${corner1.y} ${corner1.z} ${corner2.x} ${corner2.y} ${corner2.z} ${corner3.x} ${corner3.y} ${corner3.z}`);
+	//Utilities.dimensions.overworld.runCommand(`fill ${corner1.x} ${Utilities.floorCloneHeight + 1} ${corner1.z} ${corner2.x} ${Utilities.floorCloneHeight + 1} ${corner2.z} air`);
 }
 
 function flattenMap(loc: Vector) {
@@ -649,7 +646,7 @@ function flattenMap(loc: Vector) {
 	corner2.y = Utilities.levelMapHeight + 1;
 	var corner3 = loc.subtract(new Vector(range, 0, range));
 	corner3.y = Utilities.levelMapHeight;
-	overworld.runCommand(`clone ${corner1.x} ${corner1.y} ${corner1.z} ${corner2.x} ${corner2.y} ${corner2.z} ${corner3.x} ${corner3.y} ${corner3.z} masked move`);
+	Utilities.dimensions.overworld.runCommand(`clone ${corner1.x} ${corner1.y} ${corner1.z} ${corner2.x} ${corner2.y} ${corner2.z} ${corner3.x} ${corner3.y} ${corner3.z} masked move`);
 }
 
 function clearGlass(loc: Vector) {
@@ -657,7 +654,7 @@ function clearGlass(loc: Vector) {
 	loc.y = -50;
 	var corner1 = loc.subtract(new Vector(range, 0, range));
 	var corner2 = loc.add(new Vector(range, 0, range));
-	overworld.runCommand(`fill ${corner1.x} ${corner1.y} ${corner1.z} ${corner2.x} ${corner2.y} ${corner2.z} air replace glass`);
+	Utilities.dimensions.overworld.runCommand(`fill ${corner1.x} ${corner1.y} ${corner1.z} ${corner2.x} ${corner2.y} ${corner2.z} air replace glass`);
 }
 
 system.runInterval(() => {
@@ -668,7 +665,7 @@ system.runInterval(() => {
 	var playerLevelInformation = DataManager.getData(player, "levelInformation")!;
 	
 	{
-		var itemEntity = overworld.getEntities({
+		var itemEntity = Utilities.dimensions.overworld.getEntities({
 			"type": "minecraft:item",
 			"location": player.location,
 			"closest": 1,
@@ -760,7 +757,7 @@ system.runInterval(() => {
 			"location": { 'x': player.location.x, 'y': rechargeHeight, 'z': player.location.z },
 			"maxDistance": 2
 		}
-		const armorStands = overworld.getEntities(query);
+		const armorStands = Utilities.dimensions.overworld.getEntities(query);
 		var i = 0;
 		for (const armorStand of armorStands) {
 			var armorStandEnergyTracker = DataManager.getData(armorStand, "energyTracker")!;
@@ -777,7 +774,7 @@ system.runInterval(() => {
 				"location": { 'x': player.location.x, 'y': rechargeHeight, 'z': player.location.z },
 				"maxDistance": 4
 			}
-			const subArmorStands = overworld.getEntities(subQuery);
+			const subArmorStands = Utilities.dimensions.overworld.getEntities(subQuery);
 			for (const subArmorStand of subArmorStands) {
 				var armorStandEnergyTracker = DataManager.getData(subArmorStand, "energyTracker")!;
 				if (armorStandEnergyTracker.rechargerID != playerEnergyTracker.usingRechargerID) continue;
