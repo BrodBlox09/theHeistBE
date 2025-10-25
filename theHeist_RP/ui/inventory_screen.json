@@ -3,28 +3,52 @@
 	"player_armor_panel": {
 		"anchor_to": "top_middle",
 		"anchor_from": "top_middle",
-		"offset": [ -8, 0 ],
-		"modifications": [
+		"offset": [ -8, 0 ]
+	},
+	"player_armor_panel/armor_grid/head_grid_item": { "$show_head_grid_item|default": true, "visible": "$show_head_grid_item" },
+	"player_armor_panel/armor_grid/chest_grid_item": { "visible": "$show_dev_view" },
+	"player_armor_panel/armor_grid/legs_grid_item": { "visible": "$show_dev_view" },
+	"player_armor_panel/armor_grid/feet_grid_item": { "visible": "$show_dev_view" },
+	"player_armor_panel/offhand_grid": { "visible": "$show_dev_view" },
+	"crafting_panel_2x2": { "visible": false },
+	"recipe_book/gamepad_helper_bumpers": { "visible": "$show_dev_view" },
+	"tab_navigation_panel_layout": { "visible": "$show_dev_view" },
+	"recipe_book/tab_content_panel": {
+		"controls": [
 			{
-				"control_name": "armor_grid",
-				"operation": "remove"
+				"select_chest_panel": {
+					"type": "panel",
+					"visible": "(not $show_dev_view)",
+					"layer": 10,
+					"controls": [
+						{
+							"bg@common.common_panel": { "$show_close_button": false }
+						},
+						{
+							"select_equipment_label@inventory_display.label": {
+								"text": "Select the chest icon to view your equipment",
+								"size": [ "80%", "default" ],
+								"layer": 2
+							}
+						}
+					]
+				}
 			},
 			{
-				"control_name": "offhand_grid",
-				"operation": "remove"
-			},
-			{
-				"array_name": "controls",
-				"operation": "insert_front",
-				"value": [ { "@inventory_display.armor_grid_head_only": {} } ]
+				"tab_content_panel@crafting.tab_content": {
+					"visible": "$show_dev_view",
+					"bindings": [],
+					"size": [ "100%", "100%" ],
+        			"layer": 8,
+        			"$scrolling_pane_control": "crafting.recipe_book_scroll_panel"
+				}
 			}
 		]
 	},
-	"crafting_panel_2x2": {
-		"visible": false
-	},
-    "scroll_grid": {
-        "maximum_grid_items": 5,
-        "bindings": []
-    }
+	"toolbar_panel/toolbar_background/toolbar_stack_panel/creative_layout_toggle_panel": { "visible": "$show_dev_view", "bindings": [] },
+	"toolbar_panel/toolbar_background/toolbar_stack_panel/padding_1": { "visible": "$show_dev_view", "bindings": [] },
+	"toolbar_panel/toolbar_background/toolbar_stack_panel/recipe_book_layout_toggle_panel_survival": { "visible": "$show_dev_view", "bindings": [] },
+	"toolbar_panel/toolbar_background/toolbar_stack_panel/recipe_book_layout_toggle_panel_creative": { "visible": false, "bindings": [] }, // Duplicate of above for some reason
+	"toolbar_panel/toolbar_background/toolbar_stack_panel/padding_2": { "visible": "$show_dev_view", "bindings": [] },
+	"crafting_screen": { "$show_head_grid_item": false, "$top_half_variant": "crafting.survival_panel_top_half" }
 }

@@ -49,6 +49,7 @@ item.dye.green.name=Green Keycard
 item.dye.blue.name=Blue Keycard
 tile.dropper.name=Drawer
 container.dropper=Drawer
+craftingScreen.tab.armor=Equipment
 
 map.sub.forgot_prototypes=Hey dumb dumb, you forgot some of the prototypes!
 

@@ -1,36 +1,75 @@
 {
 	"namespace": "crafting_pocket",
-	"left_tab": {
-		"visible": false
+	"left_panel/recipe_book_tab_content": {
+		"controls": [
+			{
+				"select_inventory_panel": {
+					"type": "panel",
+					"visible": "(not $show_dev_view)",
+					"layer": 6,
+					"controls": [
+						{
+							"select_inventory_label@inventory_display.label": {
+								"text": "Select the chest icon to view your inventory",
+								"text_alignment": "center",
+								"size": [
+									"80%",
+									"default"
+								]
+							}
+						}
+					]
+				}
+			},
+			{
+				"recipe_book_tab_content@crafting_pocket.recipe_book_tab_content": { "visible": "$show_dev_view" }
+			}
+		]
 	},
-	"crafting_tab": {
-		"visible": false
+	"left_panel": {
+		"modifications": [
+			{
+				"control_name": "inventory_tab_content",
+				"operation": "replace",
+				"value": [{
+					"inventory_tab_content": {
+						"type": "panel",
+						"controls": [
+							{
+								"inventory_tab_content_not_dev_view@inventory_display.pocket_inventory_tab_content": { "$maximum_grid_items": 5, "$visible": "(not $show_dev_view)" }
+							},
+							{
+								"inventory_tab_content_dev_view@inventory_display.pocket_inventory_tab_content": { "$visible": "$show_dev_view" }
+							}
+						],
+						// "visible": "#is_left_tab_inventory"
+						"bindings": [
+            				{
+            					"binding_type": "global",
+            					"binding_name": "#is_left_tab_inventory",
+            					"binding_name_override": "#visible"
+            				}
+          				]
+					}
+				}]
+			}
+		]
 	},
+	"left_tab": { "visible": "$show_dev_view" },
+	// Unfortunately this tab cannot be removed because if the player starts out on a different tab there would
+	// be no way to select the inventory (unless inventory tab is always shown... but this would have to also
+	// track that the player is not in dev_view mode)
 	"inventory_tab": {
 		"visible": true
 	},
-	"survival_panel_pocket": {
+	"survival_panel_pocket@inventory_display.pocket_crafting_panel": {}, // Hide the 2x2 grid in the inventory
+	"survival_panel_crafting_pocket@inventory_display.pocket_crafting_panel": {}, // Hide the 3x3 grid in the crafting table GUI
+	"crafting_tab": {
 		"visible": false
 	},
-	"pocket_armor_tab_content": {
-		"modifications": [
-			{
-				"control_name": "label_and_renderer",
-				"operation": "remove"
-			},
-			{
-				"control_name": "equipment_and_renderer",
-				"operation": "remove"
-			},
-			{
-				"array_name": "controls",
-				"operation": "insert_front",
-				"value": [
-					{
-						"@inventory_display.pocket_equipment_and_renderer_head_only": {}
-					}
-				]
-			}
-		]
-	}
+	// Set chest, legs, feet, and offhand cells to only be visible when player is in dev_view mode
+	"pocket_armor_tab_content/equipment_and_renderer/equipment/armor_grid/chest_grid_item": { "visible": "$show_dev_view" },
+	"pocket_armor_tab_content/equipment_and_renderer/equipment/armor_grid/legs_grid_item": { "visible": "$show_dev_view" },
+	"pocket_armor_tab_content/equipment_and_renderer/equipment/armor_grid/feet_grid_item": { "visible": "$show_dev_view" },
+	"pocket_armor_tab_content/equipment_and_renderer/equipment/offhand_grid": { "visible": "$show_dev_view" }
 }
