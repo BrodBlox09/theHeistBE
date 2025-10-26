@@ -162,7 +162,7 @@ function updateRobots(player: Player, level: number, levelInformation: LevelInfo
 			if (Math.abs(cameraRobotArmorStand.location.x % 1 - 0.5) > 0.15) tryRotate = false; // Ensure the robot only turns near the center
 			if (Math.abs(cameraRobotArmorStand.location.z % 1 - 0.5) > 0.15) tryRotate = false;
 			if (tryRotate && pathLevelBlock.typeId == "minecraft:stone_brick_stairs") {
-				var reqRot = getRotFromWeirdoDir(pathLevelBlock.permutation.getState("weirdo_direction") as number);
+				var reqRot = getRotFromWeirdoDir(pathLevelBlock.permutation.getState("weirdo_direction")!);
 				if (reqRot < 0 && currRot > 90) reqRot = 270;
 				if (reqRot > 0 && currRot < 0) currRot = 360 + currRot;
 				if (Math.abs(reqRot - currRot) >= 25) {

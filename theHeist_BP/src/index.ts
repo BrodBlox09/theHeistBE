@@ -111,7 +111,7 @@ system.afterEvents.scriptEventReceive.subscribe(event => { // stable-friendly ve
 				excludeTypes: ["minecraft:player"],
 				location: player.location
 			};
-			world.sendMessage(DataManager.GetDataRaw(Utilities.dimensions.overworld.getEntities(query)[0]) as string);
+			world.sendMessage(DataManager.GetDataRaw(Utilities.dimensions.overworld.getEntities(query)[0])!);
 			break;
 		}
 		case "myData": {

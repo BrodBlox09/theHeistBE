@@ -321,7 +321,7 @@ export default class LevelConstructor {
     }
 
     static keycardDrawer(loc: Vector, color: string) {
-        const drawerInventoryContainer = Utilities.dimensions.overworld.getBlock(loc)?.getComponent("inventory")!.container as Container;
+        const drawerInventoryContainer = Utilities.dimensions.overworld.getBlock(loc)?.getComponent("inventory")!.container!;
         drawerInventoryContainer.clearAll();
         var keycardTypeId = `minecraft:${color}_dye`;
         if (color == "blue") keycardTypeId = "minecraft:lapis_lazuli";

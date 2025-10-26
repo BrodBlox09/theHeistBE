@@ -23,8 +23,7 @@ export default class ActionManager {
 	private static _runAction(actionInfo: IAction, player: Player) {
 		switch (actionInfo.type) {
 			case "slideshow":
-				let slideshowInfo = actionInfo as SlideshowAction;
-				var slideshowID = slideshowInfo.do.slideshowID;
+				var slideshowID = actionInfo.do.slideshowID;
 				ActionManager.runSlideshow(slideshowID, player);
 				break;
 			case "set_block": {

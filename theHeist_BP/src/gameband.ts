@@ -154,7 +154,7 @@ function keycard(keycardType: string, player: Player) {
 	var actionTracker = DataManager.getData(armorStand, "actionTracker");
 	if (!actionTracker || !actionTracker.isKeycardReader || actionTracker.used == true || (actionTracker.keycardType != keycardType && keycardType != "all")) return;
 	if (keycardType == "all") {
-		var playerInvContainer = (player.getComponent("inventory") as EntityInventoryComponent).container as Container;
+		var playerInvContainer = player.getComponent("inventory")!.container;
 		if (actionTracker.keycardType != "blue") {
 			if (!Utilities.inventoryContainerHasItem(playerInvContainer, `minecraft:${actionTracker.keycardType}_dye`)) return;
 		} else {
@@ -180,7 +180,7 @@ function playerBusted(player: Player, currentLevel: number) {
 	player.playSound("map.alarm");
 	player.addTag("BUSTED");
 	player.onScreenDisplay.setTitle("§r§e§lBusted", { "subtitle": "You got detected. Try again!", "fadeInDuration": 20, "fadeOutDuration": 20, "stayDuration": 160 });
-	(player.getComponent("inventory") as EntityInventoryComponent).container?.clearAll();
+	player.getComponent("inventory")!.container?.clearAll();
 	system.runTimeout(() => {
 		stopAllSound();
 		player.teleport(Utilities.levelCloneInfo[currentLevel].prisonLoc);
@@ -263,8 +263,8 @@ system.runInterval(() => {
 	player.addEffect('resistance', 2000, { amplifier: 1, showParticles: false });
 	
 	// Set lore for items
-	const playerInvContainer = (player.getComponent('inventory') as EntityInventoryComponent).container as Container;
-	const playerEquippable = (player.getComponent('equippable') as EntityEquippableComponent);
+	const playerInvContainer = player.getComponent('inventory')!.container;
+	const playerEquippable = player.getComponent('equippable')!;
 	for (let i = 0; i < playerInvContainer.size; i++) {
 		const item = playerInvContainer.getItem(i);
 		if (!item || !item.getLore()) continue;

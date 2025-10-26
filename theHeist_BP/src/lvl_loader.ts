@@ -137,7 +137,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 			if (color == "blue") keycardItemTypeId == "minecraft:lapis_lazuli";
 
 			const player = world.getPlayers().filter((x) => (x != undefined))[0];
-			var playerInvContainer = player.getComponent("inventory")!.container as Container;
+			var playerInvContainer = player.getComponent("inventory")!.container;
 			var index = Utilities.inventoryContainerIndexOf(playerInvContainer, keycardItemTypeId);
 			var i = 10;
 			while (playerInvContainer.getItem(i) && i < playerInvContainer.size) i++;

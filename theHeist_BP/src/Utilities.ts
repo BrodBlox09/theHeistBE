@@ -194,7 +194,7 @@ export default class Utilities {
 
 	static reloadPlayerInv(player: Player, levelData?: LevelInformation) {
 		if (levelData == null) levelData = DataManager.getData(player, "levelInformation")!;
-		var playerInvContainer = (player.getComponent("inventory") as EntityInventoryComponent).container as Container;
+		var playerInvContainer = player.getComponent("inventory")!.container;
 		playerInvContainer.clearAll();
 		var playerInvData = levelData.information[2].inventory; // Array of player inventory slots
 		playerInvData.forEach((invSlotData: IInventorySlotData) => {
@@ -203,7 +203,7 @@ export default class Utilities {
 			if (invSlotData.lockMode) itemStack.lockMode = ItemLockMode[invSlotData.lockMode as keyof typeof ItemLockMode];
 			playerInvContainer.setItem(invSlotData.slot, itemStack);
 		});
-		(player.getComponent("equippable") as EntityEquippableComponent).setEquipment(EquipmentSlot.Head, new ItemStack("theheist:nv_glasses"));
+		player.getComponent("equippable")!.setEquipment(EquipmentSlot.Head, new ItemStack("theheist:nv_glasses"));
 	}
 
 	/**
@@ -213,7 +213,7 @@ export default class Utilities {
 	 * @returns 
 	 */
 	static savePlayerInventory(player: Player, stripEnchants: Boolean = false): LevelInformation {
-		var playerInvContainer = (player.getComponent("inventory") as EntityInventoryComponent).container as Container;
+		var playerInvContainer = player.getComponent("inventory")!.container;
 		var playerLevelData: LevelInformation = DataManager.getData(player, "levelInformation")!;
 		var newPlayerInvData = [];
 		for (var i = 0; i < playerInvContainer.size; i++) {
@@ -235,9 +235,9 @@ export default class Utilities {
 	}
 
 	static clearPlayerInventory(player: Player) {
-		var playerInvContainer = (player.getComponent("inventory") as EntityInventoryComponent).container as Container;
+		var playerInvContainer = player.getComponent("inventory")!.container;
 		playerInvContainer.clearAll();
-		var playerEquippable = player.getComponent("equippable") as EntityEquippableComponent;
+		var playerEquippable = player.getComponent("equippable")!;
 		playerEquippable.setEquipment(EquipmentSlot.Head);
 		playerEquippable.setEquipment(EquipmentSlot.Chest);
 		playerEquippable.setEquipment(EquipmentSlot.Legs);

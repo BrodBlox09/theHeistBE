@@ -346,7 +346,7 @@ const recharge1DataNode = {
 };
 DataManager.setData(recharge1, recharge1DataNode);
 // Fill drawers
-const drawer0InventoryContainer = (Utilities.dimensions.overworld.getBlock({ "x": 2002.5, "y": -60, "z": 75.5 })!.getComponent("inventory") as BlockInventoryComponent).container  as Container;
+const drawer0InventoryContainer = Utilities.dimensions.overworld.getBlock({ "x": 2002.5, "y": -60, "z": 75.5 })!.getComponent("inventory")!.container!;
 drawer0InventoryContainer.clearAll();
 drawer0InventoryContainer.setItem(4, new ItemStack("yellow_dye"));
 // Set doors and trapdoors

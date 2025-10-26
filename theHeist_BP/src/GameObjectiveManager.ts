@@ -24,7 +24,7 @@ export default class GameObjectiveManager {
 
 	static completeObjective(objective: ScoreboardParticipant) {
 		if (!objectivesObjective.hasParticipant(`§c${objective}§r`)) return; // Ensure no errors are thrown
-		var sortOrder: number = objectivesObjective.getScore(`§c${objective}§r`) as number;
+		var sortOrder: number = objectivesObjective.getScore(`§c${objective}§r`)!;
 		objectivesObjective.removeParticipant(`§c${objective}§r`);
 		objectivesObjective.setScore(`§a${objective}§r`, sortOrder);
 		world.sendMessage([{ "text": `§o§7Completed objective: §r§a${objective}§r` }]);
