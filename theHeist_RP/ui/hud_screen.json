@@ -13,20 +13,6 @@
 			}
 		]
 	},
-	"mob_effects_renderer": {
-		"bindings": [
-			{
-				"binding_name": "#hud_title_text_string",
-				"binding_name_override": "#text",
-				"binding_type": "global"
-			},
-			{
-				"binding_type": "view",
-				"source_property_name": "(not (#text = 'hideHud'))",
-				"target_property_name": "#visible"
-			}
-		]
-	},
 	"cursor_renderer": {
 		"bindings": [
 			{
@@ -118,6 +104,10 @@
 						]
 					}
 				}
+			},
+			{
+				"operation": "remove",
+				"control_name": "mob_effects_renderer"
 			}
 		]
 	}
