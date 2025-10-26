@@ -4,7 +4,8 @@ import DataManager from "./DataManager";
 import Utilities from "./Utilities";
 import GameObjectiveManager from "./GameObjectiveManager";
 import PlayerBustedManager from "./PlayerBustedManager";
-import * as hackingModeFunc from "./gamebands/hacking";
+import * as HackingModeFunc from "./gamebands/hacking";
+import * as RechargeModeFunc from "./gamebands/recharge";
 import * as SensorModeFunc from "./gamebands/sensor";
 import * as XRayModeFunc from "./gamebands/xray";
 import * as MagnetModeFunc from "./gamebands/magnet";
@@ -77,49 +78,49 @@ function itemUse(event: ItemUseAfterEvent | ItemStartUseOnAfterEvent) {
 	let keycardType;
 	switch (text) {
 		case "theheist:recharge_mode_lvl_1":
-			rechargeMode(1, player);
+			RechargeModeFunc.toggleRechargeMode(player, 1);
 			break;
 		case "theheist:recharge_mode_lvl_2":
-			rechargeMode(2, player);
+			RechargeModeFunc.toggleRechargeMode(player, 2);
 			break;
 		case "theheist:recharge_mode_lvl_3":
-			rechargeMode(3, player);
+			RechargeModeFunc.toggleRechargeMode(player, 3);
 			break;
 		case "theheist:hacking_mode_lvl_1":
-			hackingMode(1, player);
+			HackingModeFunc.tryHackingMode(player, 1);
 			break;
 		case "theheist:hacking_mode_lvl_2":
-			hackingMode(2, player);
+			HackingModeFunc.tryHackingMode(player, 2);
 			break;
 		case "theheist:hacking_mode_lvl_3":
-			hackingMode(3, player);
+			HackingModeFunc.tryHackingMode(player, 3);
 			break;
 		case "theheist:sensor_mode_lvl_1":
-			sensorMode(1, player);
+			SensorModeFunc.toggleSensorMode(player, 1);
 			break;
 		case "theheist:sensor_mode_lvl_2":
-			sensorMode(2, player);
+			SensorModeFunc.toggleSensorMode(player, 2);
 			break;
 		case "theheist:xray_mode_lvl_1":
-			xrayMode(1, player);
+			XRayModeFunc.toggleXRayMode(player, 1);
 			break;
 		case "theheist:xray_mode_lvl_2":
-			xrayMode(2, player);
+			XRayModeFunc.toggleXRayMode(player, 2);
 			break;
 		case "theheist:magnet_mode_lvl_1":
-			magnetMode(1, player);
+			MagnetModeFunc.toggleMagnetMode(player, 1);
 			break;
 		case "theheist:stealth_mode_lvl_1":
-			stealthMode(1, player);
+			StealthModeFunc.toggleStealthMode(player, 1);
 			break;
 		case "theheist:stealth_mode_lvl_2":
-			stealthMode(2, player);
+			StealthModeFunc.toggleStealthMode(player, 2);
 			break;
 		case "theheist:stun_mode_lvl_1":
-			stunMode(1, player);
+			StunModeFunc.tryStunMode(player, 1);
 			break;
 		case "theheist:drill_mode_lvl_1":
-			drillMode(1, player);
+			DrillModeFunc.tryDrillMode(player, 1);
 			break;
 		case "minecraft:red_dye":
 			keycardType = "red"
@@ -131,130 +132,9 @@ function itemUse(event: ItemUseAfterEvent | ItemStartUseOnAfterEvent) {
 			if (!keycardType) keycardType = "blue";
 		case "minecraft:paper":
 			if (!keycardType) keycardType = "all";
-			keycard(keycardType!, player);
+			keycard(keycardType, player);
 			break;
 	}
-}
-
-/**
- * @description Mode Type: Instant
- * @param lvl 
- * @param player 
- * @returns 
- */
-function drillMode(lvl: number, player: Player) {
-	DrillModeFunc.tryDrillMode(player, lvl);
-}
-
-/**
- * @description Mode Type: Instant
- * @param lvl 
- * @param player 
- * @returns 
- */
-function stunMode(lvl: number, player: Player) {
-	StunModeFunc.tryStunMode(player, lvl);
-}
-
-/**
- * @description Mode Type: Loop
- * @param lvl 
- * @param player 
- * @returns 
- */
-function stealthMode(lvl: number, player: Player) {
-	StealthModeFunc.toggleStealthMode(player, lvl);
-}
-
-/**
- * @description Mode Type: Loop
- * @param lvl 
- * @param player 
- * @returns 
- */
-function magnetMode(lvl: number, player: Player) {
-	MagnetModeFunc.toggleMagnetMode(player, lvl);
-}
-
-/**
- * @description Mode Type: Loop
- * @param lvl 
- * @param player 
- * @returns 
- */
-function xrayMode(lvl: number, player: Player) {
-	/* NOTE: When a region is cloned, the region defined by the first 2 Vector3s will be cloned by the block which is the lowest and most NW (most negative in every direction xyz).
-	*  A copy of that block is then translated to the third Vector3 as well as a copy of the rest of the region and then cloned there. */
-	XRayModeFunc.toggleXRayMode(player, lvl);
-}
-
-/**
- * @description Mode Type: Loop
- * @param lvl 
- * @param player 
- * @returns 
- */
-function sensorMode(lvl: number, player: Player) {
-	/* NOTE: When a region is cloned, the region defined by the first 2 Vector3s will be cloned by the block which is the lowest and most NW (most negative in every direction xyz).
-	*  A copy of that block is then translated to the third Vector3 as well as a copy of the rest of the region and then cloned there. */
-	SensorModeFunc.toggleSensorMode(player, lvl);
-}
-
-/**
- * @description Mode Type: Loop
- * @param lvl 
- * @param player 
- * @returns 
- */
-function rechargeMode(lvl: number, player: Player) {
-	let levelInformation = DataManager.getData(player, "levelInformation")!;
-	GamebandManager.cancelMode(player, levelInformation.currentMode);
-
-	const query = {
-		"type": "armor_stand",
-		"location": new Vector(player.location.x, rechargeHeight, player.location.z),
-		"maxDistance": 2,
-		"closest": 1
-	}
-	const armorStands = Utilities.dimensions.overworld.getEntities(query);
-	for (const armorStand of armorStands) {
-		var armorStandEnergyTrackerDataNode = DataManager.getData(armorStand, "energyTracker")!;
-		var playerEnergyTrackerDataNode = DataManager.getData(player, "playerEnergyTracker")!;
-		playerEnergyTrackerDataNode.rechargeLevel = lvl;
-		var blockLocation = { "x": armorStandEnergyTrackerDataNode.block.x, "y": armorStandEnergyTrackerDataNode.block.y, "z": armorStandEnergyTrackerDataNode.block.z };
-		if (playerEnergyTrackerDataNode.recharging == false) {
-			if (armorStandEnergyTrackerDataNode.energyUnits == 0.0) return;
-			if (armorStandEnergyTrackerDataNode.block.y - 1 > player.location.y) return;
-			playerEnergyTrackerDataNode.recharging = true;
-			player.playSound("portal.travel", { "volume": 0.1, "pitch": 2 });
-			Utilities.setBlock(blockLocation, "theheist:recharge_station", { "minecraft:cardinal_direction": armorStandEnergyTrackerDataNode.block.rotation, "theheist:state": 2 });
-			playerEnergyTrackerDataNode.usingRechargerID = armorStandEnergyTrackerDataNode.rechargerID;
-			// Remove all gamebands except recharge mode
-			var playerInvContainer = (player.getComponent("inventory") as EntityInventoryComponent).container as Container;
-			playerInvContainer.clearAll();
-			var rechargeModeItemStack = new ItemStack(`theheist:recharge_mode_lvl_${lvl}_enchanted`);
-			rechargeModeItemStack.lockMode = ItemLockMode.slot;
-			playerInvContainer.setItem(0, rechargeModeItemStack);
-		} else {
-			// The player is currently recharging
-			playerEnergyTrackerDataNode.recharging = false;
-			Utilities.setBlock(blockLocation, "theheist:recharge_station", { "minecraft:cardinal_direction": armorStandEnergyTrackerDataNode.block.rotation, "theheist:state": 1 });
-			playerEnergyTrackerDataNode.usingRechargerID = -1;
-			// Bring back the player's items
-			Utilities.reloadPlayerInv(player);
-		}
-		DataManager.setData(player, playerEnergyTrackerDataNode);
-	}
-}
-
-/**
- * @description Mode Type: Instant
- * @param lvl 
- * @param player 
- * @returns 
- */
-function hackingMode(lvl: number, player: Player) {
-	hackingModeFunc.tryHackingMode(player, lvl);
 }
 
 function keycard(keycardType: string, player: Player) {
@@ -350,10 +230,10 @@ function clearGlass(loc: Vector) {
 system.runInterval(() => {
 	const player = world.getPlayers().filter((x: Player) => (x != undefined && x != null))[0];
 	if (player == undefined) return;
-
 	
 	var playerLevelInformation = DataManager.getData(player, "levelInformation")!;
 	
+	// Handle dropped items
 	{
 		var itemEntity = Utilities.dimensions.overworld.getEntities({
 			"type": "minecraft:item",
@@ -362,7 +242,7 @@ system.runInterval(() => {
 			"maxDistance": 3
 		})[0];
 		if (itemEntity) {
-			var droppedItemTID = (itemEntity.getComponent("item") as EntityItemComponent).itemStack.typeId;
+			var droppedItemTID = itemEntity.getComponent("item")!.itemStack.typeId;
 			itemEntity.remove();
 			if (droppedItemTID == "theheist:phone") {
 				playerBusted(player, playerLevelInformation.information[1].level);
@@ -378,12 +258,10 @@ system.runInterval(() => {
 	// clearGlass(Vector.from(player.location));
 
 	// Give player effects
-	const saturation = EffectTypes.get('saturation')!;
-	const nightVision = EffectTypes.get('night_vision')!;
-	const resistance = EffectTypes.get('resistance')!;
-	player.addEffect(saturation, 2000, { 'amplifier': 1, 'showParticles': false });
-	player.addEffect(nightVision, 2000, { 'amplifier': 1, 'showParticles': false });
-	player.addEffect(resistance, 2000, { 'amplifier': 1, 'showParticles': false });
+	player.addEffect('saturation', 2000, { amplifier: 1, showParticles: false });
+	player.addEffect('night_vision', 2000, { amplifier: 1, showParticles: false });
+	player.addEffect('resistance', 2000, { amplifier: 1, showParticles: false });
+	
 	// Set lore for items
 	const playerInvContainer = (player.getComponent('inventory') as EntityInventoryComponent).container as Container;
 	const playerEquippable = (player.getComponent('equippable') as EntityEquippableComponent);
@@ -410,6 +288,8 @@ system.runInterval(() => {
 		} catch (err) { }
 	}
 	playerEquippable.setEquipment(EquipmentSlot.Head, headItem);
+
+	// If recharge mode selected, show objectives
 	var selectedItemStack = playerInvContainer.getItem(player.selectedSlotIndex);
 	if (selectedItemStack != undefined && selectedItemStack.typeId.startsWith("theheist:recharge_mode_lvl_")) {
 		GameObjectiveManager.showSidebar();
@@ -420,11 +300,11 @@ system.runInterval(() => {
 	// Set player level to player energy level
 	var playerEnergyTracker = DataManager.getData(player, "playerEnergyTracker")!;
 
-	if (playerEnergyTracker && playerLevelInformation) SensorModeFunc.sensorTick(player, playerLevelInformation, playerEnergyTracker);
-	if (playerEnergyTracker && playerLevelInformation) XRayModeFunc.xrayTick(player, playerLevelInformation, playerEnergyTracker);
-	if (playerEnergyTracker && playerLevelInformation) MagnetModeFunc.magnetTick(player, playerLevelInformation, playerEnergyTracker);
-	if (playerEnergyTracker && playerLevelInformation) StealthModeFunc.stealthTick(player, playerLevelInformation, playerEnergyTracker);
+	// Tick all gameband modes
+	if (playerLevelInformation && playerEnergyTracker)
+		GamebandManager.tickAllGamebands(player, playerLevelInformation, playerEnergyTracker);
 
+	// Check to see if XP bar display needs to be updated
 	if ((playerEnergyTracker && playerEnergyTracker.energyUnits != player.level) || (playerLevelInformation && player.xpEarnedAtCurrentLevel != ((((playerLevelInformation.information[0].level / 100) - 0.06) * 742) + 41))) {
 		player.resetLevel();
 		player.addLevels(100);
@@ -440,64 +320,6 @@ system.runInterval(() => {
 			playerBusted(player, playerLevelInformation.information[1].level);
 		}
 	}
-	// Recharge mode
-	if (playerEnergyTracker && playerEnergyTracker.recharging == true) {
-		const query = {
-			"type": "armor_stand",
-			"location": { 'x': player.location.x, 'y': rechargeHeight, 'z': player.location.z },
-			"maxDistance": 2
-		}
-		const armorStands = Utilities.dimensions.overworld.getEntities(query);
-		var i = 0;
-		for (const armorStand of armorStands) {
-			var armorStandEnergyTracker = DataManager.getData(armorStand, "energyTracker")!;
-			if (armorStandEnergyTracker.rechargerID != playerEnergyTracker.usingRechargerID) continue;
-			if (armorStandEnergyTracker.block.y - 1 > player.location.y) continue;
-			i++;
-		}
-		if (i == 0) {
-			// Player has left range, so stop the player from recharging
-			playerEnergyTracker.recharging = false;
-			Utilities.reloadPlayerInv(player);
-			const subQuery = {
-				"type": "armor_stand",
-				"location": { 'x': player.location.x, 'y': rechargeHeight, 'z': player.location.z },
-				"maxDistance": 4
-			}
-			const subArmorStands = Utilities.dimensions.overworld.getEntities(subQuery);
-			for (const subArmorStand of subArmorStands) {
-				var armorStandEnergyTracker = DataManager.getData(subArmorStand, "energyTracker")!;
-				if (armorStandEnergyTracker.rechargerID != playerEnergyTracker.usingRechargerID) continue;
-				Utilities.setBlock({ x: armorStandEnergyTracker.block.x, y: armorStandEnergyTracker.block.y, z: armorStandEnergyTracker.block.z }, "theheist:recharge_station", { "minecraft:cardinal_direction": armorStandEnergyTracker.block.rotation, "theheist:state": 1 });
-				playerEnergyTracker.usingRechargerID = -1;
-			}
-		} else if (playerEnergyTracker.energyUnits < Utilities.rechargeGamebandInfo[playerEnergyTracker.rechargeLevel].max) {
-			var addEnergy = 1; // Amount of energy to add per tick
-			playerEnergyTracker.energyUnits = Math.min(playerEnergyTracker.energyUnits + addEnergy, Utilities.rechargeGamebandInfo[playerEnergyTracker.rechargeLevel].max);
-			for (const armorStand of armorStands) {
-				var armorStandEnergyTracker = DataManager.getData(armorStand, "energyTracker")!;
-				if (armorStandEnergyTracker.rechargerID != playerEnergyTracker.usingRechargerID) continue;
-
-				armorStandEnergyTracker.energyUnits -= addEnergy;
-				if (armorStandEnergyTracker.energyUnits <= 0) {
-					// The recharge station is out of energy, so stop player from recharging
-					var diff = Math.abs(armorStandEnergyTracker.energyUnits);
-					playerEnergyTracker.energyUnits -= diff;
-					armorStandEnergyTracker.energyUnits = 0;
-					Utilities.setBlock({ x: armorStandEnergyTracker.block.x, y: armorStandEnergyTracker.block.y, z: armorStandEnergyTracker.block.z }, "theheist:recharge_station", { "minecraft:cardinal_direction": armorStandEnergyTracker.block.rotation, "theheist:state": 3 });
-					playerEnergyTracker.recharging = false;
-					playerEnergyTracker.usingRechargerID = -1;
-					Utilities.reloadPlayerInv(player);
-					// Run actions staged for on depletion
-					if (armorStandEnergyTracker.actions) ActionManager.runActions(armorStandEnergyTracker.onDepletionActions, player);
-				}
-				DataManager.setData(armorStand, armorStandEnergyTracker);
-			}
-		}
-		DataManager.setData(player, playerEnergyTracker);
-	}
 
 	if (playerEnergyTracker && playerLevelInformation) SensorModeFunc.tryMap(player, playerLevelInformation, playerEnergyTracker);
-	// player.onScreenDisplay.setActionBar(`TPS: ${Math.round(1 / ((Date.now() - lastTickTime) / 1000))}`);
-	// lastTickTime = Date.now();
 });
