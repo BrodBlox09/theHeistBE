@@ -173,7 +173,7 @@ export default class LevelConstructor {
             "rechargerID": rechargeStations,
             "energyUnits": energyUnits,
             "block": { "x": loc.x, "y": loc.y, "z": loc.z, "rotation": blockRot },
-            "actions": actionList
+            "onDepletionActions": actionList
         };
         DataManager.setData(recharge, rechargeDataNode);
         rechargeStations++;

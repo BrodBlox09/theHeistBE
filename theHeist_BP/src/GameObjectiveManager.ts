@@ -1,5 +1,10 @@
 import { DisplaySlotId, ScoreboardObjective, ScoreboardIdentity, Entity, world } from '@minecraft/server';
 
+/**
+ * Unfinished objectives color: §c (Red)
+ * Finished objectives color: §a (Green)
+ */
+
 let objectivesObjective: ScoreboardObjective;
 
 world.afterEvents.worldLoad.subscribe(event => {

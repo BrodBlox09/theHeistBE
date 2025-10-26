@@ -4,7 +4,17 @@ import Vector from "./Vector";
 import { BlockStateSuperset } from "@minecraft/vanilla-data";
 
 export default class Utilities {
-	static dimensions: Record<string, Dimension> = {}
+	static levelMapHeight = 20;
+	static floorCloneHeight = 18;
+	static drilledBlocksHeight = 15;
+	static consolesHeight = -15;
+	static rechargeHeight = -20;
+	static cameraHeight = -25;
+	static cameraMappingHeight = -30;
+	static magnetModeMagnetBlocksHeight = -51;
+	static levelHeight = -60;
+	static SECOND = 20;
+	static dimensions: Record<string, Dimension> = {};
 
 	static sin(d: number): number {
 		return Math.sin(d * Math.PI / 180);
@@ -248,16 +258,6 @@ export default class Utilities {
 			"mapLoc": new Vector(7940, -54, 99)
 		}
 	}
-
-	static levelMapHeight = 20;
-	static floorCloneHeight = 18;
-	static drilledBlocksHeight = 15;
-	static consolesHeight = -15;
-	static rechargeHeight = -20;
-	static cameraHeight = -25;
-	static cameraMappingHeight = -30;
-	static magnetModeMagnetBlocksHeight = -51;
-	static levelHeight = -60;
 }
 
 world.afterEvents.worldLoad.subscribe(event => {

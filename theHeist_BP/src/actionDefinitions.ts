@@ -1,4 +1,4 @@
-export class SetBlockAction implements IAction {
+class SetBlockAction implements IAction {
 	type = "set_block";
 	do: { "x": number, "y": number, "z": number, "block": string, "permutations"?: Record<string, any> };
 
@@ -7,7 +7,7 @@ export class SetBlockAction implements IAction {
 	}
 }
 
-export class FillBlocksAction implements IAction {
+class FillBlocksAction implements IAction {
     type = "fill_blocks";
     do: { "x1": number, "y1": number, "z1": number, "x2": number, "y2": number, "z2": number, "block": string, "permutations"?: Record<string, any> };
 
@@ -16,7 +16,7 @@ export class FillBlocksAction implements IAction {
     }
 }
 
-export class PlaySoundAction implements IAction {
+class PlaySoundAction implements IAction {
     type = "play_sound";
     do: { "soundID": string };
 
@@ -25,7 +25,7 @@ export class PlaySoundAction implements IAction {
     }
 }
 
-export class VoiceSaysAction implements IAction {
+class VoiceSaysAction implements IAction {
     type = "voice_says";
     do: { "soundID": string };
 
@@ -34,7 +34,7 @@ export class VoiceSaysAction implements IAction {
     }
 }
 
-export class RunCommandAction implements IAction {
+class RunCommandAction implements IAction {
     type = "run_command";
     do: { "command": string };
 
@@ -43,13 +43,13 @@ export class RunCommandAction implements IAction {
     }
 }
 
-export enum ObjectiveManagementType {
+enum ObjectiveManagementType {
     ADD_OBJECTIVE = 1,
     COMPLETE_OBJECTIVE = 2,
     REMOVE_OBJECTIVE = 3
 }
 
-export class ManageObjectiveAction implements IAction {
+class ManageObjectiveAction implements IAction {
     type = "manage_objective";
     do: { "manageType": ObjectiveManagementType, "objective": string, "sortOrder"?: number };
 
@@ -59,7 +59,7 @@ export class ManageObjectiveAction implements IAction {
     }
 }
 
-export class SlideshowAction implements IAction {
+class SlideshowAction implements IAction {
     type = "slideshow";
     do: { "slideshowID": number };
 
@@ -68,7 +68,7 @@ export class SlideshowAction implements IAction {
     }
 }
 
-export class DisableCameraAction implements IAction {
+class DisableCameraAction implements IAction {
     type = "disable_camera";
     do: { "cameraID": number, "noMessage"?: boolean };
     
@@ -78,7 +78,7 @@ export class DisableCameraAction implements IAction {
     }
 }
 
-export class DisplayMailAction implements IAction {
+class DisplayMailAction implements IAction {
     type = "display_mail";
     do: { "mailID": number };
 
@@ -87,7 +87,7 @@ export class DisplayMailAction implements IAction {
     }
 }
 
-export class DisplayResearchAction implements IAction {
+class DisplayResearchAction implements IAction {
     type = "display_research";
     do: { "researchID": number };
 
@@ -96,7 +96,7 @@ export class DisplayResearchAction implements IAction {
     }
 }
 
-export class DisplayTextAction implements IAction {
+class DisplayTextAction implements IAction {
     type = "display_text";
     do: { "text": string };
 
@@ -105,7 +105,7 @@ export class DisplayTextAction implements IAction {
     }
 }
 
-export class SetAlarmLevelAction implements IAction {
+class SetAlarmLevelAction implements IAction {
     type = "set_alarm_level";
     do: { "value": number };
 
@@ -114,7 +114,7 @@ export class SetAlarmLevelAction implements IAction {
     }
 }
 
-export class NewGamebandAction implements IAction {
+class NewGamebandAction implements IAction {
     type = "new_gameband";
     do: { "displayBlock": IVector3, "mode": string, "modeText": string, "slot": number };
 
@@ -128,7 +128,7 @@ export class NewGamebandAction implements IAction {
     }
 }
 
-export class UpgradeGamebandAction implements IAction {
+class UpgradeGamebandAction implements IAction {
     type = "upgrade_gameband";
     do: { "displayBlock": IVector3, "mode": string, "modeText": string, "level": number, "slot": number };
 

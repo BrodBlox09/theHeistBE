@@ -87,7 +87,7 @@ interface EnergyTracker extends DataNode {
 	"energyUnits": number,
 	"rechargerID": number,
 	"block": IBlockOrientation,
-	"actions": ActionList
+	"onDepletionActions": ActionList
 }
 
 interface CameraTracker extends DataNode {

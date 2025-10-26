@@ -1,9 +1,5 @@
-import { Player } from "@minecraft/server";
 import BlockRotation from "../BlockRotation";
 import Vector from "../Vector";
-import Utilities from "../Utilities";
-import ActionListBuilder from "../ActionListBuilder";
-import { ManageObjectiveAction, ObjectiveManagementType, SlideshowAction } from "../actionDefinitions";
 import LevelConstructor from "./LevelConstructor";
 
 const level: ILevel = {

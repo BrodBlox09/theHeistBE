@@ -1,4 +1,4 @@
-export default class ActionListBuilder {
+class ActionListBuilder {
     private actionList: ActionList;
 
     constructor() {
