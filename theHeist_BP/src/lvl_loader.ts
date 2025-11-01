@@ -47,7 +47,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 			player.addTag('loadingLevel');
 			// Clear all data on player
 			DataManager.clearData(player);
-			player.getTags().forEach((x) => { if (!persistentTags.includes(x)) player.removeTag(x); });
+			player.getTags().forEach((x) => { if (!persistentTags.includes(x) && !x.startsWith("p_")) player.removeTag(x); });
 
 			// Ensure player is in correct game mode
 			player.setGameMode(GameMode.Adventure);
@@ -180,7 +180,8 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 				return;
 			}
 			PlayerBustedManager.setTimesBusted(player, 0);
-
+			// Remove all tags (except persistent), even p_ tags (like for voice over)
+			player.getTags().forEach((x) => { if (!persistentTags.includes(x)) player.removeTag(x); });
 			if (!nextLevel) {
 				if (currLevel != -5) system.sendScriptEvent("theheist:load-level", `${currLevel - 1}`);
 				else endDemo(player);
