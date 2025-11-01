@@ -19,7 +19,7 @@ const level: ILevel = {
 },
 "customTitle": "",
 setup: () => {
-    LevelConstructor.rechargeStation(new Vector(-21.5, -59, 62.5), BlockRotation.EAST, 21.0, new ActionListBuilder()
+    LevelConstructor.rechargeStation(new Vector(-21.5, -59, 62.5), BlockRotation.EAST, 21.0, new ActionListBuilder(0)
         .add(new ManageObjectiveAction(ObjectiveManagementType.COMPLETE_OBJECTIVE, "Recharge Gameband", 1))
         .build());
     LevelConstructor.computer(new Vector(-21.5, -58, 58.5), "Start slideshow", BlockRotation.EAST, new ActionListBuilder()
