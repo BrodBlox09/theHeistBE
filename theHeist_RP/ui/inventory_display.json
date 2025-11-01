@@ -21,27 +21,6 @@
 	// ---------------
 	// Pocket inventory
 	// ---------------
-	"pocket_crafting_panel": {
-		"type": "panel",
-		"controls": [
-			{
-				"select_equipment_label@inventory_display.label": {
-					"text": "Select the armor icon to view your equipment",
-					"size": [ "80%", "default" ],
-					"layer": 2
-				}
-			}
-		],
-		"bindings": [
-			{
-				"binding_type": "view",
-				"source_control_name": "content",
-				"resolve_sibling_scope": true,
-				"source_property_name": "(not #needs_crafting_table)",
-				"target_property_name": "#visible"
-			}
-		]
-	},
 	"pocket_inventory_tab_content@crafting_pocket.inventory_tab_content": {
 		"$scrolling_pane_control": "inventory_display.pocket_inventory_scroll_panel",
 		"$visible|default": true,
@@ -82,5 +61,9 @@
 		"type": "label",
 		"color": "$title_text_color",
 		"text_alignment": "center"
+	},
+	"filler": {
+		"type": "panel",
+		"size": [ "fill", "100%" ]
 	}
 }
