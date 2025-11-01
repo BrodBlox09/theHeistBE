@@ -8,6 +8,7 @@ import "./customComponents";
 import "./lvl_loader";
 import "./gameband";
 import "./alarm";
+import ActionManager from "./ActionManager";
 
 world.afterEvents.playerSpawn.subscribe(eventData => {
 	if (!eventData.initialSpawn || !eventData.player.hasTag('loadingLevel')) return;
@@ -137,6 +138,9 @@ system.afterEvents.scriptEventReceive.subscribe(event => { // stable-friendly ve
 		case "clearObjectives": {
 			GameObjectiveManager.removeAllObjectives();
 			console.log("objectives cleared");
+		}
+		case "runSlideshow": {
+			ActionManager.runSlideshow(parseInt(args[0]), player);
 		}
 	}
 });
