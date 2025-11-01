@@ -62,10 +62,30 @@
 	"inventory_tab": {
 		"visible": true
 	},
-	"survival_panel_pocket@inventory_display.pocket_crafting_panel": {}, // Hide the 2x2 grid in the inventory
-	"survival_panel_crafting_pocket@inventory_display.pocket_crafting_panel": {}, // Hide the 3x3 grid in the crafting table GUI
+	// "survival_panel_pocket@inventory_display.pocket_crafting_panel": {}, // Hide the 2x2 grid in the inventory
+	// "survival_panel_crafting_pocket@inventory_display.pocket_crafting_panel": {}, // Hide the 3x3 grid in the crafting table GUI
+	"right_panel": {
+		"modifications": [
+			{
+				"control_name": "crafting_tab_content",
+				"operation": "remove"
+			}
+		]
+	},
+	"right_panel/armor_tab_content": {
+		"bindings": [] // Remove the conditional binding that hid the armor tab if another tab was selected
+		// When the full screen tab in creative mode is selected, the entire right panel is hidden.
+	},
 	"crafting_tab": {
 		"visible": false
+	},
+	"armor_tab": {
+		"bindings": [
+			{
+				"binding_name": "#is_creative_mode",
+				"binding_name_override": "#visible"
+			}
+		]
 	},
 	// Set chest, legs, feet, and offhand cells to only be visible when player is in dev_view mode
 	"pocket_armor_tab_content/equipment_and_renderer/equipment/armor_grid/chest_grid_item": { "visible": "$show_dev_view" },
