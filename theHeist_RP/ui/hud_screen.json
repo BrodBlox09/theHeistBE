@@ -40,7 +40,7 @@
 				"target_property_name": "#visible"
 			},
 			{
-				"binding_name": "#hud_visible",
+				"binding_name": "#hud_visible_centered_gui_elements",
 				"binding_name_override": "#visible",
 				"binding_type": "global"
 			}
