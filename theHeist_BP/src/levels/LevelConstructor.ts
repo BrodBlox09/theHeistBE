@@ -45,7 +45,7 @@ export default class LevelConstructor {
                 }
             },
             {
-                "type": "manage_objectives", "do": { "manageType": 2, "objective": `Get ${modeInCase} upgrade` }
+                "type": "manage_objective", "do": { "manageType": 2, "objective": `Get ${modeInCase} upgrade` }
             }
         ];
         allActions.push(...actions);
@@ -73,7 +73,7 @@ export default class LevelConstructor {
                 }
             },
             {
-                "type": "manage_objectives", "do": { "manageType": 2, "objective": `Get ${modeInCase} mode` }
+                "type": "manage_objective", "do": { "manageType": 2, "objective": `Get ${modeInCase} mode` }
             }
         ];
         allActions.push(...actions);
@@ -165,7 +165,7 @@ export default class LevelConstructor {
         DataManager.setData(console, consoleActionTracker);
     }
 
-    static rechargeStation(loc: Vector, blockRot: BlockRotation, energyUnits: number = 100.0, actionList: ActionList = []) {
+    static rechargeStation(loc: Vector, blockRot: BlockRotation, energyUnits: number = 100.0, onDepletionActionList: ActionList = []) {
         const recharge = Utilities.spawnEntity(new Vector(loc.x, Utilities.rechargeHeight, loc.z), "minecraft:armor_stand");
         Utilities.setBlock(loc, "theheist:recharge_station", { "minecraft:cardinal_direction": blockRot });
         const rechargeDataNode: EnergyTracker = {
@@ -173,7 +173,7 @@ export default class LevelConstructor {
             "rechargerID": rechargeStations,
             "energyUnits": energyUnits,
             "block": { "x": loc.x, "y": loc.y, "z": loc.z, "rotation": blockRot },
-            "onDepletionActions": actionList
+            "onDepletionActions": onDepletionActionList
         };
         DataManager.setData(recharge, rechargeDataNode);
         rechargeStations++;

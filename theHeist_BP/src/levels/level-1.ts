@@ -47,10 +47,10 @@ LevelConstructor.computer(new Vector(3082.5, -59, 118.5), "Mail", BlockRotation.
     "type": "display_mail", "do": { "mailID": 104 }, "delay": 40
 },
 {
-    "type": "manage_objectives", "do": { "manageType": 1, "objective": "Find Yellow Keycard", "sortOrder": 1 }, "delay": 40
+    "type": "manage_objective", "do": { "manageType": 1, "objective": "Find Yellow Keycard", "sortOrder": 1 }, "delay": 40
 },
 {
-    "type": "manage_objectives", "do": { "manageType": 1, "objective": "Find Green Keycard", "sortOrder": 0 }, "delay": 40
+    "type": "manage_objective", "do": { "manageType": 1, "objective": "Find Green Keycard", "sortOrder": 0 }, "delay": 40
 }]);
 LevelConstructor.keypad(new Vector(3104.5, -59, 116.5), 2, BlockRotation.WEST, [{
     "type": "set_block", "do": { "x": 3103, "y": -60, "z": 115, "block": "theheist:custom_door_2_bottom", "permutations": { "minecraft:cardinal_direction": "west", "theheist:unlocked": true } }, "delay": 40
@@ -91,7 +91,7 @@ LevelConstructor.keycardReader(new Vector(3087.5, -59, 131.5), "green", [{
     "type": "play_sound", "do": { "soundID": "random.door_open" }
 },
 {
-    "type": "manage_objectives", "do": { "manageType": 2, "objective": "Access next level" }
+    "type": "manage_objective", "do": { "manageType": 2, "objective": "Access next level" }
 },
 {
     "type": "voice_says", "do": { "soundID": 204 }

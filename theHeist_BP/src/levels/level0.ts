@@ -123,7 +123,7 @@ const console0ActionTracker = {
             "type": "voice_says", "do": { "soundID": "103" }, "delay": 40
         },
         {
-            "type": "manage_objectives", "do": { "manageType": 1, "objective": "Break into Director's office", "sortOrder": 0 }, "delay": 40
+            "type": "manage_objective", "do": { "manageType": 1, "objective": "Break into Director's office", "sortOrder": 0 }, "delay": 40
         }
     ]
 };
@@ -169,7 +169,7 @@ const console2ActionTracker = {
             "type": "set_block", "do": { "x": 2015, "y": -60, "z": 61, "block": "theheist:custom_door_1_bottom", "permutations": { "minecraft:cardinal_direction": "east", "theheist:unlocked": true } }, "delay": 40
         },
         {
-            "type": "manage_objectives", "do": { "manageType": 2, "objective": "Break into Director's office", "sortOrder": 0 }, "delay": 40
+            "type": "manage_objective", "do": { "manageType": 2, "objective": "Break into Director's office", "sortOrder": 0 }, "delay": 40
         }
     ]
 };
@@ -196,7 +196,7 @@ const console3ActionTracker = {
             "type": "voice_says", "do": { "soundID": "104" }, "delay": 40
         },
         {
-            "type": "manage_objectives", "do": { "manageType": 1, "objective": "Access the elevator", "sortOrder": 1 }, "delay": 40
+            "type": "manage_objective", "do": { "manageType": 1, "objective": "Access the elevator", "sortOrder": 1 }, "delay": 40
         }
     ]
 };
@@ -296,7 +296,7 @@ const console7ActionTracker = {
             "type": "display_mail", "do": { "mailID": "001" }, "delay": 40
         },
         {
-            "type": "manage_objectives", "do": { "manageType": 1, "objective": "Find Yellow Keycard", "sortOrder": -1 }, "delay": 40
+            "type": "manage_objective", "do": { "manageType": 1, "objective": "Find Yellow Keycard", "sortOrder": -1 }, "delay": 40
         }
     ]
 };
@@ -319,7 +319,7 @@ const console8ActionTracker = {
             "type": "voice_says", "do": { "soundID": "109" }
         },
         {
-            "type": "manage_objectives", "do": { "manageType": 2, "objective": "Access the elevator", "sortOrder": 1 }
+            "type": "manage_objective", "do": { "manageType": 2, "objective": "Access the elevator", "sortOrder": 1 }
         }
     ]
 };

@@ -27,7 +27,7 @@ setup: () => {
         "type": "display_mail", "do": { "mailID": 508 }, "delay": 40
     },
     {
-        "type": "manage_objectives", "do": { "manageType": 1, "objective": "Find Green Keycard", "sortOrder": -2 }, "delay": 40
+        "type": "manage_objective", "do": { "manageType": 1, "objective": "Find Green Keycard", "sortOrder": -2 }, "delay": 40
     }]);
 } // Chief of Technology
 
@@ -157,7 +157,7 @@ setup: () => {
         "type": "display_mail", "do": { "mailID": 500 }, "delay": 40
     },
     {
-        "type": "manage_objectives", "do": { "manageType": 1, "objective": "Find Yellow Keycard", "sortOrder": 0 }, "delay": 40
+        "type": "manage_objective", "do": { "manageType": 1, "objective": "Find Yellow Keycard", "sortOrder": 0 }, "delay": 40
     }]);
 
     Utilities.setBlock(new Vector(6942, -57, 125), "theheist:white_trapdoor", {"minecraft:cardinal_direction": "east"});
@@ -215,7 +215,7 @@ setup: () => {
         "type": "display_mail", "do": { "mailID": 504 }, "delay": 40
     },
     {
-        "type": "manage_objectives", "do": { "manageType": 1, "objective": "Find Red Keycard", "sortOrder": -1 }, "delay": 40
+        "type": "manage_objective", "do": { "manageType": 1, "objective": "Find Red Keycard", "sortOrder": -1 }, "delay": 40
     }]);
 
     Utilities.setBlock(new Vector(6894, -57, 116), "theheist:white_trapdoor", {"minecraft:cardinal_direction": "west"});
@@ -343,7 +343,7 @@ setup: () => {
             "type": "play_sound", "do": { "soundID": "random.door_open" }
         },
         {
-            "type": "manage_objectives", "do": { "manageType": 2, "objective": "Access next level" }
+            "type": "manage_objective", "do": { "manageType": 2, "objective": "Access next level" }
         }
     ]);
     Utilities.setBlock(new Vector(6873, -59, 155), "minecraft:lever", { "lever_direction": "east" });

@@ -25,7 +25,7 @@ setup: () => {
             "type": "play_sound", "do": { "soundID": "random.door_open" }, "delay": 40
         },
         {
-            "type": "manage_objectives", "do": { "manageType": 2, "objective": "Access next level" }, "delay": 40
+            "type": "manage_objective", "do": { "manageType": 2, "objective": "Access next level" }, "delay": 40
         }
     ]);
     Utilities.setBlock(new Vector(0, 0, 0), "minecraft:lever", { "lever_direction": "north" });

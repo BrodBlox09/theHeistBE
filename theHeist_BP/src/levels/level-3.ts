@@ -76,7 +76,7 @@ setup: () => {
         "type": "display_mail", "do": { "mailID": 304 }, "delay": 40
     },
     {
-        "type": "manage_objectives", "do" : { "manageType": 1, "objective": "Find Green Keycard", "sortOrder": 0 }, "delay": 40
+        "type": "manage_objective", "do" : { "manageType": 1, "objective": "Find Green Keycard", "sortOrder": 0 }, "delay": 40
     }]);
 } // Gameband Assembly Factory
 
@@ -138,7 +138,7 @@ setup: () => {
             "type": "play_sound", "do": { "soundID": "random.door_open" }, "delay": 40
         },
         {
-            "type": "manage_objectives", "do": { "manageType": 2, "objective": "Access next level" }, "delay": 40
+            "type": "manage_objective", "do": { "manageType": 2, "objective": "Access next level" }, "delay": 40
         },
         {
             "type": "voice_says", "do": { "soundID": 404 }, "delay": 40

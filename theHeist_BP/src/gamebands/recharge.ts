@@ -94,7 +94,9 @@ export function rechargeTick(player: Player, levelInformation: LevelInformation,
 					playerEnergyTracker.usingRechargerID = -1;
 					Utilities.reloadPlayerInv(player);
 					// Run actions staged for on depletion
-					if (armorStandEnergyTracker.actions) ActionManager.runActions(armorStandEnergyTracker.onDepletionActions, player);
+					console.log("Recharge station depleted, if actions then running...");
+					if (armorStandEnergyTracker.onDepletionActions) ActionManager.runActions(armorStandEnergyTracker.onDepletionActions, player);
+					else console.log("No actions");
 				}
 				DataManager.setData(armorStand, armorStandEnergyTracker);
 			}

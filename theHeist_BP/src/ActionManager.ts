@@ -153,7 +153,7 @@ export default class ActionManager {
 					player.playSound("note.snare", { "pitch": 1.8, "volume": 0.5 });
 				}
 				break;
-			case "manage_objectives":
+			case "manage_objective":
 				var manageType = actionInfo.do.manageType;
 				// §c = red (unfinished)
 				// §a = green (finished)
