@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"@minecraft/server": "^2.4.0-rc.1.21.130-preview.22"
+		"@minecraft/server": "2.2.0"
 	},
 	"devDependencies": {
 		"@types/node": "^18.16.3",
