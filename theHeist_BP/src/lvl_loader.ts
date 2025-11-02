@@ -7,6 +7,7 @@ import LevelConstructor from "./levels/LevelConstructor";
 import LevelDefinitions from "./levels/levelDefinitions";
 import GameObjectiveManager from "./GameObjectiveManager";
 import PlayerBustedManager from "./PlayerBustedManager";
+import LoreItem from "./LoreItem";
 
 /**
  * Layer information:
@@ -142,11 +143,13 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 			var i = 10;
 			while (playerInvContainer.getItem(i) && i < playerInvContainer.size) i++;
 			if (index) playerInvContainer.setItem(index); // If item is in a slot already, clear the slot
-			var itemStack = new ItemStack(keycardItemTypeId);
+			const itemStack = new ItemStack(keycardItemTypeId);
 			itemStack.lockMode = ItemLockMode.slot;
+			LoreItem.setLoreOfItemStack(itemStack);
 			playerInvContainer.setItem(i, itemStack);
-			var itemStack2 = new ItemStack("minecraft:paper"); // Set universal keycard
+			const itemStack2 = new ItemStack("minecraft:paper"); // Set universal keycard
 			itemStack2.lockMode = ItemLockMode.slot;
+			LoreItem.setLoreOfItemStack(itemStack2);
 			playerInvContainer.setItem(8, itemStack2);
 			Utilities.savePlayerInventory(player);
 

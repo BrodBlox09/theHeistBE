@@ -4,6 +4,7 @@ import DataManager from "../DataManager";
 import Utilities from "../Utilities";
 import LevelConstructor from "./LevelConstructor";
 import VoiceOverManager from "../VoiceOverManager";
+import LoreItem from "../LoreItem";
 
 const level: ILevel = {
 "levelID": "0",
@@ -348,7 +349,7 @@ DataManager.setData(recharge1, recharge1DataNode);
 // Fill drawers
 const drawer0InventoryContainer = Utilities.dimensions.overworld.getBlock({ "x": 2002.5, "y": -60, "z": 75.5 })!.getComponent("inventory")!.container!;
 drawer0InventoryContainer.clearAll();
-drawer0InventoryContainer.setItem(4, new ItemStack("yellow_dye"));
+drawer0InventoryContainer.setItem(4, LoreItem.setLoreOfItemStack(new ItemStack("yellow_dye")));
 // Set doors and trapdoors
 Utilities.setBlock(new Vector(2007, -57, 56), "theheist:white_trapdoor", { "minecraft:cardinal_direction": "north" });
 Utilities.setBlock(new Vector(2006, -60, 57), "minecraft:wooden_door", { "minecraft:cardinal_direction": "north" });

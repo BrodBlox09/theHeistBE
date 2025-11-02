@@ -1,6 +1,7 @@
 import { BlockPermutation, Vector3, Block, world, Player, Container, EntityInventoryComponent, ItemStack, ItemLockMode, BlockVolume, BlockFillOptions, Entity, EntityEquippableComponent, EquipmentSlot, EntityType, Dimension } from "@minecraft/server";
 import DataManager from "./DataManager";
 import Vector from "./Vector";
+import LoreItem from "./LoreItem";
 import { BlockStateSuperset } from "@minecraft/vanilla-data";
 
 export default class Utilities {
@@ -194,16 +195,20 @@ export default class Utilities {
 
 	static reloadPlayerInv(player: Player, levelData?: LevelInformation) {
 		if (levelData == null) levelData = DataManager.getData(player, "levelInformation")!;
-		var playerInvContainer = player.getComponent("inventory")!.container;
+		const playerInvContainer = player.getComponent("inventory")!.container;
 		playerInvContainer.clearAll();
-		var playerInvData = levelData.information[2].inventory; // Array of player inventory slots
+		const playerInvData = levelData.information[2].inventory; // Array of player inventory slots
 		playerInvData.forEach((invSlotData: IInventorySlotData) => {
-			var itemStack: ItemStack = new ItemStack(invSlotData.typeId);
+			const typeId = invSlotData.typeId;
+			const itemStack: ItemStack = new ItemStack(typeId);
 			itemStack.keepOnDeath = true;
 			if (invSlotData.lockMode) itemStack.lockMode = ItemLockMode[invSlotData.lockMode as keyof typeof ItemLockMode];
+			LoreItem.setLoreOfItemStack(itemStack);
 			playerInvContainer.setItem(invSlotData.slot, itemStack);
 		});
-		player.getComponent("equippable")!.setEquipment(EquipmentSlot.Head, new ItemStack("theheist:nv_glasses"));
+		const nvGlasses = new ItemStack("theheist:nv_glasses");
+		LoreItem.setLoreOfItemStack(nvGlasses);
+		player.getComponent("equippable")!.setEquipment(EquipmentSlot.Head, nvGlasses);
 	}
 
 	/**

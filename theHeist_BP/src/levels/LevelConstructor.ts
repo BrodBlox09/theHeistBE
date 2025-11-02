@@ -3,6 +3,7 @@ import BlockRotation from "../BlockRotation";
 import Vector from "../Vector";
 import Utilities from "../Utilities";
 import DataManager from "../DataManager";
+import LoreItem from "../LoreItem";
 
 let cameras = 0;
 let rechargeStations = 0;
@@ -325,6 +326,8 @@ export default class LevelConstructor {
         drawerInventoryContainer.clearAll();
         var keycardTypeId = `minecraft:${color}_dye`;
         if (color == "blue") keycardTypeId = "minecraft:lapis_lazuli";
-        drawerInventoryContainer.setItem(4, new ItemStack(keycardTypeId));
+		const itemStack = new ItemStack(keycardTypeId);
+		LoreItem.setLoreOfItemStack(itemStack);
+        drawerInventoryContainer.setItem(4, itemStack);
     }
 }

@@ -15,43 +15,6 @@ import * as DrillModeFunc from "./gamebands/drill";
 import GamebandManager from "./gamebands/GamebandManager";
 import ActionManager from "./ActionManager";
 
-class loreItem {
-	id: string;
-	nameTag: string;
-	lore: string[];
-
-	constructor(id: string, nameTag: string, lore: string[]) {
-		this.id = id;
-		this.nameTag = nameTag;
-		this.lore = lore;
-	}
-}
-
-const loreItems = [
-	new loreItem("theheist:recharge_mode_lvl_1", "§r§9Recharge mode Lvl. 1", ["Use item to §r§6toggle", "Energy: 1.0 units/second", "Select to show objectives"]),
-	new loreItem("theheist:recharge_mode_lvl_2", "§r§9Recharge mode Lvl. 2", ["Use item to §r§6toggle", "Energy: 1.0 units/second", "Select to show objectives"]),
-	new loreItem("theheist:recharge_mode_lvl_3", "§r§9Recharge mode Lvl. 3", ["Use item to §r§6toggle", "Energy: 1.0 units/second", "Select to show objectives"]),
-	new loreItem("theheist:hacking_mode_lvl_1", "§r§2Hacking mode Lvl. 1", ["Use item to §r§6use", "Energy: 15 units"]),
-	new loreItem("theheist:hacking_mode_lvl_2", "§r§2Hacking mode Lvl. 2", ["Use item to §r§6use", "Energy: 10 units"]),
-	new loreItem("theheist:hacking_mode_lvl_3", "§r§2Hacking mode Lvl. 3", ["Use item to §r§6use", "Energy: 5 units"]),
-	new loreItem("theheist:sensor_mode_lvl_1", "§r§6Sensor mode Lvl. 1", ["Use item to §r§6toggle", "Energy: 1.0 units/second"]),
-	new loreItem("theheist:sensor_mode_lvl_2", "§r§6Sensor mode Lvl. 2", ["Use item to §r§6toggle", "Energy: 0.4 units/second"]),
-	new loreItem("theheist:xray_mode_lvl_1", "§r§4Xray mode Lvl. 1", ["Use item to §r§6toggle", "Energy: 1.33 units/second"]),
-	new loreItem("theheist:xray_mode_lvl_2", "§r§4Xray mode Lvl. 2", ["Use item to §r§6toggle", "Energy: 0.67 units/second"]),
-	new loreItem("theheist:magnet_mode_lvl_1", "§r§5Magnet mode Lvl. 1", ["Use item to §r§6toggle", "Energy: 1.6 units/second"]),
-	new loreItem("theheist:stealth_mode_lvl_1", "§r§fStealth mode Lvl. 1", ["Use item to §r§6toggle", "Energy: 40 units/second"]),
-	new loreItem("theheist:stealth_mode_lvl_2", "§r§fStealth mode Lvl. 2", ["Use item to §r§6toggle", "Energy: 10 units/second"]),
-	new loreItem("theheist:stun_mode_lvl_1", "§r§eStun mode Lvl. 1", ["Use item to §r§6use", "Energy: 10 units"]),
-	new loreItem("theheist:drill_mode_lvl_1", "§r§3Drill mode Lvl. 1", ["Use item to §r§6use", "Energy: 30 units"]),
-	new loreItem('minecraft:paper', '§oUse Keycard§r', ['Can trigger any Keycard reader', 'for which you own a matching card']),
-	new loreItem('minecraft:red_dye', '§oRed Keycard§r', ['Used on matching Keycard reader']),
-	new loreItem('minecraft:yellow_dye', '§oYellow Keycard§r', ['Used on matching Keycard reader']),
-	new loreItem('minecraft:green_dye', '§oGreen Keycard§r', ['Used on matching Keycard reader']),
-	new loreItem('minecraft:lapis_lazuli', '§oBlue Keycard§r', ['Used on matching Keycard reader']),
-	new loreItem('theheist:phone', '§oCall the authorities§r', ['Drop to restart level']),
-	new loreItem('theheist:nv_glasses', '§oNV Goggles§r', ['Drop to regain items'])
-]
-
 const levelMapHeight = 20;
 const consolesHeight = -15;
 const rechargeHeight = -20;
@@ -262,34 +225,8 @@ system.runInterval(() => {
 	player.addEffect('night_vision', 2000, { amplifier: 1, showParticles: false });
 	player.addEffect('resistance', 2000, { amplifier: 1, showParticles: false });
 	
-	// Set lore for items
-	const playerInvContainer = player.getComponent('inventory')!.container;
-	const playerEquippable = player.getComponent('equippable')!;
-	for (let i = 0; i < playerInvContainer.size; i++) {
-		const item = playerInvContainer.getItem(i);
-		if (!item || !item.getLore()) continue;
-		var itemTypeId = item.typeId;
-		if (itemTypeId.endsWith("_enchanted")) itemTypeId = itemTypeId.substring(0, itemTypeId.length - "_enchanted".length);
-		const foundItem = loreItems.find(x => x.id == itemTypeId)!;
-		try {
-			item.setLore(foundItem.lore);
-			item.nameTag = foundItem.nameTag;
-		} catch (err) {
-			continue;
-		}
-		playerInvContainer.setItem(i, item);
-	}
-	let headItem = playerEquippable.getEquipment(EquipmentSlot.Head);
-	if (headItem) {
-		let foundItem = loreItems.find(x => x.id == headItem?.typeId)!;
-		try {
-			headItem.setLore(foundItem.lore);
-			headItem.nameTag = foundItem.nameTag;
-		} catch (err) { }
-	}
-	playerEquippable.setEquipment(EquipmentSlot.Head, headItem);
-
 	// If recharge mode selected, show objectives
+	const playerInvContainer = player.getComponent('inventory')!.container;
 	var selectedItemStack = playerInvContainer.getItem(player.selectedSlotIndex);
 	if (selectedItemStack != undefined && selectedItemStack.typeId.startsWith("theheist:recharge_mode_lvl_")) {
 		GameObjectiveManager.showSidebar();
