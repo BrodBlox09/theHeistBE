@@ -18,10 +18,57 @@
 		],
 		"visible": "(not $show_dev_view)"
 	},
+	"tab_content_no_search@crafting.tab_content": {
+		"controls": [
+			{
+				"tab_content_search_bar_panel": {
+					"type": "stack_panel",
+					"size": [
+						"100% - 12px",
+						"100% - 12px"
+					],
+					"orientation": "vertical",
+					"controls": [
+						{
+							"scroll_pane@$scrolling_pane_control": {
+								"size": [
+									"100%",
+									"fill"
+								]
+							}
+						}
+					]
+				}
+			},
+			{
+				"nodrop_zone@common.root_panel": {
+					"anchor_from": "center",
+					"anchor_to": "center",
+					"size": [
+						"100%",
+						"100%"
+					],
+					"layer": 2,
+					"bindings": [
+						{
+							"binding_type": "global",
+							"binding_name": "#is_left_tab_inventory",
+							"binding_name_override": "#visible"
+						}
+					]
+				}
+			}
+		]
+	},
 	// ---------------
 	// Pocket inventory
 	// ---------------
-	"pocket_inventory_tab_content@crafting_pocket.inventory_tab_content": {
+	"pocket_inventory_tab_content@crafting.tab_content": {
+		"$scrolling_pane_control": "inventory_display.pocket_inventory_scroll_panel",
+		"$visible|default": true,
+		"visible": "$visible"
+	},
+	"no_search_pocket_inventory_tab_content@inventory_display.tab_content_no_search": {
 		"$scrolling_pane_control": "inventory_display.pocket_inventory_scroll_panel",
 		"$visible|default": true,
 		"visible": "$visible"
@@ -35,6 +82,21 @@
 				"limited_inventory_grid@crafting.scroll_grid": {
 					"$maximum_grid_items|default": 27,
 					"maximum_grid_items": "$maximum_grid_items",
+					"bindings": []
+				}
+			}
+		]
+	},
+	"pocket_left_panel@crafting_pocket.left_panel": {
+		"controls": [
+			{
+				"left_background@common.common_panel": {
+					"$dialog_background": "common.dialog_background_opaque",
+					"$show_close_button": false
+				}
+			},
+			{
+				"inventory_tab_content@crafting_pocket.inventory_tab_content": {
 					"bindings": []
 				}
 			}
