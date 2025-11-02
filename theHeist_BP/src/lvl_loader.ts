@@ -29,7 +29,7 @@ const levelHeight = -60;
 const SECOND = 20;
 
 const persistentEntities = ["minecraft:player","minecraft:painting","minecraft:chicken","theheist:driver","theheist:rideable"];
-const persistentTags = ["loadingLevel","developer"];
+const persistentTags = ["loadingLevel","developer","persistent"];
 
 system.afterEvents.scriptEventReceive.subscribe((event) => {
 	const id = event.id;
