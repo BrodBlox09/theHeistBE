@@ -257,6 +257,4 @@ system.runInterval(() => {
 			playerBusted(player, playerLevelInformation.information[1].level);
 		}
 	}
-
-	if (playerEnergyTracker && playerLevelInformation) SensorModeFunc.tryMap(player, playerLevelInformation, playerEnergyTracker);
 });
