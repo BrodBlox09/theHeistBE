@@ -1,10 +1,8 @@
-import { MolangVariableMap, BlockPermutation, EffectTypes, Vector3, world, system, Player, EntityInventoryComponent, EffectType, DisplaySlotId, ScoreboardObjective, Container, ItemStack, ItemLockMode, Entity, Dimension, ItemUseAfterEvent } from "@minecraft/server";
+import { Player } from "@minecraft/server";
 import DataManager from "../DataManager";
 import Utilities from "../Utilities";
 import Vector from "../Vector";
 import GamebandManager from "./GamebandManager";
-
-const overworld = Utilities.dimensions.overworld;
 
 export function toggleStealthMode(player: Player, lvl: number) {
     var levelInformation = DataManager.getData(player, "levelInformation")!;

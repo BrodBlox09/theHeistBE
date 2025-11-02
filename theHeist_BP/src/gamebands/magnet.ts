@@ -1,10 +1,8 @@
-import { MolangVariableMap, BlockPermutation, EffectTypes, Vector3, world, system, Player, EntityInventoryComponent, EffectType, DisplaySlotId, ScoreboardObjective, Container, ItemStack, ItemLockMode, Entity, Dimension, ItemUseAfterEvent } from "@minecraft/server";
+import { EffectTypes, Player } from "@minecraft/server";
 import DataManager from "../DataManager";
 import Utilities from "../Utilities";
 import Vector from "../Vector";
 import GamebandManager from "./GamebandManager";
-
-const overworld = Utilities.dimensions.overworld;
 
 export function toggleMagnetMode(player: Player, lvl: number) {
     var levelInformation = DataManager.getData(player, "levelInformation")!;
@@ -24,7 +22,7 @@ function tryStartMagnetMode(player: Player, lvl: number, levelInformation: Level
         return;
     }
 
-    var magnetBlock = overworld.getBlock(new Vector(player.location.x, Utilities.magnetModeMagnetBlocksHeight, player.location.z));
+    var magnetBlock = Utilities.dimensions.overworld.getBlock(new Vector(player.location.x, Utilities.magnetModeMagnetBlocksHeight, player.location.z));
     if (!magnetBlock) return;
     if (magnetBlock.typeId != "minecraft:iron_block") {
         player.sendMessage("§cNothing to grab onto!");
@@ -65,7 +63,7 @@ export function magnetTick(player: Player, levelInformation: LevelInformation, e
     }
     DataManager.setData(player, energyTracker);
 
-    var magnetBlock = overworld.getBlock(new Vector(player.location.x, Utilities.magnetModeMagnetBlocksHeight, player.location.z));
+    var magnetBlock = Utilities.dimensions.overworld.getBlock(new Vector(player.location.x, Utilities.magnetModeMagnetBlocksHeight, player.location.z));
     if (!magnetBlock || magnetBlock.typeId == "minecraft:air") {
         endMagnetMode(player, levelInformation);
         return;

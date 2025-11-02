@@ -1,71 +1,65 @@
 {
 	"namespace": "crafting_pocket",
-	"left_panel/recipe_book_tab_content": {
-		"controls": [
-			{
-				"select_inventory_panel": {
-					"type": "panel",
-					"visible": "(not $show_dev_view)",
-					"layer": 6,
-					"controls": [
-						{
-							"select_inventory_label@inventory_display.label": {
-								"text": "Select the chest icon to view your inventory",
-								"text_alignment": "center",
-								"size": [
-									"80%",
-									"default"
-								]
-							}
-						}
-					]
-				}
-			},
-			{
-				"recipe_book_tab_content@crafting_pocket.recipe_book_tab_content": { "visible": "$show_dev_view" }
-			}
-		]
-	},
-	"left_panel": {
+	"both_panels": {
 		"modifications": [
 			{
-				"control_name": "inventory_tab_content",
+				"control_name": "left_panel",
 				"operation": "replace",
 				"value": [{
-					"inventory_tab_content": {
+					"left_panel": {
 						"type": "panel",
+						"size": [ "fill", "100%" ],
+						"layer": 8,
 						"controls": [
 							{
-								"inventory_tab_content_not_dev_view@inventory_display.pocket_inventory_tab_content": { "$maximum_grid_items": 5, "$visible": "(not $show_dev_view)" }
+								"normal@inventory_display.pocket_left_panel": { "visible": "(not $show_dev_view)" }
 							},
 							{
-								"inventory_tab_content_dev_view@inventory_display.pocket_inventory_tab_content": { "$visible": "$show_dev_view" }
+								"dev@crafting_pocket.left_panel": { "visible": "$show_dev_view" }
 							}
-						],
-						// "visible": "#is_left_tab_inventory"
-						"bindings": [
-            				{
-            					"binding_type": "global",
-            					"binding_name": "#is_left_tab_inventory",
-            					"binding_name_override": "#visible"
-            				}
-          				]
+						]
 					}
 				}]
 			}
 		]
 	},
-	"left_tab": { "visible": "$show_dev_view" },
-	// Unfortunately this tab cannot be removed because if the player starts out on a different tab there would
-	// be no way to select the inventory (unless inventory tab is always shown... but this would have to also
-	// track that the player is not in dev_view mode)
-	"inventory_tab": {
-		"visible": true
+	"inventory_tab_content": {
+		"type": "panel",
+		"controls": [
+			{
+				"no_search@inventory_display.no_search_pocket_inventory_tab_content": {
+					"$maximum_grid_items": 5,
+					"$visible": "(not $show_dev_view)"
+				}
+			},
+			{
+				"search@inventory_display.pocket_inventory_tab_content": {
+					"$visible": "$show_dev_view"
+				}
+			}
+		]
 	},
-	"survival_panel_pocket@inventory_display.pocket_crafting_panel": {}, // Hide the 2x2 grid in the inventory
-	"survival_panel_crafting_pocket@inventory_display.pocket_crafting_panel": {}, // Hide the 3x3 grid in the crafting table GUI
-	"crafting_tab": {
-		"visible": false
+	"right_panel": {
+		"modifications": [
+			{
+				"control_name": "crafting_tab_content",
+				"operation": "remove"
+			}
+		]
+	},
+	"right_panel/armor_tab_content": {
+		"bindings": [] // Remove the conditional binding that hid the armor tab if another tab was selected
+		// When the full screen tab in creative mode is selected, the entire right panel is hidden.
+	},
+	"left_tab": { "visible": "$show_dev_view" },
+	"crafting_tab": { "visible": false },
+	"armor_tab": {
+		"bindings": [
+			{
+				"binding_name": "#is_creative_mode",
+				"binding_name_override": "#visible"
+			}
+		]
 	},
 	// Set chest, legs, feet, and offhand cells to only be visible when player is in dev_view mode
 	"pocket_armor_tab_content/equipment_and_renderer/equipment/armor_grid/chest_grid_item": { "visible": "$show_dev_view" },

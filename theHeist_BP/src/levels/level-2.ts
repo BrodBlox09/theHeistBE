@@ -63,7 +63,7 @@ setup: () => {
             "type": "display_mail", "do": { "mailID": 200 }, "delay": 40
         },
         {
-            "type": "manage_objectives", "do": { "manageType": 1, "objective": "Find Red Keycard", "sortOrder": 2 }, "delay": 40
+            "type": "manage_objective", "do": { "manageType": 1, "objective": "Find Red Keycard", "sortOrder": 2 }, "delay": 40
         }
     ]);
     Utilities.setBlock(new Vector(4091, -57, 134), "theheist:white_trapdoor", { "minecraft:cardinal_direction": BlockRotation.EAST });
@@ -75,7 +75,7 @@ setup: () => {
             "type": "display_mail", "do": { "mailID": 201 }, "delay": 40
         },
         {
-            "type": "manage_objectives", "do": { "manageType": 1, "objective": "Read elevator code", "sortOrder": 0 }, "delay": 40
+            "type": "manage_objective", "do": { "manageType": 1, "objective": "Read elevator code", "sortOrder": 0 }, "delay": 40
         }
     ]);
     LevelConstructor.computer(new Vector(4076.5, -59, 132.5), "Mail", BlockRotation.EAST, [
@@ -106,7 +106,7 @@ setup: () => {
         "type": "display_mail", "do": { "mailID": 205 }, "delay": 40
     },
     {
-        "type": "manage_objectives", "do": { "manageType": 1, "objective": "Find Green Keycard", "sortOrder": 1 }, "delay": 40
+        "type": "manage_objective", "do": { "manageType": 1, "objective": "Find Green Keycard", "sortOrder": 1 }, "delay": 40
     }]);
     LevelConstructor.keycardDrawer(new Vector(4104, -60, 158), "red");
     Utilities.setBlock(new Vector(4103, -57, 152), "theheist:white_trapdoor", { "minecraft:cardinal_direction": BlockRotation.NORTH });
@@ -178,7 +178,7 @@ setup: () => {
             "type": "play_sound", "do": { "soundID": "random.door_open" }, "delay": 40
         },
         {
-            "type": "manage_objectives", "do": { "manageType": 2, "objective": "Access next level" }, "delay": 40
+            "type": "manage_objective", "do": { "manageType": 2, "objective": "Access next level" }, "delay": 40
         }
     ], { "objectives": ["Read elevator code"] });
     Utilities.setBlock(new Vector(4076.5, -59, 122.5), "lever", { "lever_direction": "east" });

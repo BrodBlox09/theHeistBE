@@ -3,8 +3,7 @@ import BlockRotation from "../BlockRotation";
 import Vector from "../Vector";
 import Utilities from "../Utilities";
 import DataManager from "../DataManager";
-
-const overworld = Utilities.dimensions.overworld;
+import LoreItem from "../LoreItem";
 
 let cameras = 0;
 let rechargeStations = 0;
@@ -33,7 +32,7 @@ export default class LevelConstructor {
     }
 
     static gamebandUpgrade(loc: Vector, mode: string, modeText: string, level: number, inventorySlot: number, blockRot: BlockRotation, actions: ActionList) {
-        const console = overworld.spawnEntity("armor_stand", { "x": loc.x, "y": Utilities.consolesHeight, "z": loc.z });
+        const console = Utilities.spawnEntity({ "x": loc.x, "y": Utilities.consolesHeight, "z": loc.z }, "armor_stand");
         Utilities.setBlock(loc, `theheist:${mode}_mode_display`, { "minecraft:cardinal_direction": blockRot });
         const modeInCase = mode.substring(0, 1).toUpperCase() + mode.substring(1).toLowerCase();
         var allActions: ActionList = [
@@ -47,7 +46,7 @@ export default class LevelConstructor {
                 }
             },
             {
-                "type": "manage_objectives", "do": { "manageType": 2, "objective": `Get ${modeInCase} upgrade` }
+                "type": "manage_objective", "do": { "manageType": 2, "objective": `Get ${modeInCase} upgrade` }
             }
         ];
         allActions.push(...actions);
@@ -61,7 +60,7 @@ export default class LevelConstructor {
     }
 
     static newGameband(loc: Vector, mode: string, modeText: string, inventorySlot: number, blockRot: BlockRotation, actions: ActionList) {
-        const console = overworld.spawnEntity("armor_stand", { "x": loc.x, "y": Utilities.consolesHeight, "z": loc.z });
+        const console = Utilities.spawnEntity({ "x": loc.x, "y": Utilities.consolesHeight, "z": loc.z }, "armor_stand");
         Utilities.setBlock(loc, `theheist:${mode}_mode_display`, { "minecraft:cardinal_direction": blockRot });
         const modeInCase = mode.substring(0, 1).toUpperCase() + mode.substring(1).toLowerCase();
         var allActions: ActionList = [
@@ -75,7 +74,7 @@ export default class LevelConstructor {
                 }
             },
             {
-                "type": "manage_objectives", "do": { "manageType": 2, "objective": `Get ${modeInCase} mode` }
+                "type": "manage_objective", "do": { "manageType": 2, "objective": `Get ${modeInCase} mode` }
             }
         ];
         allActions.push(...actions);
@@ -89,7 +88,7 @@ export default class LevelConstructor {
     }
 
     static keycardReader(loc: Vector, color: string, actions: ActionList) {
-        const console = overworld.spawnEntity("armor_stand", { "x": loc.x, "y": Utilities.consolesHeight, "z": loc.z });
+        const console = Utilities.spawnEntity({ "x": loc.x, "y": Utilities.consolesHeight, "z": loc.z }, "armor_stand");
         const consoleActionTracker: KeycardReaderActionTracker = {
             "name": "actionTracker",
             "used": false,
@@ -101,9 +100,9 @@ export default class LevelConstructor {
     }
 
     static keypad(loc: Vector, level: number, blockRot: BlockRotation, actions: ActionList) {
-        const console = overworld.spawnEntity("armor_stand", { "x": loc.x, "y": Utilities.consolesHeight, "z": loc.z });
+        const console = Utilities.spawnEntity({ "x": loc.x, "y": Utilities.consolesHeight, "z": loc.z }, "armor_stand");
         Utilities.setBlock(loc, "theheist:keypad", { "minecraft:cardinal_direction": blockRot });
-        overworld.spawnEntity("theheist:hover_text", loc).nameTag = `Lvl. ${level}`;
+        Utilities.spawnEntity(loc, "theheist:hover_text").nameTag = `Lvl. ${level}`;
         var allActions = actions;
         allActions.push(
             {
@@ -123,9 +122,9 @@ export default class LevelConstructor {
     }
 
     static keypadWithPrereq(loc: Vector, level: number, blockRot: BlockRotation, actions: ActionList, prereq: IPrerequisiteList, desc: string = "") {
-        const console = overworld.spawnEntity("armor_stand", { "x": loc.x, "y": Utilities.consolesHeight, "z": loc.z });
+        const console = Utilities.spawnEntity({ "x": loc.x, "y": Utilities.consolesHeight, "z": loc.z }, "armor_stand");
         Utilities.setBlock(loc, "theheist:keypad", { "minecraft:cardinal_direction": blockRot });
-        if (desc.length > 0) overworld.spawnEntity("theheist:hover_text", loc).nameTag = desc;
+        if (desc.length > 0) Utilities.spawnEntity(loc, "theheist:hover_text").nameTag = desc;
         var allActions = actions;
         allActions.push(
             {
@@ -146,9 +145,9 @@ export default class LevelConstructor {
     }
 
     static computer(loc: Vector, desc: string, blockRot: BlockRotation, actions: ActionList) {
-        const console = overworld.spawnEntity("armor_stand", { "x": loc.x, "y": Utilities.consolesHeight, "z": loc.z });
+        const console = Utilities.spawnEntity({ "x": loc.x, "y": Utilities.consolesHeight, "z": loc.z }, "armor_stand");
         Utilities.setBlock(loc, "theheist:computer", { "minecraft:cardinal_direction": blockRot });
-        overworld.spawnEntity("theheist:hover_text", loc).nameTag = desc;
+        Utilities.spawnEntity(loc, "theheist:hover_text").nameTag = desc;
         var allActions = actions;
         allActions.push(
             {
@@ -167,25 +166,25 @@ export default class LevelConstructor {
         DataManager.setData(console, consoleActionTracker);
     }
 
-    static rechargeStation(loc: Vector, blockRot: BlockRotation, energyUnits: number = 100.0, actionList: ActionList = []) {
-        const recharge = overworld.spawnEntity("minecraft:armor_stand", new Vector(loc.x, Utilities.rechargeHeight, loc.z));
+    static rechargeStation(loc: Vector, blockRot: BlockRotation, energyUnits: number = 100.0, onDepletionActionList: ActionList = []) {
+        const recharge = Utilities.spawnEntity(new Vector(loc.x, Utilities.rechargeHeight, loc.z), "minecraft:armor_stand");
         Utilities.setBlock(loc, "theheist:recharge_station", { "minecraft:cardinal_direction": blockRot });
         const rechargeDataNode: EnergyTracker = {
             "name": "energyTracker",
             "rechargerID": rechargeStations,
             "energyUnits": energyUnits,
             "block": { "x": loc.x, "y": loc.y, "z": loc.z, "rotation": blockRot },
-            "actions": actionList
+            "onDepletionActions": onDepletionActionList
         };
         DataManager.setData(recharge, rechargeDataNode);
         rechargeStations++;
     }
 
     static staticCamera(loc: Vector, rot: number) {
-        const camera = overworld.spawnEntity("armor_stand", new Vector(loc.x, Utilities.cameraHeight, loc.z));
+        const camera = Utilities.spawnEntity(new Vector(loc.x, Utilities.cameraHeight, loc.z), "armor_stand");
         var rotationVector = { 'x': 0, 'y': rot };
         camera.setRotation(rotationVector);
-        overworld.spawnEntity("theheist:camera", loc).setRotation(rotationVector);
+        Utilities.spawnEntity(loc, "theheist:camera").setRotation(rotationVector);
         const cameraDataNode: CameraTracker = {
             "name": "cameraTracker",
             "isRobot": false,
@@ -199,10 +198,10 @@ export default class LevelConstructor {
     }
 
     static dynamicCamera(loc: Vector, swivel: ICameraSwivel) {
-        const camera = overworld.spawnEntity("armor_stand", new Vector(loc.x, Utilities.cameraHeight, loc.z));
+        const camera = Utilities.spawnEntity(new Vector(loc.x, Utilities.cameraHeight, loc.z), "armor_stand");
         var rotationVector = { 'x': 0, 'y': swivel[1] };
         camera.setRotation(rotationVector);
-        overworld.spawnEntity("theheist:camera", loc).setRotation(rotationVector);
+        Utilities.spawnEntity(loc, "theheist:camera").setRotation(rotationVector);
         const cameraDataNode: CameraTracker = {
             "name": "cameraTracker",
             "isRobot": false,
@@ -217,10 +216,10 @@ export default class LevelConstructor {
     }
 
     static sonar(loc: Vector, rot: number) {
-        const sonar = overworld.spawnEntity("armor_stand", new Vector(loc.x, Utilities.cameraHeight, loc.z));
+        const sonar = Utilities.spawnEntity(new Vector(loc.x, Utilities.cameraHeight, loc.z), "armor_stand");
         var rotationVector = { 'x': 0, 'y': rot };
         sonar.setRotation(rotationVector);
-        overworld.spawnEntity("theheist:sonar", loc).setRotation(rotationVector);
+        Utilities.spawnEntity(loc, "theheist:sonar").setRotation(rotationVector);
         const sonarDataNode: CameraTracker = {
             "name": "cameraTracker",
             "isRobot": false,
@@ -234,8 +233,8 @@ export default class LevelConstructor {
     }
 
     static sonar360(loc: Vector) {
-        const sonar360 = overworld.spawnEntity("armor_stand", new Vector(loc.x, Utilities.cameraHeight, loc.z));
-        overworld.spawnEntity("theheist:sonar360", loc);
+        const sonar360 = Utilities.spawnEntity(new Vector(loc.x, Utilities.cameraHeight, loc.z), "armor_stand");
+        Utilities.spawnEntity(loc, "theheist:sonar360");
         const sonarDataNode: CameraTracker = {
             "name": "cameraTracker",
             "isRobot": false,
@@ -249,10 +248,10 @@ export default class LevelConstructor {
     }
 
     static cameraRobot(loc: Vector, rot: number) {
-        const robot = overworld.spawnEntity("armor_stand", { "x": loc.x, "y": Utilities.cameraHeight, "z": loc.z });
+        const robot = Utilities.spawnEntity({ "x": loc.x, "y": Utilities.cameraHeight, "z": loc.z }, "armor_stand");
         robot.setRotation({ "x": 0, "y": rot });
         robot.addTag("robot");
-        overworld.spawnEntity("theheist:camera_robot", loc).setRotation({ "x": 0, "y": rot });
+        Utilities.spawnEntity(loc, "theheist:camera_robot").setRotation({ "x": 0, "y": rot });
         const robotDataNode: CameraTracker = {
             "name": "cameraTracker",
             "isRobot": true,
@@ -267,10 +266,10 @@ export default class LevelConstructor {
     }
 
     static staticCameraRobot(loc: Vector, rot: number) {
-        const robot = overworld.spawnEntity("armor_stand", { "x": loc.x, "y": Utilities.cameraHeight, "z": loc.z });
+        const robot = Utilities.spawnEntity({ "x": loc.x, "y": Utilities.cameraHeight, "z": loc.z }, "armor_stand");
         robot.setRotation({ "x": 0, "y": rot });
         robot.addTag("robot");
-        overworld.spawnEntity("theheist:camera_robot", loc).setRotation({ "x": 0, "y": rot });
+        Utilities.spawnEntity(loc, "theheist:camera_robot").setRotation({ "x": 0, "y": rot });
         const robotDataNode: CameraTracker = {
             "name": "cameraTracker",
             "isRobot": true,
@@ -286,10 +285,10 @@ export default class LevelConstructor {
     }
 
     static sonarRobot(loc: Vector, rot: number) {
-        const robot = overworld.spawnEntity("armor_stand", { "x": loc.x, "y": Utilities.cameraHeight, "z": loc.z });
+        const robot = Utilities.spawnEntity({ "x": loc.x, "y": Utilities.cameraHeight, "z": loc.z }, "armor_stand");
         robot.setRotation({ "x": 0, "y": rot });
         robot.addTag("robot");
-        overworld.spawnEntity("theheist:sonar_robot", loc).setRotation({ "x": 0, "y": rot });
+        Utilities.spawnEntity(loc, "theheist:sonar_robot").setRotation({ "x": 0, "y": rot });
         const robotDataNode: CameraTracker = {
             "name": "cameraTracker",
             "isRobot": true,
@@ -304,10 +303,10 @@ export default class LevelConstructor {
     }
 
     static staticSonarRobot(loc: Vector, rot: number) {
-        const robot = overworld.spawnEntity("armor_stand", { "x": loc.x, "y": Utilities.cameraHeight, "z": loc.z });
+        const robot = Utilities.spawnEntity({ "x": loc.x, "y": Utilities.cameraHeight, "z": loc.z }, "armor_stand");
         robot.setRotation({ "x": 0, "y": rot });
         robot.addTag("robot");
-        overworld.spawnEntity("theheist:sonar_robot", loc).setRotation({ "x": 0, "y": rot });
+        Utilities.spawnEntity(loc, "theheist:sonar_robot").setRotation({ "x": 0, "y": rot });
         const robotDataNode: CameraTracker = {
             "name": "cameraTracker",
             "isRobot": true,
@@ -323,10 +322,12 @@ export default class LevelConstructor {
     }
 
     static keycardDrawer(loc: Vector, color: string) {
-        const drawerInventoryContainer = overworld.getBlock(loc)?.getComponent("inventory")!.container as Container;
+        const drawerInventoryContainer = Utilities.dimensions.overworld.getBlock(loc)?.getComponent("inventory")!.container!;
         drawerInventoryContainer.clearAll();
         var keycardTypeId = `minecraft:${color}_dye`;
         if (color == "blue") keycardTypeId = "minecraft:lapis_lazuli";
-        drawerInventoryContainer.setItem(4, new ItemStack(keycardTypeId));
+		const itemStack = new ItemStack(keycardTypeId);
+		LoreItem.setLoreOfItemStack(itemStack);
+        drawerInventoryContainer.setItem(4, itemStack);
     }
 }

@@ -5,7 +5,7 @@ import LevelConstructor from "./LevelConstructor";
 
 const level: ILevel = {
 "levelID": "-1",
-"loadElevatorLoc": new Vector(3099, -59, 109),
+"loadElevatorLoc": new Vector(3099, -58, 109),
 "startPlayerLoc": new Vector(3086, -60, 110),
 "startingItems": [{ "slot": 0, "typeId": 'theheist:recharge_mode_lvl_1', "lockMode": "slot" }, { "slot": 1, "typeId": 'theheist:hacking_mode_lvl_1', "lockMode": "slot" }],
 "rechargeLevel": 1,
@@ -47,10 +47,10 @@ LevelConstructor.computer(new Vector(3082.5, -59, 118.5), "Mail", BlockRotation.
     "type": "display_mail", "do": { "mailID": 104 }, "delay": 40
 },
 {
-    "type": "manage_objectives", "do": { "manageType": 1, "objective": "Find Yellow Keycard", "sortOrder": 1 }, "delay": 40
+    "type": "manage_objective", "do": { "manageType": 1, "objective": "Find Yellow Keycard", "sortOrder": 1 }, "delay": 40
 },
 {
-    "type": "manage_objectives", "do": { "manageType": 1, "objective": "Find Green Keycard", "sortOrder": 0 }, "delay": 40
+    "type": "manage_objective", "do": { "manageType": 1, "objective": "Find Green Keycard", "sortOrder": 0 }, "delay": 40
 }]);
 LevelConstructor.keypad(new Vector(3104.5, -59, 116.5), 2, BlockRotation.WEST, [{
     "type": "set_block", "do": { "x": 3103, "y": -60, "z": 115, "block": "theheist:custom_door_2_bottom", "permutations": { "minecraft:cardinal_direction": "west", "theheist:unlocked": true } }, "delay": 40
@@ -91,7 +91,7 @@ LevelConstructor.keycardReader(new Vector(3087.5, -59, 131.5), "green", [{
     "type": "play_sound", "do": { "soundID": "random.door_open" }
 },
 {
-    "type": "manage_objectives", "do": { "manageType": 2, "objective": "Access next level" }
+    "type": "manage_objective", "do": { "manageType": 2, "objective": "Access next level" }
 },
 {
     "type": "voice_says", "do": { "soundID": 204 }
@@ -135,13 +135,12 @@ LevelConstructor.door1(new Vector(3082, -60, 114), BlockRotation.SOUTH, true);
 
 Utilities.dimensions.overworld.setBlockType(new Vector(3073, -55, 127), "minecraft:redstone_block");
 Utilities.setBlock(new Vector(3090, -59, 124), "minecraft:lever", { "lever_direction": "south" });
-Utilities.dimensions.overworld.spawnEntity("theheist:camera_robot", new Vector(3053.5, -59, 110.5)).setRotation({ "x": 0, "y": 180 });
+Utilities.spawnEntity(new Vector(3053.5, -59, 110.5), "theheist:camera_robot").setRotation({ "x": 0, "y": 180 });
 [new Vector(3034.5, -59, 141.5), new Vector(3035.5, -59, 141.5), new Vector(3036.5, -59, 141.5)].forEach(vector => {
-    const decorativeCamera = Utilities.dimensions.overworld.spawnEntity("theheist:camera", vector);
+    const decorativeCamera = Utilities.spawnEntity(vector, "theheist:camera");
     decorativeCamera.setRotation({ "x": 0, "y": 180 });
     decorativeCamera.triggerEvent("theheist:disable");
 });
-
 }
 };
 

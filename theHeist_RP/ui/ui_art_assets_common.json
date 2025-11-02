@@ -1,0 +1,5 @@
+{
+	"namespace": "common_art",
+	"title_panel_pocket/splash_text": { "offset": [ -55, 10 ] },
+	"title_panel_win10/splash_text": { "offset": [ -55, 10 ] }
+}

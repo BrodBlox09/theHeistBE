@@ -1,0 +1,37 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.camera.default": {
+			"loop": true,
+			"animation_length": 1,
+			"bones": {
+				"eye": {
+					"position": {
+						"0.0": [
+							"math.clamp(math.min_angle(query.body_y_rotation - query.rotation_to_camera(1)) / 22.5, -0.9, 0.9)",
+							"math.clamp(math.min_angle(query.body_x_rotation - query.rotation_to_camera(0)) / 22.5, -0.4, 0.4)",
+							0
+						]
+					}
+				}
+			}
+		},
+		"animation.camera.disable": {
+			"loop": "hold_on_last_frame",
+			"bones": {
+				"eye": {
+					"position": {
+						"0.0": ["v.x", "v.y", 0],
+						"0.75": ["v.x", "v.y - 48", 0]
+					},
+					"scale": {
+						"0.75": {
+							"pre": [ 1, 1, 1 ],
+							"post": [ 0, 0, 0 ]
+						}
+					}
+				}
+			}
+		}
+	}
+}
