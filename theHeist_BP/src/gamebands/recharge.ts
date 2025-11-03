@@ -4,6 +4,7 @@ import Utilities from "../Utilities";
 import GamebandManager from "./GamebandManager";
 import Vector from "../Vector";
 import ActionManager from "../ActionManager";
+import LoreItem from "../LoreItem";
 
 export function toggleRechargeMode(player: Player, lvl: number) {
 	let levelInformation = DataManager.getData(player, "levelInformation")!;
@@ -33,6 +34,7 @@ export function toggleRechargeMode(player: Player, lvl: number) {
 		playerInvContainer.clearAll();
 		var rechargeModeItemStack = new ItemStack(`theheist:recharge_mode_lvl_${lvl}_enchanted`);
 		rechargeModeItemStack.lockMode = ItemLockMode.slot;
+		LoreItem.setLoreOfItemStack(rechargeModeItemStack);
 		playerInvContainer.setItem(0, rechargeModeItemStack);
 	} else {
 		// The player is currently recharging

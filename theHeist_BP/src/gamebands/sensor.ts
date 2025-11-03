@@ -3,6 +3,7 @@ import DataManager from "../DataManager";
 import Utilities from "../Utilities";
 import Vector from "../Vector";
 import GamebandManager from "./GamebandManager";
+import LoreItem from "../LoreItem";
 
 const sensingRange = 14;
 const clearRange = 19;
@@ -33,6 +34,7 @@ export function tryMap(player: Player, levelInformation: LevelInformation, playe
         var sensorModeSlotData = levelInformation.information[2].inventory.find((x) => (x.slot == 2))!;
         var itemStack = new ItemStack(sensorModeSlotData.typeId);
         itemStack.lockMode = ItemLockMode.slot;
+		LoreItem.setLoreOfItemStack(itemStack);
         playerInvContainer?.setItem(2, itemStack);
     }
 }
