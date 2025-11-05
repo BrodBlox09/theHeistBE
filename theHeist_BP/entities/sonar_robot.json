@@ -15,7 +15,12 @@
                 "triggers": {
                     "deals_damage": false
                 }
-            }
+            },
+            "minecraft:ambient_sound_interval": {
+				"event_name": "map.robot2",
+				"range": 2.2,
+				"value": 2.2
+			}
         }
 	}
 }

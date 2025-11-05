@@ -185,7 +185,6 @@ function updateRobots(player: Player, level: number, levelInformation: LevelInfo
 			cameraRobot.teleport(new Vector(cameraRobotArmorStand.location.x, -59.25, cameraRobotArmorStand.location.z));
 			cameraRobot.setRotation(cameraRobotArmorStand.getRotation());
 			if (Utilities.dimensions.overworld.getBlock(cameraRobot.location)?.typeId == "minecraft:air") Utilities.setBlock(new Vector(cameraRobotArmorStand.location.x, Utilities.cameraMappingHeight - 4, cameraRobotArmorStand.location.z), "theheist:robot_path");
-			if (system.currentTick % ((cameraDataNode.type == "camera") ? 82 : 40) == 0) Utilities.dimensions.overworld.playSound((cameraDataNode.type == "camera") ? "map.robot" : "map.robot2", cameraRobot.location, { "volume": 2 }); // Every 5 or 2 seconds play robot ambience sound (100 = 20 * 5, 40 = 20 * 2)
 		} catch { }
 	});
 }
