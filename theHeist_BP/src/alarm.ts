@@ -215,8 +215,8 @@ function getRotFromWeirdoDir(weirdoDir: number): number {
 	return 0;
 }
 
-function updateCameras(player: Player, level: number, playerLevelInformationDataNode: LevelInformation) {
-	var cameraQuery: EntityQueryOptions = {
+function updateCameras(player: Player, level: number) {
+	const cameraQuery: EntityQueryOptions = {
 		"type": "armor_stand",
 		"location": { 'x': player.location.x, 'y': cameraHeight, 'z': player.location.z },
 		"maxDistance": staticSecurityDeviceLoadingRange
@@ -237,7 +237,7 @@ function updateCameras(player: Player, level: number, playerLevelInformationData
 		return true;
 	});
 
-	var cameraMappingQuery: EntityQueryOptions = {
+	const cameraMappingQuery: EntityQueryOptions = {
 		"type": "armor_stand",
 		"location": { 'x': player.location.x, 'y': cameraMappingHeight, 'z': player.location.z },
 		"maxDistance": movingSecurityDeviceLoadingRange,
@@ -245,61 +245,60 @@ function updateCameras(player: Player, level: number, playerLevelInformationData
 	};
 	const cameraMappingArmorStands = Utilities.dimensions.overworld.getEntities(cameraMappingQuery).filter((x) => (x.location.y == cameraMappingHeight));
 
-	if ((system.currentTick % 20 == 0)) {
+	if (system.currentTick % 20 == 0) {
 		// 20 tick interval elapsed
-		cameraMappingArmorStands.forEach((armorStand) => {
-			armorStand.kill();
-		});
-		cameraArmorStands.forEach((armorStand) => {
-			var cameraTrackerDataNode = DataManager.getData(armorStand, "cameraTracker")!;
+		cameraMappingArmorStands.forEach(armorStand => armorStand.kill());
+		cameraArmorStands.forEach(armorStand => {
+			let cameraTrackerDataNode = DataManager.getData(armorStand, "cameraTracker")!;
 			if (cameraTrackerDataNode.swivel) {
 				// The camera rotates
-				var rotateMode = cameraTrackerDataNode.swivel[0];
-				var minRotation = cameraTrackerDataNode.swivel[1];
-				var maxRotation = cameraTrackerDataNode.swivel[2];
-				var rotation = cameraTrackerDataNode.rotation;
-				if (rotateMode == 0) {
-					// Decrease
-					rotation -= 5;
-					if (rotation <= minRotation) {
-						rotation = minRotation;
-						rotateMode = 1;
-					}
-				} else if (rotateMode == 1) {
-					// Increase
-					rotation += 5;
-					if (rotation >= maxRotation) {
-						rotation = maxRotation;
-						rotateMode = 0;
-					}
-				} else if (rotateMode == 2) {
-					// Increase
-					rotation += 5;
+				let rotateMode = cameraTrackerDataNode.swivel[0];
+				let minRotation = cameraTrackerDataNode.swivel[1];
+				let maxRotation = cameraTrackerDataNode.swivel[2];
+				let rotation = cameraTrackerDataNode.rotation;
+				switch (rotateMode) {
+					case CameraSwivelMode.Decrease:
+						rotation -= 5;
+						if (rotation <= minRotation) {
+							rotation = minRotation;
+							rotateMode = 1;
+						}
+						break;
+					case CameraSwivelMode.Increase:
+						rotation += 5;
+						if (rotation >= maxRotation) {
+							rotation = maxRotation;
+							rotateMode = 0;
+						}
+						break;
+					case CameraSwivelMode.Continous:
+						rotation += 5;
+						break;
 				}
 				cameraTrackerDataNode.swivel[0] = rotateMode;
 				cameraTrackerDataNode.rotation = rotation;
-				var displayCameraQuery = {
+				const displayCameraQuery = {
 					"type": "theheist:camera",
 					"location": { 'x': armorStand.location.x, 'y': -57, 'z': armorStand.location.z },
 					"maxDistance": 3,
 					"closest": 1
 				}
-				var displayCamera = Utilities.dimensions.overworld.getEntities(displayCameraQuery)[0];
+				const displayCamera = Utilities.dimensions.overworld.getEntities(displayCameraQuery)[0];
 				displayCamera.setRotation({ "x": 0, "y": rotation });
 				armorStand.setRotation({ "x": 0, "y": rotation });
 				DataManager.setData(armorStand, cameraTrackerDataNode);
 			}
-			var yRot = armorStand.getRotation().y;
-			var maxCount = rayDensity;
-			for (var i = 0; i < maxCount; i++) {
-				var rayArmorStand = Utilities.dimensions.overworld.spawnEntity("minecraft:armor_stand", { "x": armorStand.location.x, "y": cameraMappingHeight, "z": armorStand.location.z });
+			let yRot = armorStand.getRotation().y;
+			let maxCount = rayDensity;
+			for (let i = 0; i < maxCount; i++) {
+				let rayArmorStand = Utilities.dimensions.overworld.spawnEntity("minecraft:armor_stand", { "x": armorStand.location.x, "y": cameraMappingHeight, "z": armorStand.location.z });
 				rayArmorStand.addTag("camera");
 				rayArmorStand.setRotation({ "x": 0, "y": (yRot - cameraFOV / 2) + (cameraFOV * i / (maxCount - 1)) });
 				if (cameraTrackerDataNode.isRobot) {
 					rayArmorStand.teleport({ "x": armorStand.location.x + -(Utilities.sin(armorStand.getRotation().y) * 0.7), "y": cameraMappingHeight, "z": armorStand.location.z + (Utilities.cos(armorStand.getRotation().y) * 0.7) });
 				}
 			}
-			// Before we save the mapped out camera sight area, make sure we remove the block below the camera if there is one
+			// Before we save the mapped out camera sight area, make sure we remove the block cache below the camera mapping armor stand if there is one
 			Utilities.setBlock({ "x": armorStand.location.x, "y": cameraMappingHeight - 2, "z": armorStand.location.z }, "air");
 		});
 		let levelCI = Utilities.levelCloneInfo[level];
@@ -307,9 +306,9 @@ function updateCameras(player: Player, level: number, playerLevelInformationData
 		Utilities.dimensions.overworld.runCommand(`fill ${levelCI.startX} ${cameraMappingHeight - 2} ${levelCI.startZ} ${levelCI.endX} ${cameraMappingHeight - 2} ${levelCI.endZ} air`);
 	} else {
 		const tpDistance = 0.55;
-		cameraMappingArmorStands.forEach((armorStand) => {
-			// x sin() needs to be inverted to work properly for some reason
-			var belowBlock = { "x": armorStand.location.x, "y": armorStand.location.y - 2, "z": armorStand.location.z };
+		cameraMappingArmorStands.forEach(armorStand => {
+			// x sin() must be inverted to work properly for some reason
+			let belowBlock = { "x": armorStand.location.x, "y": armorStand.location.y - 2, "z": armorStand.location.z };
 			armorStand.teleport({ "x": armorStand.location.x + -(Utilities.sin(armorStand.getRotation().y) * tpDistance), "y": cameraMappingHeight, "z": armorStand.location.z + (Utilities.cos(armorStand.getRotation().y) * tpDistance) }, { 'dimension': Utilities.dimensions.overworld });
 			let armorStandLocation = Vector.from({ "x": armorStand.location.x, "y": Utilities.levelHeight, "z": armorStand.location.z });
 			if (cameraCanSeeThrough(armorStandLocation)) {
@@ -322,7 +321,7 @@ function updateCameras(player: Player, level: number, playerLevelInformationData
 	}
 }
 
-function updateSonars(player: Player, level: number, playerLevelInformationDataNode: LevelInformation) {
+function updateSonars(player: Player, level: number) {
 	var sonarQuery: EntityQueryOptions = {
 		"type": "armor_stand",
 		"location": { 'x': player.location.x, 'y': cameraHeight, 'z': player.location.z },
@@ -386,7 +385,7 @@ function updateSonars(player: Player, level: number, playerLevelInformationDataN
 	}
 }
 
-function updateSonar360s(player: Player, level: number, playerLevelInformationDataNode: LevelInformation) {
+function updateSonar360s(player: Player, level: number) {
 	var sonarQuery: EntityQueryOptions = {
 		"type": "armor_stand",
 		"location": { 'x': player.location.x, 'y': cameraHeight, 'z': player.location.z },
