@@ -4,7 +4,7 @@ import Utilities from "./Utilities";
 import DataManager from "./DataManager";
 import VoiceOverManager from "./VoiceOverManager";
 import LevelConstructor from "./levels/LevelConstructor";
-import LevelDefinitions from "./levels/levelDefinitions";
+import LevelDefinitions from "./levels/LevelDefinitions";
 import GameObjectiveManager from "./GameObjectiveManager";
 import PlayerBustedManager from "./PlayerBustedManager";
 import LoreItem from "./LoreItem";
