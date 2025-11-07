@@ -1,15 +1,11 @@
 import { Vector3 } from "@minecraft/server";
 
 export default class Vector implements Vector3, IVector3 {
-    x: number;
-    y: number;
-    z: number;
+    constructor(public x: number, public y: number, public z: number) {}
 
-    constructor(_x: number, _y: number, _z: number) {
-        this.x = _x;
-        this.y = _y;
-        this.z = _z;
-    }
+	clone() {
+		return new Vector(this.x, this.y, this.z);
+	}
 
     above() {
         return this.add(Vector.up);
