@@ -51,6 +51,8 @@ tile.dropper.name=Drawer
 container.dropper=Drawer
 craftingScreen.tab.armor=Equipment
 
+resourcePack.subpackResolution=Pack Type: %s
+
 map.sub.forgot_prototypes=Hey dumb dumb, you forgot some of the prototypes!
 
 ## All lang files have this in English annoyingly

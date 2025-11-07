@@ -1,7 +1,7 @@
 {
     "format_version": 2,
     "header": {
-        "name": "pack.name",
+        "name": "The Heist RP",
         "description": "pack.description",
         "uuid": "cbcbc0f3-5783-4756-a031-249deec8aaf4",
         "version": [1, 5, 1],
@@ -13,5 +13,17 @@
             "uuid": "245fff14-0e52-43e8-85b4-0df43efff9b6",
             "version": [1, 5, 1]
         }
-    ]
+    ],
+	"subpacks": [
+		{
+			"folder_name": "developer",
+			"name": "Developer",
+			"memory_tier": 0
+		},
+		{
+			"folder_name": "player",
+			"name": "Player",
+			"memory_tier": 0
+		}
+	]
 }

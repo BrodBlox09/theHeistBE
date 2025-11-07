@@ -1,7 +1,7 @@
 {
     "format_version": 2,
     "header": {
-        "name": "pack.name",
+        "name": "The Heist BP",
         "description": "pack.description",
         "uuid": "a6b350d9-0110-4031-9912-8e59b16ff0bc",
         "version": [1, 5, 1],
