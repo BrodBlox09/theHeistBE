@@ -1,8 +1,8 @@
 import { Player } from "@minecraft/server";
-import BlockRotation from "../BlockRotation";
 import Vector from "../Vector";
 import Utilities from "../Utilities";
 import LevelConstructor from "./LevelConstructor";
+import { ILevel } from "../TypeDefinitions";
 
 const level: ILevel = {
 "levelID": "1",

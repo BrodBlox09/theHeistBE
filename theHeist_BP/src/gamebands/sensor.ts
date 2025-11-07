@@ -4,6 +4,7 @@ import Utilities from "../Utilities";
 import Vector from "../Vector";
 import GamebandManager from "./GamebandManager";
 import LoreItem from "../LoreItem";
+import { LevelInformation, PlayerEnergyTracker } from "../TypeDefinitions";
 
 const sensingRange = 14;
 const clearRange = 19;

@@ -1,9 +1,9 @@
 import { ItemStack, Container, Camera } from "@minecraft/server";
-import BlockRotation from "../BlockRotation";
 import Vector from "../Vector";
 import Utilities from "../Utilities";
 import DataManager from "../DataManager";
 import LoreItem from "../LoreItem";
+import { BlockRotation, ActionList, ActionTracker, KeycardReaderActionTracker, IPrerequisiteList, EnergyTracker, CameraTracker, ICameraSwivel } from "../TypeDefinitions";
 
 let cameras = 0;
 let rechargeStations = 0;

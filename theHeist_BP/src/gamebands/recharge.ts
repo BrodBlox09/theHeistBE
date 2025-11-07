@@ -5,6 +5,7 @@ import GamebandManager from "./GamebandManager";
 import Vector from "../Vector";
 import ActionManager from "../ActionManager";
 import LoreItem from "../LoreItem";
+import { LevelInformation, PlayerEnergyTracker } from "../TypeDefinitions";
 
 export function toggleRechargeMode(player: Player, lvl: number) {
 	let levelInformation = DataManager.getData(player, "levelInformation")!;

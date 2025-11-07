@@ -4,6 +4,7 @@ import * as SensorModeFunc from "./gamebands/sensor";
 import DataManager from "./DataManager";
 import Utilities from "./Utilities";
 import Vector from "./Vector";
+import { LevelInformation, CameraSwivelMode } from "./TypeDefinitions";
 
 const cameraHeight = Utilities.cameraHeight;
 const cameraMappingHeight = Utilities.cameraMappingHeight;

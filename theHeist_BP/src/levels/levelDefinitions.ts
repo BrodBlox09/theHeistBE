@@ -6,6 +6,7 @@ import levelN2 from './level-2';
 import levelN3 from './level-3';
 import levelN4 from './level-4';
 import levelN5 from './level-5';
+import { ILevel } from '../TypeDefinitions';
 
 const levels: ILevel[] = [ level2, level1, level0, levelN1, levelN2, levelN3, levelN4, levelN5 ];
 

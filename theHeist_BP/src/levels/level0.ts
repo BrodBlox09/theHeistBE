@@ -5,6 +5,7 @@ import Utilities from "../Utilities";
 import LevelConstructor from "./LevelConstructor";
 import VoiceOverManager from "../VoiceOverManager";
 import LoreItem from "../LoreItem";
+import { ILevel } from "../TypeDefinitions";
 
 const level: ILevel = {
 "levelID": "0",

@@ -8,6 +8,7 @@ import LevelDefinitions from "./levels/levelDefinitions";
 import GameObjectiveManager from "./GameObjectiveManager";
 import PlayerBustedManager from "./PlayerBustedManager";
 import LoreItem from "./LoreItem";
+import { PlayerEnergyTracker, LevelInformation } from "./TypeDefinitions";
 
 /**
  * Layer information:

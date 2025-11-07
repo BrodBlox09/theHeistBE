@@ -1,19 +1,19 @@
-interface ModeData {
+export interface ModeData {
 	mode: string,
 	level: number
 }
 
-interface IAction {
+export interface IAction {
 	type: string;
 	do: any;
 	delay?: number;
 }
 
-type ActionList = Array<IAction>;
+export type ActionList = Array<IAction>;
 
-type DataNodeReturnType<T extends string> = T extends keyof DataNodes ? DataNodes[T] : DataNode;
+export type DataNodeReturnType<T extends string> = T extends keyof DataNodes ? DataNodes[T] : DataNode;
 
-type DataNodes =  {
+export type DataNodes =  {
 	"levelInformation": LevelInformation,
 	"playerEnergyTracker": PlayerEnergyTracker,
 	"actionTracker": IActionTracker,
@@ -21,12 +21,11 @@ type DataNodes =  {
 	"cameraTracker": CameraTracker
 }
 
-
-interface DataNode extends Record<string, any> {
+export interface DataNode extends Record<string, any> {
 	"name": string
 }
 
-interface IActionTracker extends DataNode {
+export interface IActionTracker extends DataNode {
 	"name": "actionTracker",
 	"used": boolean,
 	"actions": ActionList,
@@ -38,23 +37,23 @@ interface IActionTracker extends DataNode {
 	"prereq"?: IPrerequisiteList
 }
 
-interface IPrerequisiteList {
+export interface IPrerequisiteList {
 	"objectives"?: Array<string>
 }
 
-interface ActionTracker extends IActionTracker {
+export interface ActionTracker extends IActionTracker {
 	"name": "actionTracker",
 	"level": number,
 	"isKeycardReader"?: false
 }
 
-interface KeycardReaderActionTracker extends IActionTracker {
+export interface KeycardReaderActionTracker extends IActionTracker {
 	"name": "actionTracker",
 	"level"?: undefined,
 	"isKeycardReader": true
 }
 
-interface LevelInformation extends DataNode {
+export interface LevelInformation extends DataNode {
 	"name": "levelInformation",
 	"currentMode": ModeData | null,
 	"information": [
@@ -74,7 +73,7 @@ interface LevelInformation extends DataNode {
 	]
 }
 
-interface PlayerEnergyTracker extends DataNode {
+export interface PlayerEnergyTracker extends DataNode {
 	"name": "playerEnergyTracker",
 	"energyUnits": number,
 	"recharging": boolean,
@@ -82,7 +81,7 @@ interface PlayerEnergyTracker extends DataNode {
 	"rechargeLevel": number
 }
 
-interface EnergyTracker extends DataNode {
+export interface EnergyTracker extends DataNode {
 	"name": "energyTracker",
 	"energyUnits": number,
 	"rechargerID": number,
@@ -90,7 +89,7 @@ interface EnergyTracker extends DataNode {
 	"onDepletionActions": ActionList
 }
 
-interface CameraTracker extends DataNode {
+export interface CameraTracker extends DataNode {
 	"name": "cameraTracker",
 	"isStatic"?: boolean,
 	"isStunned"?: boolean,
@@ -102,9 +101,22 @@ interface CameraTracker extends DataNode {
 	"rotation": number
 }
 
-type ICameraSwivel = [ number, number, number ];
+export type ICameraSwivel = [ CameraSwivelMode, number, number ];
 
-interface ILevelCloneInfo {
+export enum CameraSwivelMode {
+	Decrease = 0,
+	Increase = 1,
+	Continous = 2
+}
+
+export enum BlockRotation {
+	NORTH = "north",
+	SOUTH = "south",
+	EAST = "east",
+	WEST = "west"
+}
+
+export interface ILevelCloneInfo {
 	"startX": number,
 	"startZ": number,
 	"endX": number,
@@ -113,7 +125,7 @@ interface ILevelCloneInfo {
 	"mapLoc": IVector3
 }
 
-interface ILevel {
+export interface ILevel {
 	/**
 	 * @description This is the bottom-most center of the loading elevator structure
 	 */
@@ -150,44 +162,44 @@ interface ILevel {
 	"onLoadStart"?: (player: any) => any
 }
 
-interface IBlockOrientation extends IVector3 {
+export interface IBlockOrientation extends IVector3 {
 	"rotation": IBlockRotation
 }
 
-type IBlockRotation = "north" | "south" | "east" | "west";
+export type IBlockRotation = "north" | "south" | "east" | "west";
 
-interface IBlockArea {
+export interface IBlockArea {
 	"start": IVector3,
 	"end": IVector3
 }
 
-interface IVector3 {
+export interface IVector3 {
 	"x": number,
 	"y": number,
 	"z": number
 }
 
-interface IObjectiveData {
+export interface IObjectiveData {
 	"name": string,
 	"sortOrder": number
 }
 
-interface IInventorySlotData {
+export interface IInventorySlotData {
 	"slot": number,
 	"typeId": string,
 	"lockMode"?: "none"|"inventory"|"slot"
 }
 
-interface GamebandDataList extends Record<string, GamebandDataEntry> {}
+export interface GamebandDataList extends Record<string, GamebandDataEntry> {}
 
-interface GamebandDataEntry extends Record<number, GamebandLevelData> {}
+export interface GamebandDataEntry extends Record<number, GamebandLevelData> {}
 
-interface GamebandLevelData {
+export interface GamebandLevelData {
 	"cost": number
 }
 
-interface RechargeGamebandDataList extends Record<number, GamebandRechargeLevelData> {}
+export interface RechargeGamebandDataList extends Record<number, GamebandRechargeLevelData> {}
 
-interface GamebandRechargeLevelData {
+export interface GamebandRechargeLevelData {
 	"max": number
 }

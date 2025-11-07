@@ -1,7 +1,7 @@
-import BlockRotation from "../BlockRotation";
 import Vector from "../Vector";
 import Utilities from "../Utilities";
 import LevelConstructor from "./LevelConstructor";
+import { ILevel, BlockRotation } from "../TypeDefinitions";
 
 // Check security office to update cameraID for camera disable console
 

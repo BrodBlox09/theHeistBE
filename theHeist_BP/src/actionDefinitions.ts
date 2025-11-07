@@ -1,3 +1,5 @@
+import { IAction, IVector3 } from "./TypeDefinitions";
+
 export class SetBlockAction implements IAction {
 	type = "set_block";
 	do: { "x": number, "y": number, "z": number, "block": string, "permutations"?: Record<string, any> };

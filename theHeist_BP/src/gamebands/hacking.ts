@@ -4,6 +4,7 @@ import Utilities from "../Utilities";
 import GameObjectiveManager from "../GameObjectiveManager";
 import ActionManager from "../ActionManager";
 import GamebandManager from "./GamebandManager";
+import { ActionTracker } from "../TypeDefinitions";
 
 
 export function tryHackingMode(player: Player, lvl: number) {

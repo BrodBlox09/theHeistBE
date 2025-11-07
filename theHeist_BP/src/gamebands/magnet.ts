@@ -3,6 +3,7 @@ import DataManager from "../DataManager";
 import Utilities from "../Utilities";
 import Vector from "../Vector";
 import GamebandManager from "./GamebandManager";
+import { LevelInformation, PlayerEnergyTracker } from "../TypeDefinitions";
 
 export function toggleMagnetMode(player: Player, lvl: number) {
     var levelInformation = DataManager.getData(player, "levelInformation")!;
