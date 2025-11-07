@@ -224,19 +224,15 @@ function updateCameras(player: Player, level: number, playerLevelInformationData
 		var cameraTrackerDataNode = DataManager.getData(x, "cameraTracker");
 		if (x.location.y != cameraHeight || !cameraTrackerDataNode || cameraTrackerDataNode.type != "camera") return false;
 		if (cameraTrackerDataNode.disabled) {
-			var displayCameraQuery = {
-				"type": "theheist:camera",
-				"location": { 'x': x.location.x, 'y': -57, 'z': x.location.z },
-				"maxDistance": 3,
-				"closest": 1
+			if (system.currentTick % 3 == 0) {
+				let trackerLocation = Vector.from(x.location);
+				let displayCameraLocation = trackerLocation.clone();
+				displayCameraLocation.y = Utilities.cameraDisplayHeight;
+				disabledSecurityDeviceEffect(displayCameraLocation);
 			}
-			var displayCamera = Utilities.dimensions.overworld.getEntities(displayCameraQuery)[0];
-			if (system.currentTick % 3 == 0) disabledSecurityDeviceEffect(Vector.from(displayCamera.location));
 			return false;
 		}
-		if (cameraTrackerDataNode.isStunned) {
-			return false;
-		}
+		if (cameraTrackerDataNode.isStunned) return false;
 		return true;
 	});
 
