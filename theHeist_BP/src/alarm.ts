@@ -19,6 +19,33 @@ const staticSecurityDeviceLoadingRange = 25; // To reduce lag, only map the area
 const sonarTimeoutTime = 3; // Time in ticks that the player is invulnerable to sonar after being seen (to stop double ticking)
 const xrayTransparentBlocks = solidToTransparent.map(x => x.transparent);
 
+system.runInterval(() => {
+	// Only include adventure mode players
+	let player = world.getPlayers({ "gameMode": GameMode.Adventure }).filter((x) => (x != undefined && x != null))[0];
+	if (player == undefined) return;
+
+	let playerLevelInformationDataNode = DataManager.getData(player, "levelInformation");
+	let level;
+	if (playerLevelInformationDataNode) level = playerLevelInformationDataNode.information[1].level;
+	if (playerLevelInformationDataNode == undefined || level == undefined || level > 0) return;
+
+	updateRobots(player, level);
+	updateCameras(player, level);
+	let levelCI = Utilities.levelCloneInfo[level];
+	Utilities.fillBlocks(new Vector(levelCI.startX, Utilities.cameraMappingHeight - 5, levelCI.startZ), new Vector(levelCI.endX, Utilities.cameraMappingHeight - 5, levelCI.endZ), "air");
+	updateSonars(player, level);
+	updateSonar360s(player, level);
+	SensorModeFunc.updateSensorDisplay(player, DataManager.getData(player, "levelInformation")!);
+	updatePlayerAlarmLevel(player, playerLevelInformationDataNode);
+
+	// Toggle below to see your velocity at all times, very useful when testing sonars
+	// let playerVelocityV3 = player.getVelocity();
+	// let playerVelocity: number = Math.abs(playerVelocityV3.x) + Math.abs(playerVelocityV3.y) + Math.abs(playerVelocityV3.z);
+	// playerVelocity *= 100; // Because the player's velocity is a small number, increase it
+	// playerVelocity = Math.round(playerVelocity * 100) / 100;
+	// player.onScreenDisplay.setActionBar(`Velocity: ${playerVelocity}`);
+});
+
 function updatePlayerAlarmLevel(player: Player, levelInformation: LevelInformation) {
 	if (player.hasTag("BUSTED")) return;
 
@@ -96,34 +123,7 @@ function sonarCanSeeThrough(location: Vector): boolean {
 	return false;
 }
 
-system.runInterval(() => {
-	// Only include adventure mode players
-	var player = world.getPlayers({ "gameMode": GameMode.Adventure }).filter((x) => (x != undefined && x != null))[0];
-	if (player == undefined) return;
-
-	var playerLevelInformationDataNode = DataManager.getData(player, "levelInformation");
-	var level = undefined;
-	if (playerLevelInformationDataNode) level = playerLevelInformationDataNode.information[1].level;
-	if (playerLevelInformationDataNode == undefined || level == undefined || level > 0) return;
-
-	updateRobots(player, level, playerLevelInformationDataNode);
-	updateCameras(player, level, playerLevelInformationDataNode);
-	let levelCI = Utilities.levelCloneInfo[level];
-	Utilities.fillBlocks(new Vector(levelCI.startX, Utilities.cameraMappingHeight - 5, levelCI.startZ), new Vector(levelCI.endX, Utilities.cameraMappingHeight - 5, levelCI.endZ), "air");
-	updateSonars(player, level, playerLevelInformationDataNode);
-	updateSonar360s(player, level, playerLevelInformationDataNode);
-	SensorModeFunc.updateSensorDisplay(player, DataManager.getData(player, "levelInformation")!);
-	updatePlayerAlarmLevel(player, playerLevelInformationDataNode);
-
-	// Toggle below to see your velocity at all times, very useful when testing sonars
-	// let playerVelocityV3 = player.getVelocity();
-	// let playerVelocity: number = Math.abs(playerVelocityV3.x) + Math.abs(playerVelocityV3.y) + Math.abs(playerVelocityV3.z);
-	// playerVelocity *= 100; // Because the player's velocity is a small number, increase it
-	// playerVelocity = Math.round(playerVelocity * 100) / 100;
-	// player.onScreenDisplay.setActionBar(`Velocity: ${playerVelocity}`);
-});
-
-function updateRobots(player: Player, level: number, levelInformation: LevelInformation) {
+function updateRobots(player: Player, level: number) {
 	// Robots take exactly 1 second to turn 90 degrees
 	// Robots move at a speed of 1 blocks per 20 ticks
 	const tpDistance = 0.05;
