@@ -6,13 +6,13 @@
 		"offset": [ -8, 0 ]
 	},
 	"player_armor_panel/armor_grid/head_grid_item": { "$show_head_grid_item|default": true, "visible": "$show_head_grid_item" },
-	"player_armor_panel/armor_grid/chest_grid_item": { "visible": "$show_dev_view" },
-	"player_armor_panel/armor_grid/legs_grid_item": { "visible": "$show_dev_view" },
-	"player_armor_panel/armor_grid/feet_grid_item": { "visible": "$show_dev_view" },
-	"player_armor_panel/offhand_grid": { "visible": "$show_dev_view" },
+	"player_armor_panel/armor_grid/chest_grid_item": { "visible": false },
+	"player_armor_panel/armor_grid/legs_grid_item": { "visible": false },
+	"player_armor_panel/armor_grid/feet_grid_item": { "visible": false },
+	"player_armor_panel/offhand_grid": { "visible": false },
 	"crafting_panel_2x2": { "visible": false },
-	"recipe_book/gamepad_helper_bumpers": { "visible": "$show_dev_view" },
-	"tab_navigation_panel_layout": { "visible": "$show_dev_view" },
+	"recipe_book/gamepad_helper_bumpers": { "visible": false },
+	"tab_navigation_panel_layout": { "visible": false },
 	"recipe_inventory_screen_content": {
 		"modifications": [
 			{
@@ -24,93 +24,6 @@
 							"type": "panel",
 							"controls": [
 								{
-									"content_panel_dev": {
-										"type": "stack_panel",
-										"size": [
-											326,
-											166
-										],
-										"orientation": "horizontal",
-										"visible": "$show_dev_view",
-										"controls": [
-											{
-												"recipe_book@crafting.recipe_book": {
-													"size": [
-														"fill",
-														"100%"
-													],
-													"bindings": [
-														{
-															"binding_type": "global",
-															"binding_name": "(not #is_survival_layout)",
-															"binding_name_override": "#visible"
-														}
-													]
-												}
-											},
-											{
-												"center_fold@crafting.center_fold": {
-													"size": [
-														4,
-														166
-													],
-													"bindings": [
-														{
-															"binding_type": "global",
-															"binding_name": "#is_recipe_book_layout",
-															"binding_name_override": "#visible"
-														}
-													]
-												}
-											},
-											{
-												"survival_padding": {
-													"type": "panel",
-													"size": [
-														75,
-														"100%"
-													],
-													"bindings": [
-														{
-															"binding_type": "global",
-															"binding_name": "#is_survival_layout",
-															"binding_name_override": "#visible"
-														}
-													]
-												}
-											},
-											{
-												"player_inventory@crafting.player_inventory": {
-													"bindings": [
-														{
-															"binding_type": "global",
-															"binding_name": "(not #is_creative_layout)",
-															"binding_name_override": "#visible"
-														}
-													]
-												}
-											},
-											{
-												"toolbar_anchor": {
-													"type": "panel",
-													"size": [
-														0,
-														"100%"
-													],
-													"controls": [
-														{
-															"toolbar_panel@crafting.toolbar_panel": {
-																"anchor_from": "top_right",
-																"anchor_to": "bottom_right"
-															}
-														}
-													]
-												}
-											}
-										]
-									}
-								},
-								{
 									"content_panel_normal": {
 										"type": "stack_panel",
 										"size": [
@@ -118,7 +31,6 @@
 											166
 										],
 										"orientation": "horizontal",
-										"visible": "(not $show_dev_view)",
 										"controls": [
 											{
 												"player_inventory@crafting.player_inventory": {}
@@ -150,12 +62,13 @@
 			}
 		]
 	},
-	"toolbar_panel/toolbar_background/toolbar_stack_panel/creative_layout_toggle_panel": { "visible": "$show_dev_view", "bindings": [] },
-	"toolbar_panel/toolbar_background/toolbar_stack_panel/padding_1": { "visible": "$show_dev_view", "bindings": [] },
-	"toolbar_panel/toolbar_background/toolbar_stack_panel/recipe_book_layout_toggle_panel_survival": { "visible": "$show_dev_view", "bindings": [] },
+	"toolbar_panel/toolbar_background/toolbar_stack_panel/creative_layout_toggle_panel": { "visible": false, "bindings": [] },
+	"toolbar_panel/toolbar_background/toolbar_stack_panel/padding_1": { "visible": false, "bindings": [] },
+	"toolbar_panel/toolbar_background/toolbar_stack_panel/recipe_book_layout_toggle_panel_survival": { "visible": false, "bindings": [] },
 	"toolbar_panel/toolbar_background/toolbar_stack_panel/recipe_book_layout_toggle_panel_creative": { "visible": false, "bindings": [] }, // Duplicate of above for some reason
-	"toolbar_panel/toolbar_background/toolbar_stack_panel/padding_2": { "visible": "$show_dev_view", "bindings": [] },
-	"toolbar_panel/toolbar_background/toolbar_stack_panel/survival_layout_toggle_panel": { "visible": "$show_dev_view", "bindings": [] },
-	"toolbar_panel/toolbar_background/toolbar_stack_panel/padding_3": { "visible": "$show_dev_view", "bindings": [] },
+	"toolbar_panel/toolbar_background/toolbar_stack_panel/padding_2": { "visible": false, "bindings": [] },
+	"toolbar_panel/toolbar_background/toolbar_stack_panel/survival_layout_toggle_panel": { "visible": false, "bindings": [] },
+	"toolbar_panel/toolbar_background/toolbar_stack_panel/padding_3": { "visible": false, "bindings": [] },
+	// Head grid item must be hidden on crafting screen since the player doll is not centered otherwise. It is centered with just the head grid item on the inventory screen.
 	"crafting_screen": { "$show_head_grid_item": false, "$top_half_variant": "crafting.survival_panel_top_half" }
 }

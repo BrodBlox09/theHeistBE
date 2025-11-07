@@ -12,10 +12,7 @@
 						"layer": 8,
 						"controls": [
 							{
-								"normal@inventory_display.pocket_left_panel": { "visible": "(not $show_dev_view)" }
-							},
-							{
-								"dev@crafting_pocket.left_panel": { "visible": "$show_dev_view" }
+								"normal@inventory_display.pocket_left_panel": {}
 							}
 						]
 					}
@@ -28,13 +25,7 @@
 		"controls": [
 			{
 				"no_search@inventory_display.no_search_pocket_inventory_tab_content": {
-					"$maximum_grid_items": 5,
-					"$visible": "(not $show_dev_view)"
-				}
-			},
-			{
-				"search@inventory_display.pocket_inventory_tab_content": {
-					"$visible": "$show_dev_view"
+					"$maximum_grid_items": 5
 				}
 			}
 		]
@@ -51,19 +42,15 @@
 		"bindings": [] // Remove the conditional binding that hid the armor tab if another tab was selected
 		// When the full screen tab in creative mode is selected, the entire right panel is hidden.
 	},
-	"left_tab": { "visible": "$show_dev_view" },
+	"left_tab": { "visible": false },
 	"crafting_tab": { "visible": false },
 	"armor_tab": {
-		"bindings": [
-			{
-				"binding_name": "#is_creative_mode",
-				"binding_name_override": "#visible"
-			}
-		]
+		"visible": false,
+		"bindings": []
 	},
 	// Set chest, legs, feet, and offhand cells to only be visible when player is in dev_view mode
-	"pocket_armor_tab_content/equipment_and_renderer/equipment/armor_grid/chest_grid_item": { "visible": "$show_dev_view" },
-	"pocket_armor_tab_content/equipment_and_renderer/equipment/armor_grid/legs_grid_item": { "visible": "$show_dev_view" },
-	"pocket_armor_tab_content/equipment_and_renderer/equipment/armor_grid/feet_grid_item": { "visible": "$show_dev_view" },
-	"pocket_armor_tab_content/equipment_and_renderer/equipment/offhand_grid": { "visible": "$show_dev_view" }
+	"pocket_armor_tab_content/equipment_and_renderer/equipment/armor_grid/chest_grid_item": { "visible": false },
+	"pocket_armor_tab_content/equipment_and_renderer/equipment/armor_grid/legs_grid_item": { "visible": false },
+	"pocket_armor_tab_content/equipment_and_renderer/equipment/armor_grid/feet_grid_item": { "visible": false },
+	"pocket_armor_tab_content/equipment_and_renderer/equipment/offhand_grid": { "visible": false }
 }

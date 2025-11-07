@@ -15,8 +15,7 @@
 					"collection_name": "inventory_items"
 				}
 			}
-		],
-		"visible": "(not $show_dev_view)"
+		]
 	},
 	"tab_content_no_search@crafting.tab_content": {
 		"controls": [
@@ -63,15 +62,8 @@
 	// ---------------
 	// Pocket inventory
 	// ---------------
-	"pocket_inventory_tab_content@crafting.tab_content": {
-		"$scrolling_pane_control": "inventory_display.pocket_inventory_scroll_panel",
-		"$visible|default": true,
-		"visible": "$visible"
-	},
 	"no_search_pocket_inventory_tab_content@inventory_display.tab_content_no_search": {
-		"$scrolling_pane_control": "inventory_display.pocket_inventory_scroll_panel",
-		"$visible|default": true,
-		"visible": "$visible"
+		"$scrolling_pane_control": "inventory_display.pocket_inventory_scroll_panel"
 	},
 	"pocket_inventory_scroll_panel@crafting_pocket.survival_scroll_panel": {
 		"$scrolling_content": "inventory_display.pocket_inventory_grid"
