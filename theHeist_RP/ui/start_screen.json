@@ -1,6 +1,22 @@
 {
 	"namespace": "start",
 	"start_screen": {
-		"$screen_bg_content": "bg.bg"
-	}
+		"$screen_bg_content": "start.bg"
+	},
+	"bg": {
+        "type": "image",
+        "anchor_from": "center",
+        "anchor_to": "center",
+        "layer": 0,
+        "fill": true,
+        "offset": [
+            0,
+            0
+        ],
+        "texture": "textures/ui/main_menu_background",
+        "size": [
+            "100%",
+            "100%"
+        ]
+    }
 }
