@@ -9,16 +9,23 @@ import levelN5 from './level-5';
 import levelN6 from './level-6';
 import { ILevel } from '../TypeDefinitions';
 
-const levels: ILevel[] = [ level2, level1, level0, levelN1, levelN2, levelN3, levelN4, levelN5, levelN6 ];
+let levels: Record<string, ILevel> = {};
 
 export default class LevelDefinitions {
+	static registerLevel(level: ILevel) {
+		let id = level.levelId;
+		if (levels[id]) throw new LevelOverwriteAttemptedError(`Level ID '${id}' has already been registered.`);
+		levels[id] = level;
+	}
+
     /**
-     * @description Retrieves the LevelDefintion of the desired level
+     * @description Retrieves the level definition of the desired level
      * @param { string } id The ID of the level desired
      * @throws If the level definition is not found, throws Error
      */
     static getLevelDefinitionByID(id: string): ILevel | undefined {
-        var selectedLevelDef = levels.find((levelDef) => levelDef.levelId == id);
+        // var selectedLevelDef = levels.find((levelDef) => levelDef.levelId == id);
+        var selectedLevelDef = levels[id];
         if (!selectedLevelDef) throw new LevelNotFoundError(`No level of such ID '${id}' exists.`);
         return selectedLevelDef;
     }
@@ -26,10 +33,26 @@ export default class LevelDefinitions {
 
 class LevelNotFoundError implements Error {
     name: string = "Level Not Found Error";
-    message: string;
 
-    constructor(_message: string) {
-        this.message = _message;
-        console.warn(_message);
+    constructor(public message: string) {
+        console.warn(message);
     }
 }
+
+class LevelOverwriteAttemptedError implements Error {
+	name: string = "Level Overwrite Attempted Error";
+
+	constructor(public message: string) {
+		console.warn(message);
+	}
+}
+
+LevelDefinitions.registerLevel(level2);
+LevelDefinitions.registerLevel(level1);
+LevelDefinitions.registerLevel(level0);
+LevelDefinitions.registerLevel(levelN1);
+LevelDefinitions.registerLevel(levelN2);
+LevelDefinitions.registerLevel(levelN3);
+LevelDefinitions.registerLevel(levelN4);
+LevelDefinitions.registerLevel(levelN5);
+LevelDefinitions.registerLevel(levelN6);
