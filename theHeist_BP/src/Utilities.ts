@@ -20,59 +20,6 @@ export default class Utilities {
 	static SECOND = 20;
 	static dimensions: Record<string, Dimension> = {};
 
-	/* static gamebandInfo: GamebandDataList = {
-		"hackingMode": {
-			1: {
-				"cost": 15.0
-			},
-			2: {
-				"cost": 10.0
-			},
-			3: {
-				"cost": 5.0
-			}
-		},
-		"sensorMode": {
-			1: {
-				"cost": 1.0
-			},
-			2: {
-				"cost": 0.4
-			}
-		},
-		"xrayMode": {
-			1: {
-				"cost": 1.33
-			},
-			2: {
-				"cost": 0.67
-			}
-		},
-		"magnetMode": {
-			1: {
-				"cost": 1.6
-			}
-		},
-		"stealthMode": {
-			1: {
-				"cost": 40
-			},
-			2: {
-				"cost": 10
-			}
-		},
-		"stunMode": {
-			1: {
-				"cost": 10
-			}
-		},
-		"drillMode": {
-			1: {
-				"cost": 30
-			}
-		}
-	} */
-
 	static sin(d: number): number {
 		return Math.sin(d * Math.PI / 180);
 	}
