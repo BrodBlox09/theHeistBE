@@ -7,6 +7,7 @@ import { LevelInformation, PlayerEnergyTracker } from "../TypeDefinitions";
 
 const viewRange = 2;
 const clearRange = 4;
+
 export const solidToTransparent = [
     { "solid": "minecraft:cyan_terracotta", "transparent": "minecraft:gray_stained_glass" },
     { "solid": "minecraft:hardened_clay", "transparent": "minecraft:brown_stained_glass" },

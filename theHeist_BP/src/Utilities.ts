@@ -3,7 +3,7 @@ import DataManager from "./DataManager";
 import Vector from "./Vector";
 import LoreItem from "./LoreItem";
 import { BlockStateSuperset } from "@minecraft/vanilla-data";
-import { RechargeGamebandDataList, GamebandDataList, ILevelCloneInfo, LevelInformation, IInventorySlotData } from "./TypeDefinitions";
+import { LevelInformation, IInventorySlotData } from "./TypeDefinitions";
 
 export default class Utilities {
 	static levelMapHeight = 20;
