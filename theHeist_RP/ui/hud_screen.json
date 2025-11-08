@@ -69,6 +69,20 @@
 			}
 		]
 	},
+	"root_panel/chat_stack": {
+		"bindings": [
+			{
+				"binding_name": "#hud_title_text_string",
+				"binding_name_override": "#text",
+				"binding_type": "global"
+			},
+			{
+				"binding_type": "view",
+				"source_property_name": "(not (#text = 'hideHud'))",
+				"target_property_name": "#visible"
+			}
+		]
+	},
 	"root_panel": {
 		"bindings": [
 			{
@@ -85,11 +99,10 @@
 					"cutscene_image": {
 						"type":"image",
 						"texture":"textures/ui/cutscene",
-						"size":["100%","100%"],
-						"offset":[0,0],
+						"size": ["100%", "100%"],
+						"offset": [0, 0],
 						"anchor_from": "center_middle",
 						"anchor_to": "center_middle",
-						"fill": true,
 						"bindings": [
 							{
 								"binding_name": "#hud_title_text_string",
@@ -100,6 +113,17 @@
 								"binding_type": "view",
 								"source_property_name": "(#text = 'hideHud')",
 								"target_property_name": "#visible"
+							}
+						],
+						"controls": [
+							{
+								"tl": {
+									"type": "image",
+									"texture": "textures/ui/Black",
+									"size": [5, 5],
+									"anchor_to": "top_left",
+									"anchor_from": "top_left"
+								}
 							}
 						]
 					}
