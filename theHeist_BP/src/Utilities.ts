@@ -156,7 +156,7 @@ export default class Utilities {
 	}
 
 	/**
-	 * @description Saves player's inventory. Ensure this function is run BEFORE whenever you want to enter into a "1 mode only" state.
+	 * Saves player's inventory. Ensure this function is run BEFORE whenever you want to enter into a "1 mode only" state.
 	 * @param player 
 	 * @param stripEnchants Whether or not to remove enchants from all items in the player's inventory
 	 * @returns 

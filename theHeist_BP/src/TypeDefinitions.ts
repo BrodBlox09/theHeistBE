@@ -34,7 +34,7 @@ export interface IActionTracker extends DataNode {
 	"isKeycardReader"?: boolean,
 	"level"?: number,
 	/**
-	 * @description A list of objectives that must be completed before actions can be run.
+	 * A list of objectives that must be completed before actions can be run.
 	 */
 	"prereq"?: IPrerequisiteList
 }
@@ -120,11 +120,11 @@ export interface ILevelCloneInfo {
 
 export interface ILevel {
 	/**
-	 * @description This is the bottom-most center of the loading elevator structure
+	 * This is the bottom-most center of the loading elevator structure
 	 */
 	"loadElevatorLoc": Vector3,
 	/**
-	 * @description This is the location the player will be teleported to after the level has finished loading
+	 * This is the location the player will be teleported to after the level has finished loading
 	 */
 	"startPlayerLoc": Vector3,
 	"startPlayerRot"?: number,
@@ -143,19 +143,22 @@ export interface ILevel {
 	"playerNoPhone"?: boolean,
 	"timer"?: number,
 	/**
-	 * @description Second in function execution order.
+	 * Second in function execution order.
 	 */
 	"setup": Function,
 	/**
-	 * @description Last in function execution order.
+	 * Last in function execution order.
 	 */
 	"onStart"?: (player: any) => any,
 	/**
-	 * @description First in function execution order.
+	 * First in function execution order.
 	 */
 	"onLoadStart"?: (player: any) => any
 }
 
+/**
+ * Provides both a location and block rotation
+ */
 export interface IBlockOrientation extends Vector3 {
 	"rotation": IBlockRotation
 }
