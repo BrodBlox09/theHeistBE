@@ -20,18 +20,6 @@ export default class Utilities {
 	static SECOND = 20;
 	static dimensions: Record<string, Dimension> = {};
 
-	static rechargeGamebandInfo: RechargeGamebandDataList = {
-		1: {
-			"max": 100.0
-		},
-		2: {
-			"max": 150.0
-		},
-		3: {
-			"max": 200.0
-		}
-	}
-
 	static gamebandInfo: GamebandDataList = {
 		"hackingMode": {
 			1: {

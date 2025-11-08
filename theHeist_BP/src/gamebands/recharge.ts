@@ -5,7 +5,19 @@ import GamebandManager from "./GamebandManager";
 import Vector from "../Vector";
 import ActionManager from "../ActionManager";
 import LoreItem from "../LoreItem";
-import { LevelInformation, PlayerEnergyTracker } from "../TypeDefinitions";
+import { LevelInformation, PlayerEnergyTracker, RechargeGamebandDataList } from "../TypeDefinitions";
+
+export const rechargeModeInfo: RechargeGamebandDataList = {
+	1: {
+		"max": 100.0
+	},
+	2: {
+		"max": 150.0
+	},
+	3: {
+		"max": 200.0
+	}
+}
 
 export function toggleRechargeMode(player: Player, lvl: number) {
 	let levelInformation = DataManager.getData(player, "levelInformation")!;
@@ -79,9 +91,9 @@ export function rechargeTick(player: Player, levelInformation: LevelInformation,
 				Utilities.setBlock({ x: armorStandEnergyTracker.block.x, y: armorStandEnergyTracker.block.y, z: armorStandEnergyTracker.block.z }, "theheist:recharge_station", { "minecraft:cardinal_direction": armorStandEnergyTracker.block.rotation, "theheist:state": 1 });
 				playerEnergyTracker.usingRechargerID = -1;
 			}
-		} else if (playerEnergyTracker.energyUnits < Utilities.rechargeGamebandInfo[playerEnergyTracker.rechargeLevel].max) {
+		} else if (playerEnergyTracker.energyUnits < rechargeModeInfo[playerEnergyTracker.rechargeLevel].max) {
 			var addEnergy = 1; // Amount of energy to add per tick
-			playerEnergyTracker.energyUnits = Math.min(playerEnergyTracker.energyUnits + addEnergy, Utilities.rechargeGamebandInfo[playerEnergyTracker.rechargeLevel].max);
+			playerEnergyTracker.energyUnits = Math.min(playerEnergyTracker.energyUnits + addEnergy, rechargeModeInfo[playerEnergyTracker.rechargeLevel].max);
 			for (const armorStand of armorStands) {
 				var armorStandEnergyTracker = DataManager.getData(armorStand, "energyTracker")!;
 				if (armorStandEnergyTracker.rechargerID != playerEnergyTracker.usingRechargerID) continue;
