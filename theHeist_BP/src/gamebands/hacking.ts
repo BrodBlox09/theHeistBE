@@ -11,7 +11,7 @@ export function tryHackingMode(player: Player, lvl: number) {
 	let levelInformation = DataManager.getData(player, "levelInformation")!;
 	GamebandManager.cancelMode(player, levelInformation.currentMode);
 
-	let i = 0;
+	let consolesAttempted = 0;
 	let errorMessage: string | null = null;
 	if (player.location.y < Utilities.ventHeight) {
 		var playerEnergyTracker = DataManager.getData(player, "playerEnergyTracker")!;
@@ -24,7 +24,7 @@ export function tryHackingMode(player: Player, lvl: number) {
 		for (const armorStand of armorStands) {
 			var armorStandActionTracker = DataManager.getData(armorStand, 'actionTracker')! as ActionTracker;
 			if (armorStandActionTracker.used == true || armorStandActionTracker.isKeycardReader) continue;
-			i++;
+			consolesAttempted++;
 			
 			if (armorStandActionTracker.level <= lvl) {
 				if (Utilities.gamebandInfo.hackingMode[lvl].cost > playerEnergyTracker.energyUnits) {
@@ -52,6 +52,6 @@ export function tryHackingMode(player: Player, lvl: number) {
 			}
 		}
 	}
-	if (i == 0) errorMessage = "No console";
+	if (consolesAttempted == 0) errorMessage = "No console";
 	if (errorMessage) player.sendMessage("§c" + errorMessage);
 }
