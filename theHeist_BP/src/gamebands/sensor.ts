@@ -4,11 +4,20 @@ import Utilities from "../Utilities";
 import Vector from "../Vector";
 import GamebandManager from "./GamebandManager";
 import LoreItem from "../LoreItem";
-import { LevelInformation, PlayerEnergyTracker } from "../TypeDefinitions";
+import { GamebandInfo, LevelInformation, PlayerEnergyTracker } from "../TypeDefinitions";
 import LevelDefinitions from "../levels/LevelDefinitions";
 
 const sensingRange = 14;
 const clearRange = 19;
+
+export const sensorModeInfo: GamebandInfo = {
+	1: {
+		"cost": 1.0
+	},
+	2: {
+		"cost": 0.4
+	}
+};
 
 export function tryMap(player: Player, levelInformation: LevelInformation, playerEnergyTracker: PlayerEnergyTracker) {
     if (playerEnergyTracker.recharging) return;
@@ -53,7 +62,7 @@ function tryStartSensorMode(player: Player, lvl: number, levelInformation: Level
     GamebandManager.cancelMode(player, levelInformation.currentMode);
     levelInformation = DataManager.getData(player, "levelInformation")!;
 
-    var costPerSecond = Utilities.gamebandInfo.sensorMode[lvl].cost;
+    var costPerSecond = sensorModeInfo[lvl].cost;
     var costPerTick = costPerSecond / 20;
     var energyTracker = DataManager.getData(player, "playerEnergyTracker")!;
     if (energyTracker.energyUnits < costPerTick) {
@@ -88,7 +97,7 @@ export function sensorTick(player: Player, levelInformation: LevelInformation, e
     if (!playerIsInSensorMode(levelInformation)) return;
     var sensorModeData = levelInformation.currentMode!;
     // Player is currently in sensor mode
-    var costPerSecond = Utilities.gamebandInfo.sensorMode[sensorModeData.level].cost;
+    var costPerSecond = sensorModeInfo[sensorModeData.level].cost;
     var costPerTick = costPerSecond / 20;
     energyTracker.energyUnits -= costPerTick;
     if (energyTracker.energyUnits <= 0) {

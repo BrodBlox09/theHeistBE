@@ -4,17 +4,17 @@ import DataManager from "./DataManager";
 import Utilities from "./Utilities";
 import GameObjectiveManager from "./GameObjectiveManager";
 import PlayerBustedManager from "./PlayerBustedManager";
-import * as HackingModeFunc from "./gamebands/hacking";
-import * as RechargeModeFunc from "./gamebands/recharge";
-import * as SensorModeFunc from "./gamebands/sensor";
-import * as XRayModeFunc from "./gamebands/xray";
-import * as MagnetModeFunc from "./gamebands/magnet";
-import * as StealthModeFunc from "./gamebands/stealth";
-import * as StunModeFunc from "./gamebands/stun";
-import * as DrillModeFunc from "./gamebands/drill";
 import GamebandManager from "./gamebands/GamebandManager";
 import ActionManager from "./ActionManager";
 import LevelDefinitions from "./levels/LevelDefinitions";
+import { toggleRechargeMode } from "./gamebands/recharge";
+import { tryHackingMode } from "./gamebands/hacking";
+import { toggleSensorMode } from "./gamebands/sensor";
+import { toggleXRayMode } from "./gamebands/xray";
+import { toggleMagnetMode } from "./gamebands/magnet";
+import { toggleStealthMode } from "./gamebands/stealth";
+import { tryStunMode } from "./gamebands/stun";
+import { tryDrillMode } from "./gamebands/drill";
 
 const levelMapHeight = 20;
 const consolesHeight = -15;
@@ -42,49 +42,49 @@ function itemUse(event: ItemUseAfterEvent | ItemStartUseOnAfterEvent) {
 	let keycardType;
 	switch (text) {
 		case "theheist:recharge_mode_lvl_1":
-			RechargeModeFunc.toggleRechargeMode(player, 1);
+			toggleRechargeMode(player, 1);
 			break;
 		case "theheist:recharge_mode_lvl_2":
-			RechargeModeFunc.toggleRechargeMode(player, 2);
+			toggleRechargeMode(player, 2);
 			break;
 		case "theheist:recharge_mode_lvl_3":
-			RechargeModeFunc.toggleRechargeMode(player, 3);
+			toggleRechargeMode(player, 3);
 			break;
 		case "theheist:hacking_mode_lvl_1":
-			HackingModeFunc.tryHackingMode(player, 1);
+			tryHackingMode(player, 1);
 			break;
 		case "theheist:hacking_mode_lvl_2":
-			HackingModeFunc.tryHackingMode(player, 2);
+			tryHackingMode(player, 2);
 			break;
 		case "theheist:hacking_mode_lvl_3":
-			HackingModeFunc.tryHackingMode(player, 3);
+			tryHackingMode(player, 3);
 			break;
 		case "theheist:sensor_mode_lvl_1":
-			SensorModeFunc.toggleSensorMode(player, 1);
+			toggleSensorMode(player, 1);
 			break;
 		case "theheist:sensor_mode_lvl_2":
-			SensorModeFunc.toggleSensorMode(player, 2);
+			toggleSensorMode(player, 2);
 			break;
 		case "theheist:xray_mode_lvl_1":
-			XRayModeFunc.toggleXRayMode(player, 1);
+			toggleXRayMode(player, 1);
 			break;
 		case "theheist:xray_mode_lvl_2":
-			XRayModeFunc.toggleXRayMode(player, 2);
+			toggleXRayMode(player, 2);
 			break;
 		case "theheist:magnet_mode_lvl_1":
-			MagnetModeFunc.toggleMagnetMode(player, 1);
-			break;
+			toggleMagnetMode(player, 1);
+		break;
 		case "theheist:stealth_mode_lvl_1":
-			StealthModeFunc.toggleStealthMode(player, 1);
+			toggleStealthMode(player, 1);
 			break;
 		case "theheist:stealth_mode_lvl_2":
-			StealthModeFunc.toggleStealthMode(player, 2);
+			toggleStealthMode(player, 2);
 			break;
 		case "theheist:stun_mode_lvl_1":
-			StunModeFunc.tryStunMode(player, 1);
+			tryStunMode(player, 1);
 			break;
 		case "theheist:drill_mode_lvl_1":
-			DrillModeFunc.tryDrillMode(player, 1);
+			tryDrillMode(player, 1);
 			break;
 		case "minecraft:red_dye":
 			keycardType = "red"

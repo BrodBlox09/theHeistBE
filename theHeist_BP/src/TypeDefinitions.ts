@@ -1,3 +1,5 @@
+import { Vector3 } from "@minecraft/server";
+
 export interface ModeData {
 	mode: string,
 	level: number
@@ -32,7 +34,7 @@ export interface IActionTracker extends DataNode {
 	"isKeycardReader"?: boolean,
 	"level"?: number,
 	/**
-	 * @description A list of objectives that must be completed before actions can be run.
+	 * A list of objectives that must be completed before actions can be run.
 	 */
 	"prereq"?: IPrerequisiteList
 }
@@ -112,19 +114,19 @@ export interface ILevelCloneInfo {
 	"startZ": number,
 	"endX": number,
 	"endZ": number,
-	"prisonLoc": IVector3,
-	"mapLoc": IVector3
+	"prisonLoc": Vector3,
+	"mapLoc": Vector3
 }
 
 export interface ILevel {
 	/**
-	 * @description This is the bottom-most center of the loading elevator structure
+	 * This is the bottom-most center of the loading elevator structure
 	 */
-	"loadElevatorLoc": IVector3,
+	"loadElevatorLoc": Vector3,
 	/**
-	 * @description This is the location the player will be teleported to after the level has finished loading
+	 * This is the location the player will be teleported to after the level has finished loading
 	 */
-	"startPlayerLoc": IVector3,
+	"startPlayerLoc": Vector3,
 	"startPlayerRot"?: number,
 	"noAutoCleanup"?: boolean,
 	"levelId": string,
@@ -136,39 +138,36 @@ export interface ILevel {
 	"customTitle"?: string,
 	"customLoadingArea"?: {
 		"waitForLoadLevel": boolean,
-		"playerLoadingLocation": IVector3
+		"playerLoadingLocation": Vector3
 	},
 	"playerNoPhone"?: boolean,
 	"timer"?: number,
 	/**
-	 * @description Second in function execution order.
+	 * Second in function execution order.
 	 */
 	"setup": Function,
 	/**
-	 * @description Last in function execution order.
+	 * Last in function execution order.
 	 */
 	"onStart"?: (player: any) => any,
 	/**
-	 * @description First in function execution order.
+	 * First in function execution order.
 	 */
 	"onLoadStart"?: (player: any) => any
 }
 
-export interface IBlockOrientation extends IVector3 {
+/**
+ * Provides both a location and block rotation
+ */
+export interface IBlockOrientation extends Vector3 {
 	"rotation": IBlockRotation
 }
 
 export type IBlockRotation = "north" | "south" | "east" | "west";
 
 export interface IBlockArea {
-	"start": IVector3,
-	"end": IVector3
-}
-
-export interface IVector3 {
-	"x": number,
-	"y": number,
-	"z": number
+	"start": Vector3,
+	"end": Vector3
 }
 
 export interface IObjectiveData {
@@ -182,11 +181,9 @@ export interface IInventorySlotData {
 	"lockMode"?: "none"|"inventory"|"slot"
 }
 
-export interface GamebandDataList extends Record<string, GamebandDataEntry> {}
+export interface GamebandInfo extends Record<number, GamebandLevelInfo> {}
 
-export interface GamebandDataEntry extends Record<number, GamebandLevelData> {}
-
-export interface GamebandLevelData {
+export interface GamebandLevelInfo {
 	"cost": number
 }
 

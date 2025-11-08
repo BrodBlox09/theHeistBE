@@ -9,6 +9,7 @@ import GameObjectiveManager from "./GameObjectiveManager";
 import PlayerBustedManager from "./PlayerBustedManager";
 import LoreItem from "./LoreItem";
 import { PlayerEnergyTracker, LevelInformation } from "./TypeDefinitions";
+import { rechargeModeInfo } from "./gamebands/recharge";
 
 /**
  * Layer information:
@@ -53,7 +54,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 			const levelId = levelDefinition.levelId;
 
 			// Add mandatory data
-			const maxEnergy = Utilities.rechargeGamebandInfo[levelDefinition.rechargeLevel].max;
+			const maxEnergy = rechargeModeInfo[levelDefinition.rechargeLevel].max;
 			const playerEnergyTrackerDataNode: PlayerEnergyTracker = {
 				"name": "playerEnergyTracker",
 				"energyUnits": levelDefinition.startEnergyUnits ?? maxEnergy,

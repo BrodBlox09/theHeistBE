@@ -3,7 +3,7 @@ import DataManager from "./DataManager";
 import Vector from "./Vector";
 import LoreItem from "./LoreItem";
 import { BlockStateSuperset } from "@minecraft/vanilla-data";
-import { RechargeGamebandDataList, GamebandDataList, ILevelCloneInfo, LevelInformation, IInventorySlotData } from "./TypeDefinitions";
+import { LevelInformation, IInventorySlotData } from "./TypeDefinitions";
 
 export default class Utilities {
 	static levelMapHeight = 20;
@@ -14,75 +14,11 @@ export default class Utilities {
 	static cameraHeight = -25;
 	static cameraMappingHeight = -30;
 	static magnetModeMagnetBlocksHeight = -51;
+	static ventHeight = -57;
 	static cameraDisplayHeight = -58;
 	static levelHeight = -60;
 	static SECOND = 20;
 	static dimensions: Record<string, Dimension> = {};
-
-	static rechargeGamebandInfo: RechargeGamebandDataList = {
-		1: {
-			"max": 100.0
-		},
-		2: {
-			"max": 150.0
-		},
-		3: {
-			"max": 200.0
-		}
-	}
-
-	static gamebandInfo: GamebandDataList = {
-		"hackingMode": {
-			1: {
-				"cost": 15.0
-			},
-			2: {
-				"cost": 10.0
-			},
-			3: {
-				"cost": 5.0
-			}
-		},
-		"sensorMode": {
-			1: {
-				"cost": 1.0
-			},
-			2: {
-				"cost": 0.4
-			}
-		},
-		"xrayMode": {
-			1: {
-				"cost": 1.33
-			},
-			2: {
-				"cost": 0.67
-			}
-		},
-		"magnetMode": {
-			1: {
-				"cost": 1.6
-			}
-		},
-		"stealthMode": {
-			1: {
-				"cost": 40
-			},
-			2: {
-				"cost": 10
-			}
-		},
-		"stunMode": {
-			1: {
-				"cost": 10
-			}
-		},
-		"drillMode": {
-			1: {
-				"cost": 30
-			}
-		}
-	}
 
 	static sin(d: number): number {
 		return Math.sin(d * Math.PI / 180);
@@ -155,7 +91,7 @@ export default class Utilities {
 	}
 
 	/**
-	 * @description Saves player's inventory. Ensure this function is run BEFORE whenever you want to enter into a "1 mode only" state.
+	 * Saves player's inventory. Ensure this function is run BEFORE whenever you want to enter into a "1 mode only" state.
 	 * @param player 
 	 * @param stripEnchants Whether or not to remove enchants from all items in the player's inventory
 	 * @returns 

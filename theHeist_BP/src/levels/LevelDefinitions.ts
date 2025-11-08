@@ -19,7 +19,7 @@ export default class LevelDefinitions {
 	}
 
     /**
-     * @description Retrieves the level definition of the desired level
+     * Retrieves the level definition of the desired level
      * @param { string } id The ID of the level desired
      * @throws If the level definition is not found, throws LevelNotFoundError
      */
