@@ -9,13 +9,13 @@ import "./lvl_loader";
 import "./gameband";
 import "./alarm";
 import ActionManager from "./ActionManager";
+import LevelDefinitions from "./levels/LevelDefinitions";
 
 world.afterEvents.playerSpawn.subscribe(eventData => {
 	if (!eventData.initialSpawn || !eventData.player.hasTag('loadingLevel')) return;
 	var levelInfo = DataManager.getData(eventData.player, "levelInformation");
 	if (!levelInfo) return;
-	var gameLevel = levelInfo.information[1].level;
-	system.sendScriptEvent("theheist:load-level", `${gameLevel}`);
+	system.sendScriptEvent("theheist:load-level", `${levelInfo.information[1].levelId}`);
 });
 
 // system.beforeEvents.watchdogTerminate.subscribe((event) => {

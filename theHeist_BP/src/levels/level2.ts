@@ -5,8 +5,17 @@ import { ManageObjectiveAction, ObjectiveManagementType, SlideshowAction } from 
 import { ILevel, BlockRotation } from "../TypeDefinitions";
 
 const level: ILevel = {
-"levelID": "2",
-"loadElevatorLoc": new Vector(0, 0, 0),
+"levelId": "2",
+"noAutoCleanup": true,
+"levelCloneInfo": {
+	"startX": -25,
+	"startZ": 56,
+	"endX": -20,
+	"endZ": 65,
+	"mapLoc": Vector.zero,
+	"prisonLoc": Vector.zero
+},
+"loadElevatorLoc": Vector.zero,
 "startPlayerLoc": new Vector(-22.5, -59, 61.5),
 "startPlayerRot": -90,
 "startingItems": [{ "slot": 0, "typeId": 'theheist:recharge_mode_lvl_1', "lockMode": "slot" }, { "slot": 1, "typeId": 'theheist:hacking_mode_lvl_1', "lockMode": "slot" }],
@@ -15,7 +24,7 @@ const level: ILevel = {
 "startObjectives": [{ "name": "Recharge Gameband", "sortOrder": 1 }, { "name": "Activate Slideshow", "sortOrder": 0 }],
 "customLoadingArea": {
     "waitForLoadLevel": false,
-    "playerLoadingLocation": new Vector(0, 0, 0)
+    "playerLoadingLocation": Vector.zero
 },
 "customTitle": "",
 setup: () => {

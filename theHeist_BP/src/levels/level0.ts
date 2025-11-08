@@ -8,7 +8,15 @@ import LoreItem from "../LoreItem";
 import { ILevel } from "../TypeDefinitions";
 
 const level: ILevel = {
-"levelID": "0",
+"levelId": "0",
+"levelCloneInfo": {
+	"startX": 1975,
+	"startZ": 42,
+	"endX": 2022,
+	"endZ": 77,
+	"prisonLoc": new Vector(2037.5, -59, 59.5),
+	"mapLoc": new Vector(0,0,0)
+},
 "loadElevatorLoc": new Vector(0, 0, 0),
 "customLoadingArea": {
     "waitForLoadLevel": true,

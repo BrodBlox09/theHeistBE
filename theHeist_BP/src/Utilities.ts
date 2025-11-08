@@ -84,65 +84,6 @@ export default class Utilities {
 		}
 	}
 
-	static levelCloneInfo: Record<string, ILevelCloneInfo> = {
-		"0": {
-			"startX": 1975,
-			"startZ": 42,
-			"endX": 2022,
-			"endZ": 77,
-			"prisonLoc": new Vector(2037.5, -59, 59.5),
-			"mapLoc": new Vector(0,0,0)
-		},
-		"-1": {
-			"startX": 3028,
-			"startZ": 97,
-			"endX": 3109,
-			"endZ": 161,
-			"prisonLoc": new Vector(3109.5, -59, 91.5),
-			"mapLoc": new Vector(0,0,0)
-		},
-		"-2": {
-			"startX": 4060,
-			"startZ": 91,
-			"endX": 4133,
-			"endZ": 159,
-			"prisonLoc": new Vector(4075.5, -59, 151.5),
-			"mapLoc": new Vector(4098, -55, 115)
-		},
-		"-3": {
-			"startX": 4963,
-			"startZ": 89,
-			"endX": 5031,
-			"endZ": 182,
-			"prisonLoc": new Vector(5011.5, -59, 151.5),
-			"mapLoc": new Vector(4986, -55, 131)
-		},
-		"-4": {
-			"startX": 5843,
-			"startZ": 99,
-			"endX": 5928,
-			"endZ": 183,
-			"prisonLoc": new Vector(5916.5, -59, 99.5),
-			"mapLoc": new Vector(5906, -55, 141)
-		},
-		"-5": {
-			"startX": 6864,
-			"startZ": 69,
-			"endX": 6948,
-			"endZ": 166,
-			"prisonLoc": new Vector(6966.5, -59, 82.5),
-			"mapLoc": new Vector(6911, -55, 131)
-		},
-		"-6": {
-			"startX": 7872,
-			"startZ": 63,
-			"endX": 7999,
-			"endZ": 191,
-			"prisonLoc": new Vector(7916.5, -59, 94.5),
-			"mapLoc": new Vector(7940, -54, 99)
-		}
-	}
-
 	static sin(d: number): number {
 		return Math.sin(d * Math.PI / 180);
 	}

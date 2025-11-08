@@ -4,7 +4,15 @@ import LevelConstructor from "./LevelConstructor";
 import { ILevel, BlockRotation } from "../TypeDefinitions";
 
 const level: ILevel = {
-"levelID": "-1",
+"levelId": "-1",
+"levelCloneInfo": {
+	"startX": 3028,
+	"startZ": 97,
+	"endX": 3109,
+	"endZ": 161,
+	"prisonLoc": new Vector(3109.5, -59, 91.5),
+	"mapLoc": new Vector(0,0,0)
+},
 "loadElevatorLoc": new Vector(3099, -58, 109),
 "startPlayerLoc": new Vector(3086, -60, 110),
 "startingItems": [{ "slot": 0, "typeId": 'theheist:recharge_mode_lvl_1', "lockMode": "slot" }, { "slot": 1, "typeId": 'theheist:hacking_mode_lvl_1', "lockMode": "slot" }],

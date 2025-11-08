@@ -4,7 +4,8 @@ import * as SensorModeFunc from "./gamebands/sensor";
 import DataManager from "./DataManager";
 import Utilities from "./Utilities";
 import Vector from "./Vector";
-import { LevelInformation, CameraSwivelMode } from "./TypeDefinitions";
+import { LevelInformation, CameraSwivelMode, ILevelCloneInfo } from "./TypeDefinitions";
+import LevelDefinitions from "./levels/LevelDefinitions";
 
 const cameraHeight = Utilities.cameraHeight;
 const cameraMappingHeight = Utilities.cameraMappingHeight;
@@ -25,16 +26,16 @@ system.runInterval(() => {
 	if (player == undefined) return;
 
 	let playerLevelInformationDataNode = DataManager.getData(player, "levelInformation");
-	let level;
-	if (playerLevelInformationDataNode) level = playerLevelInformationDataNode.information[1].level;
-	if (playerLevelInformationDataNode == undefined || level == undefined || level > 0) return;
+	if (!playerLevelInformationDataNode) return;
+	let levelId = playerLevelInformationDataNode.information[1].levelId;
+	let levelDefinition = LevelDefinitions.getLevelDefinitionByID(levelId);
+	if (!levelDefinition) return;
+	let levelCI = levelDefinition.levelCloneInfo;
 
-	updateRobots(player, level);
-	updateCameras(player, level);
-	let levelCI = Utilities.levelCloneInfo[level];
-	Utilities.fillBlocks(new Vector(levelCI.startX, Utilities.cameraMappingHeight - 5, levelCI.startZ), new Vector(levelCI.endX, Utilities.cameraMappingHeight - 5, levelCI.endZ), "air");
-	updateSonars(player, level);
-	updateSonar360s(player, level);
+	updateRobots(player);
+	updateCameras(player, levelCI);
+	updateSonars(player, levelCI);
+	updateSonar360s(player);
 	SensorModeFunc.updateSensorDisplay(player, DataManager.getData(player, "levelInformation")!);
 	updatePlayerAlarmLevel(player, playerLevelInformationDataNode);
 
@@ -123,7 +124,7 @@ function sonarCanSeeThrough(location: Vector): boolean {
 	return false;
 }
 
-function updateRobots(player: Player, level: number) {
+function updateRobots(player: Player) {
 	// Robots take exactly 1 second to turn 90 degrees
 	// Robots move at a speed of 1 blocks per 20 ticks
 	const tpDistance = 0.05;
@@ -215,7 +216,7 @@ function getRotFromWeirdoDir(weirdoDir: number): number {
 	return 0;
 }
 
-function updateCameras(player: Player, level: number) {
+function updateCameras(player: Player, levelCI: ILevelCloneInfo) {
 	const cameraQuery: EntityQueryOptions = {
 		"type": "armor_stand",
 		"location": { 'x': player.location.x, 'y': cameraHeight, 'z': player.location.z },
@@ -298,10 +299,9 @@ function updateCameras(player: Player, level: number) {
 					rayArmorStand.teleport({ "x": armorStand.location.x + -(Utilities.sin(armorStand.getRotation().y) * 0.7), "y": cameraMappingHeight, "z": armorStand.location.z + (Utilities.cos(armorStand.getRotation().y) * 0.7) });
 				}
 			}
-			// Before we save the mapped out camera sight area, make sure we remove the block cache below the camera mapping armor stand if there is one
+			// Before we save the mapped out camera sight area, make sure we remove the block cache below the camera tracker armor stand if there is one
 			Utilities.setBlock({ "x": armorStand.location.x, "y": cameraMappingHeight - 2, "z": armorStand.location.z }, "air");
 		});
-		let levelCI = Utilities.levelCloneInfo[level];
 		Utilities.dimensions.overworld.runCommand(`clone ${levelCI.startX} ${cameraMappingHeight - 2} ${levelCI.startZ} ${levelCI.endX} ${cameraMappingHeight - 2} ${levelCI.endZ} ${levelCI.startX} ${cameraMappingHeight - 3} ${levelCI.startZ}`);
 		Utilities.dimensions.overworld.runCommand(`fill ${levelCI.startX} ${cameraMappingHeight - 2} ${levelCI.startZ} ${levelCI.endX} ${cameraMappingHeight - 2} ${levelCI.endZ} air`);
 	} else {
@@ -321,7 +321,9 @@ function updateCameras(player: Player, level: number) {
 	}
 }
 
-function updateSonars(player: Player, level: number) {
+function updateSonars(player: Player, levelCI: ILevelCloneInfo) {
+	Utilities.fillBlocks(new Vector(levelCI.startX, Utilities.cameraMappingHeight - 5, levelCI.startZ), new Vector(levelCI.endX, Utilities.cameraMappingHeight - 5, levelCI.endZ), "air");
+
 	var sonarQuery: EntityQueryOptions = {
 		"type": "armor_stand",
 		"location": { 'x': player.location.x, 'y': cameraHeight, 'z': player.location.z },
@@ -385,7 +387,7 @@ function updateSonars(player: Player, level: number) {
 	}
 }
 
-function updateSonar360s(player: Player, level: number) {
+function updateSonar360s(player: Player) {
 	var sonarQuery: EntityQueryOptions = {
 		"type": "armor_stand",
 		"location": { 'x': player.location.x, 'y': cameraHeight, 'z': player.location.z },

@@ -64,7 +64,7 @@ export interface LevelInformation extends DataNode {
 		},
 		{
 			"name": "gameLevel",
-			"level": number
+			"levelId": string
 		},
 		{
 			"name": "playerInv",
@@ -136,7 +136,8 @@ export interface ILevel {
 	"startPlayerLoc": IVector3,
 	"startPlayerRot"?: number,
 	"noAutoCleanup"?: boolean,
-	"levelID": string,
+	"levelId": string,
+	"levelCloneInfo": ILevelCloneInfo,
 	"startingItems": Array<IInventorySlotData>,
 	"rechargeLevel": number,
 	"startEnergyUnits"?: number,

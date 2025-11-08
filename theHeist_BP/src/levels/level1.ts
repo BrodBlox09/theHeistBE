@@ -5,7 +5,15 @@ import LevelConstructor from "./LevelConstructor";
 import { ILevel } from "../TypeDefinitions";
 
 const level: ILevel = {
-"levelID": "1",
+"levelId": "1",
+"levelCloneInfo": {
+	"startX": 985,
+	"startZ": 53,
+	"endX": 1040,
+	"endZ": 118,
+	"mapLoc": Vector.zero,
+	"prisonLoc": Vector.zero
+},
 "loadElevatorLoc": new Vector(0, 0, 0),
 "startPlayerLoc": new Vector(1000.5, -59, 57.5),
 "startPlayerRot": 90,

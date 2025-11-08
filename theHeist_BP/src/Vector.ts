@@ -42,4 +42,5 @@ export default class Vector implements Vector3, IVector3 {
 
     static up = new Vector(0, 1, 0);
     static down = new Vector(0, -1, 0);
+	static zero = new Vector(0, 0, 0);
 }
