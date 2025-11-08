@@ -1,9 +1,9 @@
 import { MolangVariableMap, BlockPermutation, EffectTypes, world, system, Player, EntityInventoryComponent, ScoreboardObjective, Container, ItemStack, ItemLockMode, Entity, ItemUseAfterEvent, BlockVolume, EntityEquippableComponent, EquipmentSlot, EntityItemComponent, ItemStartUseOnAfterEvent, EntityQueryOptions } from "@minecraft/server";
 import Vector from "./Vector";
-import DataManager from "./DataManager";
+import DataManager from "./managers/DataManager";
 import Utilities from "./Utilities";
-import GameObjectiveManager from "./GameObjectiveManager";
-import PlayerBustedManager from "./PlayerBustedManager";
+import GameObjectiveManager from "./managers/GameObjectiveManager";
+import PlayerBustedManager from "./managers/PlayerBustedManager";
 import GamebandManager from "./gamebands/GamebandManager";
 import ActionManager from "./actions/ActionManager";
 import LevelDefinitions from "./levels/LevelDefinitions";

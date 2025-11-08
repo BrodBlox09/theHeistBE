@@ -1,7 +1,7 @@
 import { Player, system, world, MolangVariableMap } from "@minecraft/server";
-import GameObjectiveManager from "../GameObjectiveManager";
-import VoiceOverManager from "../VoiceOverManager";
-import DataManager from "../DataManager";
+import GameObjectiveManager from "../managers/GameObjectiveManager";
+import VoiceOverManager from "../managers/VoiceOverManager";
+import DataManager from "../managers/DataManager";
 import Utilities from "../Utilities";
 import Vector from "../Vector";
 import { IAction, IInventorySlotData, PlayerEnergyTracker } from "../TypeDefinitions";

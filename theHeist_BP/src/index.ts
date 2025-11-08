@@ -1,7 +1,7 @@
 import { system, world, Vector3, Player, EntityQueryOptions, BlockVolume, BlockPermutation, GameMode } from "@minecraft/server";
-import VoiceOverManager from "./VoiceOverManager";
-import GameObjectiveManager from "./GameObjectiveManager";
-import DataManager from "./DataManager";
+import VoiceOverManager from "./managers/VoiceOverManager";
+import GameObjectiveManager from "./managers/GameObjectiveManager";
+import DataManager from "./managers/DataManager";
 import Utilities from "./Utilities";
 import Vector from "./Vector";
 import "./customComponents";

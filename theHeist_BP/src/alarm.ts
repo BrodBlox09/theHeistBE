@@ -1,7 +1,7 @@
 import { world, system, GameMode, Player, EntityQueryOptions, MolangVariableMap, BlockComponent, Block } from "@minecraft/server";
 import { solidToTransparent } from "./gamebands/xray";
 import * as SensorModeFunc from "./gamebands/sensor";
-import DataManager from "./DataManager";
+import DataManager from "./managers/DataManager";
 import Utilities from "./Utilities";
 import Vector from "./Vector";
 import { LevelInformation, CameraSwivelMode, ILevelCloneInfo } from "./TypeDefinitions";

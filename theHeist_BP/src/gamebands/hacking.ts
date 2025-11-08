@@ -1,7 +1,7 @@
 import { Player, EntityQueryOptions, system } from "@minecraft/server";
-import DataManager from "../DataManager";
+import DataManager from "../managers/DataManager";
 import Utilities from "../Utilities";
-import GameObjectiveManager from "../GameObjectiveManager";
+import GameObjectiveManager from "../managers/GameObjectiveManager";
 import ActionManager from "../actions/ActionManager";
 import GamebandManager from "./GamebandManager";
 import { ActionTracker, GamebandInfo } from "../TypeDefinitions";

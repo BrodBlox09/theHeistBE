@@ -1,5 +1,5 @@
 import { Entity, world } from '@minecraft/server';
-import { DataNodeReturnType, DataNode } from './TypeDefinitions';
+import { DataNodeReturnType, DataNode } from '../TypeDefinitions';
 
 export default class DataManager {
 	static getData<T extends string>(entity: Entity, dataNodeName: T): DataNodeReturnType<T> | undefined {

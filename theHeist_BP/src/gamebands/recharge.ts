@@ -1,5 +1,5 @@
 import { Player, ItemStack, ItemLockMode } from "@minecraft/server";
-import DataManager from "../DataManager";
+import DataManager from "../managers/DataManager";
 import Utilities from "../Utilities";
 import GamebandManager from "./GamebandManager";
 import Vector from "../Vector";

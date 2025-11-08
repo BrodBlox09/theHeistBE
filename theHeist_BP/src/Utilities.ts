@@ -1,5 +1,5 @@
 import { BlockPermutation, Vector3, Block, world, Player, Container, EntityInventoryComponent, ItemStack, ItemLockMode, BlockVolume, BlockFillOptions, Entity, EntityEquippableComponent, EquipmentSlot, EntityType, Dimension } from "@minecraft/server";
-import DataManager from "./DataManager";
+import DataManager from "./managers/DataManager";
 import Vector from "./Vector";
 import LoreItem from "./LoreItem";
 import { BlockStateSuperset } from "@minecraft/vanilla-data";
