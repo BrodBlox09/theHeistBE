@@ -24,6 +24,14 @@ export default class Vector implements Vector3, IVector3 {
         return new Vector(this.x + oV.x, this.y + oV.y, this.z + oV.z);
     }
 
+	distanceTo(oV: Vector3): number {
+		return Math.sqrt(
+			(this.x - oV.x) ** 2 +
+			(this.y - oV.y) ** 2 +
+			(this.z - oV.z) ** 2
+		);
+	}
+
     /**
      * 
      * @param oV Other vector to subtract
