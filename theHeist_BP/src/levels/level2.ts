@@ -1,7 +1,7 @@
 import Vector from "../Vector";
 import LevelConstructor from "./LevelConstructor";
-import ActionListBuilder from "../actions/ActionListBuilder";
-import { ManageObjectiveAction, ObjectiveManagementType, SlideshowAction } from "../actions/ActionDefinitions";
+import ActionListBuilder from "../ActionListBuilder";
+import { ManageObjectiveAction, ObjectiveManagementType, SlideshowAction } from "../ActionDefinitions";
 import { ILevel, BlockRotation } from "../TypeDefinitions";
 
 const level: ILevel = {
