@@ -14,7 +14,7 @@ export default class Utilities {
 	static cameraHeight = -25;
 	static cameraMappingHeight = -30;
 	static magnetModeMagnetBlocksHeight = -51;
-	static cameraDisplayHeight = -57;
+	static cameraDisplayHeight = -58;
 	static levelHeight = -60;
 	static SECOND = 20;
 	static dimensions: Record<string, Dimension> = {};
