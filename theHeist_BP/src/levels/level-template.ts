@@ -1,10 +1,18 @@
-import BlockRotation from "../BlockRotation";
 import Vector from "../Vector";
 import Utilities from "../Utilities";
 import LevelConstructor from "./LevelConstructor";
+import { ILevel, BlockRotation } from "../TypeDefinitions";
 
 const level: ILevel = {
-"levelID": "X",
+"levelId": "X",
+"levelCloneInfo": {
+	"startX": 0,
+	"startZ": 0,
+	"endX": 0,
+	"endZ": 0,
+	"mapLoc": Vector.zero,
+	"prisonLoc": Vector.zero
+},
 "loadElevatorLoc": new Vector(0, 0, 0),
 "startPlayerLoc": new Vector(0, 0, 0),
 "startingItems": [],

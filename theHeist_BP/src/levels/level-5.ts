@@ -1,10 +1,18 @@
-import BlockRotation from "../BlockRotation";
 import Vector from "../Vector";
 import Utilities from "../Utilities";
 import LevelConstructor from "./LevelConstructor";
+import { ILevel, BlockRotation } from "../TypeDefinitions";
 
 const level: ILevel = {
-"levelID": "-5",
+"levelId": "-5",
+"levelCloneInfo": {
+	"startX": 6864,
+	"startZ": 69,
+	"endX": 6948,
+	"endZ": 166,
+	"prisonLoc": new Vector(6966.5, -59, 82.5),
+	"mapLoc": new Vector(6911, -55, 131)
+},
 "loadElevatorLoc": new Vector(6912, -49, 162),
 "startPlayerLoc": new Vector(6912, -60, 162),
 "startingItems": [{ "slot": 0, "typeId": 'theheist:recharge_mode_lvl_3', "lockMode": "slot" }, { "slot": 1, "typeId": 'theheist:hacking_mode_lvl_2', "lockMode": "slot" }, { "slot": 2, "typeId": 'theheist:sensor_mode_lvl_2', "lockMode": "slot" }, { "slot": 3, "typeId": 'theheist:xray_mode_lvl_2', "lockMode": "slot" }, { "slot": 4, "typeId": 'theheist:magnet_mode_lvl_1', "lockMode": "slot" }, { "slot": 5, "typeId": 'theheist:stealth_mode_lvl_1', "lockMode": "slot" }, { "slot": 6, "typeId": 'theheist:stun_mode_lvl_1', "lockMode": "slot" }],

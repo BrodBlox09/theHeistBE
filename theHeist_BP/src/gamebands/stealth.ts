@@ -3,6 +3,7 @@ import DataManager from "../DataManager";
 import Utilities from "../Utilities";
 import Vector from "../Vector";
 import GamebandManager from "./GamebandManager";
+import { LevelInformation, PlayerEnergyTracker } from "../TypeDefinitions";
 
 export function toggleStealthMode(player: Player, lvl: number) {
     var levelInformation = DataManager.getData(player, "levelInformation")!;
@@ -23,8 +24,8 @@ function tryStartStealthMode(player: Player, lvl: number, levelInformation: Leve
     }
 
     levelInformation.currentMode = { "mode": "stealth", "level": lvl };
-    levelInformation.information[2].inventory = levelInformation.information[2].inventory.filter((s) => (s.slot != 5));
-    levelInformation.information[2].inventory.push({ "slot": 5, "typeId": `theheist:stealth_mode_lvl_${lvl}_enchanted`, "lockMode": "slot" });
+    levelInformation.playerInventory = levelInformation.playerInventory.filter((s) => (s.slot != 5));
+    levelInformation.playerInventory.push({ "slot": 5, "typeId": `theheist:stealth_mode_lvl_${lvl}_enchanted`, "lockMode": "slot" });
     DataManager.setData(player, levelInformation);
     Utilities.reloadPlayerInv(player, levelInformation);
     player.playSound("mob.zombie.unfect", { "pitch": 1 });
@@ -34,8 +35,8 @@ function endStealthMode(player: Player, levelInformation: LevelInformation) {
     if (!playerIsInStealthMode(levelInformation)) return;
     var stealthModeData = levelInformation.currentMode!;
     levelInformation.currentMode = null;
-    levelInformation.information[2].inventory = levelInformation.information[2].inventory.filter((x) => x.slot != 5);
-    levelInformation.information[2].inventory.push({ "slot": 5, "typeId": `theheist:stealth_mode_lvl_${stealthModeData.level}`, "lockMode": "slot" });
+    levelInformation.playerInventory = levelInformation.playerInventory.filter((x) => x.slot != 5);
+    levelInformation.playerInventory.push({ "slot": 5, "typeId": `theheist:stealth_mode_lvl_${stealthModeData.level}`, "lockMode": "slot" });
     DataManager.setData(player, levelInformation);
     Utilities.reloadPlayerInv(player, levelInformation);
     player.playSound("mob.zombie.unfect", { "pitch": 2 });

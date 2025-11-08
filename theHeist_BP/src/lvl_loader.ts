@@ -4,10 +4,11 @@ import Utilities from "./Utilities";
 import DataManager from "./DataManager";
 import VoiceOverManager from "./VoiceOverManager";
 import LevelConstructor from "./levels/LevelConstructor";
-import LevelDefinitions from "./levels/levelDefinitions";
+import LevelDefinitions from "./levels/LevelDefinitions";
 import GameObjectiveManager from "./GameObjectiveManager";
 import PlayerBustedManager from "./PlayerBustedManager";
 import LoreItem from "./LoreItem";
+import { PlayerEnergyTracker, LevelInformation } from "./TypeDefinitions";
 
 /**
  * Layer information:
@@ -17,13 +18,6 @@ import LoreItem from "./LoreItem";
  * -10: Cameras, sonars, and robots
  * -15: Cameras and sonars mappout area
  */
-
-const levelMapHeight = 20;
-const consolesHeight = -15;
-const rechargeHeight = -20;
-const cameraHeight = -25;
-const cameraMappingHeight = -30;
-const levelHeight = -60;
 
 // Second in ticks
 const SECOND = 20;
@@ -56,17 +50,31 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 			// Get level definition
 			const levelDefinition = LevelDefinitions.getLevelDefinitionByID(msg);
 			if (levelDefinition == undefined) return;
-			const levelNum = parseInt(levelDefinition.levelID.substring(0, levelDefinition.levelID.length));
+			const levelId = levelDefinition.levelId;
 
 			// Add mandatory data
 			const maxEnergy = Utilities.rechargeGamebandInfo[levelDefinition.rechargeLevel].max;
-			const playerEnergyTrackerDataNode: PlayerEnergyTracker = { "name": "playerEnergyTracker", "energyUnits": levelDefinition.startEnergyUnits ?? maxEnergy, "recharging": false, "usingRechargerID": -1, "rechargeLevel": levelDefinition.rechargeLevel };
+			const playerEnergyTrackerDataNode: PlayerEnergyTracker = {
+				"name": "playerEnergyTracker",
+				"energyUnits": levelDefinition.startEnergyUnits ?? maxEnergy,
+				"recharging": false, "usingRechargerID": -1,
+				"rechargeLevel": levelDefinition.rechargeLevel
+			};
 			DataManager.setData(player, playerEnergyTrackerDataNode);
 
-			const playerLevelInformationDataNode: LevelInformation = { "name": "levelInformation", "currentMode": null, "information": [{ "name": "alarmLevel", "level": 0, "sonarTimeout": 0 }, { "name": "gameLevel", "level": levelNum }, { "name": "playerInv", "inventory": [] }] };
+			const playerLevelInformationDataNode: LevelInformation = {
+				"name": "levelInformation",
+				"currentMode": null,
+				"alarmLevelInfo": {
+					"level": 0,
+					"sonarTimeout": 0
+				},
+				"levelId": levelId,
+				"playerInventory": []
+			};
 			if (!levelDefinition.playerNoPhone) levelDefinition.startingItems.push({ "slot": 9, "typeId": 'theheist:phone' });
 			levelDefinition.startingItems.forEach((item) => {
-				playerLevelInformationDataNode.information[2].inventory.push(item);
+				playerLevelInformationDataNode.playerInventory.push(item);
 			});
 			DataManager.setData(player, playerLevelInformationDataNode);
 			Utilities.reloadPlayerInv(player, playerLevelInformationDataNode);
@@ -79,7 +87,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 
 			var elevatorInterval: number;
 			var waitForLoadLevel = true;
-			if (levelDefinition.customTitle == undefined) player.onScreenDisplay.setTitle(`§o§7Level ${levelNum}`, { "fadeInDuration": 20, "fadeOutDuration": 20, "stayDuration": 160 });
+			if (levelDefinition.customTitle == undefined) player.onScreenDisplay.setTitle(`§o§7Level ${levelId}`, { "fadeInDuration": 20, "fadeOutDuration": 20, "stayDuration": 160 });
 			else if (levelDefinition.customTitle != "") player.onScreenDisplay.setTitle(levelDefinition.customTitle, { "fadeInDuration": 20, "fadeOutDuration": 20, "stayDuration": 160 });
 			if (!levelDefinition.customLoadingArea) {
 				player.teleport(Vector.from(levelDefinition.loadElevatorLoc).add(new Vector(0, 4, 0)), { rotation: player.getRotation() });
@@ -88,7 +96,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 				player.teleport(levelDefinition.customLoadingArea.playerLoadingLocation, { rotation: player.getRotation() });
 			} else waitForLoadLevel = false;
 
-			const levelCloneInfo = Utilities.levelCloneInfo[levelNum];
+			const levelCloneInfo = levelDefinition.levelCloneInfo;
 			// Ensure parts far away are loaded
 			Utilities.dimensions.overworld.runCommand('tickingarea remove_all');
 			if (levelCloneInfo) system.runTimeout(() => {

@@ -7,6 +7,7 @@ import * as MagnetModeFunc from "./magnet";
 import * as StealthModeFunc from "./stealth";
 import * as StunModeFunc from "./stun";
 import * as DrillModeFunc from "./drill";
+import { LevelInformation, PlayerEnergyTracker, ModeData } from "../TypeDefinitions";
 
 export default class GamebandManager {
 	static tickAllGamebands(player: Player, playerLevelInformation: LevelInformation, playerEnergyTracker: PlayerEnergyTracker) {

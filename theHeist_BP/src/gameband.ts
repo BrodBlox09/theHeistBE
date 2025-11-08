@@ -14,6 +14,7 @@ import * as StunModeFunc from "./gamebands/stun";
 import * as DrillModeFunc from "./gamebands/drill";
 import GamebandManager from "./gamebands/GamebandManager";
 import ActionManager from "./ActionManager";
+import LevelDefinitions from "./levels/LevelDefinitions";
 
 const levelMapHeight = 20;
 const consolesHeight = -15;
@@ -130,28 +131,36 @@ function keycard(keycardType: string, player: Player) {
 	DataManager.setData(armorStand, actionTracker);
 }
 
-function playerBusted(player: Player, currentLevel: number) {
+function playerBusted(player: Player, levelId: string) {
+	let levelDefinition = LevelDefinitions.getLevelDefinitionByID(levelId);
+	if (!levelDefinition) {
+		console.warn("Player busted but no level definition to determine prison location.");
+		return;
+	}
+	let levelCI = levelDefinition.levelCloneInfo;
+
 	player.addTag('loadingLevel');
-	var playerLevelInformation = DataManager.getData(player, "levelInformation")!;
+	let playerLevelInformation = DataManager.getData(player, "levelInformation")!;
 	PlayerBustedManager.playerBusted(player);
-	playerLevelInformation.information[0].level = 0;
-	playerLevelInformation.information[2].inventory = [];
+	playerLevelInformation.alarmLevelInfo.level = 0;
+	playerLevelInformation.playerInventory = [];
 	DataManager.setData(player, playerLevelInformation);
-	var playerEnergyTracker = DataManager.getData(player, "playerEnergyTracker")!;
+	let playerEnergyTracker = DataManager.getData(player, "playerEnergyTracker")!;
 	playerEnergyTracker.energyUnits = 0;
 	DataManager.setData(player, playerEnergyTracker);
+
 	player.playSound("map.alarm");
 	player.addTag("BUSTED");
 	player.onScreenDisplay.setTitle("§r§e§lBusted", { "subtitle": "You got detected. Try again!", "fadeInDuration": 20, "fadeOutDuration": 20, "stayDuration": 160 });
 	player.getComponent("inventory")!.container?.clearAll();
 	system.runTimeout(() => {
 		stopAllSound();
-		player.teleport(Utilities.levelCloneInfo[currentLevel].prisonLoc);
+		player.teleport(levelCI.prisonLoc);
 		player.sendMessage(`You got busted §c§l${PlayerBustedManager.getTimesBustedFromPlayer(player)}§r time(s)`);
 	}, Utilities.SECOND * 3);
 	system.runTimeout(() => {
 		player.removeTag("BUSTED");
-		system.sendScriptEvent("theheist:load-level", `${currentLevel}`);
+		system.sendScriptEvent("theheist:load-level", `${levelId}`);
 	}, Utilities.SECOND * (3 + 5));
 }
 
@@ -208,7 +217,7 @@ system.runInterval(() => {
 			var droppedItemTID = itemEntity.getComponent("item")!.itemStack.typeId;
 			itemEntity.remove();
 			if (droppedItemTID == "theheist:phone") {
-				playerBusted(player, playerLevelInformation.information[1].level);
+				playerBusted(player, playerLevelInformation.levelId);
 			} else if (droppedItemTID == "theheist:nv_glasses") {
 				Utilities.reloadPlayerInv(player, playerLevelInformation);
 			}
@@ -242,19 +251,19 @@ system.runInterval(() => {
 		GamebandManager.tickAllGamebands(player, playerLevelInformation, playerEnergyTracker);
 
 	// Check to see if XP bar display needs to be updated
-	if ((playerEnergyTracker && playerEnergyTracker.energyUnits != player.level) || (playerLevelInformation && player.xpEarnedAtCurrentLevel != ((((playerLevelInformation.information[0].level / 100) - 0.06) * 742) + 41))) {
+	if ((playerEnergyTracker && playerEnergyTracker.energyUnits != player.level) || (playerLevelInformation && player.xpEarnedAtCurrentLevel != ((((playerLevelInformation.alarmLevelInfo.level / 100) - 0.06) * 742) + 41))) {
 		player.resetLevel();
 		player.addLevels(100);
 		// 9 * 100 - 158 = 742 (The total amount of XP you need to go from level 100 to 101)
-		//var alarmLvlXpVal = (playerLevelInformation.information[0].level / 100) * 742;
-		var alarmLvlXpVal = (((playerLevelInformation.information[0].level / 100) - 0.06) * 742) + 41;
+		//var alarmLvlXpVal = (playerLevelInformation.alarmLevelInfo.level / 100) * 742;
+		var alarmLvlXpVal = (((playerLevelInformation.alarmLevelInfo.level / 100) - 0.06) * 742) + 41;
 		player.addExperience(alarmLvlXpVal);
 		player.addLevels(-100);
 		player.addLevels(Math.floor(playerEnergyTracker.energyUnits));
 		// Bust player if they have an alarm level that is too high
-		if (playerLevelInformation.information[0].level >= 100) {
+		if (playerLevelInformation.alarmLevelInfo.level >= 100) {
 			// Player is busted
-			playerBusted(player, playerLevelInformation.information[1].level);
+			playerBusted(player, playerLevelInformation.levelId);
 		}
 	}
 });
