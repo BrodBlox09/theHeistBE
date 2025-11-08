@@ -3,7 +3,7 @@ import DataManager from "../DataManager";
 import Utilities from "../Utilities";
 import Vector from "../Vector";
 import GamebandManager from "./GamebandManager";
-import { LevelInformation, PlayerEnergyTracker } from "../TypeDefinitions";
+import { GamebandInfo, LevelInformation, PlayerEnergyTracker } from "../TypeDefinitions";
 
 const viewRange = 2;
 const clearRange = 4;
@@ -13,6 +13,15 @@ export const solidToTransparent = [
     { "solid": "minecraft:hardened_clay", "transparent": "minecraft:brown_stained_glass" },
     { "solid": "minecraft:polished_andesite", "transparent": "minecraft:light_gray_stained_glass", "minLevel": 2 }
 ];
+
+export const xrayModeInfo: GamebandInfo = {
+	1: {
+		"cost": 1.33
+	},
+	2: {
+		"cost": 0.67
+	}
+};
 
 export function toggleXRayMode(player: Player, lvl: number) {
     var levelInformation: LevelInformation = DataManager.getData(player, "levelInformation")!;
@@ -24,7 +33,7 @@ function tryStartXRayMode(player: Player, lvl: number, levelInformation: LevelIn
     GamebandManager.cancelMode(player, levelInformation.currentMode);
     levelInformation = DataManager.getData(player, "levelInformation")!;
     
-    var costPerSecond = Utilities.gamebandInfo.xrayMode[lvl].cost;
+    var costPerSecond = xrayModeInfo[lvl].cost;
     var costPerTick = costPerSecond / 20;
     var energyTracker = DataManager.getData(player, "playerEnergyTracker")!;
     if (energyTracker.energyUnits < costPerTick) {
@@ -58,7 +67,7 @@ export function xrayTick(player: Player, levelInformation: LevelInformation, ene
     if (!playerIsInXRayMode(levelInformation)) return;
     var xrayModeData = levelInformation.currentMode!;
     // Player is currently in xray mode
-    var costPerSecond = Utilities.gamebandInfo.xrayMode[xrayModeData.level].cost;
+    var costPerSecond = xrayModeInfo[xrayModeData.level].cost;
     var costPerTick = costPerSecond / 20;
     energyTracker.energyUnits -= costPerTick;
     if (energyTracker.energyUnits <= 0) {
