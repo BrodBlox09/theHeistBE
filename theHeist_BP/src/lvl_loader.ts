@@ -19,13 +19,6 @@ import { PlayerEnergyTracker, LevelInformation } from "./TypeDefinitions";
  * -15: Cameras and sonars mappout area
  */
 
-const levelMapHeight = 20;
-const consolesHeight = -15;
-const rechargeHeight = -20;
-const cameraHeight = -25;
-const cameraMappingHeight = -30;
-const levelHeight = -60;
-
 // Second in ticks
 const SECOND = 20;
 
