@@ -10,6 +10,7 @@ import "./gameband";
 import "./alarm";
 import ActionManager from "./ActionManager";
 import LevelDefinitions from "./levels/LevelDefinitions";
+import { LevelNotFoundError } from "./levels/LevelDefinitions";
 
 world.afterEvents.playerSpawn.subscribe(eventData => {
 	if (!eventData.initialSpawn || !eventData.player.hasTag('loadingLevel')) return;
@@ -17,23 +18,6 @@ world.afterEvents.playerSpawn.subscribe(eventData => {
 	if (!levelInfo) return;
 	system.sendScriptEvent("theheist:load-level", `${levelInfo.information[1].levelId}`);
 });
-
-// system.beforeEvents.watchdogTerminate.subscribe((event) => {
-// 	event.cancel = true;
-// });
-
-const levelLocations: Record<string, Vector3> = {
-	"3": { 'x': 0.5, 'y': -50, 'z': 56.5 },
-	"2": { 'x': -22.5, 'y': -50, 'z': 56.5 },
-	"1": { 'x': 1000.5, 'y': -50, 'z': 56.5 },
-	"0": { 'x': 2000.5, 'y': -50, 'z': 56.5 },
-	"-1": {'x': 3075.5, 'y': -50, 'z': 100.5},
-	"-2": { 'x': 4101, 'y': -47, 'z': 131 },
-	"-3": { 'x': 4996, 'y': -44, 'z': 126 },
-	"-4": { 'x': 5893, 'y': -44, 'z': 129 },
-	"-5": { 'x': 6939, 'y': -54, 'z': 71 },
-	"-6": { 'x': 7939, 'y': -54, 'z': 71 }
-}
 
 system.afterEvents.scriptEventReceive.subscribe(event => { // stable-friendly version of world.beforeEvents.chatSend
 	if (event.id != "theheist:run_cmd") return;
@@ -48,11 +32,11 @@ system.afterEvents.scriptEventReceive.subscribe(event => { // stable-friendly ve
 	const cmd = args.shift();
 	switch (cmd) {
 		case "lvlTp":
-			if (levelLocations.hasOwnProperty(args[0]))
-				system.run(() => {
-					player.teleport(levelLocations[args[0]], { 'dimension': world.getDimension("overworld") });
-				});
-			else player.sendMessage(`§4The level ${args[0]} does not exist.`);
+			let levelDefinition = LevelDefinitions.getLevelDefinitionByID(args[0]);
+			if (!levelDefinition) { player.sendMessage(`§4No level with level ID '${args[0]}' exists.`); return; }
+			system.run(() => {
+				player.teleport(Vector.from(levelDefinition!.levelCloneInfo.mapLoc).above(), { 'dimension': world.getDimension("overworld") });
+			});
 			break;
 		case "tellRot":
 			const xRot = player.getRotation().x;

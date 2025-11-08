@@ -11,7 +11,7 @@ const level: ILevel = {
 	"endX": 3109,
 	"endZ": 161,
 	"prisonLoc": new Vector(3109.5, -59, 91.5),
-	"mapLoc": new Vector(0,0,0)
+	"mapLoc": new Vector(3109, -55, 91)
 },
 "loadElevatorLoc": new Vector(3099, -58, 109),
 "startPlayerLoc": new Vector(3086, -60, 110),

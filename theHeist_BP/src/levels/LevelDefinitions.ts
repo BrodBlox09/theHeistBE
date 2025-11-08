@@ -21,17 +21,16 @@ export default class LevelDefinitions {
     /**
      * @description Retrieves the level definition of the desired level
      * @param { string } id The ID of the level desired
-     * @throws If the level definition is not found, throws Error
+     * @throws If the level definition is not found, throws LevelNotFoundError
      */
     static getLevelDefinitionByID(id: string): ILevel | undefined {
-        // var selectedLevelDef = levels.find((levelDef) => levelDef.levelId == id);
         var selectedLevelDef = levels[id];
         if (!selectedLevelDef) throw new LevelNotFoundError(`No level of such ID '${id}' exists.`);
         return selectedLevelDef;
     }
 }
 
-class LevelNotFoundError implements Error {
+export class LevelNotFoundError implements Error {
     name: string = "Level Not Found Error";
 
     constructor(public message: string) {
@@ -39,7 +38,7 @@ class LevelNotFoundError implements Error {
     }
 }
 
-class LevelOverwriteAttemptedError implements Error {
+export class LevelOverwriteAttemptedError implements Error {
 	name: string = "Level Overwrite Attempted Error";
 
 	constructor(public message: string) {

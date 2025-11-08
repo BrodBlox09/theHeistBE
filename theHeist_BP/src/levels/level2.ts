@@ -12,7 +12,7 @@ const level: ILevel = {
 	"startZ": 56,
 	"endX": -20,
 	"endZ": 65,
-	"mapLoc": Vector.zero,
+	"mapLoc": new Vector(-25, -50, 56),
 	"prisonLoc": Vector.zero
 },
 "loadElevatorLoc": Vector.zero,
