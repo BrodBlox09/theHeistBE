@@ -13,20 +13,6 @@
 			}
 		]
 	},
-	"cursor_renderer": {
-		"bindings": [
-			{
-				"binding_name": "#hud_title_text_string",
-				"binding_name_override": "#text",
-				"binding_type": "global"
-			},
-			{
-				"binding_type": "view",
-				"source_property_name": "(not (#text = 'hideHud'))",
-				"target_property_name": "#visible"
-			}
-		]
-	},
 	"centered_gui_elements": {
 		"bindings": [
 			{
@@ -68,6 +54,20 @@
 				"hud_title_text": "centered_gui_elements_at_bottom_middle@hud.centered_gui_elements_at_bottom_middle"
 			}
 		}
+	},
+	"root_panel/curor_rend": {
+		"bindings": [
+			{
+				"binding_name": "#hud_title_text_string",
+				"binding_name_override": "#text",
+				"binding_type": "global"
+			},
+			{
+				"binding_type": "view",
+				"source_property_name": "(not (#text = 'hideHud'))",
+				"target_property_name": "#visible"
+			}
+		]
 	},
 	"root_panel": {
 		"bindings": [
