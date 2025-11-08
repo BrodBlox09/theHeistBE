@@ -181,11 +181,9 @@ export interface IInventorySlotData {
 	"lockMode"?: "none"|"inventory"|"slot"
 }
 
-export interface GamebandDataList extends Record<string, GamebandDataEntry> {}
+export interface GamebandInfo extends Record<number, GamebandLevelInfo> {}
 
-export interface GamebandDataEntry extends Record<number, GamebandLevelData> {}
-
-export interface GamebandLevelData {
+export interface GamebandLevelInfo {
 	"cost": number
 }
 

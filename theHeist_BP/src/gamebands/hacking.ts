@@ -4,8 +4,19 @@ import Utilities from "../Utilities";
 import GameObjectiveManager from "../GameObjectiveManager";
 import ActionManager from "../ActionManager";
 import GamebandManager from "./GamebandManager";
-import { ActionTracker } from "../TypeDefinitions";
+import { ActionTracker, GamebandInfo } from "../TypeDefinitions";
 
+export const hackingModeInfo: GamebandInfo = {
+	1: {
+		"cost": 15.0
+	},
+	2: {
+		"cost": 10.0
+	},
+	3: {
+		"cost": 5.0
+	}
+};
 
 export function tryHackingMode(player: Player, lvl: number) {
 	let levelInformation = DataManager.getData(player, "levelInformation")!;
@@ -27,7 +38,7 @@ export function tryHackingMode(player: Player, lvl: number) {
 			consolesAttempted++;
 			
 			if (armorStandActionTracker.level <= lvl) {
-				if (Utilities.gamebandInfo.hackingMode[lvl].cost > playerEnergyTracker.energyUnits) {
+				if (hackingModeInfo[lvl].cost > playerEnergyTracker.energyUnits) {
 					errorMessage = "Not enough energy!";
 					continue;
 				}
@@ -38,7 +49,7 @@ export function tryHackingMode(player: Player, lvl: number) {
 					}
 				}
 				player.playSound('map.hack_use');
-				if (armorStandActionTracker.level != 0) playerEnergyTracker.energyUnits -= Utilities.gamebandInfo.hackingMode[lvl].cost;
+				if (armorStandActionTracker.level != 0) playerEnergyTracker.energyUnits -= hackingModeInfo[lvl].cost;
 				DataManager.setData(player, playerEnergyTracker);
 				ActionManager.runActions(armorStandActionTracker.actions, player);
 				// Player hacked the device, now disable it

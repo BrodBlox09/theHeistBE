@@ -20,7 +20,7 @@ export default class Utilities {
 	static SECOND = 20;
 	static dimensions: Record<string, Dimension> = {};
 
-	static gamebandInfo: GamebandDataList = {
+	/* static gamebandInfo: GamebandDataList = {
 		"hackingMode": {
 			1: {
 				"cost": 15.0
@@ -71,7 +71,7 @@ export default class Utilities {
 				"cost": 30
 			}
 		}
-	}
+	} */
 
 	static sin(d: number): number {
 		return Math.sin(d * Math.PI / 180);
