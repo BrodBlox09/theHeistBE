@@ -140,7 +140,7 @@ export default class Utilities {
 		if (levelData == null) levelData = DataManager.getData(player, "levelInformation")!;
 		const playerInvContainer = player.getComponent("inventory")!.container;
 		playerInvContainer.clearAll();
-		const playerInvData = levelData.information[2].inventory; // Array of player inventory slots
+		const playerInvData = levelData.playerInventory; // Array of player inventory slots
 		playerInvData.forEach((invSlotData: IInventorySlotData) => {
 			const typeId = invSlotData.typeId;
 			const itemStack: ItemStack = new ItemStack(typeId);
@@ -176,7 +176,7 @@ export default class Utilities {
 				});
 			}
 		}
-		playerLevelData.information[2].inventory = newPlayerInvData;
+		playerLevelData.playerInventory = newPlayerInvData;
 		// Update player information
 		DataManager.setData(player, playerLevelData);
 		return playerLevelData;

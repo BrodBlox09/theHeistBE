@@ -142,8 +142,8 @@ function playerBusted(player: Player, levelId: string) {
 	player.addTag('loadingLevel');
 	let playerLevelInformation = DataManager.getData(player, "levelInformation")!;
 	PlayerBustedManager.playerBusted(player);
-	playerLevelInformation.information[0].level = 0;
-	playerLevelInformation.information[2].inventory = [];
+	playerLevelInformation.alarmLevelInfo.level = 0;
+	playerLevelInformation.playerInventory = [];
 	DataManager.setData(player, playerLevelInformation);
 	let playerEnergyTracker = DataManager.getData(player, "playerEnergyTracker")!;
 	playerEnergyTracker.energyUnits = 0;
@@ -217,7 +217,7 @@ system.runInterval(() => {
 			var droppedItemTID = itemEntity.getComponent("item")!.itemStack.typeId;
 			itemEntity.remove();
 			if (droppedItemTID == "theheist:phone") {
-				playerBusted(player, playerLevelInformation.information[1].levelId);
+				playerBusted(player, playerLevelInformation.levelId);
 			} else if (droppedItemTID == "theheist:nv_glasses") {
 				Utilities.reloadPlayerInv(player, playerLevelInformation);
 			}
@@ -251,19 +251,19 @@ system.runInterval(() => {
 		GamebandManager.tickAllGamebands(player, playerLevelInformation, playerEnergyTracker);
 
 	// Check to see if XP bar display needs to be updated
-	if ((playerEnergyTracker && playerEnergyTracker.energyUnits != player.level) || (playerLevelInformation && player.xpEarnedAtCurrentLevel != ((((playerLevelInformation.information[0].level / 100) - 0.06) * 742) + 41))) {
+	if ((playerEnergyTracker && playerEnergyTracker.energyUnits != player.level) || (playerLevelInformation && player.xpEarnedAtCurrentLevel != ((((playerLevelInformation.alarmLevelInfo.level / 100) - 0.06) * 742) + 41))) {
 		player.resetLevel();
 		player.addLevels(100);
 		// 9 * 100 - 158 = 742 (The total amount of XP you need to go from level 100 to 101)
-		//var alarmLvlXpVal = (playerLevelInformation.information[0].level / 100) * 742;
-		var alarmLvlXpVal = (((playerLevelInformation.information[0].level / 100) - 0.06) * 742) + 41;
+		//var alarmLvlXpVal = (playerLevelInformation.alarmLevelInfo.level / 100) * 742;
+		var alarmLvlXpVal = (((playerLevelInformation.alarmLevelInfo.level / 100) - 0.06) * 742) + 41;
 		player.addExperience(alarmLvlXpVal);
 		player.addLevels(-100);
 		player.addLevels(Math.floor(playerEnergyTracker.energyUnits));
 		// Bust player if they have an alarm level that is too high
-		if (playerLevelInformation.information[0].level >= 100) {
+		if (playerLevelInformation.alarmLevelInfo.level >= 100) {
 			// Player is busted
-			playerBusted(player, playerLevelInformation.information[1].levelId);
+			playerBusted(player, playerLevelInformation.levelId);
 		}
 	}
 });

@@ -16,26 +16,26 @@ export function tryMap(player: Player, levelInformation: LevelInformation, playe
 	const playerRotX = player.getRotation().x;
     let playerIsLookingDown = true;
 	if (!(playerRotX < 90 && playerRotX > 80)) playerIsLookingDown = false; // Player is not looking down
-    let slotTwos = levelInformation.information[2].inventory.filter((slot) => slot.slot == 2);
+    let slotTwos = levelInformation.playerInventory.filter((slot) => slot.slot == 2);
     if (!slotTwos) return;
     let sensorModeSlot = slotTwos[slotTwos.length - 1]; // Get last item of slot 2
     if (!sensorModeSlot) return;
     let typeId = sensorModeSlot.typeId;
     if (playerIsLookingDown && typeId.startsWith("theheist:sensor_mode_lvl_") && parseInt(typeId.charAt("theheist:sensor_mode_lvl_".length)) >= 2) { // Player does have a lvl 2 or greater sensor mode
         let playerInvContainer = player.getComponent("minecraft:inventory")?.container;
-		let levelDefinition = LevelDefinitions.getLevelDefinitionByID(levelInformation.information[1].levelId);
+		let levelDefinition = LevelDefinitions.getLevelDefinitionByID(levelInformation.levelId);
 		if (!levelDefinition) return;
         let map = Utilities.dimensions.overworld.getBlock(levelDefinition.levelCloneInfo.mapLoc)?.getComponent("minecraft:inventory")?.container?.getItem(0);
         if (!map) return;
         map.lockMode = ItemLockMode.slot;
         playerInvContainer?.setItem(2, map);
-        levelInformation.information[2].inventory.push({ "slot": 2, "typeId": `minecraft:filled_map`, "lockMode": "slot" });
+        levelInformation.playerInventory.push({ "slot": 2, "typeId": `minecraft:filled_map`, "lockMode": "slot" });
         DataManager.setData(player, levelInformation);
     } else if (!playerIsLookingDown && typeId == "minecraft:filled_map") { // Clear map
         let playerInvContainer = player.getComponent("minecraft:inventory")?.container;
-        levelInformation.information[2].inventory = levelInformation.information[2].inventory.filter((s) => (s.typeId != "minecraft:filled_map"));
+        levelInformation.playerInventory = levelInformation.playerInventory.filter((s) => (s.typeId != "minecraft:filled_map"));
         DataManager.setData(player, levelInformation);
-        let sensorModeSlotData = levelInformation.information[2].inventory.find((x) => (x.slot == 2))!;
+        let sensorModeSlotData = levelInformation.playerInventory.find((x) => (x.slot == 2))!;
         let itemStack = new ItemStack(sensorModeSlotData.typeId);
         itemStack.lockMode = ItemLockMode.slot;
 		LoreItem.setLoreOfItemStack(itemStack);
@@ -62,8 +62,8 @@ function tryStartSensorMode(player: Player, lvl: number, levelInformation: Level
     }
 
     levelInformation.currentMode = { "mode": "sensor", "level": lvl };
-    levelInformation.information[2].inventory = levelInformation.information[2].inventory.filter((s) => (s.slot != 2));
-    levelInformation.information[2].inventory.push({ "slot": 2, "typeId": `theheist:sensor_mode_lvl_${lvl}_enchanted`, "lockMode": "slot" });
+    levelInformation.playerInventory = levelInformation.playerInventory.filter((s) => (s.slot != 2));
+    levelInformation.playerInventory.push({ "slot": 2, "typeId": `theheist:sensor_mode_lvl_${lvl}_enchanted`, "lockMode": "slot" });
     DataManager.setData(player, levelInformation);
     Utilities.reloadPlayerInv(player, levelInformation);
     player.playSound("mob.irongolem.throw", { "pitch": 1 });
@@ -74,8 +74,8 @@ function endSensorMode(player: Player, levelInformation: LevelInformation) {
     if (!playerIsInSensorMode(levelInformation)) return;
     var sensorModeData = levelInformation.currentMode!;
     levelInformation.currentMode = null;
-    levelInformation.information[2].inventory = levelInformation.information[2].inventory.filter((x) => x.slot != 2);
-    levelInformation.information[2].inventory.push({ "slot": 2, "typeId": `theheist:sensor_mode_lvl_${sensorModeData.level}`, "lockMode": "slot" });
+    levelInformation.playerInventory = levelInformation.playerInventory.filter((x) => x.slot != 2);
+    levelInformation.playerInventory.push({ "slot": 2, "typeId": `theheist:sensor_mode_lvl_${sensorModeData.level}`, "lockMode": "slot" });
     DataManager.setData(player, levelInformation);
     Utilities.reloadPlayerInv(player, levelInformation);
     clearSensed(player, levelInformation);

@@ -61,13 +61,27 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 
 			// Add mandatory data
 			const maxEnergy = Utilities.rechargeGamebandInfo[levelDefinition.rechargeLevel].max;
-			const playerEnergyTrackerDataNode: PlayerEnergyTracker = { "name": "playerEnergyTracker", "energyUnits": levelDefinition.startEnergyUnits ?? maxEnergy, "recharging": false, "usingRechargerID": -1, "rechargeLevel": levelDefinition.rechargeLevel };
+			const playerEnergyTrackerDataNode: PlayerEnergyTracker = {
+				"name": "playerEnergyTracker",
+				"energyUnits": levelDefinition.startEnergyUnits ?? maxEnergy,
+				"recharging": false, "usingRechargerID": -1,
+				"rechargeLevel": levelDefinition.rechargeLevel
+			};
 			DataManager.setData(player, playerEnergyTrackerDataNode);
 
-			const playerLevelInformationDataNode: LevelInformation = { "name": "levelInformation", "currentMode": null, "information": [{ "name": "alarmLevel", "level": 0, "sonarTimeout": 0 }, { "name": "gameLevel", "levelId": levelId }, { "name": "playerInv", "inventory": [] }] };
+			const playerLevelInformationDataNode: LevelInformation = {
+				"name": "levelInformation",
+				"currentMode": null,
+				"alarmLevelInfo": {
+					"level": 0,
+					"sonarTimeout": 0
+				},
+				"levelId": levelId,
+				"playerInventory": []
+			};
 			if (!levelDefinition.playerNoPhone) levelDefinition.startingItems.push({ "slot": 9, "typeId": 'theheist:phone' });
 			levelDefinition.startingItems.forEach((item) => {
-				playerLevelInformationDataNode.information[2].inventory.push(item);
+				playerLevelInformationDataNode.playerInventory.push(item);
 			});
 			DataManager.setData(player, playerLevelInformationDataNode);
 			Utilities.reloadPlayerInv(player, playerLevelInformationDataNode);

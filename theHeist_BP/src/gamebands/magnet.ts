@@ -31,8 +31,8 @@ function tryStartMagnetMode(player: Player, lvl: number, levelInformation: Level
     }
 
     levelInformation.currentMode = { "mode": "magnet", "level": lvl };
-    levelInformation.information[2].inventory = levelInformation.information[2].inventory.filter((s) => (s.slot != 4));
-    levelInformation.information[2].inventory.push({ "slot": 4, "typeId": `theheist:magnet_mode_lvl_${lvl}_enchanted`, "lockMode": "slot" });
+    levelInformation.playerInventory = levelInformation.playerInventory.filter((s) => (s.slot != 4));
+    levelInformation.playerInventory.push({ "slot": 4, "typeId": `theheist:magnet_mode_lvl_${lvl}_enchanted`, "lockMode": "slot" });
     DataManager.setData(player, levelInformation);
     Utilities.reloadPlayerInv(player, levelInformation);
 }
@@ -42,8 +42,8 @@ function endMagnetMode(player: Player, levelInformation: LevelInformation) {
     var magnetModeData = levelInformation.currentMode!;
     player.removeEffect(EffectTypes.get("levitation")!);
     levelInformation.currentMode = null;
-    levelInformation.information[2].inventory = levelInformation.information[2].inventory.filter((x) => x.slot != 4);
-    levelInformation.information[2].inventory.push({ "slot": 4, "typeId": `theheist:magnet_mode_lvl_${magnetModeData.level}`, "lockMode": "slot" });
+    levelInformation.playerInventory = levelInformation.playerInventory.filter((x) => x.slot != 4);
+    levelInformation.playerInventory.push({ "slot": 4, "typeId": `theheist:magnet_mode_lvl_${magnetModeData.level}`, "lockMode": "slot" });
     DataManager.setData(player, levelInformation);
     Utilities.reloadPlayerInv(player, levelInformation);
 }

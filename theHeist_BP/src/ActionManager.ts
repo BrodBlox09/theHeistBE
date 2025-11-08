@@ -147,7 +147,7 @@ export default class ActionManager {
 				break;
 			case "set_alarm_level":
 				var lvlInfo = DataManager.getData(player, "levelInformation")!;
-				lvlInfo.information[0].level = actionInfo.do.value;
+				lvlInfo.alarmLevelInfo.level = actionInfo.do.value;
 				DataManager.setData(player, lvlInfo);
 				if (actionInfo.do.value == 0) {
 					player.sendMessage([{ "translate": "map.console.alarm" }]);
@@ -182,7 +182,7 @@ export default class ActionManager {
 				break;
 			case "new_gameband": {
 				var levelInformation = DataManager.getData(player, "levelInformation")!;
-				levelInformation.information[2].inventory.push({ "slot": actionInfo.do.slot, "typeId": `theheist:${actionInfo.do.mode}_mode_lvl_1`, "lockMode": "slot" });
+				levelInformation.playerInventory.push({ "slot": actionInfo.do.slot, "typeId": `theheist:${actionInfo.do.mode}_mode_lvl_1`, "lockMode": "slot" });
 				DataManager.setData(player, levelInformation);
 				Utilities.reloadPlayerInv(player);
 				Utilities.dimensions.overworld.getBlock(actionInfo.do.displayBlock)?.setType("minecraft:air");
@@ -191,8 +191,8 @@ export default class ActionManager {
 			}
 			case "upgrade_gameband": {
 				var levelInformation = DataManager.getData(player, "levelInformation")!;
-				levelInformation.information[2].inventory = levelInformation.information[2].inventory.filter((x: IInventorySlotData) => (x.slot != actionInfo.do.slot));
-				levelInformation.information[2].inventory.push({ "slot": actionInfo.do.slot, "typeId": `theheist:${actionInfo.do.mode}_mode_lvl_${actionInfo.do.level}`, "lockMode": "slot" });
+				levelInformation.playerInventory = levelInformation.playerInventory.filter((x: IInventorySlotData) => (x.slot != actionInfo.do.slot));
+				levelInformation.playerInventory.push({ "slot": actionInfo.do.slot, "typeId": `theheist:${actionInfo.do.mode}_mode_lvl_${actionInfo.do.level}`, "lockMode": "slot" });
 				DataManager.setData(player, levelInformation);
 				Utilities.reloadPlayerInv(player);
 				if (actionInfo.do.mode == "recharge") {

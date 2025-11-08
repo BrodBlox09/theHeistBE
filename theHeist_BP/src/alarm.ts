@@ -27,7 +27,7 @@ system.runInterval(() => {
 
 	let playerLevelInformationDataNode = DataManager.getData(player, "levelInformation");
 	if (!playerLevelInformationDataNode) return;
-	let levelId = playerLevelInformationDataNode.information[1].levelId;
+	let levelId = playerLevelInformationDataNode.levelId;
 	let levelDefinition = LevelDefinitions.getLevelDefinitionByID(levelId);
 	if (!levelDefinition) return;
 	let levelCI = levelDefinition.levelCloneInfo;
@@ -51,11 +51,11 @@ function updatePlayerAlarmLevel(player: Player, levelInformation: LevelInformati
 	if (player.hasTag("BUSTED")) return;
 
 	// Movement-based security
-	if (!levelInformation.information[0].sonarTimeout) levelInformation.information[0].sonarTimeout = 0;
-	if (levelInformation.information[0].sonarTimeout > 0) levelInformation.information[0].sonarTimeout -= 1;
+	if (!levelInformation.alarmLevelInfo.sonarTimeout) levelInformation.alarmLevelInfo.sonarTimeout = 0;
+	if (levelInformation.alarmLevelInfo.sonarTimeout > 0) levelInformation.alarmLevelInfo.sonarTimeout -= 1;
 
 	var playerSonarMappingHeightBlock = Utilities.dimensions.overworld.getBlock({ "x": player.location.x, "y": cameraMappingHeight - 5, "z": player.location.z });
-	if (playerSonarMappingHeightBlock && playerSonarMappingHeightBlock.typeId == "theheist:sonar_sight" && player.location.y < -57 && levelInformation.information[0].sonarTimeout == 0) {
+	if (playerSonarMappingHeightBlock && playerSonarMappingHeightBlock.typeId == "theheist:sonar_sight" && player.location.y < -57 && levelInformation.alarmLevelInfo.sonarTimeout == 0) {
 		// Check if player is moving and if so add to awareness based on speed
 		let playerVelocityV3 = player.getVelocity();
 		let playerVelocity = Math.abs(playerVelocityV3.x) + Math.abs(playerVelocityV3.y) + Math.abs(playerVelocityV3.z);
@@ -63,16 +63,16 @@ function updatePlayerAlarmLevel(player: Player, levelInformation: LevelInformati
 		if (playerVelocity > 5) {
 			player.playSound("note.snare", { "pitch": 1.75, "volume": 0.5 });
 			if (playerVelocity > 40) playerVelocity = 40;
-			levelInformation.information[0].level += playerVelocity;
+			levelInformation.alarmLevelInfo.level += playerVelocity;
 			DataManager.setData(player, levelInformation);
 		} else player.playSound("note.pling", { "pitch": 2, "volume": 0.4 });
-		levelInformation.information[0].sonarTimeout = sonarTimeoutTime;
+		levelInformation.alarmLevelInfo.sonarTimeout = sonarTimeoutTime;
 	}
 
 	// Presure-based security
 	var playerBlock = Utilities.dimensions.overworld.getBlock(player.location);
 	if (playerBlock && playerBlock.typeId == "minecraft:stone_pressure_plate")
-		levelInformation.information[0].level = 100;
+		levelInformation.alarmLevelInfo.level = 100;
 
 	var playerIsStealth = levelInformation.currentMode?.mode == "stealth";
 	if (playerIsStealth) return;
@@ -80,14 +80,14 @@ function updatePlayerAlarmLevel(player: Player, levelInformation: LevelInformati
 	// Sight block stuff
 	var playerCameraMappingHeightBlock = Utilities.dimensions.overworld.getBlock({ "x": player.location.x, "y": cameraMappingHeight - 3, "z": player.location.z });
 	if (playerCameraMappingHeightBlock && playerCameraMappingHeightBlock.typeId == "theheist:camera_sight" && player.location.y < -57) {
-		levelInformation.information[0].level += 2;
+		levelInformation.alarmLevelInfo.level += 2;
 		player.playSound("note.snare", { "pitch": 1.75, "volume": 0.5 });
 	}
 
 	// Laser block stuff
 	var topBlock = playerBlock?.above();
 	if (playerBlock && topBlock && (playerBlock.hasTag("laser") || topBlock.hasTag("laser")))
-		levelInformation.information[0].level = 100;
+		levelInformation.alarmLevelInfo.level = 100;
 
 	DataManager.setData(player, levelInformation);
 }

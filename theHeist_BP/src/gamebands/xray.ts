@@ -32,8 +32,8 @@ function tryStartXRayMode(player: Player, lvl: number, levelInformation: LevelIn
     }
 
     levelInformation.currentMode = { "mode": "xray", "level": lvl };
-    levelInformation.information[2].inventory = levelInformation.information[2].inventory.filter((s) => (s.slot != 3));
-    levelInformation.information[2].inventory.push({ "slot": 3, "typeId": `theheist:xray_mode_lvl_${lvl}_enchanted`, "lockMode": "slot" });
+    levelInformation.playerInventory = levelInformation.playerInventory.filter((s) => (s.slot != 3));
+    levelInformation.playerInventory.push({ "slot": 3, "typeId": `theheist:xray_mode_lvl_${lvl}_enchanted`, "lockMode": "slot" });
     DataManager.setData(player, levelInformation);
     Utilities.reloadPlayerInv(player, levelInformation);
     player.playSound("mob.spider.step", { "pitch": 1.5 });
@@ -44,8 +44,8 @@ function endXRayMode(player: Player, levelInformation: LevelInformation) {
     if (!playerIsInXRayMode(levelInformation)) return;
     var xrayModeData = levelInformation.currentMode!;
     levelInformation.currentMode = null;
-    levelInformation.information[2].inventory = levelInformation.information[2].inventory.filter((x) => x.slot != 3);
-    levelInformation.information[2].inventory.push({ "slot": 3, "typeId": `theheist:xray_mode_lvl_${xrayModeData!.level}`, "lockMode": "slot" });
+    levelInformation.playerInventory = levelInformation.playerInventory.filter((x) => x.slot != 3);
+    levelInformation.playerInventory.push({ "slot": 3, "typeId": `theheist:xray_mode_lvl_${xrayModeData!.level}`, "lockMode": "slot" });
     DataManager.setData(player, levelInformation);
     Utilities.reloadPlayerInv(player, levelInformation);
     player.playSound("mob.spider.step", { "pitch": 1.25 });

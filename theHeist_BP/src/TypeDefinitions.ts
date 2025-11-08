@@ -56,21 +56,12 @@ export interface KeycardReaderActionTracker extends IActionTracker {
 export interface LevelInformation extends DataNode {
 	"name": "levelInformation",
 	"currentMode": ModeData | null,
-	"information": [
-		{
-			"name": "alarmLevel",
-			"level": number,
-			"sonarTimeout": number
-		},
-		{
-			"name": "gameLevel",
-			"levelId": string
-		},
-		{
-			"name": "playerInv",
-			"inventory": Array<IInventorySlotData>
-		}
-	]
+	"alarmLevelInfo": {
+		"level": number,
+		"sonarTimeout": number
+	},
+	"levelId": string,
+	"playerInventory": Array<IInventorySlotData>
 }
 
 export interface PlayerEnergyTracker extends DataNode {

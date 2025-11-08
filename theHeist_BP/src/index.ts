@@ -16,7 +16,7 @@ world.afterEvents.playerSpawn.subscribe(eventData => {
 	if (!eventData.initialSpawn || !eventData.player.hasTag('loadingLevel')) return;
 	var levelInfo = DataManager.getData(eventData.player, "levelInformation");
 	if (!levelInfo) return;
-	system.sendScriptEvent("theheist:load-level", `${levelInfo.information[1].levelId}`);
+	system.sendScriptEvent("theheist:load-level", `${levelInfo.levelId}`);
 });
 
 system.afterEvents.scriptEventReceive.subscribe(event => { // stable-friendly version of world.beforeEvents.chatSend
