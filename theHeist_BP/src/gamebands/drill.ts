@@ -3,6 +3,13 @@ import DataManager from "../DataManager";
 import Utilities from "../Utilities";
 import Vector from "../Vector";
 import GamebandManager from "./GamebandManager";
+import { GamebandInfo } from "../TypeDefinitions";
+
+export const drillModeInfo: GamebandInfo = {
+	1: {
+		"cost": 30
+	}
+};
 
 export function tryDrillMode(player: Player, lvl: number) {
     let levelInformation = DataManager.getData(player, "levelInformation")!;
@@ -21,7 +28,7 @@ export function tryDrillMode(player: Player, lvl: number) {
         return;
     }
     
-    var cost = Utilities.gamebandInfo.drillMode[lvl].cost;
+    var cost = drillModeInfo[lvl].cost;
     let energyTracker = DataManager.getData(player, "playerEnergyTracker")!;
     if (energyTracker.energyUnits < cost) {
         player.sendMessage("§cNot enough energy!");

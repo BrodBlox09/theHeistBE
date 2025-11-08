@@ -3,7 +3,16 @@ import DataManager from "../DataManager";
 import Utilities from "../Utilities";
 import Vector from "../Vector";
 import GamebandManager from "./GamebandManager";
-import { LevelInformation, PlayerEnergyTracker } from "../TypeDefinitions";
+import { GamebandInfo, LevelInformation, PlayerEnergyTracker } from "../TypeDefinitions";
+
+export const stealthModeInfo: GamebandInfo = {
+	1: {
+		"cost": 40
+	},
+	2: {
+		"cost": 10
+	}
+};
 
 export function toggleStealthMode(player: Player, lvl: number) {
     var levelInformation = DataManager.getData(player, "levelInformation")!;
@@ -15,7 +24,7 @@ function tryStartStealthMode(player: Player, lvl: number, levelInformation: Leve
     GamebandManager.cancelMode(player, levelInformation.currentMode);
     levelInformation = DataManager.getData(player, "levelInformation")!;
     
-    var costPerSecond = Utilities.gamebandInfo.stealthMode[lvl].cost;
+    var costPerSecond = stealthModeInfo[lvl].cost;
     var costPerTick = costPerSecond / 20;
     var energyTracker = DataManager.getData(player, "playerEnergyTracker")!;
     if (energyTracker.energyUnits < costPerTick) {
@@ -46,7 +55,7 @@ export function stealthTick(player: Player, levelInformation: LevelInformation, 
     if (!playerIsInStealthMode(levelInformation)) return;
     var stealthModeData = levelInformation.currentMode!;
     // Player is currently in stealth mode
-    var costPerSecond = Utilities.gamebandInfo.stealthMode[stealthModeData.level].cost;
+    var costPerSecond = stealthModeInfo[stealthModeData.level].cost;
     var costPerTick = costPerSecond / 20;
     energyTracker.energyUnits -= costPerTick;
     if (energyTracker.energyUnits <= 0) {

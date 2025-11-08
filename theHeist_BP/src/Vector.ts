@@ -1,7 +1,6 @@
 import { Vector3 } from "@minecraft/server";
-import { IVector3 } from "./TypeDefinitions";
 
-export default class Vector implements Vector3, IVector3 {
+export default class Vector implements Vector3 {
     constructor(public x: number, public y: number, public z: number) {}
 
 	clone() {
@@ -23,6 +22,14 @@ export default class Vector implements Vector3, IVector3 {
     add(oV: Vector): Vector {
         return new Vector(this.x + oV.x, this.y + oV.y, this.z + oV.z);
     }
+
+	distanceTo(oV: Vector3): number {
+		return Math.sqrt(
+			(this.x - oV.x) ** 2 +
+			(this.y - oV.y) ** 2 +
+			(this.z - oV.z) ** 2
+		);
+	}
 
     /**
      * 

@@ -3,7 +3,13 @@ import DataManager from "../DataManager";
 import Utilities from "../Utilities";
 import Vector from "../Vector";
 import GamebandManager from "./GamebandManager";
-import { LevelInformation, PlayerEnergyTracker } from "../TypeDefinitions";
+import { GamebandInfo, LevelInformation, PlayerEnergyTracker } from "../TypeDefinitions";
+
+export const magnetModeInfo: GamebandInfo = {
+	1: {
+		"cost": 1.6
+	}
+};
 
 export function toggleMagnetMode(player: Player, lvl: number) {
     var levelInformation = DataManager.getData(player, "levelInformation")!;
@@ -15,7 +21,7 @@ function tryStartMagnetMode(player: Player, lvl: number, levelInformation: Level
     GamebandManager.cancelMode(player, levelInformation.currentMode);
     levelInformation = DataManager.getData(player, "levelInformation")!;
 
-    var costPerSecond = Utilities.gamebandInfo.magnetMode[lvl].cost;
+    var costPerSecond = magnetModeInfo[lvl].cost;
     var costPerTick = costPerSecond / 20;
     var energyTracker = DataManager.getData(player, "playerEnergyTracker")!;
     if (energyTracker.energyUnits < costPerTick) {
@@ -52,7 +58,7 @@ export function magnetTick(player: Player, levelInformation: LevelInformation, e
     if (!playerIsInMagnetMode(levelInformation)) return;
     var magnetModeData = levelInformation.currentMode!;
     // Player is currently in magnet mode
-    var costPerSecond = Utilities.gamebandInfo.magnetMode[magnetModeData.level].cost;
+    var costPerSecond = magnetModeInfo[magnetModeData.level].cost;
     var costPerTick = costPerSecond / 20;
     energyTracker.energyUnits -= costPerTick;
     if (energyTracker.energyUnits <= 0) {

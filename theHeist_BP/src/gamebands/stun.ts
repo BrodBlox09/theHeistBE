@@ -3,8 +3,15 @@ import DataManager from "../DataManager";
 import Utilities from "../Utilities";
 import Vector from "../Vector";
 import GamebandManager from "./GamebandManager";
+import { GamebandInfo } from "../TypeDefinitions";
 
 const range = 2;
+
+export const stunModeInfo: GamebandInfo = {
+	1: {
+		"cost": 10
+	}
+};
 
 export function tryStunMode(player: Player, lvl: number) {
     let levelInformation = DataManager.getData(player, "levelInformation")!;
@@ -18,7 +25,7 @@ export function tryStunMode(player: Player, lvl: number) {
     });
     if (robots.length == 0) return;
 
-    var cost = Utilities.gamebandInfo.stunMode[lvl].cost;
+    var cost = stunModeInfo[lvl].cost;
     var energyTracker = DataManager.getData(player, "playerEnergyTracker")!;
     if (energyTracker.energyUnits < cost) {
         player.sendMessage("§cNot enough energy!");
