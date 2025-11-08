@@ -1,4 +1,4 @@
-import { ItemStack, Player, system, world, DisplaySlotId, BlockInventoryComponent, BlockPermutation, Container, ItemLockMode, GameMode, HudVisibility } from "@minecraft/server";
+import { ItemStack, Player, system, world, BlockPermutation, ItemLockMode, GameMode, HudVisibility } from "@minecraft/server";
 import Vector from "./Vector";
 import Utilities from "./Utilities";
 import DataManager from "./managers/DataManager";
