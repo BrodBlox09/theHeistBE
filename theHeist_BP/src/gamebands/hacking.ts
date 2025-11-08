@@ -33,28 +33,29 @@ export function tryHackingMode(player: Player, lvl: number) {
 		}
 		const armorStands = Utilities.dimensions.overworld.getEntities(query);
 		for (const armorStand of armorStands) {
-			var armorStandActionTracker = DataManager.getData(armorStand, 'actionTracker')! as ConsoleActionTracker;
-			if (armorStandActionTracker.used == true || armorStandActionTracker.isKeycardReader) continue;
+			let armorStandActionTracker = DataManager.getData(armorStand, 'actionTracker');
+			if (!armorStandActionTracker || armorStandActionTracker.used == true || armorStandActionTracker.isKeycardReader) continue;
+			let armorStandConsoleActionTracker = armorStandActionTracker as ConsoleActionTracker;
 			consolesAttempted++;
 			
-			if (armorStandActionTracker.level <= lvl) {
+			if (armorStandConsoleActionTracker.level <= lvl) {
 				if (hackingModeInfo[lvl].cost > playerEnergyTracker.energyUnits) {
 					errorMessage = "Not enough energy!";
 					continue;
 				}
-				if (armorStandActionTracker.prereq) { // If there are prerequisites, ensure they are true here
-					var prereq = armorStandActionTracker.prereq!;
+				if (armorStandConsoleActionTracker.prereq) { // If there are prerequisites, ensure they are true here
+					var prereq = armorStandConsoleActionTracker.prereq!;
 					if (prereq.objectives) { // Objective(s) must be completed first
 						if (!prereq.objectives!.every(x => GameObjectiveManager.objectiveIsComplete(x))) continue;
 					}
 				}
 				player.playSound('map.hack_use');
-				if (armorStandActionTracker.level != 0) playerEnergyTracker.energyUnits -= hackingModeInfo[lvl].cost;
+				if (armorStandConsoleActionTracker.level != 0) playerEnergyTracker.energyUnits -= hackingModeInfo[lvl].cost;
 				DataManager.setData(player, playerEnergyTracker);
-				ActionManager.runActions(armorStandActionTracker.actions, player);
+				ActionManager.runActions(armorStandConsoleActionTracker.actions, player);
 				// Player hacked the device, now disable it
-				armorStandActionTracker.used = true;
-				DataManager.setData(armorStand, armorStandActionTracker);
+				armorStandConsoleActionTracker.used = true;
+				DataManager.setData(armorStand, armorStandConsoleActionTracker);
 				errorMessage = null;
 				break;
 			} else {
