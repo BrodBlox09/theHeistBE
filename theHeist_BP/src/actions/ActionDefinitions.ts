@@ -1,5 +1,5 @@
 import { Vector3 } from '@minecraft/server';
-import { IAction } from "./TypeDefinitions";
+import { IAction } from "../TypeDefinitions";
 
 export class SetBlockAction implements IAction {
 	type = "set_block";

@@ -1,4 +1,4 @@
-import { ActionList, IAction } from "./TypeDefinitions";
+import { ActionList, IAction } from "../TypeDefinitions";
 
 export default class ActionListBuilder {
     private actionList: ActionList;
