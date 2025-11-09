@@ -3,7 +3,7 @@ import DataManager from "../managers/DataManager";
 import Utilities from "../Utilities";
 import GamebandManager from "./GamebandManager";
 import Vector from "../Vector";
-import ActionManager from "../ActionManager";
+import ActionManager from "../actions/ActionManager";
 import LoreItem from "../LoreItem";
 import { LevelInformation, PlayerEnergyTracker, RechargeGamebandDataList } from "../TypeDefinitions";
 

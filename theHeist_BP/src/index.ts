@@ -8,7 +8,7 @@ import "./customComponents";
 import "./lvl_loader";
 import "./gameband";
 import "./alarm";
-import ActionManager from "./ActionManager";
+import ActionManager from "./actions/ActionManager";
 import LevelDefinitions from "./levels/LevelDefinitions";
 import { LevelNotFoundError } from "./levels/LevelDefinitions";
 

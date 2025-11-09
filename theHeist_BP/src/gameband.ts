@@ -5,7 +5,7 @@ import Utilities from "./Utilities";
 import GameObjectiveManager from "./managers/GameObjectiveManager";
 import PlayerBustedManager from "./managers/PlayerBustedManager";
 import GamebandManager from "./gamebands/GamebandManager";
-import ActionManager from "./ActionManager";
+import ActionManager from "./actions/ActionManager";
 import LevelDefinitions from "./levels/LevelDefinitions";
 import { toggleRechargeMode } from "./gamebands/recharge";
 import { tryHackingMode } from "./gamebands/hacking";
