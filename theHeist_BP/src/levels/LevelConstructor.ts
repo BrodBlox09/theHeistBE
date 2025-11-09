@@ -3,7 +3,7 @@ import Vector from "../Vector";
 import Utilities from "../Utilities";
 import DataManager from "../managers/DataManager";
 import LoreItem from "../LoreItem";
-import { BlockRotation, ActionList, ActionTracker, KeycardReaderActionTracker, IPrerequisiteList, EnergyTracker, CameraTracker, ICameraSwivel } from "../TypeDefinitions";
+import { BlockRotation, ActionList, ConsoleActionTracker, KeycardReaderActionTracker, IPrerequisiteList, EnergyTracker, CameraTracker, ICameraSwivel } from "../TypeDefinitions";
 
 let cameras = 0;
 let rechargeStations = 0;
@@ -50,7 +50,7 @@ export default class LevelConstructor {
             }
         ];
         allActions.push(...actions);
-        const consoleActionTracker: ActionTracker = {
+        const consoleActionTracker: ConsoleActionTracker = {
             "name": "actionTracker",
             "used": false,
             "level": 0,
@@ -78,7 +78,7 @@ export default class LevelConstructor {
             }
         ];
         allActions.push(...actions);
-        const consoleActionTracker: ActionTracker = {
+        const consoleActionTracker: ConsoleActionTracker = {
             "name": "actionTracker",
             "used": false,
             "level": 0,
@@ -112,7 +112,7 @@ export default class LevelConstructor {
                 "type": "set_block", "do": { "x": loc.x, "y": loc.y, "z": loc.z, "block": "theheist:keypad", "permutations": { "minecraft:cardinal_direction": blockRot, "theheist:unlocked": 2 } }, "delay": 40
             }
         );
-        const consoleActionTracker: ActionTracker = {
+        const consoleActionTracker: ConsoleActionTracker = {
             "name": "actionTracker",
             "used": false,
             "level": level,
@@ -134,7 +134,7 @@ export default class LevelConstructor {
                 "type": "set_block", "do": { "x": loc.x, "y": loc.y, "z": loc.z, "block": "theheist:keypad", "permutations": { "minecraft:cardinal_direction": blockRot, "theheist:unlocked": 2 } }, "delay": 40
             }
         );
-        const consoleActionTracker: ActionTracker = {
+        const consoleActionTracker: ConsoleActionTracker = {
             "name": "actionTracker",
             "used": false,
             "level": level,
@@ -157,7 +157,7 @@ export default class LevelConstructor {
                 "type": "set_block", "do": { "x": loc.x, "y": loc.y, "z": loc.z, "block": "theheist:computer", "permutations": { "minecraft:cardinal_direction": blockRot, "theheist:unlocked": 2 } }, "delay": 40
             }
         );
-        const consoleActionTracker: ActionTracker = {
+        const consoleActionTracker: ConsoleActionTracker = {
             "name": "actionTracker",
             "used": false,
             "level": 1,

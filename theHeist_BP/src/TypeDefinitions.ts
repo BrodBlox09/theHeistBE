@@ -23,6 +23,8 @@ export type DataNodes =  {
 	"cameraTracker": CameraTracker
 }
 
+export interface DataNodeHelper {}
+
 export interface DataNode extends Record<string, any> {
 	"name": string
 }
@@ -43,7 +45,7 @@ export interface IPrerequisiteList {
 	"objectives"?: Array<string>
 }
 
-export interface ActionTracker extends IActionTracker {
+export interface ConsoleActionTracker extends IActionTracker {
 	"name": "actionTracker",
 	"level": number,
 	"isKeycardReader"?: false
