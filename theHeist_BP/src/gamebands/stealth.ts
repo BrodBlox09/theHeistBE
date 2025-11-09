@@ -1,5 +1,5 @@
 import { Player } from "@minecraft/server";
-import DataManager from "../DataManager";
+import DataManager from "../managers/DataManager";
 import Utilities from "../Utilities";
 import Vector from "../Vector";
 import GamebandManager from "./GamebandManager";

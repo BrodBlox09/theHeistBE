@@ -1,10 +1,10 @@
 import { Player, system, world, MolangVariableMap } from "@minecraft/server";
-import GameObjectiveManager from "./GameObjectiveManager";
-import VoiceOverManager from "./VoiceOverManager";
-import DataManager from "./DataManager";
-import Utilities from "./Utilities";
-import Vector from "./Vector";
-import { IAction, IInventorySlotData, PlayerEnergyTracker } from "./TypeDefinitions";
+import GameObjectiveManager from "../managers/GameObjectiveManager";
+import VoiceOverManager from "../managers/VoiceOverManager";
+import DataManager from "../managers/DataManager";
+import Utilities from "../Utilities";
+import Vector from "../Vector";
+import { IAction, IInventorySlotData, PlayerEnergyTracker } from "../TypeDefinitions";
 
 export default class ActionManager {
 	static runActions(actionInfos: IAction[], player: Player) {

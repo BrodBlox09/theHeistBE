@@ -1,12 +1,12 @@
-import { ItemStack, Player, system, world, DisplaySlotId, BlockInventoryComponent, BlockPermutation, Container, ItemLockMode, GameMode, HudVisibility } from "@minecraft/server";
+import { ItemStack, Player, system, world, BlockPermutation, ItemLockMode, GameMode, HudVisibility } from "@minecraft/server";
 import Vector from "./Vector";
 import Utilities from "./Utilities";
-import DataManager from "./DataManager";
-import VoiceOverManager from "./VoiceOverManager";
+import DataManager from "./managers/DataManager";
+import VoiceOverManager from "./managers/VoiceOverManager";
 import LevelConstructor from "./levels/LevelConstructor";
 import LevelDefinitions from "./levels/LevelDefinitions";
-import GameObjectiveManager from "./GameObjectiveManager";
-import PlayerBustedManager from "./PlayerBustedManager";
+import GameObjectiveManager from "./managers/GameObjectiveManager";
+import PlayerBustedManager from "./managers/PlayerBustedManager";
 import LoreItem from "./LoreItem";
 import { PlayerEnergyTracker, LevelInformation } from "./TypeDefinitions";
 import { rechargeModeInfo } from "./gamebands/recharge";
