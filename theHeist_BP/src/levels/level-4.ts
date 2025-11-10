@@ -142,6 +142,7 @@ setup: () => {
     }]);
 
     Utilities.setBlock(new Vector(5889, -57, 124), "theheist:white_trapdoor", {"minecraft:cardinal_direction": "north"});
+    Utilities.setBlock(new Vector(5889, -57, 131), "theheist:white_trapdoor", {"minecraft:cardinal_direction": "west"});
 } // Accounting
 
 {
