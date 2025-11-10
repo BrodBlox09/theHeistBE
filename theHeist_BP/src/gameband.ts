@@ -166,8 +166,11 @@ system.runInterval(() => {
 	const player = world.getPlayers().filter((x: Player) => (x != undefined && x != null))[0];
 	if (player == undefined) return;
 	
-	let inventoryTracker = DataManager.getData(player, "inventoryTracker")!;
-	let alarmTracker = DataManager.getData(player, "alarmTracker")!;
+	let inventoryTracker = DataManager.getData(player, "inventoryTracker");
+	let gamebandTracker = DataManager.getData(player, "gamebandTracker");
+	let alarmTracker = DataManager.getData(player, "alarmTracker");
+
+	if (!inventoryTracker || !gamebandTracker || !alarmTracker) return;
 	
 	// Handle dropped items
 	{
@@ -207,11 +210,8 @@ system.runInterval(() => {
 		GameObjectiveManager.hideSidebar();
 	}
 
-	// Set player level to player energy level
-	let gamebandTracker = DataManager.getData(player, "gamebandTracker")!;
-
 	// Tick all gameband modes
-	GamebandManager.tickAllGamebands(player, gamebandTracker, inventoryTracker);
+	if (gamebandTracker) GamebandManager.tickAllGamebands(player, gamebandTracker, inventoryTracker);
 
 	// Check to see if XP bar display needs to be updated
 	if (gamebandTracker.energy != player.level || player.xpEarnedAtCurrentLevel != ((((alarmTracker.level / 100) - 0.06) * 742) + 41)) {
