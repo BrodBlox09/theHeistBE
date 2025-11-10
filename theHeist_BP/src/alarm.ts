@@ -9,9 +9,6 @@ import { LevelInformation, CameraSwivelMode, ILevelCloneInfo, AlarmTracker, Game
 import LevelDefinitions from "./levels/LevelDefinitions";
 import PlayerBustedManager from "./managers/PlayerBustedManager";
 
-const robotPathHeight = -49;
-const levelHeight = -59;
-
 const cameraFOV = 40;
 const sonar360FOV = 70;
 const rayDensity = 12;
@@ -156,7 +153,7 @@ function updateRobots(player: Player) {
 
 				var cameraRobotQuery = {
 					"type": (cameraDataNode.type == "camera") ? "theheist:camera_robot" : "theheist:sonar_robot",
-					"location": { 'x': cameraRobotArmorStand.location.x, 'y': levelHeight, 'z': cameraRobotArmorStand.location.z },
+					"location": { 'x': cameraRobotArmorStand.location.x, 'y': Utilities.levelPlayingHeight, 'z': cameraRobotArmorStand.location.z },
 					"maxDistance": 5,
 					"closest": 1
 				};
@@ -166,7 +163,7 @@ function updateRobots(player: Player) {
 			}
 			var move = (!cameraDataNode.isStatic);
 			var tryRotate = true;
-			var pathLevelBlock = Utilities.dimensions.overworld.getBlock(new Vector(cameraRobotArmorStand.location.x, robotPathHeight, cameraRobotArmorStand.location.z))!;
+			var pathLevelBlock = Utilities.dimensions.overworld.getBlock(new Vector(cameraRobotArmorStand.location.x, Utilities.robotPathMapHeight, cameraRobotArmorStand.location.z))!;
 			var currRot = cameraRobotArmorStand.getRotation().y;
 			if (Math.abs(cameraRobotArmorStand.location.x % 1 - 0.5) > 0.15) tryRotate = false; // Ensure the robot only turns near the center
 			if (Math.abs(cameraRobotArmorStand.location.z % 1 - 0.5) > 0.15) tryRotate = false;
@@ -186,7 +183,7 @@ function updateRobots(player: Player) {
 			// Update visuals
 			var cameraRobotQuery = {
 				"type": (cameraDataNode.type == "camera") ? "theheist:camera_robot" : "theheist:sonar_robot",
-				"location": { 'x': cameraRobotArmorStand.location.x, 'y': levelHeight, 'z': cameraRobotArmorStand.location.z },
+				"location": { 'x': cameraRobotArmorStand.location.x, 'y': Utilities.levelPlayingHeight, 'z': cameraRobotArmorStand.location.z },
 				"maxDistance": 5,
 				"closest": 1
 			};
