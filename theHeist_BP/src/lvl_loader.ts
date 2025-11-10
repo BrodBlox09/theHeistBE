@@ -57,9 +57,12 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 			const playerLevelInformationDataNode: LevelInformation = {
 				"name": "levelInformation",
 				"id": levelId,
-				"runSecurity": !levelDefinition.noRunSecurity,
-				"timeLimit": levelDefinition.timeLimit
+				"runSecurity": !levelDefinition.noRunSecurity
 			};
+			if (levelDefinition.timeLimit) playerLevelInformationDataNode.timeLimit = {
+					"maxTime": levelDefinition.timeLimit,
+					"remainingTime": levelDefinition.timeLimit
+				};
 			DataManager.setData(player, playerLevelInformationDataNode);
 
 			

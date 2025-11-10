@@ -139,17 +139,24 @@ export interface ILevelCloneInfo {
 
 export interface ILevel {
 	/**
-	 * This is the bottom-most center of the loading elevator structure
+	 * This is the bottom-most center of the loading elevator structure.
 	 */
 	"loadElevatorLoc": Vector3,
 	/**
-	 * This is the location the player will be teleported to after the level has finished loading
+	 * This is the location the player will be teleported to after the level has finished loading, usually an elevator below the loading elevator.
 	 */
 	"startPlayerLoc": Vector3,
 	"startPlayerRot"?: number,
+	/**
+	 * When true, level setup script will not automatically clear layers of sensor mode residue and robot paths from previous runs.
+	 * Useful for more exploratory levels, like level 2.
+	 */
 	"noAutoCleanup"?: boolean,
 	"noRunSecurity"?: boolean,
-	"timeLimit"?: TimeLimit,
+	/**
+	 * Number of time, in seconds, that the player has to finish the level.
+	 */
+	"timeLimit"?: number,
 	"levelId": string,
 	"levelCloneInfo": ILevelCloneInfo,
 	"startingItems": Array<IInventorySlotData>,

@@ -3,6 +3,8 @@ import Vector from "../Vector";
 
 const level: ILevel = {
 "levelId": "-6",
+// 5 minute time limit
+"timeLimit": 300,
 "levelCloneInfo": {
 	"startX": 7872,
 	"startZ": 63,
