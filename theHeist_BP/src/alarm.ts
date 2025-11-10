@@ -109,7 +109,7 @@ function cameraCanSeeThrough(location: Vector): boolean {
 	var topBlockTID = topBlock.typeId;
 	var bottomBlockTID = bottomBlock.typeId;
 	if (xrayTransparentBlocks.includes(bottomBlockTID)) return false;
-	if (bottomBlockTID == "theheist:robot_path") return true;
+	if (bottomBlockTID == "theheist:robot_path" || bottomBlockTID == "theheist:drawer_decoration") return true;
 	if ((!bottomBlock.hasTag("plant") && bottomBlockTID != "minecraft:tallgrass") && topBlockTID == "minecraft:air") return true;
 	if (bottomBlockTID == "minecraft:air" && topBlock.hasTag("text_sign")) return true;
 	if (topBlockTID == "minecraft:glass" && bottomBlockTID == "minecraft:glass") return true;
@@ -125,7 +125,8 @@ function sonarCanSeeThrough(location: Vector): boolean {
 	var block = Utilities.dimensions.overworld.getBlock(location);
 	if (!block) return false;
 	if (block.isAir) return true;
-	if (block.typeId.startsWith("theheist:laser") || block.typeId == "theheist:robot_path") return true;
+	if (block.typeId == "theheist:robot_path" || block.typeId == "theheist:drawer_decoration") return true;
+	if (block.typeId.startsWith("theheist:laser")) return true;
 	if (block.typeId.startsWith("theheist:custom_door_") && Utilities.getBlockState(block, "theheist:open")) return true;
 	return false;
 }
