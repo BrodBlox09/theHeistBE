@@ -109,6 +109,7 @@ function cameraCanSeeThrough(location: Vector): boolean {
 	var topBlockTID = topBlock.typeId;
 	var bottomBlockTID = bottomBlock.typeId;
 	if (xrayTransparentBlocks.includes(bottomBlockTID)) return false;
+	if (bottomBlockTID == "theheist:robot_path") return true;
 	if ((!bottomBlock.hasTag("plant") && bottomBlockTID != "minecraft:tallgrass") && topBlockTID == "minecraft:air") return true;
 	if (bottomBlockTID == "minecraft:air" && topBlock.hasTag("text_sign")) return true;
 	if (topBlockTID == "minecraft:glass" && bottomBlockTID == "minecraft:glass") return true;
@@ -120,10 +121,11 @@ function cameraCanSeeThrough(location: Vector): boolean {
 }
 
 function sonarCanSeeThrough(location: Vector): boolean {
+	// Block right above the floor
 	var block = Utilities.dimensions.overworld.getBlock(location);
 	if (!block) return false;
 	if (block.isAir) return true;
-	if (block.typeId == "theheist:laser") return true;
+	if (block.typeId.startsWith("theheist:laser") || block.typeId == "theheist:robot_path") return true;
 	if (block.typeId.startsWith("theheist:custom_door_") && Utilities.getBlockState(block, "theheist:open")) return true;
 	return false;
 }
@@ -314,7 +316,7 @@ function updateCameras(player: Player, levelCI: ILevelCloneInfo) {
 			// x sin() must be inverted to work properly for some reason
 			let belowBlock = { "x": armorStand.location.x, "y": armorStand.location.y - 2, "z": armorStand.location.z };
 			armorStand.teleport({ "x": armorStand.location.x + -(Utilities.sin(armorStand.getRotation().y) * tpDistance), "y": Utilities.raycastHeight, "z": armorStand.location.z + (Utilities.cos(armorStand.getRotation().y) * tpDistance) }, { 'dimension': Utilities.dimensions.overworld });
-			let armorStandLocation = Vector.from({ "x": armorStand.location.x, "y": Utilities.levelFloorHeight, "z": armorStand.location.z });
+			let armorStandLocation = Vector.from({ "x": armorStand.location.x, "y": Utilities.levelPlayingHeight, "z": armorStand.location.z });
 			if (cameraCanSeeThrough(armorStandLocation)) {
 				let floorBlock = Utilities.dimensions.overworld.getBlock({ "x": armorStand.location.x, "y": Utilities.floorCloneHeight, "z": armorStand.location.z })!.typeId;
 				if ("minecraft:air" != floorBlock && floorBlock != "theheist:forcefield_bridge") {
