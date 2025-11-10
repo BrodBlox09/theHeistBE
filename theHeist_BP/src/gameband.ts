@@ -159,6 +159,11 @@ function clearGlass(loc: Vector) {
 system.runInterval(() => {
 	const player = world.getPlayers().filter((x: Player) => (x != undefined && x != null))[0];
 	if (player == undefined) return;
+
+	// Give player effects
+	player.addEffect('saturation', 2000, { amplifier: 1, showParticles: false });
+	player.addEffect('night_vision', 2000, { amplifier: 1, showParticles: false });
+	player.addEffect('resistance', 2000, { amplifier: 1, showParticles: false });
 	
 	let inventoryTracker = DataManager.getData(player, "inventoryTracker");
 	let gamebandTracker = DataManager.getData(player, "gamebandTracker");
@@ -189,11 +194,6 @@ system.runInterval(() => {
 	// cloneFloor(Vector.from(player.location));
 	// flattenMap(Vector.from(player.location));
 	// clearGlass(Vector.from(player.location));
-
-	// Give player effects
-	player.addEffect('saturation', 2000, { amplifier: 1, showParticles: false });
-	player.addEffect('night_vision', 2000, { amplifier: 1, showParticles: false });
-	player.addEffect('resistance', 2000, { amplifier: 1, showParticles: false });
 	
 	// If recharge mode selected, show objectives
 	const playerInvContainer = player.getComponent('inventory')!.container;
@@ -213,7 +213,7 @@ system.runInterval(() => {
 		player.addLevels(100);
 		// 9 * 100 - 158 = 742 (The total amount of XP you need to go from level 100 to 101)
 		//var alarmLvlXpVal = (alarmTracker.level / 100) * 742;
-		var alarmLvlXpVal = (((alarmTracker.level / 100) - 0.06) * 742) + 41;
+		var alarmLvlXpVal = (((Math.min(alarmTracker.level, 100) / 100) - 0.06) * 742) + 41;
 		player.addExperience(alarmLvlXpVal);
 		player.addLevels(-100);
 		player.addLevels(Math.floor(gamebandTracker.energy));
