@@ -125,9 +125,10 @@ function sonarCanSeeThrough(location: Vector): boolean {
 	var block = Utilities.dimensions.overworld.getBlock(location);
 	if (!block) return false;
 	if (block.isAir) return true;
-	if (block.typeId == "theheist:robot_path" || block.typeId == "theheist:drawer_decoration") return true;
-	if (block.typeId.startsWith("theheist:laser")) return true;
-	if (block.typeId.startsWith("theheist:custom_door_") && Utilities.getBlockState(block, "theheist:open")) return true;
+	var blockTID = block.typeId;
+	if (blockTID == "theheist:robot_path" || blockTID == "theheist:drawer_decoration") return true;
+	if (blockTID.startsWith("theheist:laser")) return true;
+	if (blockTID.startsWith("theheist:custom_door_") && Utilities.getBlockState(block, "theheist:open")) return true;
 	return false;
 }
 
