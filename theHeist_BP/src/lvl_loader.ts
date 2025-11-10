@@ -123,7 +123,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 						// Clear robot paths in the air
 						Utilities.fillBlocks(new Vector(levelCloneInfo.startX, Utilities.robotPathDisplayMapHeight, levelCloneInfo.startZ), new Vector(levelCloneInfo.endX, Utilities.robotPathDisplayMapHeight, levelCloneInfo.endZ), "air");
 						// Clear robot paths on the floor
-						Utilities.dimensions.overworld.runCommand(`fill ${levelCloneInfo.startX} ${Utilities.levelFloorHeight} ${levelCloneInfo.startZ} ${levelCloneInfo.endX} ${Utilities.levelFloorHeight} ${levelCloneInfo.endZ} air replace theheist:robot_path`);
+						Utilities.dimensions.overworld.runCommand(`fill ${levelCloneInfo.startX} ${Utilities.levelPlayingHeight} ${levelCloneInfo.startZ} ${levelCloneInfo.endX} ${Utilities.levelPlayingHeight} ${levelCloneInfo.endZ} air replace theheist:robot_path`);
 						// Clear sensor mode residue
 						Utilities.dimensions.overworld.runCommand(`clone ${levelCloneInfo.startX} ${Utilities.floorCloneHeight} ${levelCloneInfo.startZ} ${levelCloneInfo.endX} ${Utilities.floorCloneHeight} ${levelCloneInfo.endZ} ${levelCloneInfo.startX} ${Utilities.levelFloorHeight} ${levelCloneInfo.startZ}`);
 						// Move drilled areas back into position

@@ -139,11 +139,10 @@ function clearSensed(player: Player) {
     var corner2 = loc.add(new Vector(clearRange, 0, clearRange));
     var corner3 = loc.subtract(new Vector(clearRange, 0, clearRange));
     corner3.y = Utilities.levelFloorHeight;
+	// Remove camera sight blocks
     Utilities.dimensions.overworld.runCommand(`clone ${corner1.x} ${corner1.y} ${corner1.z} ${corner2.x} ${corner2.y} ${corner2.z} ${corner3.x} ${corner3.y} ${corner3.z}`);
-    /*Utilities.dimensions.overworld.fillBlocks(corner1, corner2, floorBlock, {
-        "matchingBlock": BlockPermutation.resolve("theheist:camera_sight")
-    });*/
-    Utilities.dimensions.overworld.runCommand(`fill ${corner1.x} ${Utilities.levelFloorHeight} ${corner1.z} ${corner2.x} ${Utilities.levelFloorHeight} ${corner2.z} air replace theheist:robot_path`);
+	// Remove robot paths
+    Utilities.dimensions.overworld.runCommand(`fill ${corner1.x} ${Utilities.levelPlayingHeight} ${corner1.z} ${corner2.x} ${Utilities.levelPlayingHeight} ${corner2.z} air replace theheist:robot_path`);
 }
 
 export function playerIsInSensorMode(gamebandTracker: GamebandTracker) {
