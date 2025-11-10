@@ -22,6 +22,7 @@ export const rechargeModeInfo: RechargeGamebandDataList = {
 export function toggleRechargeMode(player: Player, lvl: number) {
 	let gamebandTracker = DataManager.getData(player, "gamebandTracker")!;
 	GamebandManager.cancelMode(player, gamebandTracker.currentMode);
+	gamebandTracker = DataManager.getData(player, "gamebandTracker")!;
 
 	const query = {
 		"type": "armor_stand",
@@ -41,7 +42,7 @@ export function toggleRechargeMode(player: Player, lvl: number) {
 		gamebandTracker.currentMode = { "mode": "recharge", "level": lvl };
 		player.playSound("portal.travel", { "volume": 0.1, "pitch": 2 });
 		Utilities.setBlock(blockLocation, "theheist:recharge_station", { "minecraft:cardinal_direction": armorStandEnergyTrackerDataNode.block.rotation, "theheist:state": 2 });
-		gamebandTracker.usingRechargerID = armorStandEnergyTrackerDataNode.rechargerID;
+		gamebandTracker.usingRechargerId = armorStandEnergyTrackerDataNode.rechargerID;
 		// Remove all gamebands except recharge mode
 		var playerInvContainer = player.getComponent("inventory")!.container;
 		playerInvContainer.clearAll();
@@ -54,71 +55,69 @@ export function toggleRechargeMode(player: Player, lvl: number) {
 		gamebandTracker.recharging = false;
 		gamebandTracker.currentMode = null;
 		Utilities.setBlock(blockLocation, "theheist:recharge_station", { "minecraft:cardinal_direction": armorStandEnergyTrackerDataNode.block.rotation, "theheist:state": 1 });
-		gamebandTracker.usingRechargerID = -1;
+		gamebandTracker.usingRechargerId = -1;
 		// Bring back the player's items
 		Utilities.reloadPlayerInv(player);
 	}
 	DataManager.setData(player, gamebandTracker);
-	DataManager.setData(player, gamebandTracker);
 }
 
 export function rechargeTick(player: Player, gamebandTracker: GamebandTracker, inventoryTracker: InventoryTracker) {
-	if (!gamebandTracker.recharging) return;
+	if (!playerIsInRechargeMode(gamebandTracker)) return;
 	const query = {
+		"type": "armor_stand",
+		"location": { 'x': player.location.x, 'y': Utilities.rechargeHeight, 'z': player.location.z },
+		"maxDistance": 2
+	}
+	const armorStands = Utilities.dimensions.overworld.getEntities(query);
+	var i = 0;
+	for (const armorStand of armorStands) {
+		var armorStandEnergyTracker = DataManager.getData(armorStand, "energyTracker")!;
+		if (armorStandEnergyTracker.rechargerID != gamebandTracker.usingRechargerId) continue;
+		if (armorStandEnergyTracker.block.y - 1 > player.location.y) continue;
+		i++;
+	}
+	if (i == 0) {
+		// Player has left range, so stop the player from recharging
+		gamebandTracker.recharging = false;
+		gamebandTracker.currentMode = null;
+		Utilities.reloadPlayerInv(player);
+		const subQuery = {
 			"type": "armor_stand",
 			"location": { 'x': player.location.x, 'y': Utilities.rechargeHeight, 'z': player.location.z },
-			"maxDistance": 2
+			"maxDistance": 4
 		}
-		const armorStands = Utilities.dimensions.overworld.getEntities(query);
-		var i = 0;
+		const subArmorStands = Utilities.dimensions.overworld.getEntities(subQuery);
+		for (const subArmorStand of subArmorStands) {
+			var armorStandEnergyTracker = DataManager.getData(subArmorStand, "energyTracker")!;
+			if (armorStandEnergyTracker.rechargerID != gamebandTracker.usingRechargerId) continue;
+			Utilities.setBlock({ x: armorStandEnergyTracker.block.x, y: armorStandEnergyTracker.block.y, z: armorStandEnergyTracker.block.z }, "theheist:recharge_station", { "minecraft:cardinal_direction": armorStandEnergyTracker.block.rotation, "theheist:state": 1 });
+			gamebandTracker.usingRechargerId = -1;
+		}
+	} else if (gamebandTracker.energy < rechargeModeInfo[gamebandTracker.rechargeLevel].max) {
+		var addEnergy = 1; // Amount of energy to add per tick
+		gamebandTracker.energy = Math.min(gamebandTracker.energy + addEnergy, rechargeModeInfo[gamebandTracker.rechargeLevel].max);
 		for (const armorStand of armorStands) {
 			var armorStandEnergyTracker = DataManager.getData(armorStand, "energyTracker")!;
-			if (armorStandEnergyTracker.rechargerID != gamebandTracker.usingRechargerID) continue;
-			if (armorStandEnergyTracker.block.y - 1 > player.location.y) continue;
-			i++;
+			if (armorStandEnergyTracker.rechargerID != gamebandTracker.usingRechargerId) continue;
+			armorStandEnergyTracker.energyUnits -= addEnergy;
+			if (armorStandEnergyTracker.energyUnits <= 0) {
+				// The recharge station is out of energy, so stop player from recharging
+				var diff = Math.abs(armorStandEnergyTracker.energyUnits);
+				gamebandTracker.energy -= diff;
+				armorStandEnergyTracker.energyUnits = 0;
+				Utilities.setBlock({ x: armorStandEnergyTracker.block.x, y: armorStandEnergyTracker.block.y, z: armorStandEnergyTracker.block.z }, "theheist:recharge_station", { "minecraft:cardinal_direction": armorStandEnergyTracker.block.rotation, "theheist:state": 3 });
+				gamebandTracker.recharging = false;
+				gamebandTracker.currentMode = null;
+				gamebandTracker.usingRechargerId = -1;
+				Utilities.reloadPlayerInv(player);
+				// Run actions staged for on depletion
+				if (armorStandEnergyTracker.onDepletionActions) ActionManager.runActions(armorStandEnergyTracker.onDepletionActions, player);
+			}
+			DataManager.setData(armorStand, armorStandEnergyTracker);
 		}
-		if (i == 0) {
-			// Player has left range, so stop the player from recharging
-			gamebandTracker.recharging = false;
-			gamebandTracker.currentMode = null;
-			Utilities.reloadPlayerInv(player);
-			const subQuery = {
-				"type": "armor_stand",
-				"location": { 'x': player.location.x, 'y': Utilities.rechargeHeight, 'z': player.location.z },
-				"maxDistance": 4
-			}
-			const subArmorStands = Utilities.dimensions.overworld.getEntities(subQuery);
-			for (const subArmorStand of subArmorStands) {
-				var armorStandEnergyTracker = DataManager.getData(subArmorStand, "energyTracker")!;
-				if (armorStandEnergyTracker.rechargerID != gamebandTracker.usingRechargerID) continue;
-				Utilities.setBlock({ x: armorStandEnergyTracker.block.x, y: armorStandEnergyTracker.block.y, z: armorStandEnergyTracker.block.z }, "theheist:recharge_station", { "minecraft:cardinal_direction": armorStandEnergyTracker.block.rotation, "theheist:state": 1 });
-				gamebandTracker.usingRechargerID = -1;
-			}
-		} else if (gamebandTracker.energyUnits < rechargeModeInfo[gamebandTracker.rechargeLevel].max) {
-			var addEnergy = 1; // Amount of energy to add per tick
-			gamebandTracker.energyUnits = Math.min(gamebandTracker.energyUnits + addEnergy, rechargeModeInfo[gamebandTracker.rechargeLevel].max);
-			for (const armorStand of armorStands) {
-				var armorStandEnergyTracker = DataManager.getData(armorStand, "energyTracker")!;
-				if (armorStandEnergyTracker.rechargerID != gamebandTracker.usingRechargerID) continue;
-
-				armorStandEnergyTracker.energyUnits -= addEnergy;
-				if (armorStandEnergyTracker.energyUnits <= 0) {
-					// The recharge station is out of energy, so stop player from recharging
-					var diff = Math.abs(armorStandEnergyTracker.energyUnits);
-					gamebandTracker.energyUnits -= diff;
-					armorStandEnergyTracker.energyUnits = 0;
-					Utilities.setBlock({ x: armorStandEnergyTracker.block.x, y: armorStandEnergyTracker.block.y, z: armorStandEnergyTracker.block.z }, "theheist:recharge_station", { "minecraft:cardinal_direction": armorStandEnergyTracker.block.rotation, "theheist:state": 3 });
-					gamebandTracker.recharging = false;
-					gamebandTracker.currentMode = null;
-					gamebandTracker.usingRechargerID = -1;
-					Utilities.reloadPlayerInv(player);
-					// Run actions staged for on depletion
-					if (armorStandEnergyTracker.onDepletionActions) ActionManager.runActions(armorStandEnergyTracker.onDepletionActions, player);
-				}
-				DataManager.setData(armorStand, armorStandEnergyTracker);
-			}
-		}
-		DataManager.setData(player, gamebandTracker);
+	}
+	DataManager.setData(player, gamebandTracker);
 }
 
 export function playerIsInRechargeMode(gamebandTracker: GamebandTracker) {
