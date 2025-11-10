@@ -32,7 +32,7 @@ export function tryMap(player: Player, levelInformation: LevelInformation, playe
     let typeId = sensorModeSlot.typeId;
     if (playerIsLookingDown && typeId.startsWith("theheist:sensor_mode_lvl_") && parseInt(typeId.charAt("theheist:sensor_mode_lvl_".length)) >= 2) { // Player does have a lvl 2 or greater sensor mode
         let playerInvContainer = player.getComponent("minecraft:inventory")?.container;
-		let levelDefinition = LevelDefinitions.getLevelDefinitionByID(levelInformation.levelId);
+		let levelDefinition = LevelDefinitions.getLevelDefinitionByID(levelInformation.id);
 		if (!levelDefinition) return;
         let map = Utilities.dimensions.overworld.getBlock(levelDefinition.levelCloneInfo.mapLoc)?.getComponent("minecraft:inventory")?.container?.getItem(0);
         if (!map) return;

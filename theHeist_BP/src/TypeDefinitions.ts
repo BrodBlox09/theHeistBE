@@ -62,7 +62,7 @@ export interface KeycardReaderActionTracker extends IActionTracker {
 export interface LevelInformation extends DataNode {
 	"name": "levelInformation",
 	"currentMode": ModeData | null,
-	"levelId": string
+	"id": string
 }
 
 export interface AlarmTracker extends DataNode {

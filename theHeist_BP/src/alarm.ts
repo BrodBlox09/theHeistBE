@@ -27,7 +27,7 @@ system.runInterval(() => {
 
 	let playerLevelInformationDataNode = DataManager.getData(player, "levelInformation");
 	if (!playerLevelInformationDataNode) return;
-	let levelId = playerLevelInformationDataNode.levelId;
+	let levelId = playerLevelInformationDataNode.id;
 	let levelDefinition = LevelDefinitions.getLevelDefinitionByID(levelId);
 	if (!levelDefinition) return;
 	let levelCI = levelDefinition.levelCloneInfo;

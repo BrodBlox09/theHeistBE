@@ -12,7 +12,7 @@ world.afterEvents.worldLoad.subscribe(event => {
 export default class PlayerBustedManager {
 	static playerBusted(player: Player): void {
 		let playerLevelInformation = DataManager.getData(player, "levelInformation")!;
-		let levelDefinition = LevelDefinitions.getLevelDefinitionByID(playerLevelInformation.levelId);
+		let levelDefinition = LevelDefinitions.getLevelDefinitionByID(playerLevelInformation.id);
 		if (!levelDefinition) {
 			console.warn("Player busted but no level definition to determine prison location.");
 			return;
@@ -44,7 +44,7 @@ export default class PlayerBustedManager {
 		}, Utilities.SECOND * 3);
 		system.runTimeout(() => {
 			player.removeTag("BUSTED");
-			system.sendScriptEvent("theheist:load-level", `${playerLevelInformation.levelId}`);
+			system.sendScriptEvent("theheist:load-level", `${playerLevelInformation.id}`);
 		}, Utilities.SECOND * (3 + 5));
 	}
 
