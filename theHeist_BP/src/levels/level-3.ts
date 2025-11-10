@@ -137,19 +137,19 @@ setup: () => {
     Utilities.setBlock(new Vector(4991, -60, 173), "theheist:custom_door_4_bottom_r", { "minecraft:cardinal_direction": "south", "theheist:unlocked": false });
     LevelConstructor.keycardReader(new Vector(4989.5, -59, 172.5), "green", [
         {
-            "type": "set_block", "do": { "x": 4992, "y": -60, "z": 173, "block": "theheist:custom_door_4_bottom_l", "permutations": { "minecraft:cardinal_direction": "south", "theheist:open": true } }, "delay": 40
+            "type": "set_block", "do": { "x": 4992, "y": -60, "z": 173, "block": "theheist:custom_door_4_bottom_l", "permutations": { "minecraft:cardinal_direction": "south", "theheist:open": true } }
         },
         {
-            "type": "set_block", "do": { "x": 4991, "y": -60, "z": 173, "block": "theheist:custom_door_4_bottom_r", "permutations": { "minecraft:cardinal_direction": "south", "theheist:open": true } }, "delay": 40
+            "type": "set_block", "do": { "x": 4991, "y": -60, "z": 173, "block": "theheist:custom_door_4_bottom_r", "permutations": { "minecraft:cardinal_direction": "south", "theheist:open": true } }
         },
         {
-            "type": "play_sound", "do": { "soundID": "random.door_open" }, "delay": 40
+            "type": "play_sound", "do": { "soundID": "random.door_open" }
         },
         {
-            "type": "manage_objective", "do": { "manageType": 2, "objective": "Access next level" }, "delay": 40
+            "type": "manage_objective", "do": { "manageType": 2, "objective": "Access next level" }
         },
         {
-            "type": "voice_says", "do": { "soundID": 404 }, "delay": 40
+            "type": "voice_says", "do": { "soundID": 404 }
         }
     ]);
     Utilities.setBlock(new Vector(4991.5, -59, 179.5), "minecraft:lever", { "lever_direction": "north" });
