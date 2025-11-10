@@ -8,7 +8,7 @@ import LevelDefinitions from "./levels/LevelDefinitions";
 import GameObjectiveManager from "./managers/GameObjectiveManager";
 import PlayerBustedManager from "./managers/PlayerBustedManager";
 import LoreItem from "./LoreItem";
-import { PlayerEnergyTracker, LevelInformation } from "./TypeDefinitions";
+import { PlayerEnergyTracker, LevelInformation, InventoryTracker } from "./TypeDefinitions";
 import { rechargeModeInfo } from "./gamebands/recharge";
 
 /**
@@ -70,15 +70,18 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 					"level": 0,
 					"sonarTimeout": 0
 				},
-				"levelId": levelId,
-				"playerInventory": []
+				"levelId": levelId
 			};
-			if (!levelDefinition.playerNoPhone) levelDefinition.startingItems.push({ "slot": 9, "typeId": 'theheist:phone' });
-			levelDefinition.startingItems.forEach((item) => {
-				playerLevelInformationDataNode.playerInventory.push(item);
-			});
 			DataManager.setData(player, playerLevelInformationDataNode);
-			Utilities.reloadPlayerInv(player, playerLevelInformationDataNode);
+
+			const inventoryTrackerDataNode: InventoryTracker = {
+				"name": "inventoryTracker",
+				"slots": []
+			};
+			inventoryTrackerDataNode.slots = levelDefinition.startingItems;
+			if (!levelDefinition.playerNoPhone) levelDefinition.startingItems.push({ "slot": 9, "typeId": 'theheist:phone' });
+			Utilities.reloadPlayerInv(player, inventoryTrackerDataNode);
+			DataManager.setData(player, inventoryTrackerDataNode);
 
 			GameObjectiveManager.removeAllObjectives();
 			levelDefinition.startObjectives.forEach((objData) => {

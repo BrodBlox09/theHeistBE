@@ -3,7 +3,7 @@ import DataManager from "./managers/DataManager";
 import Vector from "./Vector";
 import LoreItem from "./LoreItem";
 import { BlockStateSuperset } from "@minecraft/vanilla-data";
-import { LevelInformation, IInventorySlotData } from "./TypeDefinitions";
+import { LevelInformation, IInventorySlotData, InventoryTracker } from "./TypeDefinitions";
 
 export default class Utilities {
 	static levelMapHeight = 20;
@@ -72,14 +72,14 @@ export default class Utilities {
 		this.dimensions.overworld.fillBlocks(new BlockVolume(location1, location2), BlockPermutation.resolve(block, permutations), options);
 	}
 
-	static reloadPlayerInv(player: Player, levelData?: LevelInformation) {
-		if (levelData == null) levelData = DataManager.getData(player, "levelInformation")!;
+	static reloadPlayerInv(player: Player, inventoryTracker?: InventoryTracker) {
+		if (inventoryTracker == null) inventoryTracker = DataManager.getData(player, "inventoryTracker")!;
 		const playerInvContainer = player.getComponent("inventory")!.container;
 		playerInvContainer.clearAll();
-		const playerInvData = levelData.playerInventory; // Array of player inventory slots
+		const playerInvData = inventoryTracker.slots; // Array of player inventory slots
 		playerInvData.forEach((invSlotData: IInventorySlotData) => {
 			const typeId = invSlotData.typeId;
-			const itemStack: ItemStack = new ItemStack(typeId);
+			const itemStack = new ItemStack(typeId);
 			itemStack.keepOnDeath = true;
 			if (invSlotData.lockMode) itemStack.lockMode = ItemLockMode[invSlotData.lockMode as keyof typeof ItemLockMode];
 			LoreItem.setLoreOfItemStack(itemStack);
@@ -96,9 +96,9 @@ export default class Utilities {
 	 * @param stripEnchants Whether or not to remove enchants from all items in the player's inventory
 	 * @returns 
 	 */
-	static savePlayerInventory(player: Player, stripEnchants: Boolean = false): LevelInformation {
+	static savePlayerInventory(player: Player, stripEnchants: Boolean = false): InventoryTracker {
 		var playerInvContainer = player.getComponent("inventory")!.container;
-		var playerLevelData: LevelInformation = DataManager.getData(player, "levelInformation")!;
+		var inventoryTracker = DataManager.getData(player, "inventoryTracker")!;
 		var newPlayerInvData = [];
 		for (var i = 0; i < playerInvContainer.size; i++) {
 			var itemStack = playerInvContainer.getItem(i);
@@ -112,10 +112,10 @@ export default class Utilities {
 				});
 			}
 		}
-		playerLevelData.playerInventory = newPlayerInvData;
+		inventoryTracker.slots = newPlayerInvData;
 		// Update player information
-		DataManager.setData(player, playerLevelData);
-		return playerLevelData;
+		DataManager.setData(player, inventoryTracker);
+		return inventoryTracker;
 	}
 
 	static clearPlayerInventory(player: Player) {

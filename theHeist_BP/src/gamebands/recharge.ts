@@ -5,7 +5,7 @@ import GamebandManager from "./GamebandManager";
 import Vector from "../Vector";
 import ActionManager from "../actions/ActionManager";
 import LoreItem from "../LoreItem";
-import { LevelInformation, PlayerEnergyTracker, RechargeGamebandDataList } from "../TypeDefinitions";
+import { InventoryTracker, LevelInformation, PlayerEnergyTracker, RechargeGamebandDataList } from "../TypeDefinitions";
 
 export const rechargeModeInfo: RechargeGamebandDataList = {
 	1: {
@@ -60,7 +60,7 @@ export function toggleRechargeMode(player: Player, lvl: number) {
 	DataManager.setData(player, playerEnergyTrackerDataNode);
 }
 
-export function rechargeTick(player: Player, levelInformation: LevelInformation, playerEnergyTracker: PlayerEnergyTracker) {
+export function rechargeTick(player: Player, levelInformation: LevelInformation, playerEnergyTracker: PlayerEnergyTracker, inventoryTracker: InventoryTracker) {
 	if (!playerEnergyTracker.recharging) return;
 	const query = {
 			"type": "armor_stand",

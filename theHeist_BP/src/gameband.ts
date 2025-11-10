@@ -143,8 +143,10 @@ function playerBusted(player: Player, levelId: string) {
 	let playerLevelInformation = DataManager.getData(player, "levelInformation")!;
 	PlayerBustedManager.playerBusted(player);
 	playerLevelInformation.alarmLevelInfo.level = 0;
-	playerLevelInformation.playerInventory = [];
 	DataManager.setData(player, playerLevelInformation);
+	let inventoryTracker = DataManager.getData(player, "inventoryTracker")!;
+	inventoryTracker.slots = [];
+	DataManager.setData(player, inventoryTracker);
 	let playerEnergyTracker = DataManager.getData(player, "playerEnergyTracker")!;
 	playerEnergyTracker.energyUnits = 0;
 	DataManager.setData(player, playerEnergyTracker);
@@ -203,7 +205,8 @@ system.runInterval(() => {
 	const player = world.getPlayers().filter((x: Player) => (x != undefined && x != null))[0];
 	if (player == undefined) return;
 	
-	var playerLevelInformation = DataManager.getData(player, "levelInformation")!;
+	let levelInformation = DataManager.getData(player, "levelInformation")!;
+	let inventoryTracker = DataManager.getData(player, "inventoryTracker")!;
 	
 	// Handle dropped items
 	{
@@ -217,9 +220,9 @@ system.runInterval(() => {
 			var droppedItemTID = itemEntity.getComponent("item")!.itemStack.typeId;
 			itemEntity.remove();
 			if (droppedItemTID == "theheist:phone") {
-				playerBusted(player, playerLevelInformation.levelId);
+				playerBusted(player, levelInformation.levelId);
 			} else if (droppedItemTID == "theheist:nv_glasses") {
-				Utilities.reloadPlayerInv(player, playerLevelInformation);
+				Utilities.reloadPlayerInv(player, inventoryTracker);
 			}
 		}
 	}
@@ -247,23 +250,23 @@ system.runInterval(() => {
 	var playerEnergyTracker = DataManager.getData(player, "playerEnergyTracker")!;
 
 	// Tick all gameband modes
-	if (playerLevelInformation && playerEnergyTracker)
-		GamebandManager.tickAllGamebands(player, playerLevelInformation, playerEnergyTracker);
+	if (levelInformation && playerEnergyTracker)
+		GamebandManager.tickAllGamebands(player, levelInformation, playerEnergyTracker, inventoryTracker);
 
 	// Check to see if XP bar display needs to be updated
-	if ((playerEnergyTracker && playerEnergyTracker.energyUnits != player.level) || (playerLevelInformation && player.xpEarnedAtCurrentLevel != ((((playerLevelInformation.alarmLevelInfo.level / 100) - 0.06) * 742) + 41))) {
+	if ((playerEnergyTracker && playerEnergyTracker.energyUnits != player.level) || (levelInformation && player.xpEarnedAtCurrentLevel != ((((levelInformation.alarmLevelInfo.level / 100) - 0.06) * 742) + 41))) {
 		player.resetLevel();
 		player.addLevels(100);
 		// 9 * 100 - 158 = 742 (The total amount of XP you need to go from level 100 to 101)
 		//var alarmLvlXpVal = (playerLevelInformation.alarmLevelInfo.level / 100) * 742;
-		var alarmLvlXpVal = (((playerLevelInformation.alarmLevelInfo.level / 100) - 0.06) * 742) + 41;
+		var alarmLvlXpVal = (((levelInformation.alarmLevelInfo.level / 100) - 0.06) * 742) + 41;
 		player.addExperience(alarmLvlXpVal);
 		player.addLevels(-100);
 		player.addLevels(Math.floor(playerEnergyTracker.energyUnits));
 		// Bust player if they have an alarm level that is too high
-		if (playerLevelInformation.alarmLevelInfo.level >= 100) {
+		if (levelInformation.alarmLevelInfo.level >= 100) {
 			// Player is busted
-			playerBusted(player, playerLevelInformation.levelId);
+			playerBusted(player, levelInformation.levelId);
 		}
 	}
 });
