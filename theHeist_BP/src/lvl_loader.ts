@@ -119,14 +119,16 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 					for (const entity of entities) {
 						if (!persistentEntities.includes(entity.typeId) && !entity.hasTag("persistent")) entity.remove();
 					}
-					// Clear sensor mode residue
 					if (levelCloneInfo) {
-						Utilities.fillBlocks(new Vector(levelCloneInfo.startX, Utilities.cameraMappingHeight - 4, levelCloneInfo.startZ), new Vector(levelCloneInfo.endX, Utilities.cameraMappingHeight - 4, levelCloneInfo.endZ), "air");
+						// Clear robot paths in the air
+						Utilities.fillBlocks(new Vector(levelCloneInfo.startX, Utilities.robotPathDisplayMapHeight, levelCloneInfo.startZ), new Vector(levelCloneInfo.endX, Utilities.robotPathDisplayMapHeight, levelCloneInfo.endZ), "air");
+						// Clear robot paths on the floor
 						Utilities.dimensions.overworld.runCommand(`fill ${levelCloneInfo.startX} ${Utilities.levelFloorHeight} ${levelCloneInfo.startZ} ${levelCloneInfo.endX} ${Utilities.levelFloorHeight} ${levelCloneInfo.endZ} air replace theheist:robot_path`);
-						Utilities.dimensions.overworld.runCommand(`clone ${levelCloneInfo.startX} ${Utilities.floorCloneHeight} ${levelCloneInfo.startZ} ${levelCloneInfo.endX} ${Utilities.floorCloneHeight} ${levelCloneInfo.endZ} ${levelCloneInfo.startX} ${Utilities.levelFloorHeight - 1} ${levelCloneInfo.startZ}`);
+						// Clear sensor mode residue
+						Utilities.dimensions.overworld.runCommand(`clone ${levelCloneInfo.startX} ${Utilities.floorCloneHeight} ${levelCloneInfo.startZ} ${levelCloneInfo.endX} ${Utilities.floorCloneHeight} ${levelCloneInfo.endZ} ${levelCloneInfo.startX} ${Utilities.levelFloorHeight} ${levelCloneInfo.startZ}`);
 						// Move drilled areas back into position
 						Utilities.dimensions.overworld.runCommand(`clone ${levelCloneInfo.startX} ${Utilities.drilledBlocksHeight} ${levelCloneInfo.startZ} ${levelCloneInfo.endX} ${Utilities.drilledBlocksHeight + 1} ${levelCloneInfo.endZ} ${levelCloneInfo.startX} ${Utilities.levelFloorHeight} ${levelCloneInfo.startZ} filtered normal minecraft:hardened_clay`);
-						Utilities.dimensions.overworld.runCommand(`clone ${levelCloneInfo.startX} ${Utilities.drilledBlocksHeight} ${levelCloneInfo.startZ} ${levelCloneInfo.endX} ${Utilities.drilledBlocksHeight + 1} ${levelCloneInfo.endZ} ${levelCloneInfo.startX} ${Utilities.levelFloorHeight + 1} ${levelCloneInfo.startZ} filtered move minecraft:hardened_clay`);
+						Utilities.dimensions.overworld.runCommand(`clone ${levelCloneInfo.startX} ${Utilities.drilledBlocksHeight} ${levelCloneInfo.startZ} ${levelCloneInfo.endX} ${Utilities.drilledBlocksHeight + 1} ${levelCloneInfo.endZ} ${levelCloneInfo.startX} ${Utilities.levelPlayingHeight} ${levelCloneInfo.startZ} filtered move minecraft:hardened_clay`);
 					}
 				}
 

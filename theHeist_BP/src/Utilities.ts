@@ -12,13 +12,17 @@ export default class Utilities {
 	static consolesHeight = -15;
 	static rechargeHeight = -20;
 	static cameraHeight = -25;
-	static cameraMappingHeight = -30;
+	static raycastHeight = -30;
+	static cameraBlockCacheMappingHeight = -32;
+	static cameraBlockMappingHeight = -33;
+	static robotPathDisplayMapHeight = -34;
+	static sonarBlockMappingHeight = -35;
 	static robotPathMapHeight = -49;
 	static magnetModeMagnetBlocksHeight = -51;
 	static ventHeight = -57;
 	static cameraDisplayHeight = -58;
-	static levelPlayingHeight = -59;
-	static levelFloorHeight = -60;
+	static levelPlayingHeight = -60;
+	static levelFloorHeight = -61;
 	static SECOND = 20;
 	static dimensions: Record<string, Dimension> = {};
 

@@ -123,16 +123,13 @@ export function updateSensorDisplay(player: Player, gamebandTracker: GamebandTra
     if (!playerIsInSensorMode(gamebandTracker)) return; // Player is not in sensor mode
     clearSensed(player);
     var loc = Vector.from(player.location);
-    loc.y = Utilities.cameraMappingHeight - 3; // To get to camera sight blocks height
     var corner1Top = loc.subtract(new Vector(sensingRange, 0, sensingRange));
     var corner2Top = loc.add(new Vector(sensingRange, 0, sensingRange));
     var corner1Floor = loc.subtract(new Vector(sensingRange, 0, sensingRange));
-    corner1Floor.y = Utilities.levelFloorHeight - 1; // To get floor height
     // Hopefully below can be replaced and changed into a script API function
-    //Utilities.cameraMappingHeight - 4
-    Utilities.dimensions.overworld.runCommand(`clone ${corner1Top.x} ${corner1Top.y} ${corner1Top.z} ${corner2Top.x} ${corner2Top.y} ${corner2Top.z} ${corner1Floor.x} ${corner1Floor.y} ${corner1Floor.z} filtered normal theheist:camera_sight`);
-    Utilities.dimensions.overworld.runCommand(`clone ${corner1Top.x} ${corner1Top.y - 2} ${corner1Top.z} ${corner2Top.x} ${corner2Top.y - 2} ${corner2Top.z} ${corner1Floor.x} ${corner1Floor.y} ${corner1Floor.z} filtered normal theheist:sonar_sight`);
-    Utilities.dimensions.overworld.runCommand(`clone ${corner1Top.x} ${Utilities.cameraMappingHeight - 4} ${corner1Top.z} ${corner2Top.x} ${Utilities.cameraMappingHeight - 4} ${corner2Top.z} ${corner1Floor.x} ${Utilities.levelFloorHeight} ${corner1Floor.z} filtered normal theheist:robot_path`);
+    Utilities.dimensions.overworld.runCommand(`clone ${corner1Top.x} ${Utilities.cameraBlockMappingHeight} ${corner1Top.z} ${corner2Top.x} ${Utilities.cameraBlockMappingHeight} ${corner2Top.z} ${corner1Floor.x} ${Utilities.levelFloorHeight} ${corner1Floor.z} filtered normal theheist:camera_sight`);
+    Utilities.dimensions.overworld.runCommand(`clone ${corner1Top.x} ${Utilities.sonarBlockMappingHeight} ${corner1Top.z} ${corner2Top.x} ${Utilities.sonarBlockMappingHeight} ${corner2Top.z} ${corner1Floor.x} ${Utilities.levelFloorHeight} ${corner1Floor.z} filtered normal theheist:sonar_sight`);
+    Utilities.dimensions.overworld.runCommand(`clone ${corner1Top.x} ${Utilities.robotPathDisplayMapHeight} ${corner1Top.z} ${corner2Top.x} ${Utilities.robotPathDisplayMapHeight} ${corner2Top.z} ${corner1Floor.x} ${Utilities.levelPlayingHeight} ${corner1Floor.z} filtered normal theheist:robot_path`);
 }
 
 function clearSensed(player: Player) {
@@ -141,7 +138,7 @@ function clearSensed(player: Player) {
     var corner1 = loc.subtract(new Vector(clearRange, 0, clearRange));
     var corner2 = loc.add(new Vector(clearRange, 0, clearRange));
     var corner3 = loc.subtract(new Vector(clearRange, 0, clearRange));
-    corner3.y = Utilities.levelFloorHeight - 1;
+    corner3.y = Utilities.levelFloorHeight;
     Utilities.dimensions.overworld.runCommand(`clone ${corner1.x} ${corner1.y} ${corner1.z} ${corner2.x} ${corner2.y} ${corner2.z} ${corner3.x} ${corner3.y} ${corner3.z}`);
     /*Utilities.dimensions.overworld.fillBlocks(corner1, corner2, floorBlock, {
         "matchingBlock": BlockPermutation.resolve("theheist:camera_sight")
