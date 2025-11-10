@@ -16,12 +16,6 @@ import { toggleStealthMode } from "./gamebands/stealth";
 import { tryStunMode } from "./gamebands/stun";
 import { tryDrillMode } from "./gamebands/drill";
 
-const levelMapHeight = 20;
-const consolesHeight = -15;
-const rechargeHeight = -20;
-const cameraHeight = -25;
-const cameraMappingHeight = -30;
-
 world.afterEvents.itemStartUseOn.subscribe(itemUse);
 world.afterEvents.itemUse.subscribe(itemUse);
 
@@ -109,7 +103,7 @@ function keycard(keycardType: string, player: Player) {
 	if (block.typeId != "theheist:keycard_reader") return;
 	var query = {
 		"type": "armor_stand",
-		"location": { 'x': block.location.x, 'y': consolesHeight, 'z': block.location.z },
+		"location": { 'x': block.location.x, 'y': Utilities.consolesHeight, 'z': block.location.z },
 		"maxDistance": 2,
 		"closest": 1
 	}
