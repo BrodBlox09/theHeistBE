@@ -19,7 +19,7 @@ export const hackingModeInfo: GamebandInfo = {
 };
 
 export function tryHackingMode(player: Player, lvl: number) {
-	let gamebandTracker = DataManager.getData(player, "levelInformation")!;
+	let gamebandTracker = DataManager.getData(player, "gamebandTracker")!;
 	GamebandManager.cancelMode(player, gamebandTracker.currentMode);
 
 	let consolesAttempted = 0;
