@@ -62,7 +62,8 @@ export interface KeycardReaderActionTracker extends IActionTracker {
 export interface LevelInformation extends DataNode {
 	"name": "levelInformation",
 	"currentMode": ModeData | null,
-	"id": string
+	"id": string,
+	"runSecurity": boolean
 }
 
 export interface AlarmTracker extends DataNode {
@@ -139,6 +140,7 @@ export interface ILevel {
 	"startPlayerLoc": Vector3,
 	"startPlayerRot"?: number,
 	"noAutoCleanup"?: boolean,
+	"noRunSecurity"?: boolean,
 	"levelId": string,
 	"levelCloneInfo": ILevelCloneInfo,
 	"startingItems": Array<IInventorySlotData>,

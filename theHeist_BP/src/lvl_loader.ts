@@ -66,7 +66,8 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 			const playerLevelInformationDataNode: LevelInformation = {
 				"name": "levelInformation",
 				"currentMode": null,
-				"id": levelId
+				"id": levelId,
+				"runSecurity": !levelDefinition.noRunSecurity
 			};
 			DataManager.setData(player, playerLevelInformationDataNode);
 

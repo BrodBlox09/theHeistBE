@@ -20,6 +20,7 @@ const level: ILevel = {
 "startingItems": [{ "slot": 0, "typeId": 'theheist:recharge_mode_lvl_1', "lockMode": "slot" }, { "slot": 1, "typeId": 'theheist:hacking_mode_lvl_1', "lockMode": "slot" }],
 "rechargeLevel": 1,
 "noAutoCleanup": true,
+"noRunSecurity": true,
 "startObjectives": [{ "name": "Get into the building", "sortOrder": 0 }],
 "customTitle": "§o§7Outside the HQ",
 "customLoadingArea": {

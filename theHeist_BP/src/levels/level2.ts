@@ -7,6 +7,7 @@ import { ILevel, BlockRotation } from "../TypeDefinitions";
 const level: ILevel = {
 "levelId": "2",
 "noAutoCleanup": true,
+"noRunSecurity": true,
 "levelCloneInfo": {
 	"startX": -25,
 	"startZ": 56,

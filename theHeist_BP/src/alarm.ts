@@ -26,7 +26,7 @@ system.runInterval(() => {
 	if (player == undefined) return;
 
 	let playerLevelInformationDataNode = DataManager.getData(player, "levelInformation");
-	if (!playerLevelInformationDataNode) return;
+	if (!playerLevelInformationDataNode || !playerLevelInformationDataNode.runSecurity) return;
 	let levelId = playerLevelInformationDataNode.id;
 	let levelDefinition = LevelDefinitions.getLevelDefinitionByID(levelId);
 	if (!levelDefinition) return;
