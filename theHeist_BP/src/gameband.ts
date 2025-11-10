@@ -223,10 +223,5 @@ system.runInterval(() => {
 		player.addExperience(alarmLvlXpVal);
 		player.addLevels(-100);
 		player.addLevels(Math.floor(gamebandTracker.energy));
-		// Bust player if they have an alarm level that is too high
-		if (alarmTracker.level >= 100) {
-			// Player is busted
-			PlayerBustedManager.playerBusted(player);
-		}
 	}
 });

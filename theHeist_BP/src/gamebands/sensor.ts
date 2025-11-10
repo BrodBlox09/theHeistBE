@@ -116,8 +116,10 @@ export function sensorTick(player: Player, gamebandTracker: GamebandTracker, inv
     DataManager.setData(player, gamebandTracker);
 }
 
+/**
+ * Update the ground to show where the camera sight blocks are if the player is using sensor mode.
+ */
 export function updateSensorDisplay(player: Player, gamebandTracker: GamebandTracker) {
-    // Update ground to show where the camera sight blocks are
     if (!playerIsInSensorMode(gamebandTracker)) return; // Player is not in sensor mode
     clearSensed(player);
     var loc = Vector.from(player.location);

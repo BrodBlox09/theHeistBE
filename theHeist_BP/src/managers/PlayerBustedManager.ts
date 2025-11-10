@@ -20,10 +20,11 @@ export default class PlayerBustedManager {
 		}
 		let levelCI = levelDefinition.levelCloneInfo;
 
-		player.addTag('loadingLevel');
+		player.addTag("BUSTED");
 
-		playerLevelInformation.alarmLevelInfo.level = 0;
-		DataManager.setData(player, playerLevelInformation);
+		let alarmTracker = DataManager.getData(player, "alarmTracker")!;
+		alarmTracker.level = 0;
+		DataManager.setData(player, alarmTracker);
 
 		let inventoryTracker = DataManager.getData(player, "inventoryTracker")!;
 		inventoryTracker.slots = [];
@@ -36,13 +37,14 @@ export default class PlayerBustedManager {
 
 		bustedCounterObjective.setScore(player, (bustedCounterObjective.getScore(player) ?? 0) + 1);
 		player.playSound("map.alarm");
-		player.addTag("BUSTED");
+		player.addTag('loadingLevel');
 		player.onScreenDisplay.setTitle("§r§e§lBusted", { "subtitle": "You got detected. Try again!", "fadeInDuration": 20, "fadeOutDuration": 20, "stayDuration": 160 });
-		player.getComponent("inventory")!.container?.clearAll();
+		player.getComponent("inventory")!.container.clearAll();
 		system.runTimeout(() => {
 			PlayerBustedManager.stopAllSound();
 			player.teleport(levelCI.prisonLoc);
-			player.sendMessage(`You got busted §c§l${PlayerBustedManager.getTimesBustedFromPlayer(player)}§r time(s)`);
+			let bustedCount = PlayerBustedManager.getTimesBustedFromPlayer(player);
+			player.sendMessage(`You got busted §c§l${bustedCount}§r time${bustedCount > 1 ? 's' : ''}`);
 		}, Utilities.SECOND * 3);
 		system.runTimeout(() => {
 			player.removeTag("BUSTED");

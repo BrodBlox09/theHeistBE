@@ -7,6 +7,7 @@ import Utilities from "./Utilities";
 import Vector from "./Vector";
 import { LevelInformation, CameraSwivelMode, ILevelCloneInfo, AlarmTracker, GamebandTracker } from "./TypeDefinitions";
 import LevelDefinitions from "./levels/LevelDefinitions";
+import PlayerBustedManager from "./managers/PlayerBustedManager";
 
 const cameraHeight = Utilities.cameraHeight;
 const cameraMappingHeight = Utilities.cameraMappingHeight;
@@ -36,11 +37,13 @@ system.runInterval(() => {
 	let alarmTracker = DataManager.getData(player, "alarmTracker")!;
 	let gamebandTracker = DataManager.getData(player, "gamebandTracker")!;
 
+	// Update camera sight blocks and sensor display
 	updateRobots(player);
 	updateCameras(player, levelCI);
 	updateSonars(player, levelCI);
 	updateSonar360s(player);
 	SensorModeFunc.updateSensorDisplay(player, gamebandTracker);
+
 	updatePlayerAlarmLevel(player, gamebandTracker, alarmTracker);
 
 	// Toggle below to see your velocity at all times, very useful when testing sonars
@@ -52,6 +55,7 @@ system.runInterval(() => {
 });
 
 function updatePlayerAlarmLevel(player: Player, gamebandTracker: GamebandTracker, alarmTracker: AlarmTracker) {
+	// If player is already busted, do not add to their alarm level
 	if (player.hasTag("BUSTED")) return;
 
 	// Movement-based security
@@ -92,6 +96,9 @@ function updatePlayerAlarmLevel(player: Player, gamebandTracker: GamebandTracker
 		alarmTracker.level = 100;
 
 	DataManager.setData(player, alarmTracker);
+
+	// Bust player if they have an alarm level that is too high
+	if (alarmTracker.level >= 100) PlayerBustedManager.playerBusted(player);
 }
 
 function cameraCanSeeThrough(location: Vector): boolean {
