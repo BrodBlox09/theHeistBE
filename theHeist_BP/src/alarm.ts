@@ -1,10 +1,11 @@
 import { world, system, GameMode, Player, EntityQueryOptions, MolangVariableMap, BlockComponent, Block } from "@minecraft/server";
 import { solidToTransparent } from "./gamebands/xray";
+import * as StealthModeFunc from "./gamebands/stealth";
 import * as SensorModeFunc from "./gamebands/sensor";
 import DataManager from "./managers/DataManager";
 import Utilities from "./Utilities";
 import Vector from "./Vector";
-import { LevelInformation, CameraSwivelMode, ILevelCloneInfo, AlarmTracker } from "./TypeDefinitions";
+import { LevelInformation, CameraSwivelMode, ILevelCloneInfo, AlarmTracker, GamebandTracker } from "./TypeDefinitions";
 import LevelDefinitions from "./levels/LevelDefinitions";
 
 const cameraHeight = Utilities.cameraHeight;
@@ -33,13 +34,14 @@ system.runInterval(() => {
 	let levelCI = levelDefinition.levelCloneInfo;
 
 	let alarmTracker = DataManager.getData(player, "alarmTracker")!;
+	let gamebandTracker = DataManager.getData(player, "gamebandTracker")!;
 
 	updateRobots(player);
 	updateCameras(player, levelCI);
 	updateSonars(player, levelCI);
 	updateSonar360s(player);
-	SensorModeFunc.updateSensorDisplay(player, DataManager.getData(player, "levelInformation")!);
-	updatePlayerAlarmLevel(player, playerLevelInformationDataNode, alarmTracker);
+	SensorModeFunc.updateSensorDisplay(player, gamebandTracker);
+	updatePlayerAlarmLevel(player, gamebandTracker, alarmTracker);
 
 	// Toggle below to see your velocity at all times, very useful when testing sonars
 	// let playerVelocityV3 = player.getVelocity();
@@ -49,7 +51,7 @@ system.runInterval(() => {
 	// player.onScreenDisplay.setActionBar(`Velocity: ${playerVelocity}`);
 });
 
-function updatePlayerAlarmLevel(player: Player, levelInformation: LevelInformation, alarmTracker: AlarmTracker) {
+function updatePlayerAlarmLevel(player: Player, gamebandTracker: GamebandTracker, alarmTracker: AlarmTracker) {
 	if (player.hasTag("BUSTED")) return;
 
 	// Movement-based security
@@ -75,8 +77,7 @@ function updatePlayerAlarmLevel(player: Player, levelInformation: LevelInformati
 	if (playerBlock && playerBlock.typeId == "minecraft:stone_pressure_plate")
 		alarmTracker.level = 100;
 
-	var playerIsStealth = levelInformation.currentMode?.mode == "stealth";
-	if (playerIsStealth) return;
+	if (StealthModeFunc.playerIsInStealthMode(gamebandTracker)) return;
 	// Vision-based security
 	// Sight block stuff
 	var playerCameraMappingHeightBlock = Utilities.dimensions.overworld.getBlock({ "x": player.location.x, "y": cameraMappingHeight - 3, "z": player.location.z });

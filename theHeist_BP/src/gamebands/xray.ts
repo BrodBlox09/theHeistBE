@@ -3,7 +3,7 @@ import DataManager from "../managers/DataManager";
 import Utilities from "../Utilities";
 import Vector from "../Vector";
 import GamebandManager from "./GamebandManager";
-import { GamebandInfo, InventoryTracker, LevelInformation, PlayerEnergyTracker } from "../TypeDefinitions";
+import { GamebandInfo, GamebandTracker, InventoryTracker, LevelInformation, PlayerEnergyTracker } from "../TypeDefinitions";
 
 const viewRange = 2;
 const clearRange = 4;
@@ -24,15 +24,15 @@ export const xrayModeInfo: GamebandInfo = {
 };
 
 export function toggleXRayMode(player: Player, lvl: number) {
-    let levelInformation = DataManager.getData(player, "levelInformation")!;
+    let gamebandTracker = DataManager.getData(player, "gamebandTracker")!;
 	let inventoryTracker = DataManager.getData(player, "inventoryTracker")!;
-    if (playerIsInXRayMode(levelInformation)) endXRayMode(player, levelInformation, inventoryTracker);
-    else tryStartXRayMode(player, lvl, levelInformation, inventoryTracker);
+    if (playerIsInXRayMode(gamebandTracker)) endXRayMode(player, gamebandTracker, inventoryTracker);
+    else tryStartXRayMode(player, lvl, gamebandTracker, inventoryTracker);
 }
 
-function tryStartXRayMode(player: Player, lvl: number, levelInformation: LevelInformation, inventoryTracker: InventoryTracker) {
-    GamebandManager.cancelMode(player, levelInformation.currentMode);
-    levelInformation = DataManager.getData(player, "levelInformation")!;
+function tryStartXRayMode(player: Player, lvl: number, gamebandTracker: GamebandTracker, inventoryTracker: InventoryTracker) {
+    GamebandManager.cancelMode(player, gamebandTracker.currentMode);
+    gamebandTracker = DataManager.getData(player, "gamebandTracker")!;
     
     var costPerSecond = xrayModeInfo[lvl].cost;
     var costPerTick = costPerSecond / 20;
@@ -42,33 +42,33 @@ function tryStartXRayMode(player: Player, lvl: number, levelInformation: LevelIn
         return;
     }
 
-    levelInformation.currentMode = { "mode": "xray", "level": lvl };
+    gamebandTracker.currentMode = { "mode": "xray", "level": lvl };
     inventoryTracker.slots = inventoryTracker.slots.filter((s) => (s.slot != 3));
     inventoryTracker.slots.push({ "slot": 3, "typeId": `theheist:xray_mode_lvl_${lvl}_enchanted`, "lockMode": "slot" });
-    DataManager.setData(player, levelInformation);
+    DataManager.setData(player, gamebandTracker);
     DataManager.setData(player, inventoryTracker);
     Utilities.reloadPlayerInv(player, inventoryTracker);
     player.playSound("mob.spider.step", { "pitch": 1.5 });
-    updateXRayDisplay(player, levelInformation, lvl);
+    updateXRayDisplay(player, gamebandTracker, lvl);
 }
 
-function endXRayMode(player: Player, levelInformation: LevelInformation, inventoryTracker: InventoryTracker) {
-    if (!playerIsInXRayMode(levelInformation)) return;
-    var xrayModeData = levelInformation.currentMode!;
-    levelInformation.currentMode = null;
+function endXRayMode(player: Player, gamebandTracker: GamebandTracker, inventoryTracker: InventoryTracker) {
+    if (!playerIsInXRayMode(gamebandTracker)) return;
+    var xrayModeData = gamebandTracker.currentMode!;
+    gamebandTracker.currentMode = null;
     inventoryTracker.slots = inventoryTracker.slots.filter((x) => x.slot != 3);
     inventoryTracker.slots.push({ "slot": 3, "typeId": `theheist:xray_mode_lvl_${xrayModeData!.level}`, "lockMode": "slot" });
-    DataManager.setData(player, levelInformation);
+    DataManager.setData(player, gamebandTracker);
     DataManager.setData(player, inventoryTracker);
     Utilities.reloadPlayerInv(player, inventoryTracker);
     player.playSound("mob.spider.step", { "pitch": 1.25 });
-    clearXRayDisplay(player, levelInformation);
-    system.runTimeout(() => clearXRayDisplay(player, levelInformation), 5); // Ensure everything actually gets cleared
+    clearXRayDisplay(player);
+    system.runTimeout(() => clearXRayDisplay(player), 5); // Ensure everything actually gets cleared
 }
 
-export function xrayTick(player: Player, levelInformation: LevelInformation, energyTracker: PlayerEnergyTracker, inventoryTracker: InventoryTracker) {
-    if (!playerIsInXRayMode(levelInformation)) return;
-    var xrayModeData = levelInformation.currentMode!;
+export function xrayTick(player: Player, gamebandTracker: GamebandTracker, energyTracker: PlayerEnergyTracker, inventoryTracker: InventoryTracker) {
+    if (!playerIsInXRayMode(gamebandTracker)) return;
+    var xrayModeData = gamebandTracker.currentMode!;
     // Player is currently in xray mode
     var costPerSecond = xrayModeInfo[xrayModeData.level].cost;
     var costPerTick = costPerSecond / 20;
@@ -76,18 +76,18 @@ export function xrayTick(player: Player, levelInformation: LevelInformation, ene
     if (energyTracker.energyUnits <= 0) {
         // Player can no longer afford xray mode
         energyTracker.energyUnits = 0;
-        endXRayMode(player, levelInformation, inventoryTracker);
+        endXRayMode(player, gamebandTracker, inventoryTracker);
         DataManager.setData(player, energyTracker);
         return;
     }
     DataManager.setData(player, energyTracker);
-    updateXRayDisplay(player, levelInformation, xrayModeData.level);
+    updateXRayDisplay(player, gamebandTracker, xrayModeData.level);
 }
 
-export function updateXRayDisplay(player: Player, levelInformation: LevelInformation, lvl: number) {
+export function updateXRayDisplay(player: Player, gamebandTracker: GamebandTracker, lvl: number) {
     // Update ground to show where the camera sight blocks are
-    if (!playerIsInXRayMode(levelInformation)) return; // Player is not in xray mode
-    clearXRayDisplay(player, levelInformation);
+    if (!playerIsInXRayMode(gamebandTracker)) return; // Player is not in xray mode
+    clearXRayDisplay(player);
     var loc = Vector.from(player.location);
     var corner1 = loc.subtract(new Vector(viewRange, viewRange, viewRange));
     var corner2 = loc.add(new Vector(viewRange, viewRange, viewRange));
@@ -101,7 +101,7 @@ export function updateXRayDisplay(player: Player, levelInformation: LevelInforma
     });
 }
 
-function clearXRayDisplay(player: Player, levelInformation: LevelInformation) {
+function clearXRayDisplay(player: Player) {
     var loc = Vector.from(player.location);
     loc.y = Utilities.levelHeight; // Ensure xray does not go below the level
     var corner1 = loc.subtract(new Vector(clearRange, clearRange, clearRange));
@@ -115,6 +115,6 @@ function clearXRayDisplay(player: Player, levelInformation: LevelInformation) {
     });
 }
 
-export function playerIsInXRayMode(levelInformation: LevelInformation) {
-    return levelInformation.currentMode?.mode == "xray";
+export function playerIsInXRayMode(gamebandTracker: GamebandTracker) {
+    return gamebandTracker.currentMode?.mode == "xray";
 }

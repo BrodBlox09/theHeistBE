@@ -209,11 +209,12 @@ system.runInterval(() => {
 	}
 
 	// Set player level to player energy level
-	var playerEnergyTracker = DataManager.getData(player, "playerEnergyTracker")!;
+	let playerEnergyTracker = DataManager.getData(player, "playerEnergyTracker")!;
+	let gamebandTracker = DataManager.getData(player, "gamebandTracker");
 
 	// Tick all gameband modes
-	if (levelInformation && playerEnergyTracker)
-		GamebandManager.tickAllGamebands(player, levelInformation, playerEnergyTracker, inventoryTracker);
+	if (gamebandTracker && playerEnergyTracker)
+		GamebandManager.tickAllGamebands(player, gamebandTracker, playerEnergyTracker, inventoryTracker);
 
 	// Check to see if XP bar display needs to be updated
 	if ((playerEnergyTracker && playerEnergyTracker.energyUnits != player.level) || (levelInformation && player.xpEarnedAtCurrentLevel != ((((alarmTracker.level / 100) - 0.06) * 742) + 41))) {

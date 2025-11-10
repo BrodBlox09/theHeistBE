@@ -4,7 +4,7 @@ import Utilities from "../Utilities";
 import Vector from "../Vector";
 import GamebandManager from "./GamebandManager";
 import LoreItem from "../LoreItem";
-import { GamebandInfo, InventoryTracker, LevelInformation, PlayerEnergyTracker } from "../TypeDefinitions";
+import { GamebandInfo, GamebandTracker, InventoryTracker, LevelInformation, PlayerEnergyTracker } from "../TypeDefinitions";
 import LevelDefinitions from "../levels/LevelDefinitions";
 
 const sensingRange = 14;
@@ -53,15 +53,15 @@ export function tryMap(player: Player, levelInformation: LevelInformation, playe
 }
 
 export function toggleSensorMode(player: Player, lvl: number) {
-    let levelInformation = DataManager.getData(player, "levelInformation")!;
+    let gamebandTracker = DataManager.getData(player, "gamebandTracker")!;
     let inventoryTracker = DataManager.getData(player, "inventoryTracker")!;
-    if (playerIsInSensorMode(levelInformation)) endSensorMode(player, levelInformation, inventoryTracker);
-    else tryStartSensorMode(player, lvl, levelInformation, inventoryTracker);
+    if (playerIsInSensorMode(gamebandTracker)) endSensorMode(player, gamebandTracker, inventoryTracker);
+    else tryStartSensorMode(player, lvl, gamebandTracker, inventoryTracker);
 }
 
-function tryStartSensorMode(player: Player, lvl: number, levelInformation: LevelInformation, inventoryTracker: InventoryTracker) {
-    GamebandManager.cancelMode(player, levelInformation.currentMode);
-    levelInformation = DataManager.getData(player, "levelInformation")!;
+function tryStartSensorMode(player: Player, lvl: number, gamebandTracker: GamebandTracker, inventoryTracker: InventoryTracker) {
+    GamebandManager.cancelMode(player, gamebandTracker.currentMode);
+    gamebandTracker = DataManager.getData(player, "gamebandTracker")!;
 
     var costPerSecond = sensorModeInfo[lvl].cost;
     var costPerTick = costPerSecond / 20;
@@ -71,35 +71,36 @@ function tryStartSensorMode(player: Player, lvl: number, levelInformation: Level
         return;
     }
 
-    levelInformation.currentMode = { "mode": "sensor", "level": lvl };
-    DataManager.setData(player, levelInformation);
+    gamebandTracker.currentMode = { "mode": "sensor", "level": lvl };
+    DataManager.setData(player, gamebandTracker);
 
     inventoryTracker.slots = inventoryTracker.slots.filter((s) => (s.slot != 2));
     inventoryTracker.slots.push({ "slot": 2, "typeId": `theheist:sensor_mode_lvl_${lvl}_enchanted`, "lockMode": "slot" });
     DataManager.setData(player, inventoryTracker);
 	Utilities.reloadPlayerInv(player, inventoryTracker);
     player.playSound("mob.irongolem.throw", { "pitch": 1 });
-    updateSensorDisplay(player, levelInformation);
+    updateSensorDisplay(player, gamebandTracker);
 }
 
-function endSensorMode(player: Player, levelInformation: LevelInformation, inventoryTracker: InventoryTracker) {
-    if (!playerIsInSensorMode(levelInformation)) return;
-    var sensorModeData = levelInformation.currentMode!;
-    levelInformation.currentMode = null;
+function endSensorMode(player: Player, gamebandTracker: GamebandTracker, inventoryTracker: InventoryTracker) {
+    if (!playerIsInSensorMode(gamebandTracker)) return;
+    var sensorModeData = gamebandTracker.currentMode!;
+    gamebandTracker.currentMode = null;
     inventoryTracker.slots = inventoryTracker.slots.filter((x) => x.slot != 2);
     inventoryTracker.slots.push({ "slot": 2, "typeId": `theheist:sensor_mode_lvl_${sensorModeData.level}`, "lockMode": "slot" });
-    DataManager.setData(player, levelInformation);
+    DataManager.setData(player, gamebandTracker);
     DataManager.setData(player, inventoryTracker);
     Utilities.reloadPlayerInv(player, inventoryTracker);
-    clearSensed(player, levelInformation);
+    clearSensed(player);
     player.playSound("mob.irongolem.throw", { "pitch": 0.5 });
-    system.runTimeout(() => clearSensed(player, levelInformation), 5); // Ensure everything actually gets cleared
+    system.runTimeout(() => clearSensed(player), 5); // Ensure everything actually gets cleared
 }
 
-export function sensorTick(player: Player, levelInformation: LevelInformation, energyTracker: PlayerEnergyTracker, inventoryTracker: InventoryTracker) {
+export function sensorTick(player: Player, gamebandTracker: GamebandTracker, energyTracker: PlayerEnergyTracker, inventoryTracker: InventoryTracker) {
+	let levelInformation = DataManager.getData(player, "levelInformation")!;
 	tryMap(player, levelInformation, energyTracker, inventoryTracker);
-    if (!playerIsInSensorMode(levelInformation)) return;
-    var sensorModeData = levelInformation.currentMode!;
+    if (!playerIsInSensorMode(gamebandTracker)) return;
+    var sensorModeData = gamebandTracker.currentMode!;
     // Player is currently in sensor mode
     var costPerSecond = sensorModeInfo[sensorModeData.level].cost;
     var costPerTick = costPerSecond / 20;
@@ -107,17 +108,17 @@ export function sensorTick(player: Player, levelInformation: LevelInformation, e
     if (energyTracker.energyUnits <= 0) {
         // Player can no longer afford sensor mode
         energyTracker.energyUnits = 0;
-        endSensorMode(player, levelInformation, inventoryTracker);
+        endSensorMode(player, gamebandTracker, inventoryTracker);
         DataManager.setData(player, energyTracker);
         return;
     }
     DataManager.setData(player, energyTracker);
 }
 
-export function updateSensorDisplay(player: Player, levelInformation: LevelInformation) {
+export function updateSensorDisplay(player: Player, gamebandTracker: GamebandTracker) {
     // Update ground to show where the camera sight blocks are
-    if (!playerIsInSensorMode(levelInformation)) return; // Player is not in sensor mode
-    clearSensed(player, levelInformation);
+    if (!playerIsInSensorMode(gamebandTracker)) return; // Player is not in sensor mode
+    clearSensed(player);
     var loc = Vector.from(player.location);
     loc.y = Utilities.cameraMappingHeight - 3; // To get to camera sight blocks height
     var corner1Top = loc.subtract(new Vector(sensingRange, 0, sensingRange));
@@ -131,7 +132,7 @@ export function updateSensorDisplay(player: Player, levelInformation: LevelInfor
     Utilities.dimensions.overworld.runCommand(`clone ${corner1Top.x} ${Utilities.cameraMappingHeight - 4} ${corner1Top.z} ${corner2Top.x} ${Utilities.cameraMappingHeight - 4} ${corner2Top.z} ${corner1Floor.x} ${Utilities.levelHeight} ${corner1Floor.z} filtered normal theheist:robot_path`);
 }
 
-function clearSensed(player: Player, levelInformation: LevelInformation) {
+function clearSensed(player: Player) {
     var loc = Vector.from(player.location);
     loc.y = Utilities.floorCloneHeight; // To get to floor height
     var corner1 = loc.subtract(new Vector(clearRange, 0, clearRange));
@@ -145,6 +146,6 @@ function clearSensed(player: Player, levelInformation: LevelInformation) {
     Utilities.dimensions.overworld.runCommand(`fill ${corner1.x} ${Utilities.levelHeight} ${corner1.z} ${corner2.x} ${Utilities.levelHeight} ${corner2.z} air replace theheist:robot_path`);
 }
 
-export function playerIsInSensorMode(levelInformation: LevelInformation) {
-    return levelInformation.currentMode?.mode == "sensor";
+export function playerIsInSensorMode(gamebandTracker: GamebandTracker) {
+    return gamebandTracker.currentMode?.mode == "sensor";
 }

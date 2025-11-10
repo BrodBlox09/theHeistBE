@@ -12,9 +12,9 @@ export const drillModeInfo: GamebandInfo = {
 };
 
 export function tryDrillMode(player: Player, lvl: number) {
-    let levelInformation = DataManager.getData(player, "levelInformation")!;
-    GamebandManager.cancelMode(player, levelInformation.currentMode);
-    levelInformation = DataManager.getData(player, "levelInformation")!;
+    let gamebandTracker = DataManager.getData(player, "gamebandTracker")!;
+    GamebandManager.cancelMode(player, gamebandTracker.currentMode);
+    gamebandTracker = DataManager.getData(player, "gamebandTracker")!;
     
     let playerRot = player.getRotation().y;
 	if (playerRot < 0) playerRot = 360 + playerRot;

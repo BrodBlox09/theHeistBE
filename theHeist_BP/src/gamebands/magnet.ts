@@ -3,7 +3,7 @@ import DataManager from "../managers/DataManager";
 import Utilities from "../Utilities";
 import Vector from "../Vector";
 import GamebandManager from "./GamebandManager";
-import { GamebandInfo, InventoryTracker, LevelInformation, PlayerEnergyTracker } from "../TypeDefinitions";
+import { GamebandInfo, GamebandTracker, InventoryTracker, LevelInformation, PlayerEnergyTracker } from "../TypeDefinitions";
 
 export const magnetModeInfo: GamebandInfo = {
 	1: {
@@ -12,15 +12,14 @@ export const magnetModeInfo: GamebandInfo = {
 };
 
 export function toggleMagnetMode(player: Player, lvl: number) {
-    let levelInformation = DataManager.getData(player, "levelInformation")!;
+    let gamebandTracker = DataManager.getData(player, "gamebandTracker")!;
 	let inventoryTracker = DataManager.getData(player, "inventoryTracker")!;
-    if (playerIsInMagnetMode(levelInformation)) endMagnetMode(player, levelInformation, inventoryTracker);
-    else tryStartMagnetMode(player, lvl, levelInformation, inventoryTracker);
+    if (playerIsInMagnetMode(gamebandTracker)) endMagnetMode(player, gamebandTracker, inventoryTracker);
+    else tryStartMagnetMode(player, lvl, gamebandTracker, inventoryTracker);
 }
 
-function tryStartMagnetMode(player: Player, lvl: number, levelInformation: LevelInformation, inventoryTracker: InventoryTracker) {
-    GamebandManager.cancelMode(player, levelInformation.currentMode);
-    levelInformation = DataManager.getData(player, "levelInformation")!;
+function tryStartMagnetMode(player: Player, lvl: number, gamebandTracker: GamebandTracker, inventoryTracker: InventoryTracker) {
+    GamebandManager.cancelMode(player, gamebandTracker.currentMode);
 
     var costPerSecond = magnetModeInfo[lvl].cost;
     var costPerTick = costPerSecond / 20;
@@ -37,8 +36,8 @@ function tryStartMagnetMode(player: Player, lvl: number, levelInformation: Level
         return;
     }
 	
-    levelInformation.currentMode = { "mode": "magnet", "level": lvl };
-    DataManager.setData(player, levelInformation);
+    gamebandTracker.currentMode = { "mode": "magnet", "level": lvl };
+    DataManager.setData(player, gamebandTracker);
 
     inventoryTracker.slots = inventoryTracker.slots.filter((s) => (s.slot != 4));
     inventoryTracker.slots.push({ "slot": 4, "typeId": `theheist:magnet_mode_lvl_${lvl}_enchanted`, "lockMode": "slot" });
@@ -46,21 +45,21 @@ function tryStartMagnetMode(player: Player, lvl: number, levelInformation: Level
 	DataManager.setData(player, inventoryTracker);
 }
 
-function endMagnetMode(player: Player, levelInformation: LevelInformation, inventoryTracker: InventoryTracker) {
-    if (!playerIsInMagnetMode(levelInformation)) return;
-    var magnetModeData = levelInformation.currentMode!;
+function endMagnetMode(player: Player, gamebandTracker: GamebandTracker, inventoryTracker: InventoryTracker) {
+    if (!playerIsInMagnetMode(gamebandTracker)) return;
+    var magnetModeData = gamebandTracker.currentMode!;
     player.removeEffect(EffectTypes.get("levitation")!);
-    levelInformation.currentMode = null;
-    DataManager.setData(player, levelInformation);
+    gamebandTracker.currentMode = null;
+    DataManager.setData(player, gamebandTracker);
 
     inventoryTracker.slots = inventoryTracker.slots.filter((x) => x.slot != 4);
     inventoryTracker.slots.push({ "slot": 4, "typeId": `theheist:magnet_mode_lvl_${magnetModeData.level}`, "lockMode": "slot" });
     Utilities.reloadPlayerInv(player, inventoryTracker);
 }
 
-export function magnetTick(player: Player, levelInformation: LevelInformation, energyTracker: PlayerEnergyTracker, inventoryTracker: InventoryTracker) {
-    if (!playerIsInMagnetMode(levelInformation)) return;
-    var magnetModeData = levelInformation.currentMode!;
+export function magnetTick(player: Player, gamebandTracker: GamebandTracker, energyTracker: PlayerEnergyTracker, inventoryTracker: InventoryTracker) {
+    if (!playerIsInMagnetMode(gamebandTracker)) return;
+    var magnetModeData = gamebandTracker.currentMode!;
     // Player is currently in magnet mode
     var costPerSecond = magnetModeInfo[magnetModeData.level].cost;
     var costPerTick = costPerSecond / 20;
@@ -68,7 +67,7 @@ export function magnetTick(player: Player, levelInformation: LevelInformation, e
     if (energyTracker.energyUnits <= 0) {
         // Player can no longer afford magnet mode
         energyTracker.energyUnits = 0;
-        endMagnetMode(player, levelInformation, inventoryTracker);
+        endMagnetMode(player, gamebandTracker, inventoryTracker);
         DataManager.setData(player, energyTracker);
         return;
     }
@@ -76,13 +75,13 @@ export function magnetTick(player: Player, levelInformation: LevelInformation, e
 
     var magnetBlock = Utilities.dimensions.overworld.getBlock(new Vector(player.location.x, Utilities.magnetModeMagnetBlocksHeight, player.location.z));
     if (!magnetBlock || magnetBlock.typeId == "minecraft:air") {
-        endMagnetMode(player, levelInformation, inventoryTracker);
+        endMagnetMode(player, gamebandTracker, inventoryTracker);
         return;
     }
 
     player.addEffect(EffectTypes.get("levitation")!, 10, { 'amplifier': 10, 'showParticles': false });
 }
 
-export function playerIsInMagnetMode(levelInformation: LevelInformation) {
-    return levelInformation.currentMode?.mode == "magnet";
+export function playerIsInMagnetMode(gamebandTracker: GamebandTracker) {
+    return gamebandTracker.currentMode?.mode == "magnet";
 }

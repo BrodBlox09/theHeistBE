@@ -14,9 +14,9 @@ export const stunModeInfo: GamebandInfo = {
 };
 
 export function tryStunMode(player: Player, lvl: number) {
-    let levelInformation = DataManager.getData(player, "levelInformation")!;
-    GamebandManager.cancelMode(player, levelInformation.currentMode);
-    levelInformation = DataManager.getData(player, "levelInformation")!;
+    let gamebandTracker = DataManager.getData(player, "gamebandTracker")!;
+    GamebandManager.cancelMode(player, gamebandTracker.currentMode);
+    gamebandTracker = DataManager.getData(player, "gamebandTracker")!;
 
     let robots = Utilities.dimensions.overworld.getEntities({
         "location": new Vector(player.location.x, Utilities.cameraHeight, player.location.z),

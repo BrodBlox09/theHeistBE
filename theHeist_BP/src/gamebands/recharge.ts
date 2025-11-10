@@ -5,7 +5,7 @@ import GamebandManager from "./GamebandManager";
 import Vector from "../Vector";
 import ActionManager from "../actions/ActionManager";
 import LoreItem from "../LoreItem";
-import { InventoryTracker, LevelInformation, PlayerEnergyTracker, RechargeGamebandDataList } from "../TypeDefinitions";
+import { GamebandTracker, InventoryTracker, LevelInformation, PlayerEnergyTracker, RechargeGamebandDataList } from "../TypeDefinitions";
 
 export const rechargeModeInfo: RechargeGamebandDataList = {
 	1: {
@@ -20,8 +20,8 @@ export const rechargeModeInfo: RechargeGamebandDataList = {
 }
 
 export function toggleRechargeMode(player: Player, lvl: number) {
-	let levelInformation = DataManager.getData(player, "levelInformation")!;
-	GamebandManager.cancelMode(player, levelInformation.currentMode);
+	let gamebandTracker = DataManager.getData(player, "gamebandTracker")!;
+	GamebandManager.cancelMode(player, gamebandTracker.currentMode);
 
 	const query = {
 		"type": "armor_stand",
@@ -39,6 +39,7 @@ export function toggleRechargeMode(player: Player, lvl: number) {
 		if (armorStandEnergyTrackerDataNode.energyUnits == 0.0) return;
 		if (armorStandEnergyTrackerDataNode.block.y - 1 > player.location.y) return;
 		playerEnergyTrackerDataNode.recharging = true;
+		gamebandTracker.currentMode = { "mode": "recharge", "level": lvl };
 		player.playSound("portal.travel", { "volume": 0.1, "pitch": 2 });
 		Utilities.setBlock(blockLocation, "theheist:recharge_station", { "minecraft:cardinal_direction": armorStandEnergyTrackerDataNode.block.rotation, "theheist:state": 2 });
 		playerEnergyTrackerDataNode.usingRechargerID = armorStandEnergyTrackerDataNode.rechargerID;
@@ -52,15 +53,17 @@ export function toggleRechargeMode(player: Player, lvl: number) {
 	} else {
 		// The player is currently recharging
 		playerEnergyTrackerDataNode.recharging = false;
+		gamebandTracker.currentMode = null;
 		Utilities.setBlock(blockLocation, "theheist:recharge_station", { "minecraft:cardinal_direction": armorStandEnergyTrackerDataNode.block.rotation, "theheist:state": 1 });
 		playerEnergyTrackerDataNode.usingRechargerID = -1;
 		// Bring back the player's items
 		Utilities.reloadPlayerInv(player);
 	}
 	DataManager.setData(player, playerEnergyTrackerDataNode);
+	DataManager.setData(player, gamebandTracker);
 }
 
-export function rechargeTick(player: Player, levelInformation: LevelInformation, playerEnergyTracker: PlayerEnergyTracker, inventoryTracker: InventoryTracker) {
+export function rechargeTick(player: Player, gamebandTracker: GamebandTracker, playerEnergyTracker: PlayerEnergyTracker, inventoryTracker: InventoryTracker) {
 	if (!playerEnergyTracker.recharging) return;
 	const query = {
 			"type": "armor_stand",
@@ -78,6 +81,7 @@ export function rechargeTick(player: Player, levelInformation: LevelInformation,
 		if (i == 0) {
 			// Player has left range, so stop the player from recharging
 			playerEnergyTracker.recharging = false;
+			gamebandTracker.currentMode = null;
 			Utilities.reloadPlayerInv(player);
 			const subQuery = {
 				"type": "armor_stand",
@@ -106,6 +110,7 @@ export function rechargeTick(player: Player, levelInformation: LevelInformation,
 					armorStandEnergyTracker.energyUnits = 0;
 					Utilities.setBlock({ x: armorStandEnergyTracker.block.x, y: armorStandEnergyTracker.block.y, z: armorStandEnergyTracker.block.z }, "theheist:recharge_station", { "minecraft:cardinal_direction": armorStandEnergyTracker.block.rotation, "theheist:state": 3 });
 					playerEnergyTracker.recharging = false;
+					gamebandTracker.currentMode = null;
 					playerEnergyTracker.usingRechargerID = -1;
 					Utilities.reloadPlayerInv(player);
 					// Run actions staged for on depletion
@@ -115,8 +120,9 @@ export function rechargeTick(player: Player, levelInformation: LevelInformation,
 			}
 		}
 		DataManager.setData(player, playerEnergyTracker);
+		DataManager.setData(player, gamebandTracker);
 }
 
-export function playerIsInRechargeMode(levelInformation: LevelInformation) {
-	return levelInformation.currentMode?.mode == "recharge";
+export function playerIsInRechargeMode(gamebandTracker: GamebandTracker) {
+	return gamebandTracker.currentMode?.mode == "recharge";
 }

@@ -17,6 +17,7 @@ export type DataNodeReturnType<T extends string> = T extends keyof DataNodes ? D
 
 export type DataNodes =  {
 	"levelInformation": LevelInformation,
+	"gamebandTracker": GamebandTracker,
 	"alarmTracker": AlarmTracker,
 	"inventoryTracker": InventoryTracker,
 	"playerEnergyTracker": PlayerEnergyTracker,
@@ -61,9 +62,13 @@ export interface KeycardReaderActionTracker extends IActionTracker {
 
 export interface LevelInformation extends DataNode {
 	"name": "levelInformation",
-	"currentMode": ModeData | null,
 	"id": string,
 	"runSecurity": boolean
+}
+
+export interface GamebandTracker extends DataNode {
+	"name": "gamebandTracker",
+	"currentMode": ModeData | null
 }
 
 export interface AlarmTracker extends DataNode {
