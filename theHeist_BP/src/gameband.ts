@@ -129,8 +129,8 @@ function cloneFloor(loc: Vector) {
 	var range = 10;
 	var corner1 = loc.subtract(new Vector(range, 0, range));
 	var corner2 = loc.add(new Vector(range, 0, range));
-	corner1.y = Utilities.levelHeight - 1;
-	corner2.y = Utilities.levelHeight - 1;
+	corner1.y = Utilities.levelFloorHeight - 1;
+	corner2.y = Utilities.levelFloorHeight - 1;
 	var corner3 = loc.subtract(new Vector(range, 0, range));
 	corner3.y = Utilities.floorCloneHeight;
 	Utilities.dimensions.overworld.runCommand(`clone ${corner1.x} ${corner1.y} ${corner1.z} ${corner2.x} ${corner2.y} ${corner2.z} ${corner3.x} ${corner3.y} ${corner3.z}`);

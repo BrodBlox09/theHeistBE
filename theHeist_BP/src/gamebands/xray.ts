@@ -102,7 +102,7 @@ export function updateXRayDisplay(player: Player, gamebandTracker: GamebandTrack
 
 function clearXRayDisplay(player: Player) {
     var loc = Vector.from(player.location);
-    loc.y = Utilities.levelHeight; // Ensure xray does not go below the level
+    loc.y = Utilities.levelFloorHeight; // Ensure xray does not go below the level
     var corner1 = loc.subtract(new Vector(clearRange, clearRange, clearRange));
     var corner2 = loc.add(new Vector(clearRange, clearRange, clearRange));
     solidToTransparent.forEach((x) => {
