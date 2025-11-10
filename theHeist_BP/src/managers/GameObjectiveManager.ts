@@ -1,4 +1,4 @@
-import { DisplaySlotId, ScoreboardObjective, ScoreboardIdentity, Entity, world } from '@minecraft/server';
+import { DisplaySlotId, ScoreboardObjective, ScoreboardIdentity, Entity, world, Player, HudElement } from '@minecraft/server';
 
 /**
  * Unfinished objectives color: §c (Red)
@@ -78,4 +78,16 @@ export default class GameObjectiveManager {
 	static hideSidebar() {
 		world.scoreboard.clearObjectiveAtDisplaySlot(DisplaySlotId.Sidebar);
 	}
+
+	static setTimeRemaining(player: Player, timeRemaining: number) {
+		player.onScreenDisplay.setActionBar(`Time Remaining - ${formatSeconds(timeRemaining)}`);
+	}
+}
+
+function formatSeconds(totalSeconds: number) {
+	let minutes = Math.floor(totalSeconds / 60).toString();
+	if (minutes.length < 2) minutes = "0" + minutes;
+	let seconds = Math.floor(totalSeconds % 60).toString();
+	if (seconds.length < 2) seconds = "0" + seconds;
+	return `${minutes}:${seconds}`;
 }

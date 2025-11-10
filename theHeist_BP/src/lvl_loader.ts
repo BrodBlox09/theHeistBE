@@ -59,10 +59,13 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 				"id": levelId,
 				"runSecurity": !levelDefinition.noRunSecurity
 			};
-			if (levelDefinition.timeLimit) playerLevelInformationDataNode.timeLimit = {
-					"maxTime": levelDefinition.timeLimit,
-					"remainingTime": levelDefinition.timeLimit
+			if (levelDefinition.timeLimit) {
+				playerLevelInformationDataNode.timeLimit = {
+					"maxTime": levelDefinition.timeLimit * Utilities.SECOND,
+					"remainingTime": levelDefinition.timeLimit * Utilities.SECOND
 				};
+				GameObjectiveManager.setTimeRemaining(player, playerLevelInformationDataNode.timeLimit.remainingTime);
+			}
 			DataManager.setData(player, playerLevelInformationDataNode);
 
 			

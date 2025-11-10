@@ -67,7 +67,7 @@ export interface LevelInformation extends DataNode {
 }
 
 /**
- * Describes the maximum time, in seconds, a certain event can run for, and how much time there is left to run it, in seconds.
+ * Describes the maximum time, in ticks, a certain event can run for, and how much time there is left to run it, in ticks.
  */
 export interface TimeLimit {
 	"maxTime": number,

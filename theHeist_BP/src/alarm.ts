@@ -8,6 +8,7 @@ import Vector from "./Vector";
 import { LevelInformation, CameraSwivelMode, ILevelCloneInfo, AlarmTracker, GamebandTracker } from "./TypeDefinitions";
 import LevelDefinitions from "./levels/LevelDefinitions";
 import PlayerBustedManager from "./managers/PlayerBustedManager";
+import GameObjectiveManager from "./managers/GameObjectiveManager";
 
 const cameraFOV = 40;
 const sonar360FOV = 70;
@@ -22,9 +23,9 @@ system.runInterval(() => {
 	let player = world.getPlayers({ "gameMode": GameMode.Adventure }).filter((x) => (x != undefined && x != null))[0];
 	if (player == undefined) return;
 
-	let playerLevelInformationDataNode = DataManager.getData(player, "levelInformation");
-	if (!playerLevelInformationDataNode || !playerLevelInformationDataNode.runSecurity) return;
-	let levelId = playerLevelInformationDataNode.id;
+	let levelInformation = DataManager.getData(player, "levelInformation");
+	if (!levelInformation || !levelInformation.runSecurity) return;
+	let levelId = levelInformation.id;
 	let levelDefinition = LevelDefinitions.getLevelDefinitionByID(levelId);
 	if (!levelDefinition) return;
 	let levelCI = levelDefinition.levelCloneInfo;
@@ -39,20 +40,24 @@ system.runInterval(() => {
 	updateSonar360s(player);
 	SensorModeFunc.updateSensorDisplay(player, gamebandTracker);
 
+	// If player is already busted, do not add to their alarm level
+	let playerBusted = player.hasTag("BUSTED");
+	if (playerBusted) return;
+
 	updatePlayerAlarmLevel(player, gamebandTracker, alarmTracker);
 
-	// Toggle below to see your velocity at all times, very useful when testing sonars
-	// let playerVelocityV3 = player.getVelocity();
-	// let playerVelocity: number = Math.abs(playerVelocityV3.x) + Math.abs(playerVelocityV3.y) + Math.abs(playerVelocityV3.z);
-	// playerVelocity *= 100; // Because the player's velocity is a small number, increase it
-	// playerVelocity = Math.round(playerVelocity * 100) / 100;
-	// player.onScreenDisplay.setActionBar(`Velocity: ${playerVelocity}`);
+	// Bust player if they have an alarm level that is too high
+	if (alarmTracker.level >= 100) PlayerBustedManager.playerBusted(player);
+	else if (levelInformation.timeLimit && !player.hasTag('loadingLevel')) {
+		levelInformation.timeLimit.remainingTime -= 1;
+		if (levelInformation.timeLimit.remainingTime < 0) levelInformation.timeLimit.remainingTime = 0;
+		if (levelInformation.timeLimit.remainingTime == 0) PlayerBustedManager.playerBusted(player);
+		DataManager.setData(player, levelInformation);
+	}
+	if (levelInformation.timeLimit) GameObjectiveManager.setTimeRemaining(player, levelInformation.timeLimit.remainingTime / Utilities.SECOND);
 });
 
 function updatePlayerAlarmLevel(player: Player, gamebandTracker: GamebandTracker, alarmTracker: AlarmTracker) {
-	// If player is already busted, do not add to their alarm level
-	if (player.hasTag("BUSTED")) return;
-
 	// Movement-based security
 	if (!alarmTracker.sonarTimeout) alarmTracker.sonarTimeout = 0;
 	if (alarmTracker.sonarTimeout > 0) alarmTracker.sonarTimeout -= 1;
@@ -91,9 +96,6 @@ function updatePlayerAlarmLevel(player: Player, gamebandTracker: GamebandTracker
 		alarmTracker.level = 100;
 
 	DataManager.setData(player, alarmTracker);
-
-	// Bust player if they have an alarm level that is too high
-	if (alarmTracker.level >= 100) PlayerBustedManager.playerBusted(player);
 }
 
 function cameraCanSeeThrough(location: Vector): boolean {
