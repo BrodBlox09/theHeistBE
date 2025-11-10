@@ -62,7 +62,16 @@ export interface KeycardReaderActionTracker extends IActionTracker {
 export interface LevelInformation extends DataNode {
 	"name": "levelInformation",
 	"id": string,
-	"runSecurity": boolean
+	"runSecurity": boolean,
+	"timeLimit"?: TimeLimit
+}
+
+/**
+ * Describes the maximum time, in seconds, a certain event can run for, and how much time there is left to run it, in seconds.
+ */
+export interface TimeLimit {
+	"maxTime": number,
+	"remainingTime": number
 }
 
 export interface GamebandTracker extends DataNode {
@@ -140,6 +149,7 @@ export interface ILevel {
 	"startPlayerRot"?: number,
 	"noAutoCleanup"?: boolean,
 	"noRunSecurity"?: boolean,
+	"timeLimit"?: TimeLimit,
 	"levelId": string,
 	"levelCloneInfo": ILevelCloneInfo,
 	"startingItems": Array<IInventorySlotData>,
