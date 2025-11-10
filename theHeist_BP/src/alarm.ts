@@ -58,7 +58,7 @@ function updatePlayerAlarmLevel(player: Player, gamebandTracker: GamebandTracker
 	if (alarmTracker.sonarTimeout > 0) alarmTracker.sonarTimeout -= 1;
 
 	var playerSonarMappingHeightBlock = Utilities.dimensions.overworld.getBlock({ "x": player.location.x, "y": Utilities.sonarBlockMappingHeight, "z": player.location.z });
-	if (playerSonarMappingHeightBlock && playerSonarMappingHeightBlock.typeId == "theheist:sonar_sight" && player.location.y < -57 && alarmTracker.sonarTimeout == 0) {
+	if (playerSonarMappingHeightBlock && playerSonarMappingHeightBlock.typeId == "theheist:sonar_sight" && player.location.y < Utilities.ventHeight && alarmTracker.sonarTimeout == 0) {
 		// Check if player is moving and if so add to awareness based on speed
 		let playerVelocityV3 = player.getVelocity();
 		let playerVelocity = Math.abs(playerVelocityV3.x) + Math.abs(playerVelocityV3.y) + Math.abs(playerVelocityV3.z);
@@ -80,7 +80,7 @@ function updatePlayerAlarmLevel(player: Player, gamebandTracker: GamebandTracker
 	// Vision-based security
 	// Sight block stuff
 	var playerCameraMappingHeightBlock = Utilities.dimensions.overworld.getBlock({ "x": player.location.x, "y": Utilities.cameraBlockMappingHeight, "z": player.location.z });
-	if (playerCameraMappingHeightBlock && playerCameraMappingHeightBlock.typeId == "theheist:camera_sight" && player.location.y < -57) {
+	if (playerCameraMappingHeightBlock && playerCameraMappingHeightBlock.typeId == "theheist:camera_sight" && player.location.y < Utilities.ventHeight) {
 		alarmTracker.level += 2;
 		player.playSound("note.snare", { "pitch": 1.75, "volume": 0.5 });
 	}
