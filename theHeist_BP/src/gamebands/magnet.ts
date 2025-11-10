@@ -50,10 +50,11 @@ function endMagnetMode(player: Player, gamebandTracker: GamebandTracker, invento
     player.removeEffect(EffectTypes.get("levitation")!);
     gamebandTracker.currentMode = null;
     DataManager.setData(player, gamebandTracker);
-
+	
     inventoryTracker.slots = inventoryTracker.slots.filter((x) => x.slot != 4);
     inventoryTracker.slots.push({ "slot": 4, "typeId": `theheist:magnet_mode_lvl_${magnetModeData.level}`, "lockMode": "slot" });
     Utilities.reloadPlayerInv(player, inventoryTracker);
+    DataManager.setData(player, inventoryTracker);
 }
 
 export function magnetTick(player: Player, gamebandTracker: GamebandTracker, inventoryTracker: InventoryTracker) {
