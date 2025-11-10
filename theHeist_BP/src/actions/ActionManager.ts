@@ -146,9 +146,9 @@ export default class ActionManager {
 				player.sendMessage(text);
 				break;
 			case "set_alarm_level":
-				var lvlInfo = DataManager.getData(player, "levelInformation")!;
-				lvlInfo.alarmLevelInfo.level = actionInfo.do.value;
-				DataManager.setData(player, lvlInfo);
+				let alarmTracker = DataManager.getData(player, "alarmTracker")!;
+				alarmTracker.level = actionInfo.do.value;
+				DataManager.setData(player, alarmTracker);
 				if (actionInfo.do.value == 0) {
 					player.sendMessage([{ "translate": "map.console.alarm" }]);
 					player.playSound("note.snare", { "pitch": 1.8, "volume": 0.5 });
@@ -181,19 +181,19 @@ export default class ActionManager {
 				}
 				break;
 			case "new_gameband": {
-				var levelInformation = DataManager.getData(player, "levelInformation")!;
-				levelInformation.playerInventory.push({ "slot": actionInfo.do.slot, "typeId": `theheist:${actionInfo.do.mode}_mode_lvl_1`, "lockMode": "slot" });
-				DataManager.setData(player, levelInformation);
+				let inventoryTracker = DataManager.getData(player, "inventoryTracker")!;
+				inventoryTracker.slots.push({ "slot": actionInfo.do.slot, "typeId": `theheist:${actionInfo.do.mode}_mode_lvl_1`, "lockMode": "slot" });
+				DataManager.setData(player, inventoryTracker);
 				Utilities.reloadPlayerInv(player);
 				Utilities.dimensions.overworld.getBlock(actionInfo.do.displayBlock)?.setType("minecraft:air");
 				world.sendMessage([{ "text": "§7New Mode Available: §r" + actionInfo.do.modeText }]);
 				break;
 			}
 			case "upgrade_gameband": {
-				var levelInformation = DataManager.getData(player, "levelInformation")!;
-				levelInformation.playerInventory = levelInformation.playerInventory.filter((x: IInventorySlotData) => (x.slot != actionInfo.do.slot));
-				levelInformation.playerInventory.push({ "slot": actionInfo.do.slot, "typeId": `theheist:${actionInfo.do.mode}_mode_lvl_${actionInfo.do.level}`, "lockMode": "slot" });
-				DataManager.setData(player, levelInformation);
+				let inventoryTracker = DataManager.getData(player, "inventoryTracker")!;
+				inventoryTracker.slots = inventoryTracker.slots.filter((x: IInventorySlotData) => (x.slot != actionInfo.do.slot));
+				inventoryTracker.slots.push({ "slot": actionInfo.do.slot, "typeId": `theheist:${actionInfo.do.mode}_mode_lvl_${actionInfo.do.level}`, "lockMode": "slot" });
+				DataManager.setData(player, inventoryTracker);
 				Utilities.reloadPlayerInv(player);
 				if (actionInfo.do.mode == "recharge") {
 					var playerEnergyTracker: PlayerEnergyTracker = DataManager.getData(player, "playerEnergyTracker")!;

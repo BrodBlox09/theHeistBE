@@ -3,7 +3,7 @@ import DataManager from "../managers/DataManager";
 import Utilities from "../Utilities";
 import Vector from "../Vector";
 import GamebandManager from "./GamebandManager";
-import { GamebandInfo, LevelInformation, PlayerEnergyTracker } from "../TypeDefinitions";
+import { GamebandInfo, InventoryTracker, LevelInformation, PlayerEnergyTracker } from "../TypeDefinitions";
 
 const viewRange = 2;
 const clearRange = 4;
@@ -24,12 +24,13 @@ export const xrayModeInfo: GamebandInfo = {
 };
 
 export function toggleXRayMode(player: Player, lvl: number) {
-    var levelInformation: LevelInformation = DataManager.getData(player, "levelInformation")!;
-    if (playerIsInXRayMode(levelInformation)) endXRayMode(player, levelInformation);
-    else tryStartXRayMode(player, lvl, levelInformation);
+    let levelInformation = DataManager.getData(player, "levelInformation")!;
+	let inventoryTracker = DataManager.getData(player, "inventoryTracker")!;
+    if (playerIsInXRayMode(levelInformation)) endXRayMode(player, levelInformation, inventoryTracker);
+    else tryStartXRayMode(player, lvl, levelInformation, inventoryTracker);
 }
 
-function tryStartXRayMode(player: Player, lvl: number, levelInformation: LevelInformation) {
+function tryStartXRayMode(player: Player, lvl: number, levelInformation: LevelInformation, inventoryTracker: InventoryTracker) {
     GamebandManager.cancelMode(player, levelInformation.currentMode);
     levelInformation = DataManager.getData(player, "levelInformation")!;
     
@@ -42,28 +43,30 @@ function tryStartXRayMode(player: Player, lvl: number, levelInformation: LevelIn
     }
 
     levelInformation.currentMode = { "mode": "xray", "level": lvl };
-    levelInformation.playerInventory = levelInformation.playerInventory.filter((s) => (s.slot != 3));
-    levelInformation.playerInventory.push({ "slot": 3, "typeId": `theheist:xray_mode_lvl_${lvl}_enchanted`, "lockMode": "slot" });
+    inventoryTracker.slots = inventoryTracker.slots.filter((s) => (s.slot != 3));
+    inventoryTracker.slots.push({ "slot": 3, "typeId": `theheist:xray_mode_lvl_${lvl}_enchanted`, "lockMode": "slot" });
     DataManager.setData(player, levelInformation);
-    Utilities.reloadPlayerInv(player, levelInformation);
+    DataManager.setData(player, inventoryTracker);
+    Utilities.reloadPlayerInv(player, inventoryTracker);
     player.playSound("mob.spider.step", { "pitch": 1.5 });
     updateXRayDisplay(player, levelInformation, lvl);
 }
 
-function endXRayMode(player: Player, levelInformation: LevelInformation) {
+function endXRayMode(player: Player, levelInformation: LevelInformation, inventoryTracker: InventoryTracker) {
     if (!playerIsInXRayMode(levelInformation)) return;
     var xrayModeData = levelInformation.currentMode!;
     levelInformation.currentMode = null;
-    levelInformation.playerInventory = levelInformation.playerInventory.filter((x) => x.slot != 3);
-    levelInformation.playerInventory.push({ "slot": 3, "typeId": `theheist:xray_mode_lvl_${xrayModeData!.level}`, "lockMode": "slot" });
+    inventoryTracker.slots = inventoryTracker.slots.filter((x) => x.slot != 3);
+    inventoryTracker.slots.push({ "slot": 3, "typeId": `theheist:xray_mode_lvl_${xrayModeData!.level}`, "lockMode": "slot" });
     DataManager.setData(player, levelInformation);
-    Utilities.reloadPlayerInv(player, levelInformation);
+    DataManager.setData(player, inventoryTracker);
+    Utilities.reloadPlayerInv(player, inventoryTracker);
     player.playSound("mob.spider.step", { "pitch": 1.25 });
     clearXRayDisplay(player, levelInformation);
     system.runTimeout(() => clearXRayDisplay(player, levelInformation), 5); // Ensure everything actually gets cleared
 }
 
-export function xrayTick(player: Player, levelInformation: LevelInformation, energyTracker: PlayerEnergyTracker) {
+export function xrayTick(player: Player, levelInformation: LevelInformation, energyTracker: PlayerEnergyTracker, inventoryTracker: InventoryTracker) {
     if (!playerIsInXRayMode(levelInformation)) return;
     var xrayModeData = levelInformation.currentMode!;
     // Player is currently in xray mode
@@ -73,7 +76,7 @@ export function xrayTick(player: Player, levelInformation: LevelInformation, ene
     if (energyTracker.energyUnits <= 0) {
         // Player can no longer afford xray mode
         energyTracker.energyUnits = 0;
-        endXRayMode(player, levelInformation);
+        endXRayMode(player, levelInformation, inventoryTracker);
         DataManager.setData(player, energyTracker);
         return;
     }

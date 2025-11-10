@@ -4,7 +4,7 @@ import * as SensorModeFunc from "./gamebands/sensor";
 import DataManager from "./managers/DataManager";
 import Utilities from "./Utilities";
 import Vector from "./Vector";
-import { LevelInformation, CameraSwivelMode, ILevelCloneInfo } from "./TypeDefinitions";
+import { LevelInformation, CameraSwivelMode, ILevelCloneInfo, AlarmTracker } from "./TypeDefinitions";
 import LevelDefinitions from "./levels/LevelDefinitions";
 
 const cameraHeight = Utilities.cameraHeight;
@@ -32,12 +32,14 @@ system.runInterval(() => {
 	if (!levelDefinition) return;
 	let levelCI = levelDefinition.levelCloneInfo;
 
+	let alarmTracker = DataManager.getData(player, "alarmTracker")!;
+
 	updateRobots(player);
 	updateCameras(player, levelCI);
 	updateSonars(player, levelCI);
 	updateSonar360s(player);
 	SensorModeFunc.updateSensorDisplay(player, DataManager.getData(player, "levelInformation")!);
-	updatePlayerAlarmLevel(player, playerLevelInformationDataNode);
+	updatePlayerAlarmLevel(player, playerLevelInformationDataNode, alarmTracker);
 
 	// Toggle below to see your velocity at all times, very useful when testing sonars
 	// let playerVelocityV3 = player.getVelocity();
@@ -47,15 +49,15 @@ system.runInterval(() => {
 	// player.onScreenDisplay.setActionBar(`Velocity: ${playerVelocity}`);
 });
 
-function updatePlayerAlarmLevel(player: Player, levelInformation: LevelInformation) {
+function updatePlayerAlarmLevel(player: Player, levelInformation: LevelInformation, alarmTracker: AlarmTracker) {
 	if (player.hasTag("BUSTED")) return;
 
 	// Movement-based security
-	if (!levelInformation.alarmLevelInfo.sonarTimeout) levelInformation.alarmLevelInfo.sonarTimeout = 0;
-	if (levelInformation.alarmLevelInfo.sonarTimeout > 0) levelInformation.alarmLevelInfo.sonarTimeout -= 1;
+	if (!alarmTracker.sonarTimeout) alarmTracker.sonarTimeout = 0;
+	if (alarmTracker.sonarTimeout > 0) alarmTracker.sonarTimeout -= 1;
 
 	var playerSonarMappingHeightBlock = Utilities.dimensions.overworld.getBlock({ "x": player.location.x, "y": cameraMappingHeight - 5, "z": player.location.z });
-	if (playerSonarMappingHeightBlock && playerSonarMappingHeightBlock.typeId == "theheist:sonar_sight" && player.location.y < -57 && levelInformation.alarmLevelInfo.sonarTimeout == 0) {
+	if (playerSonarMappingHeightBlock && playerSonarMappingHeightBlock.typeId == "theheist:sonar_sight" && player.location.y < -57 && alarmTracker.sonarTimeout == 0) {
 		// Check if player is moving and if so add to awareness based on speed
 		let playerVelocityV3 = player.getVelocity();
 		let playerVelocity = Math.abs(playerVelocityV3.x) + Math.abs(playerVelocityV3.y) + Math.abs(playerVelocityV3.z);
@@ -63,16 +65,15 @@ function updatePlayerAlarmLevel(player: Player, levelInformation: LevelInformati
 		if (playerVelocity > 5) {
 			player.playSound("note.snare", { "pitch": 1.75, "volume": 0.5 });
 			if (playerVelocity > 40) playerVelocity = 40;
-			levelInformation.alarmLevelInfo.level += playerVelocity;
-			DataManager.setData(player, levelInformation);
+			alarmTracker.level += playerVelocity;
 		} else player.playSound("note.pling", { "pitch": 2, "volume": 0.4 });
-		levelInformation.alarmLevelInfo.sonarTimeout = sonarTimeoutTime;
+		alarmTracker.sonarTimeout = sonarTimeoutTime;
 	}
 
 	// Presure-based security
 	var playerBlock = Utilities.dimensions.overworld.getBlock(player.location);
 	if (playerBlock && playerBlock.typeId == "minecraft:stone_pressure_plate")
-		levelInformation.alarmLevelInfo.level = 100;
+		alarmTracker.level = 100;
 
 	var playerIsStealth = levelInformation.currentMode?.mode == "stealth";
 	if (playerIsStealth) return;
@@ -80,16 +81,16 @@ function updatePlayerAlarmLevel(player: Player, levelInformation: LevelInformati
 	// Sight block stuff
 	var playerCameraMappingHeightBlock = Utilities.dimensions.overworld.getBlock({ "x": player.location.x, "y": cameraMappingHeight - 3, "z": player.location.z });
 	if (playerCameraMappingHeightBlock && playerCameraMappingHeightBlock.typeId == "theheist:camera_sight" && player.location.y < -57) {
-		levelInformation.alarmLevelInfo.level += 2;
+		alarmTracker.level += 2;
 		player.playSound("note.snare", { "pitch": 1.75, "volume": 0.5 });
 	}
 
 	// Laser block stuff
 	var topBlock = playerBlock?.above();
 	if (playerBlock && topBlock && (playerBlock.hasTag("laser") || topBlock.hasTag("laser")))
-		levelInformation.alarmLevelInfo.level = 100;
+		alarmTracker.level = 100;
 
-	DataManager.setData(player, levelInformation);
+	DataManager.setData(player, alarmTracker);
 }
 
 function cameraCanSeeThrough(location: Vector): boolean {

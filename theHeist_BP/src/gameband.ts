@@ -131,43 +131,6 @@ function keycard(keycardType: string, player: Player) {
 	DataManager.setData(armorStand, actionTracker);
 }
 
-function playerBusted(player: Player, levelId: string) {
-	let levelDefinition = LevelDefinitions.getLevelDefinitionByID(levelId);
-	if (!levelDefinition) {
-		console.warn("Player busted but no level definition to determine prison location.");
-		return;
-	}
-	let levelCI = levelDefinition.levelCloneInfo;
-
-	player.addTag('loadingLevel');
-	let playerLevelInformation = DataManager.getData(player, "levelInformation")!;
-	PlayerBustedManager.playerBusted(player);
-	playerLevelInformation.alarmLevelInfo.level = 0;
-	playerLevelInformation.playerInventory = [];
-	DataManager.setData(player, playerLevelInformation);
-	let playerEnergyTracker = DataManager.getData(player, "playerEnergyTracker")!;
-	playerEnergyTracker.energyUnits = 0;
-	DataManager.setData(player, playerEnergyTracker);
-
-	player.playSound("map.alarm");
-	player.addTag("BUSTED");
-	player.onScreenDisplay.setTitle("§r§e§lBusted", { "subtitle": "You got detected. Try again!", "fadeInDuration": 20, "fadeOutDuration": 20, "stayDuration": 160 });
-	player.getComponent("inventory")!.container?.clearAll();
-	system.runTimeout(() => {
-		stopAllSound();
-		player.teleport(levelCI.prisonLoc);
-		player.sendMessage(`You got busted §c§l${PlayerBustedManager.getTimesBustedFromPlayer(player)}§r time(s)`);
-	}, Utilities.SECOND * 3);
-	system.runTimeout(() => {
-		player.removeTag("BUSTED");
-		system.sendScriptEvent("theheist:load-level", `${levelId}`);
-	}, Utilities.SECOND * (3 + 5));
-}
-
-function stopAllSound() {
-	Utilities.dimensions.overworld.getEntities({ "excludeTypes": ["minecraft:armor_stand", "theheist:hover_text"] }).forEach((e) => { try { e.runCommand('stopsound @s'); } catch { } });
-}
-
 function cloneFloor(loc: Vector) {
 	var range = 10;
 	var corner1 = loc.subtract(new Vector(range, 0, range));
@@ -203,7 +166,9 @@ system.runInterval(() => {
 	const player = world.getPlayers().filter((x: Player) => (x != undefined && x != null))[0];
 	if (player == undefined) return;
 	
-	var playerLevelInformation = DataManager.getData(player, "levelInformation")!;
+	let levelInformation = DataManager.getData(player, "levelInformation")!;
+	let inventoryTracker = DataManager.getData(player, "inventoryTracker")!;
+	let alarmTracker = DataManager.getData(player, "alarmTracker")!;
 	
 	// Handle dropped items
 	{
@@ -217,9 +182,9 @@ system.runInterval(() => {
 			var droppedItemTID = itemEntity.getComponent("item")!.itemStack.typeId;
 			itemEntity.remove();
 			if (droppedItemTID == "theheist:phone") {
-				playerBusted(player, playerLevelInformation.levelId);
+				PlayerBustedManager.playerBusted(player);
 			} else if (droppedItemTID == "theheist:nv_glasses") {
-				Utilities.reloadPlayerInv(player, playerLevelInformation);
+				Utilities.reloadPlayerInv(player, inventoryTracker);
 			}
 		}
 	}
@@ -247,23 +212,23 @@ system.runInterval(() => {
 	var playerEnergyTracker = DataManager.getData(player, "playerEnergyTracker")!;
 
 	// Tick all gameband modes
-	if (playerLevelInformation && playerEnergyTracker)
-		GamebandManager.tickAllGamebands(player, playerLevelInformation, playerEnergyTracker);
+	if (levelInformation && playerEnergyTracker)
+		GamebandManager.tickAllGamebands(player, levelInformation, playerEnergyTracker, inventoryTracker);
 
 	// Check to see if XP bar display needs to be updated
-	if ((playerEnergyTracker && playerEnergyTracker.energyUnits != player.level) || (playerLevelInformation && player.xpEarnedAtCurrentLevel != ((((playerLevelInformation.alarmLevelInfo.level / 100) - 0.06) * 742) + 41))) {
+	if ((playerEnergyTracker && playerEnergyTracker.energyUnits != player.level) || (levelInformation && player.xpEarnedAtCurrentLevel != ((((alarmTracker.level / 100) - 0.06) * 742) + 41))) {
 		player.resetLevel();
 		player.addLevels(100);
 		// 9 * 100 - 158 = 742 (The total amount of XP you need to go from level 100 to 101)
-		//var alarmLvlXpVal = (playerLevelInformation.alarmLevelInfo.level / 100) * 742;
-		var alarmLvlXpVal = (((playerLevelInformation.alarmLevelInfo.level / 100) - 0.06) * 742) + 41;
+		//var alarmLvlXpVal = (alarmTracker.level / 100) * 742;
+		var alarmLvlXpVal = (((alarmTracker.level / 100) - 0.06) * 742) + 41;
 		player.addExperience(alarmLvlXpVal);
 		player.addLevels(-100);
 		player.addLevels(Math.floor(playerEnergyTracker.energyUnits));
 		// Bust player if they have an alarm level that is too high
-		if (playerLevelInformation.alarmLevelInfo.level >= 100) {
+		if (alarmTracker.level >= 100) {
 			// Player is busted
-			playerBusted(player, playerLevelInformation.levelId);
+			PlayerBustedManager.playerBusted(player);
 		}
 	}
 });

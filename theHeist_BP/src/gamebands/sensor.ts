@@ -4,7 +4,7 @@ import Utilities from "../Utilities";
 import Vector from "../Vector";
 import GamebandManager from "./GamebandManager";
 import LoreItem from "../LoreItem";
-import { GamebandInfo, LevelInformation, PlayerEnergyTracker } from "../TypeDefinitions";
+import { GamebandInfo, InventoryTracker, LevelInformation, PlayerEnergyTracker } from "../TypeDefinitions";
 import LevelDefinitions from "../levels/LevelDefinitions";
 
 const sensingRange = 14;
@@ -19,13 +19,13 @@ export const sensorModeInfo: GamebandInfo = {
 	}
 };
 
-export function tryMap(player: Player, levelInformation: LevelInformation, playerEnergyTracker: PlayerEnergyTracker) {
+export function tryMap(player: Player, levelInformation: LevelInformation, playerEnergyTracker: PlayerEnergyTracker, inventoryTracker: InventoryTracker) {
     if (playerEnergyTracker.recharging) return;
     // If sensor mode lvl. 2 or greater, the player can use the sensor mode to see a map of the level
 	const playerRotX = player.getRotation().x;
     let playerIsLookingDown = true;
 	if (!(playerRotX < 90 && playerRotX > 80)) playerIsLookingDown = false; // Player is not looking down
-    let slotTwos = levelInformation.playerInventory.filter((slot) => slot.slot == 2);
+    let slotTwos = inventoryTracker.slots.filter((slot) => slot.slot == 2);
     if (!slotTwos) return;
     let sensorModeSlot = slotTwos[slotTwos.length - 1]; // Get last item of slot 2
     if (!sensorModeSlot) return;
@@ -38,13 +38,13 @@ export function tryMap(player: Player, levelInformation: LevelInformation, playe
         if (!map) return;
         map.lockMode = ItemLockMode.slot;
         playerInvContainer?.setItem(2, map);
-        levelInformation.playerInventory.push({ "slot": 2, "typeId": `minecraft:filled_map`, "lockMode": "slot" });
-        DataManager.setData(player, levelInformation);
+        inventoryTracker.slots.push({ "slot": 2, "typeId": `minecraft:filled_map`, "lockMode": "slot" });
+        DataManager.setData(player, inventoryTracker);
     } else if (!playerIsLookingDown && typeId == "minecraft:filled_map") { // Clear map
         let playerInvContainer = player.getComponent("minecraft:inventory")?.container;
-        levelInformation.playerInventory = levelInformation.playerInventory.filter((s) => (s.typeId != "minecraft:filled_map"));
-        DataManager.setData(player, levelInformation);
-        let sensorModeSlotData = levelInformation.playerInventory.find((x) => (x.slot == 2))!;
+        inventoryTracker.slots = inventoryTracker.slots.filter((s) => (s.typeId != "minecraft:filled_map"));
+        DataManager.setData(player, inventoryTracker);
+        let sensorModeSlotData = inventoryTracker.slots.find((x) => (x.slot == 2))!;
         let itemStack = new ItemStack(sensorModeSlotData.typeId);
         itemStack.lockMode = ItemLockMode.slot;
 		LoreItem.setLoreOfItemStack(itemStack);
@@ -53,12 +53,13 @@ export function tryMap(player: Player, levelInformation: LevelInformation, playe
 }
 
 export function toggleSensorMode(player: Player, lvl: number) {
-    var levelInformation = DataManager.getData(player, "levelInformation")!;
-    if (playerIsInSensorMode(levelInformation)) endSensorMode(player, levelInformation);
-    else tryStartSensorMode(player, lvl, levelInformation);
+    let levelInformation = DataManager.getData(player, "levelInformation")!;
+    let inventoryTracker = DataManager.getData(player, "inventoryTracker")!;
+    if (playerIsInSensorMode(levelInformation)) endSensorMode(player, levelInformation, inventoryTracker);
+    else tryStartSensorMode(player, lvl, levelInformation, inventoryTracker);
 }
 
-function tryStartSensorMode(player: Player, lvl: number, levelInformation: LevelInformation) {
+function tryStartSensorMode(player: Player, lvl: number, levelInformation: LevelInformation, inventoryTracker: InventoryTracker) {
     GamebandManager.cancelMode(player, levelInformation.currentMode);
     levelInformation = DataManager.getData(player, "levelInformation")!;
 
@@ -71,29 +72,32 @@ function tryStartSensorMode(player: Player, lvl: number, levelInformation: Level
     }
 
     levelInformation.currentMode = { "mode": "sensor", "level": lvl };
-    levelInformation.playerInventory = levelInformation.playerInventory.filter((s) => (s.slot != 2));
-    levelInformation.playerInventory.push({ "slot": 2, "typeId": `theheist:sensor_mode_lvl_${lvl}_enchanted`, "lockMode": "slot" });
     DataManager.setData(player, levelInformation);
-    Utilities.reloadPlayerInv(player, levelInformation);
+
+    inventoryTracker.slots = inventoryTracker.slots.filter((s) => (s.slot != 2));
+    inventoryTracker.slots.push({ "slot": 2, "typeId": `theheist:sensor_mode_lvl_${lvl}_enchanted`, "lockMode": "slot" });
+    DataManager.setData(player, inventoryTracker);
+	Utilities.reloadPlayerInv(player, inventoryTracker);
     player.playSound("mob.irongolem.throw", { "pitch": 1 });
     updateSensorDisplay(player, levelInformation);
 }
 
-function endSensorMode(player: Player, levelInformation: LevelInformation) {
+function endSensorMode(player: Player, levelInformation: LevelInformation, inventoryTracker: InventoryTracker) {
     if (!playerIsInSensorMode(levelInformation)) return;
     var sensorModeData = levelInformation.currentMode!;
     levelInformation.currentMode = null;
-    levelInformation.playerInventory = levelInformation.playerInventory.filter((x) => x.slot != 2);
-    levelInformation.playerInventory.push({ "slot": 2, "typeId": `theheist:sensor_mode_lvl_${sensorModeData.level}`, "lockMode": "slot" });
+    inventoryTracker.slots = inventoryTracker.slots.filter((x) => x.slot != 2);
+    inventoryTracker.slots.push({ "slot": 2, "typeId": `theheist:sensor_mode_lvl_${sensorModeData.level}`, "lockMode": "slot" });
     DataManager.setData(player, levelInformation);
-    Utilities.reloadPlayerInv(player, levelInformation);
+    DataManager.setData(player, inventoryTracker);
+    Utilities.reloadPlayerInv(player, inventoryTracker);
     clearSensed(player, levelInformation);
     player.playSound("mob.irongolem.throw", { "pitch": 0.5 });
     system.runTimeout(() => clearSensed(player, levelInformation), 5); // Ensure everything actually gets cleared
 }
 
-export function sensorTick(player: Player, levelInformation: LevelInformation, energyTracker: PlayerEnergyTracker) {
-	tryMap(player, levelInformation, energyTracker);
+export function sensorTick(player: Player, levelInformation: LevelInformation, energyTracker: PlayerEnergyTracker, inventoryTracker: InventoryTracker) {
+	tryMap(player, levelInformation, energyTracker, inventoryTracker);
     if (!playerIsInSensorMode(levelInformation)) return;
     var sensorModeData = levelInformation.currentMode!;
     // Player is currently in sensor mode
@@ -103,7 +107,7 @@ export function sensorTick(player: Player, levelInformation: LevelInformation, e
     if (energyTracker.energyUnits <= 0) {
         // Player can no longer afford sensor mode
         energyTracker.energyUnits = 0;
-        endSensorMode(player, levelInformation);
+        endSensorMode(player, levelInformation, inventoryTracker);
         DataManager.setData(player, energyTracker);
         return;
     }
