@@ -26,13 +26,12 @@ export function tryStunMode(player: Player, lvl: number) {
     if (robots.length == 0) return;
 
     var cost = stunModeInfo[lvl].cost;
-    var energyTracker = DataManager.getData(player, "playerEnergyTracker")!;
-    if (energyTracker.energyUnits < cost) {
+    if (gamebandTracker.energy < cost) {
         player.sendMessage("§cNot enough energy!");
         return;
     }
-    energyTracker.energyUnits -= cost;
-    DataManager.setData(player, energyTracker);
+    gamebandTracker.energy -= cost;
+    DataManager.setData(player, gamebandTracker);
     player.playSound("map.shock", { "pitch": 1 });
 
     robots.forEach(robot => {

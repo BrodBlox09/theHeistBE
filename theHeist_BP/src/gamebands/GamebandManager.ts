@@ -7,15 +7,15 @@ import * as MagnetModeFunc from "./magnet";
 import * as StealthModeFunc from "./stealth";
 import * as StunModeFunc from "./stun";
 import * as DrillModeFunc from "./drill";
-import { PlayerEnergyTracker, ModeData, InventoryTracker, GamebandTracker } from "../TypeDefinitions";
+import { ModeData, InventoryTracker, GamebandTracker } from "../TypeDefinitions";
 
 export default class GamebandManager {
-	static tickAllGamebands(player: Player, gamebandTracker: GamebandTracker, playerEnergyTracker: PlayerEnergyTracker, inventoryTracker: InventoryTracker) {
-		RechargeModeFunc.rechargeTick(player, gamebandTracker, playerEnergyTracker, inventoryTracker);
-		SensorModeFunc.sensorTick(player, gamebandTracker, playerEnergyTracker, inventoryTracker);
-		XRayModeFunc.xrayTick(player, gamebandTracker, playerEnergyTracker, inventoryTracker);
-		MagnetModeFunc.magnetTick(player, gamebandTracker, playerEnergyTracker, inventoryTracker);
-		StealthModeFunc.stealthTick(player, gamebandTracker, playerEnergyTracker, inventoryTracker);
+	static tickAllGamebands(player: Player, gamebandTracker: GamebandTracker, inventoryTracker: InventoryTracker) {
+		RechargeModeFunc.rechargeTick(player, gamebandTracker, inventoryTracker);
+		SensorModeFunc.sensorTick(player, gamebandTracker, inventoryTracker);
+		XRayModeFunc.xrayTick(player, gamebandTracker, inventoryTracker);
+		MagnetModeFunc.magnetTick(player, gamebandTracker, inventoryTracker);
+		StealthModeFunc.stealthTick(player, gamebandTracker, inventoryTracker);
 	}
 
     static cancelMode(player: Player, modeData: ModeData | null) {

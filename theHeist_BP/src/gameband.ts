@@ -166,7 +166,6 @@ system.runInterval(() => {
 	const player = world.getPlayers().filter((x: Player) => (x != undefined && x != null))[0];
 	if (player == undefined) return;
 	
-	let levelInformation = DataManager.getData(player, "levelInformation")!;
 	let inventoryTracker = DataManager.getData(player, "inventoryTracker")!;
 	let alarmTracker = DataManager.getData(player, "alarmTracker")!;
 	
@@ -209,15 +208,13 @@ system.runInterval(() => {
 	}
 
 	// Set player level to player energy level
-	let playerEnergyTracker = DataManager.getData(player, "playerEnergyTracker")!;
-	let gamebandTracker = DataManager.getData(player, "gamebandTracker");
+	let gamebandTracker = DataManager.getData(player, "gamebandTracker")!;
 
 	// Tick all gameband modes
-	if (gamebandTracker && playerEnergyTracker)
-		GamebandManager.tickAllGamebands(player, gamebandTracker, playerEnergyTracker, inventoryTracker);
+	GamebandManager.tickAllGamebands(player, gamebandTracker, inventoryTracker);
 
 	// Check to see if XP bar display needs to be updated
-	if ((playerEnergyTracker && playerEnergyTracker.energyUnits != player.level) || (levelInformation && player.xpEarnedAtCurrentLevel != ((((alarmTracker.level / 100) - 0.06) * 742) + 41))) {
+	if (gamebandTracker.energy != player.level || player.xpEarnedAtCurrentLevel != ((((alarmTracker.level / 100) - 0.06) * 742) + 41)) {
 		player.resetLevel();
 		player.addLevels(100);
 		// 9 * 100 - 158 = 742 (The total amount of XP you need to go from level 100 to 101)
@@ -225,7 +222,7 @@ system.runInterval(() => {
 		var alarmLvlXpVal = (((alarmTracker.level / 100) - 0.06) * 742) + 41;
 		player.addExperience(alarmLvlXpVal);
 		player.addLevels(-100);
-		player.addLevels(Math.floor(playerEnergyTracker.energyUnits));
+		player.addLevels(Math.floor(gamebandTracker.energy));
 		// Bust player if they have an alarm level that is too high
 		if (alarmTracker.level >= 100) {
 			// Player is busted

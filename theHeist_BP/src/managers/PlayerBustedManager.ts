@@ -2,6 +2,7 @@ import { ScoreboardObjective, world, Player, system } from "@minecraft/server";
 import DataManager from "./DataManager";
 import Utilities from "../Utilities";
 import LevelDefinitions from "../levels/LevelDefinitions";
+import GamebandManager from "../gamebands/GamebandManager";
 
 let bustedCounterObjective: ScoreboardObjective;
 
@@ -28,9 +29,10 @@ export default class PlayerBustedManager {
 		inventoryTracker.slots = [];
 		DataManager.setData(player, inventoryTracker);
 
-		let playerEnergyTracker = DataManager.getData(player, "playerEnergyTracker")!;
-		playerEnergyTracker.energyUnits = 0;
-		DataManager.setData(player, playerEnergyTracker);
+		let gamebandTracker = DataManager.getData(player, "gamebandTracker")!;
+		GamebandManager.cancelMode(player, gamebandTracker.currentMode);
+		gamebandTracker.energy = 0;
+		DataManager.setData(player, gamebandTracker);
 
 		bustedCounterObjective.setScore(player, (bustedCounterObjective.getScore(player) ?? 0) + 1);
 		player.playSound("map.alarm");

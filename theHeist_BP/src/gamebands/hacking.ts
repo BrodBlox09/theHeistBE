@@ -25,7 +25,6 @@ export function tryHackingMode(player: Player, lvl: number) {
 	let consolesAttempted = 0;
 	let errorMessage: string | null = null;
 	if (player.location.y < Utilities.ventHeight) {
-		var playerEnergyTracker = DataManager.getData(player, "playerEnergyTracker")!;
 		const query: EntityQueryOptions = {
 			"type": "armor_stand",
 			"location": { "x": player.location.x, "y": Utilities.consolesHeight, "z": player.location.z },
@@ -39,7 +38,7 @@ export function tryHackingMode(player: Player, lvl: number) {
 			consolesAttempted++;
 			
 			if (armorStandConsoleActionTracker.level <= lvl) {
-				if (hackingModeInfo[lvl].cost > playerEnergyTracker.energyUnits) {
+				if (hackingModeInfo[lvl].cost > gamebandTracker.energy) {
 					errorMessage = "Not enough energy!";
 					continue;
 				}
@@ -50,8 +49,8 @@ export function tryHackingMode(player: Player, lvl: number) {
 					}
 				}
 				player.playSound('map.hack_use');
-				if (armorStandConsoleActionTracker.level != 0) playerEnergyTracker.energyUnits -= hackingModeInfo[lvl].cost;
-				DataManager.setData(player, playerEnergyTracker);
+				if (armorStandConsoleActionTracker.level != 0) gamebandTracker.energy -= hackingModeInfo[lvl].cost;
+				DataManager.setData(player, gamebandTracker);
 				ActionManager.runActions(armorStandConsoleActionTracker.actions, player);
 				// Player hacked the device, now disable it
 				armorStandConsoleActionTracker.used = true;

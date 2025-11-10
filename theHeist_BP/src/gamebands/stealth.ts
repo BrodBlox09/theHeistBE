@@ -3,7 +3,7 @@ import DataManager from "../managers/DataManager";
 import Utilities from "../Utilities";
 import Vector from "../Vector";
 import GamebandManager from "./GamebandManager";
-import { GamebandInfo, GamebandTracker, InventoryTracker, LevelInformation, PlayerEnergyTracker } from "../TypeDefinitions";
+import { GamebandInfo, GamebandTracker, InventoryTracker } from "../TypeDefinitions";
 
 export const stealthModeInfo: GamebandInfo = {
 	1: {
@@ -27,8 +27,7 @@ function tryStartStealthMode(player: Player, lvl: number, gamebandTracker: Gameb
     
     var costPerSecond = stealthModeInfo[lvl].cost;
     var costPerTick = costPerSecond / 20;
-    var energyTracker = DataManager.getData(player, "playerEnergyTracker")!;
-    if (energyTracker.energyUnits < costPerTick) {
+    if (gamebandTracker.energy < costPerTick) {
         player.sendMessage("§cNot enough energy!");
         return;
     }
@@ -54,21 +53,21 @@ function endStealthMode(player: Player, gamebandTracker: GamebandTracker, invent
     player.playSound("mob.zombie.unfect", { "pitch": 2 });
 }
 
-export function stealthTick(player: Player, gamebandTracker: GamebandTracker, energyTracker: PlayerEnergyTracker, inventoryTracker: InventoryTracker) {
+export function stealthTick(player: Player, gamebandTracker: GamebandTracker, inventoryTracker: InventoryTracker) {
     if (!playerIsInStealthMode(gamebandTracker)) return;
     var stealthModeData = gamebandTracker.currentMode!;
     // Player is currently in stealth mode
     var costPerSecond = stealthModeInfo[stealthModeData.level].cost;
     var costPerTick = costPerSecond / 20;
-    energyTracker.energyUnits -= costPerTick;
-    if (energyTracker.energyUnits <= 0) {
+    gamebandTracker.energy -= costPerTick;
+    if (gamebandTracker.energy <= 0) {
         // Player can no longer afford stealth mode
-        energyTracker.energyUnits = 0;
+        gamebandTracker.energy = 0;
         endStealthMode(player, gamebandTracker, inventoryTracker);
-        DataManager.setData(player, energyTracker);
+        DataManager.setData(player, gamebandTracker);
         return;
     }
-    DataManager.setData(player, energyTracker);
+    DataManager.setData(player, gamebandTracker);
     player.addEffect("invisibility", 5, { "showParticles": false });
 }
 

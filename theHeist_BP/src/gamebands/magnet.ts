@@ -3,7 +3,7 @@ import DataManager from "../managers/DataManager";
 import Utilities from "../Utilities";
 import Vector from "../Vector";
 import GamebandManager from "./GamebandManager";
-import { GamebandInfo, GamebandTracker, InventoryTracker, LevelInformation, PlayerEnergyTracker } from "../TypeDefinitions";
+import { GamebandInfo, GamebandTracker, InventoryTracker } from "../TypeDefinitions";
 
 export const magnetModeInfo: GamebandInfo = {
 	1: {
@@ -23,8 +23,7 @@ function tryStartMagnetMode(player: Player, lvl: number, gamebandTracker: Gameba
 
     var costPerSecond = magnetModeInfo[lvl].cost;
     var costPerTick = costPerSecond / 20;
-    var energyTracker = DataManager.getData(player, "playerEnergyTracker")!;
-    if (energyTracker.energyUnits < costPerTick) {
+    if (gamebandTracker.energy < costPerTick) {
         player.sendMessage("§cNot enough energy!");
         return;
     }
@@ -57,21 +56,21 @@ function endMagnetMode(player: Player, gamebandTracker: GamebandTracker, invento
     Utilities.reloadPlayerInv(player, inventoryTracker);
 }
 
-export function magnetTick(player: Player, gamebandTracker: GamebandTracker, energyTracker: PlayerEnergyTracker, inventoryTracker: InventoryTracker) {
+export function magnetTick(player: Player, gamebandTracker: GamebandTracker, inventoryTracker: InventoryTracker) {
     if (!playerIsInMagnetMode(gamebandTracker)) return;
     var magnetModeData = gamebandTracker.currentMode!;
     // Player is currently in magnet mode
     var costPerSecond = magnetModeInfo[magnetModeData.level].cost;
     var costPerTick = costPerSecond / 20;
-    energyTracker.energyUnits -= costPerTick;
-    if (energyTracker.energyUnits <= 0) {
+    gamebandTracker.energy -= costPerTick;
+    if (gamebandTracker.energy <= 0) {
         // Player can no longer afford magnet mode
-        energyTracker.energyUnits = 0;
+        gamebandTracker.energy = 0;
         endMagnetMode(player, gamebandTracker, inventoryTracker);
-        DataManager.setData(player, energyTracker);
+        DataManager.setData(player, gamebandTracker);
         return;
     }
-    DataManager.setData(player, energyTracker);
+    DataManager.setData(player, gamebandTracker);
 
     var magnetBlock = Utilities.dimensions.overworld.getBlock(new Vector(player.location.x, Utilities.magnetModeMagnetBlocksHeight, player.location.z));
     if (!magnetBlock || magnetBlock.typeId == "minecraft:air") {

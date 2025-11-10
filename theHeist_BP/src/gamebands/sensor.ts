@@ -4,8 +4,9 @@ import Utilities from "../Utilities";
 import Vector from "../Vector";
 import GamebandManager from "./GamebandManager";
 import LoreItem from "../LoreItem";
-import { GamebandInfo, GamebandTracker, InventoryTracker, LevelInformation, PlayerEnergyTracker } from "../TypeDefinitions";
+import { GamebandInfo, GamebandTracker, InventoryTracker, LevelInformation } from "../TypeDefinitions";
 import LevelDefinitions from "../levels/LevelDefinitions";
+import * as RechargeModeFunc from './recharge';
 
 const sensingRange = 14;
 const clearRange = 19;
@@ -19,8 +20,8 @@ export const sensorModeInfo: GamebandInfo = {
 	}
 };
 
-export function tryMap(player: Player, levelInformation: LevelInformation, playerEnergyTracker: PlayerEnergyTracker, inventoryTracker: InventoryTracker) {
-    if (playerEnergyTracker.recharging) return;
+export function tryMap(player: Player, levelInformation: LevelInformation, gamebandTracker: GamebandTracker, inventoryTracker: InventoryTracker) {
+    if (RechargeModeFunc.playerIsInRechargeMode(gamebandTracker)) return;
     // If sensor mode lvl. 2 or greater, the player can use the sensor mode to see a map of the level
 	const playerRotX = player.getRotation().x;
     let playerIsLookingDown = true;
@@ -65,8 +66,8 @@ function tryStartSensorMode(player: Player, lvl: number, gamebandTracker: Gameba
 
     var costPerSecond = sensorModeInfo[lvl].cost;
     var costPerTick = costPerSecond / 20;
-    var energyTracker = DataManager.getData(player, "playerEnergyTracker")!;
-    if (energyTracker.energyUnits < costPerTick) {
+    var energyTracker = DataManager.getData(player, "gamebandTracker")!;
+    if (gamebandTracker.energy < costPerTick) {
         player.sendMessage("§cNot enough energy!");
         return;
     }
@@ -96,23 +97,23 @@ function endSensorMode(player: Player, gamebandTracker: GamebandTracker, invento
     system.runTimeout(() => clearSensed(player), 5); // Ensure everything actually gets cleared
 }
 
-export function sensorTick(player: Player, gamebandTracker: GamebandTracker, energyTracker: PlayerEnergyTracker, inventoryTracker: InventoryTracker) {
+export function sensorTick(player: Player, gamebandTracker: GamebandTracker, inventoryTracker: InventoryTracker) {
 	let levelInformation = DataManager.getData(player, "levelInformation")!;
-	tryMap(player, levelInformation, energyTracker, inventoryTracker);
+	tryMap(player, levelInformation, gamebandTracker, inventoryTracker);
     if (!playerIsInSensorMode(gamebandTracker)) return;
     var sensorModeData = gamebandTracker.currentMode!;
     // Player is currently in sensor mode
     var costPerSecond = sensorModeInfo[sensorModeData.level].cost;
     var costPerTick = costPerSecond / 20;
-    energyTracker.energyUnits -= costPerTick;
-    if (energyTracker.energyUnits <= 0) {
+    gamebandTracker.energy -= costPerTick;
+    if (gamebandTracker.energy <= 0) {
         // Player can no longer afford sensor mode
-        energyTracker.energyUnits = 0;
+        gamebandTracker.energy = 0;
         endSensorMode(player, gamebandTracker, inventoryTracker);
-        DataManager.setData(player, energyTracker);
+        DataManager.setData(player, gamebandTracker);
         return;
     }
-    DataManager.setData(player, energyTracker);
+    DataManager.setData(player, gamebandTracker);
 }
 
 export function updateSensorDisplay(player: Player, gamebandTracker: GamebandTracker) {

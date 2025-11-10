@@ -3,7 +3,7 @@ import DataManager from "../managers/DataManager";
 import Utilities from "../Utilities";
 import Vector from "../Vector";
 import GamebandManager from "./GamebandManager";
-import { GamebandInfo, GamebandTracker, InventoryTracker, LevelInformation, PlayerEnergyTracker } from "../TypeDefinitions";
+import { GamebandInfo, GamebandTracker, InventoryTracker } from "../TypeDefinitions";
 
 const viewRange = 2;
 const clearRange = 4;
@@ -36,8 +36,7 @@ function tryStartXRayMode(player: Player, lvl: number, gamebandTracker: Gameband
     
     var costPerSecond = xrayModeInfo[lvl].cost;
     var costPerTick = costPerSecond / 20;
-    var energyTracker = DataManager.getData(player, "playerEnergyTracker")!;
-    if (energyTracker.energyUnits < costPerTick) {
+    if (gamebandTracker.energy < costPerTick) {
         player.sendMessage("§cNot enough energy!");
         return;
     }
@@ -66,21 +65,21 @@ function endXRayMode(player: Player, gamebandTracker: GamebandTracker, inventory
     system.runTimeout(() => clearXRayDisplay(player), 5); // Ensure everything actually gets cleared
 }
 
-export function xrayTick(player: Player, gamebandTracker: GamebandTracker, energyTracker: PlayerEnergyTracker, inventoryTracker: InventoryTracker) {
+export function xrayTick(player: Player, gamebandTracker: GamebandTracker, inventoryTracker: InventoryTracker) {
     if (!playerIsInXRayMode(gamebandTracker)) return;
     var xrayModeData = gamebandTracker.currentMode!;
     // Player is currently in xray mode
     var costPerSecond = xrayModeInfo[xrayModeData.level].cost;
     var costPerTick = costPerSecond / 20;
-    energyTracker.energyUnits -= costPerTick;
-    if (energyTracker.energyUnits <= 0) {
+    gamebandTracker.energy -= costPerTick;
+    if (gamebandTracker.energy <= 0) {
         // Player can no longer afford xray mode
-        energyTracker.energyUnits = 0;
+        gamebandTracker.energy = 0;
         endXRayMode(player, gamebandTracker, inventoryTracker);
-        DataManager.setData(player, energyTracker);
+        DataManager.setData(player, gamebandTracker);
         return;
     }
-    DataManager.setData(player, energyTracker);
+    DataManager.setData(player, gamebandTracker);
     updateXRayDisplay(player, gamebandTracker, xrayModeData.level);
 }
 

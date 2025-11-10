@@ -20,7 +20,6 @@ export type DataNodes =  {
 	"gamebandTracker": GamebandTracker,
 	"alarmTracker": AlarmTracker,
 	"inventoryTracker": InventoryTracker,
-	"playerEnergyTracker": PlayerEnergyTracker,
 	"actionTracker": IActionTracker,
 	"energyTracker": EnergyTracker,
 	"cameraTracker": CameraTracker
@@ -68,7 +67,10 @@ export interface LevelInformation extends DataNode {
 
 export interface GamebandTracker extends DataNode {
 	"name": "gamebandTracker",
-	"currentMode": ModeData | null
+	"currentMode": ModeData | null,
+	"energy": number,
+	"usingRechargerId": number,
+	"rechargeLevel": number
 }
 
 export interface AlarmTracker extends DataNode {
@@ -80,14 +82,6 @@ export interface AlarmTracker extends DataNode {
 export interface InventoryTracker extends DataNode {
 	"name": "inventoryTracker",
 	"slots": Array<IInventorySlotData>
-}
-
-export interface PlayerEnergyTracker extends DataNode {
-	"name": "playerEnergyTracker",
-	"energyUnits": number,
-	"recharging": boolean,
-	"usingRechargerID": number,
-	"rechargeLevel": number
 }
 
 export interface EnergyTracker extends DataNode {

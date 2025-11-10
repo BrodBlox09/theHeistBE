@@ -8,7 +8,7 @@ import LevelDefinitions from "./levels/LevelDefinitions";
 import GameObjectiveManager from "./managers/GameObjectiveManager";
 import PlayerBustedManager from "./managers/PlayerBustedManager";
 import LoreItem from "./LoreItem";
-import { PlayerEnergyTracker, LevelInformation, InventoryTracker, AlarmTracker } from "./TypeDefinitions";
+import { LevelInformation, InventoryTracker, AlarmTracker, GamebandTracker } from "./TypeDefinitions";
 import { rechargeModeInfo } from "./gamebands/recharge";
 
 /**
@@ -54,22 +54,23 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 			const levelId = levelDefinition.levelId;
 
 			// Add mandatory data
-			const maxEnergy = rechargeModeInfo[levelDefinition.rechargeLevel].max;
-			const playerEnergyTrackerDataNode: PlayerEnergyTracker = {
-				"name": "playerEnergyTracker",
-				"energyUnits": levelDefinition.startEnergyUnits ?? maxEnergy,
-				"recharging": false, "usingRechargerID": -1,
-				"rechargeLevel": levelDefinition.rechargeLevel
-			};
-			DataManager.setData(player, playerEnergyTrackerDataNode);
-
 			const playerLevelInformationDataNode: LevelInformation = {
 				"name": "levelInformation",
-				"currentMode": null,
 				"id": levelId,
 				"runSecurity": !levelDefinition.noRunSecurity
 			};
 			DataManager.setData(player, playerLevelInformationDataNode);
+
+			
+			const maxEnergy = rechargeModeInfo[levelDefinition.rechargeLevel].max;
+			const gamebandTracker: GamebandTracker = {
+				"name": "gamebandTracker",
+				"currentMode": null,
+				"energy": levelDefinition.startEnergyUnits ?? maxEnergy,
+				"rechargeLevel": levelDefinition.rechargeLevel,
+				"usingRechargerId": -1
+			};
+			DataManager.setData(player, gamebandTracker);
 
 			const alarmTrackerDataNode: AlarmTracker = {
 				"name": "alarmTracker",

@@ -4,7 +4,7 @@ import VoiceOverManager from "../managers/VoiceOverManager";
 import DataManager from "../managers/DataManager";
 import Utilities from "../Utilities";
 import Vector from "../Vector";
-import { IAction, IInventorySlotData, PlayerEnergyTracker } from "../TypeDefinitions";
+import { IAction, IInventorySlotData, GamebandTracker } from "../TypeDefinitions";
 
 export default class ActionManager {
 	static runActions(actionInfos: IAction[], player: Player) {
@@ -196,9 +196,9 @@ export default class ActionManager {
 				DataManager.setData(player, inventoryTracker);
 				Utilities.reloadPlayerInv(player);
 				if (actionInfo.do.mode == "recharge") {
-					var playerEnergyTracker: PlayerEnergyTracker = DataManager.getData(player, "playerEnergyTracker")!;
-					playerEnergyTracker.rechargeLevel = actionInfo.do.level;
-					DataManager.setData(player, playerEnergyTracker);
+					var gamebandTracker = DataManager.getData(player, "gamebandTracker")!;
+					gamebandTracker.rechargeLevel = actionInfo.do.level;
+					DataManager.setData(player, gamebandTracker);
 				}
 				Utilities.dimensions.overworld.getBlock(actionInfo.do.displayBlock)?.setType("minecraft:air");
 				world.sendMessage([{ "text": "§7Upgrade Recieved: §r" + actionInfo.do.modeText }]);
