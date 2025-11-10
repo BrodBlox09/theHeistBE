@@ -204,6 +204,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 			PlayerBustedManager.setTimesBusted(player, 0);
 			// Remove all tags (except persistent), even p_ tags (like for voice over)
 			player.getTags().forEach((x) => { if (!persistentTags.includes(x)) player.removeTag(x); });
+			GameObjectiveManager.hideSidebar();
 			if (!nextLevel) {
 				if (currLevel != -5) system.sendScriptEvent("theheist:load-level", `${currLevel - 1}`);
 				else endDemo(player);
