@@ -35,7 +35,8 @@ export default class PlayerBustedManager {
 		gamebandTracker.energy = 0;
 		DataManager.setData(player, gamebandTracker);
 
-		bustedCounterObjective.setScore(player, (bustedCounterObjective.getScore(player) ?? 0) + 1);
+		let currentBustCount = bustedCounterObjective.hasParticipant(player) ? bustedCounterObjective.getScore(player)! : 0;
+		bustedCounterObjective.setScore(player, currentBustCount + 1);
 		player.playSound("map.alarm");
 		player.addTag('loadingLevel');
 		player.onScreenDisplay.setTitle("§r§e§lBusted", { "subtitle": "You got detected. Try again!", "fadeInDuration": 20, "fadeOutDuration": 20, "stayDuration": 160 });
