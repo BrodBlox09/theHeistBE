@@ -22,6 +22,7 @@ export default class Utilities {
 	static ventHeight = 63;
 	static cameraDisplayHeight = 62;
 	static consoleDisplayHeight = 61;
+	static robotDisplayHeight = 60.75;
 	static levelPlayingHeight = 60;
 	static levelFloorHeight = 59;
 	static SECOND = 20;
