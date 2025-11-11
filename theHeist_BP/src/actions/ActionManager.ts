@@ -4,7 +4,7 @@ import VoiceOverManager from "../managers/VoiceOverManager";
 import DataManager from "../managers/DataManager";
 import Utilities from "../Utilities";
 import Vector from "../Vector";
-import { IAction, IInventorySlotData, GamebandTracker } from "../TypeDefinitions";
+import { IAction, IInventorySlotData } from "../TypeDefinitions";
 
 export default class ActionManager {
 	static runActions(actionInfos: IAction[], player: Player) {

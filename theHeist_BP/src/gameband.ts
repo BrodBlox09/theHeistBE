@@ -1,4 +1,4 @@
-import { MolangVariableMap, BlockPermutation, EffectTypes, world, system, Player, EntityInventoryComponent, ScoreboardObjective, Container, ItemStack, ItemLockMode, Entity, ItemUseAfterEvent, BlockVolume, EntityEquippableComponent, EquipmentSlot, EntityItemComponent, ItemStartUseOnAfterEvent, EntityQueryOptions } from "@minecraft/server";
+import { world, system, Player, ItemUseAfterEvent, ItemStartUseOnAfterEvent } from "@minecraft/server";
 import Vector from "./Vector";
 import DataManager from "./managers/DataManager";
 import Utilities from "./Utilities";
@@ -6,7 +6,6 @@ import GameObjectiveManager from "./managers/GameObjectiveManager";
 import PlayerBustedManager from "./managers/PlayerBustedManager";
 import GamebandManager from "./gamebands/GamebandManager";
 import ActionManager from "./actions/ActionManager";
-import LevelDefinitions from "./levels/LevelDefinitions";
 import { toggleRechargeMode } from "./gamebands/recharge";
 import { tryHackingMode } from "./gamebands/hacking";
 import { toggleSensorMode } from "./gamebands/sensor";

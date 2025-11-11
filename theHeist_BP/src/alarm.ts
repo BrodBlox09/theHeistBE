@@ -1,11 +1,11 @@
-import { world, system, GameMode, Player, EntityQueryOptions, MolangVariableMap, BlockComponent, Block } from "@minecraft/server";
+import { world, system, GameMode, Player, EntityQueryOptions, MolangVariableMap } from "@minecraft/server";
 import { solidToTransparent } from "./gamebands/xray";
 import * as StealthModeFunc from "./gamebands/stealth";
 import * as SensorModeFunc from "./gamebands/sensor";
 import DataManager from "./managers/DataManager";
 import Utilities from "./Utilities";
 import Vector from "./Vector";
-import { LevelInformation, CameraSwivelMode, ILevelCloneInfo, AlarmTracker, GamebandTracker } from "./TypeDefinitions";
+import { CameraSwivelMode, ILevelCloneInfo, AlarmTracker, GamebandTracker } from "./TypeDefinitions";
 import LevelDefinitions from "./levels/LevelDefinitions";
 import PlayerBustedManager from "./managers/PlayerBustedManager";
 import GameObjectiveManager from "./managers/GameObjectiveManager";

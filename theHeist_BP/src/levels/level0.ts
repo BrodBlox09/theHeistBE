@@ -1,8 +1,7 @@
-import { ItemStack, Player, system, world, DisplaySlotId, BlockInventoryComponent, BlockPermutation, Container, ItemLockMode } from "@minecraft/server";
+import { ItemStack, Player } from "@minecraft/server";
 import Vector from "../Vector";
 import DataManager from "../managers/DataManager";
 import Utilities from "../Utilities";
-import LevelConstructor from "./LevelConstructor";
 import VoiceOverManager from "../managers/VoiceOverManager";
 import LoreItem from "../LoreItem";
 import { ILevel } from "../TypeDefinitions";

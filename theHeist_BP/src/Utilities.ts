@@ -1,9 +1,8 @@
-import { BlockPermutation, Vector3, Block, world, Player, Container, EntityInventoryComponent, ItemStack, ItemLockMode, BlockVolume, BlockFillOptions, Entity, EntityEquippableComponent, EquipmentSlot, EntityType, Dimension } from "@minecraft/server";
+import { BlockPermutation, Vector3, Block, world, Player, Container, ItemStack, ItemLockMode, BlockVolume, BlockFillOptions, Entity, EquipmentSlot, EntityType, Dimension } from "@minecraft/server";
 import DataManager from "./managers/DataManager";
-import Vector from "./Vector";
 import LoreItem from "./LoreItem";
 import { BlockStateSuperset } from "@minecraft/vanilla-data";
-import { LevelInformation, IInventorySlotData, InventoryTracker } from "./TypeDefinitions";
+import { IInventorySlotData, InventoryTracker } from "./TypeDefinitions";
 
 export default class Utilities {
 	static readonly levelMapHeight = 140;

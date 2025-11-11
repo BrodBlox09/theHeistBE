@@ -1,4 +1,4 @@
-import { ItemStack, Container, Camera } from "@minecraft/server";
+import { ItemStack } from "@minecraft/server";
 import Vector from "../Vector";
 import VectorXZ from "../VectorXZ";
 import Utilities from "../Utilities";
