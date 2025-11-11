@@ -224,29 +224,29 @@ export default class ActionManager {
 				}, 0)
 
 				// First TP
-				player.teleport({ x: 998.5, y: -60, z: 112.5 }, { 'dimension': Utilities.dimensions.overworld });
+				player.teleport({ x: 998.5, y: 60, z: 112.5 }, { 'dimension': Utilities.dimensions.overworld });
 				player.camera.setCamera('minecraft:free', {
-					location: { x: 1030.5, y: -57.25, z: 107.5 },
+					location: { x: 1030.5, y: 62.75, z: 107.5 },
 					rotation: { x: 0, y: 180 }
 				})
 
 				system.runTimeout(() => {
 					player.camera.setCamera('minecraft:free', {
-						location: { x: 1031.5, y: -57.25, z: 88.5 },
+						location: { x: 1031.5, y: 62.75, z: 88.5 },
 						rotation: { x: -30, y: 125 }
 					})
 				}, Utilities.SECOND * 5);
 
 				system.runTimeout(() => {
 					player.camera.setCamera('minecraft:free', {
-						location: { x: 1027.5, y: -57.25, z: 68.5 },
+						location: { x: 1027.5, y: 62.75, z: 68.5 },
 						rotation: { x: 0, y: 135 }
 					})
 				}, Utilities.SECOND * 13);
 
 				system.runTimeout(() => {
 					player.camera.setCamera('minecraft:free', {
-						location: { x: 1017.5, y: -57.25, z: 56.5 },
+						location: { x: 1017.5, y: 62.75, z: 56.5 },
 						rotation: { x: -25, y: 80 }
 					})
 				}, Utilities.SECOND * 22);
