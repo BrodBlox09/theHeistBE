@@ -1,4 +1,4 @@
-import { Vector3 } from "@minecraft/server";
+import { Player, Vector3 } from "@minecraft/server";
 
 export interface ModeData {
 	mode: string,
@@ -161,27 +161,35 @@ export interface ILevel {
 	"levelCloneInfo": ILevelCloneInfo,
 	"startingItems": Array<IInventorySlotData>,
 	"rechargeLevel": number,
+	/**
+	 * Default is the maximum energy that can be stored in the current recharge mode (increases by level).
+	 */
 	"startEnergyUnits"?: number,
 	"startObjectives": Array<IObjectiveData>,
 	"customTitle"?: string,
 	"customLoadingArea"?: {
-		"waitForLoadLevel": boolean,
+		"waitForLoadLevel"?: boolean,
 		"playerLoadingLocation": Vector3
 	},
+	/** 
+	 * Custom total wait time (in seconds) for first-time level load, on top of the .
+	 * Ignored on subsequent loads.
+	 */
+	"initialAdditionalLoadWaitTime"?: number;
 	"playerNoPhone"?: boolean,
 	"timer"?: number,
 	/**
 	 * Second in function execution order.
 	 */
-	"setup": Function,
+	"setup": () => void,
 	/**
 	 * Last in function execution order.
 	 */
-	"onStart"?: (player: any) => any,
+	"onStart"?: (player: Player) => void,
 	/**
 	 * First in function execution order.
 	 */
-	"onLoadStart"?: (player: any) => any
+	"onLoadStart"?: (player: Player) => void
 }
 
 /**

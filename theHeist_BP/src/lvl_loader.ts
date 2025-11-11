@@ -20,9 +20,6 @@ import { rechargeModeInfo } from "./gamebands/recharge";
  * -15: Cameras and sonars mappout area
  */
 
-// Second in ticks
-const SECOND = 20;
-
 const persistentEntities = ["minecraft:player","minecraft:painting","minecraft:chicken","theheist:driver","theheist:rideable"];
 const persistentTags = ["loadingLevel","developer","persistent"];
 
@@ -31,16 +28,21 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 	const msg = event.message;
 	switch (id) {
 		case "theheist:load-level": {
-			const entities = Utilities.dimensions.overworld.getEntities();
-			for (const entity of entities) {
-				if (!persistentEntities.includes(entity.typeId) && !entity.hasTag("persistent")) entity.remove();
-			}
 			const player = world.getPlayers().filter((x) => (x != undefined && x != null))[0];
 			if (player == undefined) {
 				world.sendMessage("Could not find player");
 				return;
 			}
+			if (player.hasTag('loadingLevel')) {
+				world.sendMessage("Player already loading level");
+				return;
+			}
 			player.addTag('loadingLevel');
+			
+			const entities = Utilities.dimensions.overworld.getEntities();
+			for (const entity of entities) {
+				if (!persistentEntities.includes(entity.typeId) && !entity.hasTag("persistent")) entity.remove();
+			}
 			// Clear all data on player
 			DataManager.clearData(player);
 			player.getTags().forEach((x) => { if (!persistentTags.includes(x) && !x.startsWith("p_")) player.removeTag(x); });
@@ -101,13 +103,13 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 			});
 			if (levelDefinition.onLoadStart) levelDefinition.onLoadStart(player);
 
-			var elevatorInterval: number;
+			var elevatorIntervalId: number;
 			var waitForLoadLevel = true;
 			if (levelDefinition.customTitle == undefined) player.onScreenDisplay.setTitle(`§o§7Level ${levelId}`, { "fadeInDuration": 20, "fadeOutDuration": 20, "stayDuration": 160 });
 			else if (levelDefinition.customTitle != "") player.onScreenDisplay.setTitle(levelDefinition.customTitle, { "fadeInDuration": 20, "fadeOutDuration": 20, "stayDuration": 160 });
 			if (!levelDefinition.customLoadingArea) {
 				player.teleport(Vector.from(levelDefinition.loadElevatorLoc).add(new Vector(0, 4, 0)), { rotation: player.getRotation() });
-				elevatorInterval = runElelevatorAnimation(Vector.from(levelDefinition.loadElevatorLoc));
+				elevatorIntervalId = runElelevatorAnimation(Vector.from(levelDefinition.loadElevatorLoc));
 			} else if (levelDefinition.customLoadingArea.waitForLoadLevel) {
 				player.teleport(levelDefinition.customLoadingArea.playerLoadingLocation, { rotation: player.getRotation() });
 			} else waitForLoadLevel = false;
@@ -118,8 +120,11 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 			if (levelCloneInfo) system.runTimeout(() => {
 				// Ticking area doesn't depend on Y level and it uses rounded X and Z coordinates
 				Utilities.dimensions.overworld.runCommand(`tickingarea add ${levelCloneInfo.startX} 0 ${levelCloneInfo.startZ} ${levelCloneInfo.endX} 0 ${levelCloneInfo.endZ} level-wide`);
-			}, waitForLoadLevel ? 2 : 0); // Ensure this ticking area isn't removed
+			}, waitForLoadLevel ? 2 : 0); // Wait to ensure this ticking area isn't removed
 
+			let chunkWaitTime = waitForLoadLevel ? Utilities.SECOND * 7.5 : 0;
+			let levelLoadWaitTime = chunkWaitTime + (waitForLoadLevel ? Utilities.SECOND * 2.5 : 0);
+			if (waitForLoadLevel && levelDefinition.initialAdditionalLoadWaitTime && !player.hasTag("p_initialLevelLoad")) levelLoadWaitTime += levelDefinition.initialAdditionalLoadWaitTime;
 			system.runTimeout(() => {
 				if (!levelDefinition.noAutoCleanup) {
 					const entities = Utilities.dimensions.overworld.getEntities();
@@ -140,14 +145,15 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 				}
 
 				LevelConstructor.start();
-				levelDefinition.setup(player);
-			}, waitForLoadLevel ? SECOND * 7.5 : 0); // After 7.5 seconds load level objects
+				levelDefinition.setup();
+			},chunkWaitTime); // After 7.5 seconds load level objects
 			system.runTimeout(() => { // After 10 seconds bring the player out of the elevator and end the interval
-				if (elevatorInterval) system.clearRun(elevatorInterval);
+				if (elevatorIntervalId) system.clearRun(elevatorIntervalId);
 				player.teleport(levelDefinition.startPlayerLoc, { rotation: levelDefinition.startPlayerRot ? { 'x': 0, 'y': levelDefinition.startPlayerRot } : player.getRotation() });
 				if (levelDefinition.onStart) levelDefinition.onStart(player);
 				player.removeTag('loadingLevel');
-			}, waitForLoadLevel ? SECOND * 10 : 0);
+				player.addTag('p_initialLevelLoad');
+			}, levelLoadWaitTime);
 			break;
 		}
 		case "theheist:voice-says": {
