@@ -164,6 +164,15 @@ system.runInterval(() => {
 	player.addEffect('saturation', 2000, { amplifier: 1, showParticles: false });
 	player.addEffect('night_vision', 2000, { amplifier: 1, showParticles: false });
 	player.addEffect('resistance', 2000, { amplifier: 1, showParticles: false });
+
+	// If recharge mode selected, show objectives
+	const playerInvContainer = player.getComponent('inventory')!.container;
+	var selectedItemStack = playerInvContainer.getItem(player.selectedSlotIndex);
+	if (selectedItemStack != undefined && selectedItemStack.typeId.startsWith("theheist:recharge_mode_lvl_")) {
+		GameObjectiveManager.showSidebar();
+	} else {
+		GameObjectiveManager.hideSidebar();
+	}
 	
 	let inventoryTracker = DataManager.getData(player, "inventoryTracker");
 	let gamebandTracker = DataManager.getData(player, "gamebandTracker");
@@ -194,15 +203,6 @@ system.runInterval(() => {
 	// cloneFloor(Vector.from(player.location));
 	// flattenMap(Vector.from(player.location));
 	// clearGlass(Vector.from(player.location));
-	
-	// If recharge mode selected, show objectives
-	const playerInvContainer = player.getComponent('inventory')!.container;
-	var selectedItemStack = playerInvContainer.getItem(player.selectedSlotIndex);
-	if (selectedItemStack != undefined && selectedItemStack.typeId.startsWith("theheist:recharge_mode_lvl_")) {
-		GameObjectiveManager.showSidebar();
-	} else {
-		GameObjectiveManager.hideSidebar();
-	}
 
 	// Tick all gameband modes
 	if (gamebandTracker) GamebandManager.tickAllGamebands(player, gamebandTracker, inventoryTracker);
