@@ -35,10 +35,17 @@ export function toggleRechargeMode(player: Player, lvl: number) {
 	let armorStandEnergyTrackerDataNode = DataManager.getData(armorStand, "energyTracker")!;
 	gamebandTracker.rechargeLevel = lvl;
 	var blockLocation = { "x": armorStandEnergyTrackerDataNode.block.x, "y": armorStandEnergyTrackerDataNode.block.y, "z": armorStandEnergyTrackerDataNode.block.z };
-	if (gamebandTracker.recharging == false) {
+	if (playerIsInRechargeMode(gamebandTracker)) {
+		// The player is currently recharging
+		gamebandTracker.currentMode = null;
+		Utilities.setBlock(blockLocation, "theheist:recharge_station", { "minecraft:cardinal_direction": armorStandEnergyTrackerDataNode.block.rotation, "theheist:state": 1 });
+		gamebandTracker.usingRechargerId = -1;
+		// Bring back the player's items
+		Utilities.reloadPlayerInv(player);
+	} else {
+		// The player is not currently recharging
 		if (armorStandEnergyTrackerDataNode.energyUnits == 0.0) return;
 		if (armorStandEnergyTrackerDataNode.block.y - 1 > player.location.y) return;
-		gamebandTracker.recharging = true;
 		gamebandTracker.currentMode = { "mode": "recharge", "level": lvl };
 		player.playSound("portal.travel", { "volume": 0.1, "pitch": 2 });
 		Utilities.setBlock(blockLocation, "theheist:recharge_station", { "minecraft:cardinal_direction": armorStandEnergyTrackerDataNode.block.rotation, "theheist:state": 2 });
@@ -50,14 +57,6 @@ export function toggleRechargeMode(player: Player, lvl: number) {
 		rechargeModeItemStack.lockMode = ItemLockMode.slot;
 		LoreItem.setLoreOfItemStack(rechargeModeItemStack);
 		playerInvContainer.setItem(0, rechargeModeItemStack);
-	} else {
-		// The player is currently recharging
-		gamebandTracker.recharging = false;
-		gamebandTracker.currentMode = null;
-		Utilities.setBlock(blockLocation, "theheist:recharge_station", { "minecraft:cardinal_direction": armorStandEnergyTrackerDataNode.block.rotation, "theheist:state": 1 });
-		gamebandTracker.usingRechargerId = -1;
-		// Bring back the player's items
-		Utilities.reloadPlayerInv(player);
 	}
 	DataManager.setData(player, gamebandTracker);
 }
@@ -79,7 +78,6 @@ export function rechargeTick(player: Player, gamebandTracker: GamebandTracker, i
 	}
 	if (i == 0) {
 		// Player has left range, so stop the player from recharging
-		gamebandTracker.recharging = false;
 		gamebandTracker.currentMode = null;
 		Utilities.reloadPlayerInv(player);
 		const subQuery = {
@@ -107,7 +105,6 @@ export function rechargeTick(player: Player, gamebandTracker: GamebandTracker, i
 				gamebandTracker.energy -= diff;
 				armorStandEnergyTracker.energyUnits = 0;
 				Utilities.setBlock({ x: armorStandEnergyTracker.block.x, y: armorStandEnergyTracker.block.y, z: armorStandEnergyTracker.block.z }, "theheist:recharge_station", { "minecraft:cardinal_direction": armorStandEnergyTracker.block.rotation, "theheist:state": 3 });
-				gamebandTracker.recharging = false;
 				gamebandTracker.currentMode = null;
 				gamebandTracker.usingRechargerId = -1;
 				Utilities.reloadPlayerInv(player);
