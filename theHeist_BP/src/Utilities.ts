@@ -6,26 +6,26 @@ import { BlockStateSuperset } from "@minecraft/vanilla-data";
 import { LevelInformation, IInventorySlotData, InventoryTracker } from "./TypeDefinitions";
 
 export default class Utilities {
-	static levelMapHeight = 140;
-	static floorCloneHeight = 138;
-	static drilledBlocksHeight = 135;
-	static consolesHeight = 105;
-	static rechargeHeight = 100;
-	static cameraHeight = 95;
-	static raycastHeight = 90;
-	static cameraBlockCacheMappingHeight = 88;
-	static cameraBlockMappingHeight = 87;
-	static robotPathDisplayMapHeight = 86;
-	static sonarBlockMappingHeight = 85;
-	static robotPathMapHeight = 71;
-	static magnetModeMagnetBlocksHeight = 69;
-	static ventHeight = 63;
-	static cameraDisplayHeight = 62;
-	static consoleDisplayHeight = 61;
-	static robotDisplayHeight = 60.75;
-	static levelPlayingHeight = 60;
-	static levelFloorHeight = 59;
-	static SECOND = 20;
+	static readonly levelMapHeight = 140;
+	static readonly floorCloneHeight = 138;
+	static readonly drilledBlocksHeight = 135;
+	static readonly consolesHeight = 105;
+	static readonly rechargeHeight = 100;
+	static readonly cameraHeight = 95;
+	static readonly raycastHeight = 90;
+	static readonly cameraBlockCacheMappingHeight = 88;
+	static readonly cameraBlockMappingHeight = 87;
+	static readonly robotPathDisplayMapHeight = 86;
+	static readonly sonarBlockMappingHeight = 85;
+	static readonly robotPathMapHeight = 71;
+	static readonly magnetModeMagnetBlocksHeight = 69;
+	static readonly ventHeight = 63;
+	static readonly cameraDisplayHeight = 62;
+	static readonly consoleDisplayHeight = 61;
+	static readonly robotDisplayHeight = 60.75;
+	static readonly levelPlayingHeight = 60;
+	static readonly levelFloorHeight = 59;
+	static readonly SECOND = 20;
 	static dimensions: Record<string, Dimension> = {};
 
 	static sin(d: number): number {
