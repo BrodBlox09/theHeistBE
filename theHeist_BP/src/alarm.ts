@@ -290,7 +290,7 @@ function updateCameras(player: Player, levelCI: ILevelCloneInfo) {
 				cameraTrackerDataNode.rotation = rotation;
 				const displayCameraQuery = {
 					"type": "theheist:camera",
-					"location": { 'x': armorStand.location.x, 'y': -57, 'z': armorStand.location.z },
+					"location": { 'x': armorStand.location.x, 'y': Utilities.cameraDisplayHeight, 'z': armorStand.location.z },
 					"maxDistance": 3,
 					"closest": 1
 				}
@@ -345,7 +345,7 @@ function updateSonars(player: Player, levelCI: ILevelCloneInfo) {
 		if (cameraTrackerDataNode.disabled) {
 			var displayCameraQuery = {
 				"type": `theheist:sonar`,
-				"location": { 'x': x.location.x, 'y': -57, 'z': x.location.z },
+				"location": { 'x': x.location.x, 'y': Utilities.cameraDisplayHeight, 'z': x.location.z },
 				"maxDistance": 3,
 				"closest": 1
 			}
@@ -409,7 +409,7 @@ function updateSonar360s(player: Player) {
 		if (cameraTrackerDataNode.disabled) {
 			var displayCameraQuery = {
 				"type": `theheist:sonar360`,
-				"location": { 'x': x.location.x, 'y': -57, 'z': x.location.z },
+				"location": { 'x': x.location.x, 'y': Utilities.cameraDisplayHeight, 'z': x.location.z },
 				"maxDistance": 3,
 				"closest": 1
 			}

@@ -72,7 +72,7 @@ export default class ActionManager {
 				var cameraTrackerDataNode = DataManager.getData(cameraArmorStand, "cameraTracker")!;
 				cameraTrackerDataNode.disabled = true;
 				DataManager.setData(cameraArmorStand, cameraTrackerDataNode);
-				var displayCameraLocation = { "x": cameraArmorStand.location.x, "y": -57, "z": cameraArmorStand.location.z };
+				var displayCameraLocation = { "x": cameraArmorStand.location.x, "y": Utilities.cameraDisplayHeight, "z": cameraArmorStand.location.z };
 				var displayCameraQuery = {
 					"type": `theheist:${cameraTrackerDataNode.type}`,
 					"location": displayCameraLocation,
