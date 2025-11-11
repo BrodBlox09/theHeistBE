@@ -71,7 +71,7 @@ system.afterEvents.scriptEventReceive.subscribe(event => { // stable-friendly ve
 			Utilities.clearPlayerInventory(player);
 			DataManager.clearData(player);
 			player.resetLevel();
-			player.teleport(new Vector(44.5, -59, 70.5), {
+			player.teleport(new Vector(44.5, 60, 70.5), {
 				dimension: Utilities.dimensions.overworld,
 				rotation: { x: 0, y: 90 }
 			});
