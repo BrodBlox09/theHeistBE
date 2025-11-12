@@ -18,7 +18,7 @@ const staticSecurityDeviceLoadingRange = 25; // To reduce lag, only map the area
 const sonarTimeoutTime = 3; // Time in ticks that the player is invulnerable to sonar after being seen (to stop double ticking)
 const xrayTransparentBlocks = solidToTransparent.map(x => x.transparent);
 
-system.runInterval(() => {
+export function alarmTick() {
 	// Only include adventure mode players
 	let player = world.getPlayers({ "gameMode": GameMode.Adventure }).filter((x) => (x != undefined && x != null))[0];
 	if (player == undefined) return;
@@ -55,7 +55,7 @@ system.runInterval(() => {
 		DataManager.setWorldData("levelInformation", levelInformation);
 	}
 	if (levelInformation.timeLimit) GameObjectiveManager.setTimeRemaining(player, levelInformation.timeLimit.remainingTime / Utilities.SECOND);
-});
+}
 
 function updatePlayerAlarmLevel(player: Player, gamebandTracker: GamebandTracker, alarmTracker: AlarmTracker) {
 	// Movement-based security

@@ -155,7 +155,7 @@ function clearGlass(loc: Vector) {
 	Utilities.dimensions.overworld.runCommand(`fill ${corner1.x} ${corner1.y} ${corner1.z} ${corner2.x} ${corner2.y} ${corner2.z} air replace glass`);
 }
 
-system.runInterval(() => {
+export function gamebandTick() {
 	const player = world.getPlayers().filter((x: Player) => (x != undefined && x != null))[0];
 	if (player == undefined) return;
 
@@ -217,4 +217,4 @@ system.runInterval(() => {
 		player.addLevels(-100);
 		player.addLevels(Math.floor(gamebandTracker.energy));
 	}
-});
+}

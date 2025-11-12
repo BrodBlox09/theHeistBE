@@ -5,10 +5,15 @@ import Utilities from "./Utilities";
 import Vector from "./Vector";
 import "./customComponents";
 import "./lvl_loader";
-import "./gameband";
-import "./alarm";
+import { gamebandTick } from "./gameband";
+import { alarmTick } from "./alarm";
 import ActionManager from "./actions/ActionManager";
 import LevelDefinitions from "./levels/LevelDefinitions";
+
+system.runInterval(() => {
+	gamebandTick();
+	alarmTick();
+});
 
 world.afterEvents.playerSpawn.subscribe(eventData => {
 	if (!eventData.initialSpawn || !eventData.player.hasTag('loadingLevel')) return;
