@@ -11,9 +11,6 @@ import LoreItem from "./LoreItem";
 import { LevelInformation, InventoryTracker, AlarmTracker, GamebandTracker } from "./TypeDefinitions";
 import { rechargeModeInfo } from "./gamebands/recharge";
 
-// Second in ticks
-const SECOND = 20;
-
 const persistentEntities = ["minecraft:player","minecraft:painting","theheist:driver","theheist:rideable"];
 const persistentTags = ["loadingLevel","developer","persistent"];
 
@@ -130,13 +127,13 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 
 				LevelConstructor.start();
 				levelDefinition.setup(player);
-			}, waitForLoadLevel ? SECOND * 7.5 : 0); // After 7.5 seconds load level objects
+			}, waitForLoadLevel ? Utilities.SECOND * 7.5 : 0); // After 7.5 seconds load level objects
 			system.runTimeout(() => { // After 10 seconds bring the player out of the elevator and end the interval
 				if (elevatorInterval) system.clearRun(elevatorInterval);
 				player.teleport(levelDefinition.startPlayerLoc, { rotation: levelDefinition.startPlayerRot ? { 'x': 0, 'y': levelDefinition.startPlayerRot } : player.getRotation() });
 				if (levelDefinition.onStart) levelDefinition.onStart(player);
 				player.removeTag('loadingLevel');
-			}, waitForLoadLevel ? SECOND * 10 : 0);
+			}, waitForLoadLevel ? Utilities.SECOND * 10 : 0);
 			break;
 		}
 		case "theheist:voice-says": {
