@@ -30,8 +30,10 @@ export function alarmTick() {
 	if (!levelDefinition) return;
 	let levelCI = levelDefinition.levelCloneInfo;
 
-	let alarmTracker = DataManager.getData(player, "alarmTracker")!;
-	let gamebandTracker = DataManager.getData(player, "gamebandTracker")!;
+	let alarmTracker = DataManager.getData(player, "alarmTracker");
+	let gamebandTracker = DataManager.getData(player, "gamebandTracker");
+
+	if (!alarmTracker || !gamebandTracker) return;
 
 	// Update camera sight blocks and sensor display
 	updateRobots(player);
