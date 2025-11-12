@@ -11,15 +11,6 @@ import LoreItem from "./LoreItem";
 import { LevelInformation, InventoryTracker, AlarmTracker, GamebandTracker } from "./TypeDefinitions";
 import { rechargeModeInfo } from "./gamebands/recharge";
 
-/**
- * Layer information:
- * 20: Level map
- * 0: Hackable consoles
- * -5: Recharge stations
- * -10: Cameras, sonars, and robots
- * -15: Cameras and sonars mappout area
- */
-
 // Second in ticks
 const SECOND = 20;
 
