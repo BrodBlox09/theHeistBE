@@ -12,7 +12,7 @@ world.afterEvents.worldLoad.subscribe(event => {
 
 export default class PlayerBustedManager {
 	static playerBusted(player: Player): void {
-		let playerLevelInformation = DataManager.getData(player, "levelInformation")!;
+		let playerLevelInformation = DataManager.getWorldData("levelInformation")!;
 		let levelDefinition = LevelDefinitions.getLevelDefinitionByID(playerLevelInformation.id);
 		if (!levelDefinition) {
 			console.warn("Player busted but no level definition to determine prison location.");

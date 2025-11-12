@@ -13,10 +13,24 @@ export interface IAction {
 
 export type ActionList = Array<IAction>;
 
+export type WorldDataNodeType<T extends WorldDataNodeName> = T extends WorldDataNodeName ? WorldDataNodes[T] : undefined;
+export type WorldDataNodeName = keyof WorldDataNodes;
+
+export type WorldDataNodes = {
+	"levelInformation": LevelInformation
+}
+
+export interface WorldDataNode extends Record<string, any> {}
+
+export interface LevelInformation extends WorldDataNode {
+	"id": string,
+	"runSecurity": boolean,
+	"timeLimit"?: TimeLimit
+}
+
 export type DataNodeReturnType<T extends string> = T extends keyof DataNodes ? DataNodes[T] : DataNode;
 
 export type DataNodes =  {
-	"levelInformation": LevelInformation,
 	"gamebandTracker": GamebandTracker,
 	"alarmTracker": AlarmTracker,
 	"inventoryTracker": InventoryTracker,
@@ -57,13 +71,6 @@ export interface KeycardReaderActionTracker extends IActionTracker {
 	"name": "actionTracker",
 	"level"?: undefined,
 	"isKeycardReader": true
-}
-
-export interface LevelInformation extends DataNode {
-	"name": "levelInformation",
-	"id": string,
-	"runSecurity": boolean,
-	"timeLimit"?: TimeLimit
 }
 
 /**

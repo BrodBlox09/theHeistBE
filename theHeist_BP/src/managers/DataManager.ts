@@ -1,7 +1,18 @@
 import { Entity, world } from '@minecraft/server';
-import { DataNodeReturnType, DataNode } from '../TypeDefinitions';
+import { WorldDataNodeType, WorldDataNodeName, DataNodeReturnType, DataNode } from '../TypeDefinitions';
 
 export default class DataManager {
+	static getWorldData<T extends WorldDataNodeName>(dataNodeName: T): WorldDataNodeType<T> | undefined {
+		const dataStr = world.getDynamicProperty(dataNodeName) as string;
+		if (!dataStr) return;
+		return JSON.parse(dataStr);
+	}
+
+	static setWorldData<T extends WorldDataNodeName>(dataNodeName: T, object: WorldDataNodeType<T>) {
+		const data = JSON.stringify(object);
+		world.setDynamicProperty(dataNodeName, data);
+	}
+
 	static getData<T extends string>(entity: Entity, dataNodeName: T): DataNodeReturnType<T> | undefined {
 		const dataStr = entity.getDynamicProperty('data') as string;
 		if (!dataStr) return;

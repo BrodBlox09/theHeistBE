@@ -23,7 +23,7 @@ system.runInterval(() => {
 	let player = world.getPlayers({ "gameMode": GameMode.Adventure }).filter((x) => (x != undefined && x != null))[0];
 	if (player == undefined) return;
 
-	let levelInformation = DataManager.getData(player, "levelInformation");
+	let levelInformation = DataManager.getWorldData("levelInformation");
 	if (!levelInformation || !levelInformation.runSecurity) return;
 	let levelId = levelInformation.id;
 	let levelDefinition = LevelDefinitions.getLevelDefinitionByID(levelId);
@@ -52,7 +52,7 @@ system.runInterval(() => {
 		levelInformation.timeLimit.remainingTime -= 1;
 		if (levelInformation.timeLimit.remainingTime < 0) levelInformation.timeLimit.remainingTime = 0;
 		if (levelInformation.timeLimit.remainingTime == 0) PlayerBustedManager.playerBusted(player);
-		DataManager.setData(player, levelInformation);
+		DataManager.setWorldData("levelInformation", levelInformation);
 	}
 	if (levelInformation.timeLimit) GameObjectiveManager.setTimeRemaining(player, levelInformation.timeLimit.remainingTime / Utilities.SECOND);
 });

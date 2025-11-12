@@ -14,7 +14,7 @@ import { LevelNotFoundError } from "./levels/LevelDefinitions";
 
 world.afterEvents.playerSpawn.subscribe(eventData => {
 	if (!eventData.initialSpawn || !eventData.player.hasTag('loadingLevel')) return;
-	var levelInfo = DataManager.getData(eventData.player, "levelInformation");
+	var levelInfo = DataManager.getWorldData("levelInformation");
 	if (!levelInfo) return;
 	system.sendScriptEvent("theheist:load-level", `${levelInfo.id}`);
 });
@@ -104,7 +104,7 @@ system.afterEvents.scriptEventReceive.subscribe(event => { // stable-friendly ve
 			break;
 		}
 		case "lvlData": {
-			var data = DataManager.getData(player, "levelInformation");
+			var data = DataManager.getWorldData("levelInformation");
 			world.sendMessage(JSON.stringify(data));
 			break;
 		}

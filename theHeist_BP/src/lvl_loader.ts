@@ -54,20 +54,18 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 			const levelId = levelDefinition.levelId;
 
 			// Add mandatory data
-			const playerLevelInformationDataNode: LevelInformation = {
-				"name": "levelInformation",
+			const levelInformationDataNode: LevelInformation = {
 				"id": levelId,
 				"runSecurity": !levelDefinition.noRunSecurity
 			};
 			if (levelDefinition.timeLimit) {
-				playerLevelInformationDataNode.timeLimit = {
+				levelInformationDataNode.timeLimit = {
 					"maxTime": levelDefinition.timeLimit * Utilities.SECOND,
 					"remainingTime": levelDefinition.timeLimit * Utilities.SECOND
 				};
-				GameObjectiveManager.setTimeRemaining(player, playerLevelInformationDataNode.timeLimit.remainingTime);
+				GameObjectiveManager.setTimeRemaining(player, levelInformationDataNode.timeLimit.remainingTime);
 			}
-			DataManager.setData(player, playerLevelInformationDataNode);
-
+			DataManager.setWorldData("levelInformation", levelInformationDataNode);
 			
 			const maxEnergy = rechargeModeInfo[levelDefinition.rechargeLevel].max;
 			const gamebandTracker: GamebandTracker = {
