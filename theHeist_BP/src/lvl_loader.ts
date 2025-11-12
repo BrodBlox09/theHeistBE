@@ -23,7 +23,7 @@ import { rechargeModeInfo } from "./gamebands/recharge";
 // Second in ticks
 const SECOND = 20;
 
-const persistentEntities = ["minecraft:player","minecraft:painting","minecraft:chicken","theheist:driver","theheist:rideable"];
+const persistentEntities = ["minecraft:player","minecraft:painting","theheist:driver","theheist:rideable"];
 const persistentTags = ["loadingLevel","developer","persistent"];
 
 system.afterEvents.scriptEventReceive.subscribe((event) => {
