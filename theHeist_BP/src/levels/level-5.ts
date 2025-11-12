@@ -49,17 +49,17 @@ setup: () => {
     Utilities.setBlock(new Vector(6912, Utilities.ventHeight, 140), "theheist:white_trapdoor", {"minecraft:cardinal_direction": "north"});
     Utilities.setBlock(new Vector(6905, Utilities.ventHeight, 140), "theheist:white_trapdoor", {"minecraft:cardinal_direction": "east"});
     // Right Wing:
-    Utilities.fillBlocks(new Vector(6933, Utilities.levelPlayingHeight, 130), new Vector(6933, -58, 130), "theheist:laser_end", {"minecraft:cardinal_direction": "west"});
-    Utilities.fillBlocks(new Vector(6934, Utilities.levelPlayingHeight, 130), new Vector(6936, -58, 130), "theheist:laser", {"minecraft:cardinal_direction": "south"});
-    Utilities.fillBlocks(new Vector(6937, Utilities.levelPlayingHeight, 130), new Vector(6937, -58, 130), "theheist:laser_end", {"minecraft:cardinal_direction": "east"});
+    Utilities.fillBlocks(new Vector(6933, Utilities.levelPlayingHeight, 130), new Vector(6933, Utilities.levelPlayingHeight + 2, 130), "theheist:laser_end", {"minecraft:cardinal_direction": "west"});
+    Utilities.fillBlocks(new Vector(6934, Utilities.levelPlayingHeight, 130), new Vector(6936, Utilities.levelPlayingHeight + 2, 130), "theheist:laser", {"minecraft:cardinal_direction": "south"});
+    Utilities.fillBlocks(new Vector(6937, Utilities.levelPlayingHeight, 130), new Vector(6937, Utilities.levelPlayingHeight + 2, 130), "theheist:laser_end", {"minecraft:cardinal_direction": "east"});
     LevelConstructor.keypad(new VectorXZ(6937.5, 129.5), 3, BlockRotation.EAST, [{
-        "type": "fill_blocks", "do": { "x1": 6933, "y1": Utilities.levelPlayingHeight, "z1": 130, "x2": 6933, "y2": -58, "z2": 130, "block": "theheist:laser_end", "permutations": {"minecraft:cardinal_direction": "west","theheist:connect":false} }, "delay": 40
+        "type": "fill_blocks", "do": { "x1": 6933, "y1": Utilities.levelPlayingHeight, "z1": 130, "x2": 6933, "y2": Utilities.levelPlayingHeight + 2, "z2": 130, "block": "theheist:laser_end", "permutations": {"minecraft:cardinal_direction": "west","theheist:connect":false} }, "delay": 40
     },
     {
-        "type": "fill_blocks", "do": { "x1": 6934, "y1": Utilities.levelPlayingHeight, "z1": 130, "x2": 6936, "y2": -58, "z2": 130, "block": "air", "permutations": {} }, "delay": 40
+        "type": "fill_blocks", "do": { "x1": 6934, "y1": Utilities.levelPlayingHeight, "z1": 130, "x2": 6936, "y2": Utilities.levelPlayingHeight + 2, "z2": 130, "block": "air", "permutations": {} }, "delay": 40
     },
     {
-        "type": "fill_blocks", "do": { "x1": 6937, "y1": Utilities.levelPlayingHeight, "z1": 130, "x2": 6937, "y2": -58, "z2": 130, "block": "theheist:laser_end", "permutations": {"minecraft:cardinal_direction": "east","theheist:connect":false} }, "delay": 40
+        "type": "fill_blocks", "do": { "x1": 6937, "y1": Utilities.levelPlayingHeight, "z1": 130, "x2": 6937, "y2": Utilities.levelPlayingHeight + 2, "z2": 130, "block": "theheist:laser_end", "permutations": {"minecraft:cardinal_direction": "east","theheist:connect":false} }, "delay": 40
     },
     {
         "type": "hack_console", "do": { "x": 6937, "z": 131 }
@@ -73,17 +73,17 @@ setup: () => {
 
     Utilities.setBlock(new Vector(6933, Utilities.ventHeight, 125), "theheist:white_trapdoor", {"minecraft:cardinal_direction": "north"});
     // Left Wing:
-    Utilities.fillBlocks(new Vector(6886, Utilities.levelPlayingHeight, 122), new Vector(6886, -58, 122), "theheist:laser_end", {"minecraft:cardinal_direction": "north"});
-    Utilities.fillBlocks(new Vector(6886, Utilities.levelPlayingHeight, 123), new Vector(6886, -58, 125), "theheist:laser", {"minecraft:cardinal_direction": "west"});
-    Utilities.fillBlocks(new Vector(6886, Utilities.levelPlayingHeight, 126), new Vector(6886, -58, 126), "theheist:laser_end", {"minecraft:cardinal_direction": "south"});
+    Utilities.fillBlocks(new Vector(6886, Utilities.levelPlayingHeight, 122), new Vector(6886, Utilities.levelPlayingHeight + 2, 122), "theheist:laser_end", {"minecraft:cardinal_direction": "north"});
+    Utilities.fillBlocks(new Vector(6886, Utilities.levelPlayingHeight, 123), new Vector(6886, Utilities.levelPlayingHeight + 2, 125), "theheist:laser", {"minecraft:cardinal_direction": "west"});
+    Utilities.fillBlocks(new Vector(6886, Utilities.levelPlayingHeight, 126), new Vector(6886, Utilities.levelPlayingHeight + 2, 126), "theheist:laser_end", {"minecraft:cardinal_direction": "south"});
     LevelConstructor.keypad(new VectorXZ(6887.5, 122.5), 3, BlockRotation.NORTH, [{
-        "type": "fill_blocks", "do": { "x1": 6886, "y1": Utilities.levelPlayingHeight, "z1": 122, "x2": 6886, "y2": -58, "z2": 122, "block": "theheist:laser_end", "permutations": {"minecraft:cardinal_direction": "north","theheist:connect":false} }, "delay": 40
+        "type": "fill_blocks", "do": { "x1": 6886, "y1": Utilities.levelPlayingHeight, "z1": 122, "x2": 6886, "y2": Utilities.levelPlayingHeight + 2, "z2": 122, "block": "theheist:laser_end", "permutations": {"minecraft:cardinal_direction": "north","theheist:connect":false} }, "delay": 40
     },
     {
-        "type": "fill_blocks", "do": { "x1": 6886, "y1": Utilities.levelPlayingHeight, "z1": 123, "x2": 6886, "y2": -58, "z2": 125, "block": "air", "permutations": {} }, "delay": 40
+        "type": "fill_blocks", "do": { "x1": 6886, "y1": Utilities.levelPlayingHeight, "z1": 123, "x2": 6886, "y2": Utilities.levelPlayingHeight + 2, "z2": 125, "block": "air", "permutations": {} }, "delay": 40
     },
     {
-        "type": "fill_blocks", "do": { "x1": 6886, "y1": Utilities.levelPlayingHeight, "z1": 126, "x2": 6886, "y2": -58, "z2": 126, "block": "theheist:laser_end", "permutations": {"minecraft:cardinal_direction": "south","theheist:connect":false} }, "delay": 40
+        "type": "fill_blocks", "do": { "x1": 6886, "y1": Utilities.levelPlayingHeight, "z1": 126, "x2": 6886, "y2": Utilities.levelPlayingHeight + 2, "z2": 126, "block": "theheist:laser_end", "permutations": {"minecraft:cardinal_direction": "south","theheist:connect":false} }, "delay": 40
     }]);
 
     LevelConstructor.sonarRobot(new VectorXZ(6897.5, 122.5), 180);
@@ -91,17 +91,17 @@ setup: () => {
     Utilities.setBlock(new Vector(6902, Utilities.ventHeight, 118), "theheist:white_trapdoor", {"minecraft:cardinal_direction": "west"});
     Utilities.setBlock(new Vector(6894, Utilities.ventHeight, 126), "theheist:white_trapdoor", {"minecraft:cardinal_direction": "west"});
     // North Wing:
-    Utilities.fillBlocks(new Vector(6910, Utilities.levelPlayingHeight, 91), new Vector(6910, -58, 91), "theheist:laser_end", {"minecraft:cardinal_direction": "west"});
-    Utilities.fillBlocks(new Vector(6911, Utilities.levelPlayingHeight, 91), new Vector(6913, -58, 91), "theheist:laser", {"minecraft:cardinal_direction": "north"});
-    Utilities.fillBlocks(new Vector(6914, Utilities.levelPlayingHeight, 91), new Vector(6914, -58, 91), "theheist:laser_end", {"minecraft:cardinal_direction": "east"});
+    Utilities.fillBlocks(new Vector(6910, Utilities.levelPlayingHeight, 91), new Vector(6910, Utilities.levelPlayingHeight + 2, 91), "theheist:laser_end", {"minecraft:cardinal_direction": "west"});
+    Utilities.fillBlocks(new Vector(6911, Utilities.levelPlayingHeight, 91), new Vector(6913, Utilities.levelPlayingHeight + 2, 91), "theheist:laser", {"minecraft:cardinal_direction": "north"});
+    Utilities.fillBlocks(new Vector(6914, Utilities.levelPlayingHeight, 91), new Vector(6914, Utilities.levelPlayingHeight + 2, 91), "theheist:laser_end", {"minecraft:cardinal_direction": "east"});
     LevelConstructor.keypad(new VectorXZ(6914.5, 90.5), 3, BlockRotation.EAST, [{
-        "type": "fill_blocks", "do": { "x1": 6910, "y1": Utilities.levelPlayingHeight, "z1": 91, "x2": 6910, "y2": -58, "z2": 91, "block": "theheist:laser_end", "permutations": {"minecraft:cardinal_direction": "west","theheist:connect":false} }, "delay": 40
+        "type": "fill_blocks", "do": { "x1": 6910, "y1": Utilities.levelPlayingHeight, "z1": 91, "x2": 6910, "y2": Utilities.levelPlayingHeight + 2, "z2": 91, "block": "theheist:laser_end", "permutations": {"minecraft:cardinal_direction": "west","theheist:connect":false} }, "delay": 40
     },
     {
-        "type": "fill_blocks", "do": { "x1": 6911, "y1": Utilities.levelPlayingHeight, "z1": 91, "x2": 6913, "y2": -58, "z2": 91, "block": "air", "permutations": {} }, "delay": 40
+        "type": "fill_blocks", "do": { "x1": 6911, "y1": Utilities.levelPlayingHeight, "z1": 91, "x2": 6913, "y2": Utilities.levelPlayingHeight + 2, "z2": 91, "block": "air", "permutations": {} }, "delay": 40
     },
     {
-        "type": "fill_blocks", "do": { "x1": 6914, "y1": Utilities.levelPlayingHeight, "z1": 91, "x2": 6914, "y2": -58, "z2": 91, "block": "theheist:laser_end", "permutations": {"minecraft:cardinal_direction": "east","theheist:connect":false} }, "delay": 40
+        "type": "fill_blocks", "do": { "x1": 6914, "y1": Utilities.levelPlayingHeight, "z1": 91, "x2": 6914, "y2": Utilities.levelPlayingHeight + 2, "z2": 91, "block": "theheist:laser_end", "permutations": {"minecraft:cardinal_direction": "east","theheist:connect":false} }, "delay": 40
     },
     {
         "type": "hack_console", "do": { "x": 6914, "z": 92 }
@@ -216,7 +216,7 @@ setup: () => {
     LevelConstructor.gamebandUpgrade(new VectorXZ(6938.5, 150.5), "stealth", "§f§lStealth Lvl. 2", 2, 5, BlockRotation.EAST, []);
 
     Utilities.setBlock(new Vector(6930, Utilities.ventHeight, 150), "theheist:white_trapdoor", {"minecraft:cardinal_direction": "west"});
-    Utilities.spawnEntity(new Vector(6923.5, -59, 150.5), "minecraft:sheep").nameTag = "jeb_";
+    Utilities.spawnEntity(new Vector(6923.5, Utilities.levelPlayingHeight + 1, 150.5), "minecraft:sheep").nameTag = "jeb_";
 } // Electromagnetic Field Research
 
 {
