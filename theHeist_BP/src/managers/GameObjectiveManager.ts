@@ -33,8 +33,7 @@ export default class GameObjectiveManager {
 
 	static completeObjectiveNonStrict(objective: ScoreboardParticipant, sortOrder: number) {
 		if (objectivesObjective.hasParticipant(`§a${objective}§r`)) return; // Ensure this objective is not set to complete multiple times
-		if (!objectivesObjective.hasParticipant(`§c${objective}§r`)) this.addObjective(objective, sortOrder, false); // Ensure objective is made
-		objectivesObjective.removeParticipant(`§c${objective}§r`);
+		if (objectivesObjective.hasParticipant(`§c${objective}§r`)) objectivesObjective.removeParticipant(`§c${objective}§r`);
 		objectivesObjective.setScore(`§a${objective}§r`, sortOrder);
 		world.sendMessage([{ "text": `§o§7Completed objective: §r§a${objective}§r` }]);
 		this.reloadSidebar();
