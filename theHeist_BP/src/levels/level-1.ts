@@ -142,10 +142,10 @@ LevelConstructor.door1(new VectorXZ(3080, 114), BlockRotation.EAST, true);
 LevelConstructor.door1(new VectorXZ(3081, 114), BlockRotation.WEST, true);
 LevelConstructor.door1(new VectorXZ(3082, 114), BlockRotation.SOUTH, true);
 
-Utilities.dimensions.overworld.setBlockType(new Vector(3073, -55, 127), "minecraft:redstone_block");
+Utilities.dimensions.overworld.setBlockType(new Vector(3073, Utilities.levelPlayingHeight + 5, 127), "minecraft:redstone_block");
 Utilities.setBlock(new Vector(3090, Utilities.consoleDisplayHeight, 124), "minecraft:lever", { "lever_direction": "south" });
-Utilities.spawnEntity(new Vector(3053.5, -59, 110.5), "theheist:camera_robot").setRotation({ "x": 0, "y": 180 });
-[new Vector(3034.5, -59, 141.5), new Vector(3035.5, -59, 141.5), new Vector(3036.5, -59, 141.5)].forEach(vector => {
+Utilities.spawnEntity(new Vector(3053.5, Utilities.levelPlayingHeight + 1, 110.5), "theheist:camera_robot").setRotation({ "x": 0, "y": 180 });
+[new Vector(3034.5, Utilities.levelPlayingHeight + 1, 141.5), new Vector(3035.5, Utilities.levelPlayingHeight + 1, 141.5), new Vector(3036.5, Utilities.levelPlayingHeight + 1, 141.5)].forEach(vector => {
     const decorativeCamera = Utilities.spawnEntity(vector, "theheist:camera");
     decorativeCamera.setRotation({ "x": 0, "y": 180 });
     decorativeCamera.triggerEvent("theheist:disable");
