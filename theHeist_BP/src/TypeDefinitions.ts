@@ -28,7 +28,8 @@ export interface LevelInformation extends WorldDataNode {
 	"timeLimit"?: TimeLimit
 }
 
-export type DataNodeReturnType<T extends string> = T extends keyof DataNodes ? DataNodes[T] : DataNode;
+export type DataNodeType<T extends DataNodeName> = T extends DataNodeName ? DataNodes[T] : undefined;
+export type DataNodeName = keyof DataNodes;
 
 export type DataNodes =  {
 	"gamebandTracker": GamebandTracker,

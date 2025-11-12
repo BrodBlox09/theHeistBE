@@ -1,5 +1,5 @@
 import { Entity, world } from '@minecraft/server';
-import { WorldDataNodeType, WorldDataNodeName, DataNodeReturnType, DataNode } from '../TypeDefinitions';
+import { WorldDataNodeType, WorldDataNodeName, DataNodeType, DataNodeName, DataNode } from '../TypeDefinitions';
 
 export default class DataManager {
 	static getWorldData<T extends WorldDataNodeName>(dataNodeName: T): WorldDataNodeType<T> | undefined {
@@ -15,7 +15,7 @@ export default class DataManager {
 
 	static clearWorldData() { world.clearDynamicProperties(); }
 
-	static getData<T extends string>(entity: Entity, dataNodeName: T): DataNodeReturnType<T> | undefined {
+	static getData<T extends DataNodeName>(entity: Entity, dataNodeName: T): DataNodeType<T> | undefined {
 		const dataStr = entity.getDynamicProperty('data') as string;
 		if (!dataStr) return;
 		const dataNodes = JSON.parse(dataStr);
