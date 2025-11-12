@@ -219,7 +219,7 @@ export default class ActionManager {
 				player.sendMessage([{ "text": "§5§oVoice:§r " }, { "translate": "map.sub.001.A" }]);
 				player.sendMessage([{ "text": "§5§oVoice:§r " }, { "translate": "map.sub.001.B" }]);
 
-				const hideHud = system.runInterval(() => {
+				const hideHudIntervalId = system.runInterval(() => {
 					player.onScreenDisplay.setTitle('hideHud')
 				}, 0)
 
@@ -252,7 +252,7 @@ export default class ActionManager {
 				}, Utilities.SECOND * 22);
 
 				system.runTimeout(() => {
-					system.clearRun(hideHud);
+					system.clearRun(hideHudIntervalId);
 					player.camera.clear();
 					system.sendScriptEvent("theheist:load-level", "1");
 				}, Utilities.SECOND * 30.5);
