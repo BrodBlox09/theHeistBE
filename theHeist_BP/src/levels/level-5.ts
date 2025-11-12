@@ -46,8 +46,8 @@ setup: () => {
     // Starting/South Wing:
     LevelConstructor.cameraRobot(new VectorXZ(6911.5, 137.5), 0);
 
-    Utilities.setBlock(new Vector(6912, -57, 140), "theheist:white_trapdoor", {"minecraft:cardinal_direction": "north"});
-    Utilities.setBlock(new Vector(6905, -57, 140), "theheist:white_trapdoor", {"minecraft:cardinal_direction": "east"});
+    Utilities.setBlock(new Vector(6912, Utilities.ventHeight, 140), "theheist:white_trapdoor", {"minecraft:cardinal_direction": "north"});
+    Utilities.setBlock(new Vector(6905, Utilities.ventHeight, 140), "theheist:white_trapdoor", {"minecraft:cardinal_direction": "east"});
     // Right Wing:
     Utilities.fillBlocks(new Vector(6933, Utilities.levelPlayingHeight, 130), new Vector(6933, -58, 130), "theheist:laser_end", {"minecraft:cardinal_direction": "west"});
     Utilities.fillBlocks(new Vector(6934, Utilities.levelPlayingHeight, 130), new Vector(6936, -58, 130), "theheist:laser", {"minecraft:cardinal_direction": "south"});
@@ -71,7 +71,7 @@ setup: () => {
     LevelConstructor.sonar(new VectorXZ(6932.5, 137.5), 225);
     LevelConstructor.sonarRobot(new VectorXZ(6934.5, 128.5), 0);
 
-    Utilities.setBlock(new Vector(6933, -57, 125), "theheist:white_trapdoor", {"minecraft:cardinal_direction": "north"});
+    Utilities.setBlock(new Vector(6933, Utilities.ventHeight, 125), "theheist:white_trapdoor", {"minecraft:cardinal_direction": "north"});
     // Left Wing:
     Utilities.fillBlocks(new Vector(6886, Utilities.levelPlayingHeight, 122), new Vector(6886, -58, 122), "theheist:laser_end", {"minecraft:cardinal_direction": "north"});
     Utilities.fillBlocks(new Vector(6886, Utilities.levelPlayingHeight, 123), new Vector(6886, -58, 125), "theheist:laser", {"minecraft:cardinal_direction": "west"});
@@ -88,8 +88,8 @@ setup: () => {
 
     LevelConstructor.sonarRobot(new VectorXZ(6897.5, 122.5), 180);
 
-    Utilities.setBlock(new Vector(6902, -57, 118), "theheist:white_trapdoor", {"minecraft:cardinal_direction": "west"});
-    Utilities.setBlock(new Vector(6894, -57, 126), "theheist:white_trapdoor", {"minecraft:cardinal_direction": "west"});
+    Utilities.setBlock(new Vector(6902, Utilities.ventHeight, 118), "theheist:white_trapdoor", {"minecraft:cardinal_direction": "west"});
+    Utilities.setBlock(new Vector(6894, Utilities.ventHeight, 126), "theheist:white_trapdoor", {"minecraft:cardinal_direction": "west"});
     // North Wing:
     Utilities.fillBlocks(new Vector(6910, Utilities.levelPlayingHeight, 91), new Vector(6910, -58, 91), "theheist:laser_end", {"minecraft:cardinal_direction": "west"});
     Utilities.fillBlocks(new Vector(6911, Utilities.levelPlayingHeight, 91), new Vector(6913, -58, 91), "theheist:laser", {"minecraft:cardinal_direction": "north"});
@@ -111,7 +111,7 @@ setup: () => {
     }]);
     LevelConstructor.rechargeStation(new VectorXZ(6908.5, 96.5), BlockRotation.WEST);
 
-    Utilities.setBlock(new Vector(6906, -57, 114), "theheist:white_trapdoor", {"minecraft:cardinal_direction": "north"});
+    Utilities.setBlock(new Vector(6906, Utilities.ventHeight, 114), "theheist:white_trapdoor", {"minecraft:cardinal_direction": "north"});
 } // Main Hub
 
 {
@@ -141,7 +141,7 @@ setup: () => {
     LevelConstructor.rechargeStation(new VectorXZ(6920.5, 119.5), BlockRotation.SOUTH);
     LevelConstructor.rechargeStation(new VectorXZ(6919.5, 118.5), BlockRotation.WEST);
     
-    Utilities.setBlock(new Vector(6923, -57, 117), "theheist:white_trapdoor", {"minecraft:cardinal_direction": "south"});
+    Utilities.setBlock(new Vector(6923, Utilities.ventHeight, 117), "theheist:white_trapdoor", {"minecraft:cardinal_direction": "south"});
 } // Security Office
 
 {
@@ -152,8 +152,8 @@ setup: () => {
     LevelConstructor.dynamicCamera(new VectorXZ(6931.5, 106.5), [1, -20, 120]);
     LevelConstructor.cameraRobot(new VectorXZ(6922.5, 107.5), 270);
 
-    Utilities.setBlock(new Vector(6937, -57, 114), "theheist:white_trapdoor", {"minecraft:cardinal_direction": "east"});
-    Utilities.setBlock(new Vector(6922, -57, 105), "theheist:white_trapdoor", {"minecraft:cardinal_direction": "west"});
+    Utilities.setBlock(new Vector(6937, Utilities.ventHeight, 114), "theheist:white_trapdoor", {"minecraft:cardinal_direction": "east"});
+    Utilities.setBlock(new Vector(6922, Utilities.ventHeight, 105), "theheist:white_trapdoor", {"minecraft:cardinal_direction": "west"});
 } // Software Development
 
 {
@@ -169,7 +169,7 @@ setup: () => {
         "type": "manage_objective", "do": { "manageType": 1, "objective": "Find Yellow Keycard", "sortOrder": 0 }, "delay": 40
     }]);
 
-    Utilities.setBlock(new Vector(6942, -57, 125), "theheist:white_trapdoor", {"minecraft:cardinal_direction": "east"});
+    Utilities.setBlock(new Vector(6942, Utilities.ventHeight, 125), "theheist:white_trapdoor", {"minecraft:cardinal_direction": "east"});
 } // Chief of Engineering
 
 {
@@ -191,7 +191,7 @@ setup: () => {
         "type": "display_mail", "do": { "mailID": 507 }, "delay": 40
     }]);
 
-    Utilities.setBlock(new Vector(6923, -57, 131), "theheist:white_trapdoor", {"minecraft:cardinal_direction": "west"});
+    Utilities.setBlock(new Vector(6923, Utilities.ventHeight, 131), "theheist:white_trapdoor", {"minecraft:cardinal_direction": "west"});
 } // Chief of Research
 
 {
@@ -215,7 +215,7 @@ setup: () => {
     }]);
     LevelConstructor.gamebandUpgrade(new VectorXZ(6938.5, 150.5), "stealth", "§f§lStealth Lvl. 2", 2, 5, BlockRotation.EAST, []);
 
-    Utilities.setBlock(new Vector(6930, -57, 150), "theheist:white_trapdoor", {"minecraft:cardinal_direction": "west"});
+    Utilities.setBlock(new Vector(6930, Utilities.ventHeight, 150), "theheist:white_trapdoor", {"minecraft:cardinal_direction": "west"});
     Utilities.spawnEntity(new Vector(6923.5, -59, 150.5), "minecraft:sheep").nameTag = "jeb_";
 } // Electromagnetic Field Research
 
@@ -227,7 +227,7 @@ setup: () => {
         "type": "manage_objective", "do": { "manageType": 1, "objective": "Find Red Keycard", "sortOrder": -1 }, "delay": 40
     }]);
 
-    Utilities.setBlock(new Vector(6894, -57, 116), "theheist:white_trapdoor", {"minecraft:cardinal_direction": "west"});
+    Utilities.setBlock(new Vector(6894, Utilities.ventHeight, 116), "theheist:white_trapdoor", {"minecraft:cardinal_direction": "west"});
 } // Administrative Office
 
 {
@@ -243,7 +243,7 @@ setup: () => {
     }]);
 
     Utilities.setBlock(new Vector(6878, Utilities.levelPlayingHeight, 113), "theheist:custom_door_2_bottom", {"minecraft:cardinal_direction": "west"});
-    Utilities.setBlock(new Vector(6882, -57, 116), "theheist:white_trapdoor", {"minecraft:cardinal_direction": "north"});
+    Utilities.setBlock(new Vector(6882, Utilities.ventHeight, 116), "theheist:white_trapdoor", {"minecraft:cardinal_direction": "north"});
 
     // Gameband Pedestal Room
     Utilities.setBlock(new Vector(6882, Utilities.levelPlayingHeight, 111), "theheist:custom_door_3_bottom", {"minecraft:cardinal_direction": "north","theheist:unlocked":false});
@@ -256,7 +256,7 @@ setup: () => {
 
     LevelConstructor.sonar(new VectorXZ(6885.5, 110.5), 135);
 
-    Utilities.setBlock(new Vector(6882, -57, 107), "theheist:white_trapdoor", {"minecraft:cardinal_direction": "east"});
+    Utilities.setBlock(new Vector(6882, Utilities.ventHeight, 107), "theheist:white_trapdoor", {"minecraft:cardinal_direction": "east"});
 
     // Secret Room
     LevelConstructor.rechargeStation(new VectorXZ(6875.5, 120.5), BlockRotation.SOUTH);

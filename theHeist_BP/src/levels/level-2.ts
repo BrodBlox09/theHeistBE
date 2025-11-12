@@ -32,7 +32,7 @@ setup: () => {
     LevelConstructor.rechargeStation(new VectorXZ(4086.5, 104.5), BlockRotation.SOUTH);
     LevelConstructor.rechargeStation(new VectorXZ(4088.5, 101.5), BlockRotation.EAST);
     LevelConstructor.rechargeStation(new VectorXZ(4088.5, 99.5), BlockRotation.EAST);
-    Utilities.setBlock(new Vector(4085, -57, 101), "theheist:white_trapdoor", { "minecraft:cardinal_direction": BlockRotation.SOUTH });
+    Utilities.setBlock(new Vector(4085, Utilities.ventHeight, 101), "theheist:white_trapdoor", { "minecraft:cardinal_direction": BlockRotation.SOUTH });
 } // Engineering Workshop
 
 {
@@ -63,7 +63,7 @@ setup: () => {
 } // Ventilation Pump Room
 
 {
-    Utilities.setBlock(new Vector(4112, -57, 130), "theheist:white_trapdoor", { "minecraft:cardinal_direction": BlockRotation.EAST });
+    Utilities.setBlock(new Vector(4112, Utilities.ventHeight, 130), "theheist:white_trapdoor", { "minecraft:cardinal_direction": BlockRotation.EAST });
 } // Boiler Room
 
 {
@@ -75,7 +75,7 @@ setup: () => {
             "type": "manage_objective", "do": { "manageType": 1, "objective": "Find Red Keycard", "sortOrder": 2 }, "delay": 40
         }
     ]);
-    Utilities.setBlock(new Vector(4091, -57, 134), "theheist:white_trapdoor", { "minecraft:cardinal_direction": BlockRotation.EAST });
+    Utilities.setBlock(new Vector(4091, Utilities.ventHeight, 134), "theheist:white_trapdoor", { "minecraft:cardinal_direction": BlockRotation.EAST });
 } // Server Room
 
 {
@@ -92,7 +92,7 @@ setup: () => {
             "type": "display_mail", "do": { "mailID": 202 }, "delay": 40
         }
     ]);
-    Utilities.setBlock(new Vector(4077, -57, 129), "theheist:white_trapdoor", { "minecraft:cardinal_direction": BlockRotation.WEST });
+    Utilities.setBlock(new Vector(4077, Utilities.ventHeight, 129), "theheist:white_trapdoor", { "minecraft:cardinal_direction": BlockRotation.WEST });
 } // Web Development
 
 {
@@ -104,7 +104,7 @@ setup: () => {
         "type": "display_research", "do": { "researchID": 204 }, "delay": 40
     }]);
     LevelConstructor.gamebandUpgrade(new VectorXZ(4062.5, 133.5), "sensor", "§6§lSensor Lvl. 2", 2, 2, BlockRotation.WEST, []);
-    Utilities.setBlock(new Vector(4064, -57, 135), "theheist:white_trapdoor", { "minecraft:cardinal_direction": BlockRotation.SOUTH });
+    Utilities.setBlock(new Vector(4064, Utilities.ventHeight, 135), "theheist:white_trapdoor", { "minecraft:cardinal_direction": BlockRotation.SOUTH });
 } // Sensor Lvl.2 Research
 
 {
@@ -118,8 +118,8 @@ setup: () => {
         "type": "manage_objective", "do": { "manageType": 1, "objective": "Find Green Keycard", "sortOrder": 1 }, "delay": 40
     }]);
     LevelConstructor.keycardDrawer(new VectorXZ(4104, 158), "red");
-    Utilities.setBlock(new Vector(4103, -57, 152), "theheist:white_trapdoor", { "minecraft:cardinal_direction": BlockRotation.NORTH });
-    Utilities.setBlock(new Vector(4092, -57, 152), "theheist:white_trapdoor", { "minecraft:cardinal_direction": BlockRotation.NORTH });
+    Utilities.setBlock(new Vector(4103, Utilities.ventHeight, 152), "theheist:white_trapdoor", { "minecraft:cardinal_direction": BlockRotation.NORTH });
+    Utilities.setBlock(new Vector(4092, Utilities.ventHeight, 152), "theheist:white_trapdoor", { "minecraft:cardinal_direction": BlockRotation.NORTH });
 } // Customer Service
 
 {
@@ -139,9 +139,9 @@ setup: () => {
     ]);
     LevelConstructor.rechargeStation(new VectorXZ(4122.5, 146.5), BlockRotation.WEST);
     LevelConstructor.newGameband(new VectorXZ(4131.5, 146.5), "xray", "§4§lXRay", 3, BlockRotation.EAST, []);
-    Utilities.setBlock(new Vector(4127, -57, 145), "theheist:white_trapdoor", { "minecraft:cardinal_direction": BlockRotation.SOUTH });
+    Utilities.setBlock(new Vector(4127, Utilities.ventHeight, 145), "theheist:white_trapdoor", { "minecraft:cardinal_direction": BlockRotation.SOUTH });
     Utilities.setBlock(new Vector(4127, Utilities.levelPlayingHeight, 140), "minecraft:wooden_door", { "minecraft:cardinal_direction": BlockRotation.WEST });
-    Utilities.setBlock(new Vector(4126, -57, 136), "theheist:white_trapdoor", { "minecraft:cardinal_direction": BlockRotation.SOUTH });
+    Utilities.setBlock(new Vector(4126, Utilities.ventHeight, 136), "theheist:white_trapdoor", { "minecraft:cardinal_direction": BlockRotation.SOUTH });
 } // Xray Research
 
 {
@@ -157,7 +157,7 @@ setup: () => {
 } // Security Stuffs
 
 {
-    Utilities.setBlock(new Vector(4085, -57, 109), "theheist:white_trapdoor", { "minecraft:cardinal_direction": BlockRotation.EAST });
+    Utilities.setBlock(new Vector(4085, Utilities.ventHeight, 109), "theheist:white_trapdoor", { "minecraft:cardinal_direction": BlockRotation.EAST });
 } // Bar
 
 {
@@ -166,11 +166,11 @@ setup: () => {
     Utilities.setBlock(new Vector(4087, Utilities.levelPlayingHeight, 121), "minecraft:wooden_door", { "minecraft:cardinal_direction": BlockRotation.EAST });
     Utilities.setBlock(new Vector(4089, Utilities.levelPlayingHeight, 121), "minecraft:wooden_door", { "minecraft:cardinal_direction": BlockRotation.EAST });
     Utilities.setBlock(new Vector(4091, Utilities.levelPlayingHeight, 121), "minecraft:wooden_door", { "minecraft:cardinal_direction": BlockRotation.EAST, "door_hinge_bit": true });
-    Utilities.setBlock(new Vector(4089, -57, 122), "theheist:white_trapdoor", { "minecraft:cardinal_direction": BlockRotation.SOUTH });
+    Utilities.setBlock(new Vector(4089, Utilities.ventHeight, 122), "theheist:white_trapdoor", { "minecraft:cardinal_direction": BlockRotation.SOUTH });
     // Men's
     Utilities.setBlock(new Vector(4086, Utilities.levelPlayingHeight, 126), "minecraft:wooden_door", { "minecraft:cardinal_direction": BlockRotation.NORTH });
     Utilities.setBlock(new Vector(4090, Utilities.levelPlayingHeight, 125), "minecraft:wooden_door", { "minecraft:cardinal_direction": BlockRotation.SOUTH });
-    Utilities.setBlock(new Vector(4088, -57, 126), "theheist:white_trapdoor", { "minecraft:cardinal_direction": BlockRotation.EAST });
+    Utilities.setBlock(new Vector(4088, Utilities.ventHeight, 126), "theheist:white_trapdoor", { "minecraft:cardinal_direction": BlockRotation.EAST });
 } // Restrooms
 
 {

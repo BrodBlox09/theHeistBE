@@ -45,7 +45,7 @@ setup: () => {
     }]);
     LevelConstructor.rechargeStation(new VectorXZ(4990.5, 123.5), BlockRotation.SOUTH);
     LevelConstructor.newGameband(new VectorXZ(4994.5, 121.5), "magnet", "§5§lMagnet", 4, BlockRotation.EAST, []);
-    Utilities.setBlock(new Vector(4991, -57, 119), "theheist:white_trapdoor", { "minecraft:cardinal_direction": BlockRotation.SOUTH });
+    Utilities.setBlock(new Vector(4991, Utilities.ventHeight, 119), "theheist:white_trapdoor", { "minecraft:cardinal_direction": BlockRotation.SOUTH });
 } // Magnet Research
 
 {
@@ -64,7 +64,7 @@ setup: () => {
         "type": "disable_camera", "do": { "cameraID": 0 }, "delay": 40
     }]);
     LevelConstructor.rechargeStation(new VectorXZ(4996.5, 125.5), BlockRotation.EAST);
-    Utilities.setBlock(new Vector(4991, -57, 128), "theheist:white_trapdoor", { "minecraft:cardinal_direction": BlockRotation.EAST });
+    Utilities.setBlock(new Vector(4991, Utilities.ventHeight, 128), "theheist:white_trapdoor", { "minecraft:cardinal_direction": BlockRotation.EAST });
 } // Security Office
 
 {
@@ -75,7 +75,7 @@ setup: () => {
         "type": "display_research", "do": { "researchID": 301 }, "delay": 40
     }]);
     LevelConstructor.rechargeStation(new VectorXZ(5007.5, 97.5), BlockRotation.NORTH);
-    Utilities.setBlock(new Vector(5011, -57, 99), "theheist:white_trapdoor", { "minecraft:cardinal_direction": BlockRotation.NORTH });
+    Utilities.setBlock(new Vector(5011, Utilities.ventHeight, 99), "theheist:white_trapdoor", { "minecraft:cardinal_direction": BlockRotation.NORTH });
     Utilities.setBlock(new Vector(5004, -55, 102), "theheist:white_trapdoor", { "minecraft:cardinal_direction": BlockRotation.NORTH });
     Utilities.setBlock(new Vector(5004, -55, 108), "theheist:white_trapdoor", { "minecraft:cardinal_direction": BlockRotation.WEST });
 } // Stealth Research
@@ -117,18 +117,18 @@ setup: () => {
     // Men's
     Utilities.setBlock(new Vector(5014, Utilities.levelPlayingHeight, 109), "minecraft:wooden_door", { "minecraft:cardinal_direction": BlockRotation.SOUTH });
     Utilities.setBlock(new Vector(5010, Utilities.levelPlayingHeight, 108), "minecraft:wooden_door", { "minecraft:cardinal_direction": BlockRotation.NORTH });
-    Utilities.setBlock(new Vector(5011, -57, 109), "theheist:white_trapdoor", { "minecraft:cardinal_direction": BlockRotation.WEST });
+    Utilities.setBlock(new Vector(5011, Utilities.ventHeight, 109), "theheist:white_trapdoor", { "minecraft:cardinal_direction": BlockRotation.WEST });
     // Women's
     Utilities.setBlock(new Vector(5014, Utilities.levelPlayingHeight, 105), "minecraft:wooden_door", { "minecraft:cardinal_direction": BlockRotation.SOUTH });
     Utilities.setBlock(new Vector(5010, Utilities.levelPlayingHeight, 106), "minecraft:wooden_door", { "minecraft:cardinal_direction": BlockRotation.NORTH });
     Utilities.setBlock(new Vector(5010, Utilities.levelPlayingHeight, 104), "minecraft:wooden_door", { "minecraft:cardinal_direction": BlockRotation.NORTH });
-    Utilities.setBlock(new Vector(5011, -57, 105), "theheist:white_trapdoor", { "minecraft:cardinal_direction": BlockRotation.WEST });
+    Utilities.setBlock(new Vector(5011, Utilities.ventHeight, 105), "theheist:white_trapdoor", { "minecraft:cardinal_direction": BlockRotation.WEST });
 } // Restrooms
 
 {
-    Utilities.setBlock(new Vector(4991, -57, 153), "theheist:white_trapdoor", { "minecraft:cardinal_direction": BlockRotation.EAST });
-    Utilities.setBlock(new Vector(4991, -57, 145), "theheist:white_trapdoor", { "minecraft:cardinal_direction": BlockRotation.EAST });
-    Utilities.setBlock(new Vector(4991, -57, 135), "theheist:white_trapdoor", { "minecraft:cardinal_direction": BlockRotation.EAST });
+    Utilities.setBlock(new Vector(4991, Utilities.ventHeight, 153), "theheist:white_trapdoor", { "minecraft:cardinal_direction": BlockRotation.EAST });
+    Utilities.setBlock(new Vector(4991, Utilities.ventHeight, 145), "theheist:white_trapdoor", { "minecraft:cardinal_direction": BlockRotation.EAST });
+    Utilities.setBlock(new Vector(4991, Utilities.ventHeight, 135), "theheist:white_trapdoor", { "minecraft:cardinal_direction": BlockRotation.EAST });
 } // Final hallway
 
 {

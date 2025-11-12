@@ -134,9 +134,9 @@ Utilities.setBlock(new Vector(3062, Utilities.levelPlayingHeight, 118), "minecra
 Utilities.setBlock(new Vector(3059, Utilities.levelPlayingHeight, 114), "minecraft:wooden_door", { "minecraft:cardinal_direction": BlockRotation.EAST });
 Utilities.setBlock(new Vector(3061, Utilities.levelPlayingHeight, 114), "minecraft:wooden_door", { "minecraft:cardinal_direction": BlockRotation.EAST });
 Utilities.setBlock(new Vector(3063, Utilities.levelPlayingHeight, 114), "minecraft:wooden_door", { "minecraft:cardinal_direction": BlockRotation.EAST, "door_hinge_bit": true });
-Utilities.setBlock(new Vector(3079, -57, 139), "theheist:white_trapdoor", { "minecraft:cardinal_direction": BlockRotation.SOUTH });
+Utilities.setBlock(new Vector(3079, Utilities.ventHeight, 139), "theheist:white_trapdoor", { "minecraft:cardinal_direction": BlockRotation.SOUTH });
 Utilities.setBlock(new Vector(3107, Utilities.levelPlayingHeight, 125), "minecraft:wooden_door", { "minecraft:cardinal_direction": BlockRotation.WEST });
-Utilities.setBlock(new Vector(3107, -57, 119), "theheist:white_trapdoor", { "minecraft:cardinal_direction": BlockRotation.SOUTH });
+Utilities.setBlock(new Vector(3107, Utilities.ventHeight, 119), "theheist:white_trapdoor", { "minecraft:cardinal_direction": BlockRotation.SOUTH });
 LevelConstructor.door1(new VectorXZ(3079, 114), BlockRotation.WEST, true);
 LevelConstructor.door1(new VectorXZ(3080, 114), BlockRotation.EAST, true);
 LevelConstructor.door1(new VectorXZ(3081, 114), BlockRotation.WEST, true);
