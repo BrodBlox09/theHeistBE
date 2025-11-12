@@ -73,6 +73,8 @@ system.afterEvents.scriptEventReceive.subscribe(event => { // stable-friendly ve
 			player.setGameMode(GameMode.Adventure);
 			Utilities.clearPlayerInventory(player);
 			DataManager.clearData(player);
+			DataManager.clearWorldData();
+			player.getTags().forEach(tag => player.removeTag(tag));
 			player.resetLevel();
 			player.teleport(new Vector(44.5, 60, 70.5), {
 				dimension: Utilities.dimensions.overworld,
