@@ -11,10 +11,10 @@ const level: ILevel = {
 	"startZ": 69,
 	"endX": 6948,
 	"endZ": 166,
-	"prisonLoc": new Vector(6966.5, -59, 82.5),
-	"mapLoc": new Vector(6911, -55, 131)
+	"prisonLoc": new Vector(6966.5, 61, 82.5),
+	"mapLoc": new Vector(6911, 65, 131)
 },
-"loadElevatorLoc": new Vector(6912, -49, 162),
+"loadElevatorLoc": new Vector(6912, 71, 162),
 "startPlayerLoc": new Vector(6912, Utilities.levelPlayingHeight, 162),
 "startingItems": [{ "slot": 0, "typeId": 'theheist:recharge_mode_lvl_3', "lockMode": "slot" }, { "slot": 1, "typeId": 'theheist:hacking_mode_lvl_2', "lockMode": "slot" }, { "slot": 2, "typeId": 'theheist:sensor_mode_lvl_2', "lockMode": "slot" }, { "slot": 3, "typeId": 'theheist:xray_mode_lvl_2', "lockMode": "slot" }, { "slot": 4, "typeId": 'theheist:magnet_mode_lvl_1', "lockMode": "slot" }, { "slot": 5, "typeId": 'theheist:stealth_mode_lvl_1', "lockMode": "slot" }, { "slot": 6, "typeId": 'theheist:stun_mode_lvl_1', "lockMode": "slot" }],
 "rechargeLevel": 3, // Objectives: Green -2, Yellow 0, Red -1

@@ -11,10 +11,10 @@ const level: ILevel = {
 	"startZ": 99,
 	"endX": 5928,
 	"endZ": 183,
-	"prisonLoc": new Vector(5916.5, -59, 99.5),
-	"mapLoc": new Vector(5906, -55, 141)
+	"prisonLoc": new Vector(5916.5, 61, 99.5),
+	"mapLoc": new Vector(5906, 65, 141)
 },
-"loadElevatorLoc": new Vector(5887, -50, 105),
+"loadElevatorLoc": new Vector(5887, 70, 105),
 "startPlayerLoc": new Vector(5887, Utilities.levelPlayingHeight, 105),
 "startingItems": [{ "slot": 0, "typeId": 'theheist:recharge_mode_lvl_2', "lockMode": "slot" }, { "slot": 1, "typeId": 'theheist:hacking_mode_lvl_2', "lockMode": "slot" }, { "slot": 2, "typeId": 'theheist:sensor_mode_lvl_2', "lockMode": "slot" }, { "slot": 3, "typeId": 'theheist:xray_mode_lvl_1', "lockMode": "slot" }, { "slot": 4, "typeId": 'theheist:magnet_mode_lvl_1', "lockMode": "slot" }, { "slot": 5, "typeId": 'theheist:stealth_mode_lvl_1', "lockMode": "slot" }],
 "rechargeLevel": 2,
