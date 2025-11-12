@@ -40,8 +40,6 @@ export type DataNodes =  {
 	"cameraTracker": CameraTracker
 }
 
-export interface DataNodeHelper {}
-
 export interface DataNode extends Record<string, any> {
 	"name": string
 }
