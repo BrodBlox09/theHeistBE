@@ -13,6 +13,8 @@ export default class DataManager {
 		world.setDynamicProperty(dataNodeName, data);
 	}
 
+	static clearWorldData() { world.clearDynamicProperties(); }
+
 	static getData<T extends string>(entity: Entity, dataNodeName: T): DataNodeReturnType<T> | undefined {
 		const dataStr = entity.getDynamicProperty('data') as string;
 		if (!dataStr) return;
@@ -46,8 +48,5 @@ export default class DataManager {
 		return true;
 	}
 
-	static clearData(entity: Entity) {
-		entity.setDynamicProperty('data', "");
-		return true;
-	}
+	static clearData(entity: Entity) { entity.clearDynamicProperties(); }
 }
