@@ -194,7 +194,7 @@ function updateRobots(player: Player) {
 				"closest": 1
 			};
 			var cameraRobot = Utilities.dimensions.overworld.getEntities(cameraRobotQuery)[0];
-			cameraRobot.teleport(new Vector(cameraRobotArmorStand.location.x, -59.25, cameraRobotArmorStand.location.z));
+			cameraRobot.teleport(new Vector(cameraRobotArmorStand.location.x, Utilities.robotDisplayHeight, cameraRobotArmorStand.location.z));
 			cameraRobot.setRotation(cameraRobotArmorStand.getRotation());
 			if (Utilities.dimensions.overworld.getBlock(cameraRobot.location)?.typeId == "minecraft:air") Utilities.setBlock(new Vector(cameraRobotArmorStand.location.x, Utilities.robotPathDisplayMapHeight, cameraRobotArmorStand.location.z), "theheist:robot_path");
 		} catch { }

@@ -355,7 +355,7 @@ setup: () => {
             "type": "manage_objective", "do": { "manageType": 2, "objective": "Access next level" }
         }
     ]);
-    Utilities.setBlock(new Vector(6873, -59, 155), "minecraft:lever", { "lever_direction": "east" });
+    Utilities.setBlock(new Vector(6873, Utilities.consoleDisplayHeight, 155), "minecraft:lever", { "lever_direction": "east" });
     LevelConstructor.rechargeStation(new VectorXZ(6876.5, 154.5), BlockRotation.NORTH);
 } // End Level Elevator
 

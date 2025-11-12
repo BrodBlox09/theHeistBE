@@ -153,7 +153,7 @@ setup: () => {
             "type": "voice_says", "do": { "soundID": 404 }
         }
     ]);
-    Utilities.setBlock(new Vector(4991.5, -59, 179.5), "minecraft:lever", { "lever_direction": "north" });
+    Utilities.setBlock(new Vector(4991.5, Utilities.consoleDisplayHeight, 179.5), "minecraft:lever", { "lever_direction": "north" });
     LevelConstructor.rechargeStation(new VectorXZ(4990.5, 175.5), BlockRotation.WEST);
 } // Elevator
 
