@@ -15,7 +15,7 @@ const level: ILevel = {
 	"mapLoc": new Vector(3109, -55, 91)
 },
 "loadElevatorLoc": new Vector(3099, -58, 109),
-"startPlayerLoc": new Vector(3086, -60, 110),
+"startPlayerLoc": new Vector(3086, Utilities.levelPlayingHeight, 110),
 "startingItems": [{ "slot": 0, "typeId": 'theheist:recharge_mode_lvl_1', "lockMode": "slot" }, { "slot": 1, "typeId": 'theheist:hacking_mode_lvl_1', "lockMode": "slot" }],
 "rechargeLevel": 1,
 "startObjectives": [{ "name": "Access next level", "sortOrder": 5 }, { "name": "Get Sensor mode", "sortOrder": 4 }, { "name": "Get Hacking upgrade", "sortOrder": 3 }, { "name": "Get Recharge upgrade", "sortOrder": 2 }],
@@ -33,7 +33,7 @@ LevelConstructor.cameraRobot(new VectorXZ(3088.5, 134.5), -90);
 LevelConstructor.cameraRobot(new VectorXZ(3055.5, 124.5), -180);
 
 LevelConstructor.keypad(new VectorXZ(3079.5, 107.5), 1, BlockRotation.NORTH, [{
-    "type": "set_block", "do": { "x": 3078, "y": -60, "z": 106, "block": "theheist:custom_door_1_bottom", "permutations": { "minecraft:cardinal_direction": "north", "theheist:unlocked": true } }, "delay": 40
+    "type": "set_block", "do": { "x": 3078, "y": Utilities.levelPlayingHeight, "z": 106, "block": "theheist:custom_door_1_bottom", "permutations": { "minecraft:cardinal_direction": "north", "theheist:unlocked": true } }, "delay": 40
 }]);
 LevelConstructor.computer(new VectorXZ(3072.5, 105.5), "Research info", BlockRotation.SOUTH, [{
     "type": "display_research", "do": { "researchID": 100 }, "delay": 40
@@ -41,13 +41,13 @@ LevelConstructor.computer(new VectorXZ(3072.5, 105.5), "Research info", BlockRot
 LevelConstructor.newGameband(new VectorXZ(3074.5, 100.5), "sensor", "§6§lSensor", 2, BlockRotation.NORTH, []);
 LevelConstructor.keypad(new VectorXZ(3074.5, 116.5), 3, BlockRotation.EAST, []);
 LevelConstructor.keypad(new VectorXZ(3052.5, 115.5), 1, BlockRotation.NORTH, [{
-    "type": "set_block", "do": { "x": 3051, "y": -60, "z": 114, "block": "theheist:custom_door_1_bottom", "permutations": { "minecraft:cardinal_direction": "north", "theheist:unlocked": true } }, "delay": 40
+    "type": "set_block", "do": { "x": 3051, "y": Utilities.levelPlayingHeight, "z": 114, "block": "theheist:custom_door_1_bottom", "permutations": { "minecraft:cardinal_direction": "north", "theheist:unlocked": true } }, "delay": 40
 }]);
 LevelConstructor.computer(new VectorXZ(3045.5, 111.5), "Mail", BlockRotation.WEST, [{
     "type": "display_mail", "do": { "mailID": 103 }, "delay": 40
 }]);
 LevelConstructor.keypad(new VectorXZ(3074.5, 139.5), 1, BlockRotation.EAST, [{
-    "type": "set_block", "do": { "x": 3075, "y": -60, "z": 140, "block": "theheist:custom_door_1_bottom", "permutations": { "minecraft:cardinal_direction": "east", "theheist:unlocked": true } }, "delay": 40
+    "type": "set_block", "do": { "x": 3075, "y": Utilities.levelPlayingHeight, "z": 140, "block": "theheist:custom_door_1_bottom", "permutations": { "minecraft:cardinal_direction": "east", "theheist:unlocked": true } }, "delay": 40
 }]);
 LevelConstructor.computer(new VectorXZ(3080.5, 142.5), "Clear alarm status", BlockRotation.SOUTH, [{
     "type": "set_alarm_level", "do": { "value": 0 }, "delay": 40
@@ -62,13 +62,13 @@ LevelConstructor.computer(new VectorXZ(3082.5, 118.5), "Mail", BlockRotation.EAS
     "type": "manage_objective", "do": { "manageType": 1, "objective": "Find Green Keycard", "sortOrder": 0 }, "delay": 40
 }]);
 LevelConstructor.keypad(new VectorXZ(3104.5, 116.5), 2, BlockRotation.WEST, [{
-    "type": "set_block", "do": { "x": 3103, "y": -60, "z": 115, "block": "theheist:custom_door_2_bottom", "permutations": { "minecraft:cardinal_direction": "west", "theheist:unlocked": true } }, "delay": 40
+    "type": "set_block", "do": { "x": 3103, "y": Utilities.levelPlayingHeight, "z": 115, "block": "theheist:custom_door_2_bottom", "permutations": { "minecraft:cardinal_direction": "west", "theheist:unlocked": true } }, "delay": 40
 },
 {
     "type": "hack_console", "do": { "x": 3097, "z": 123 }, "delay": 40
 }]);
 LevelConstructor.keypad(new VectorXZ(3097.5, 123.5), 2, BlockRotation.NORTH, [{
-    "type": "set_block", "do": { "x": 3096, "y": -60, "z": 122, "block": "theheist:custom_door_2_bottom", "permutations": { "minecraft:cardinal_direction": "north", "theheist:unlocked": true } }, "delay": 40
+    "type": "set_block", "do": { "x": 3096, "y": Utilities.levelPlayingHeight, "z": 122, "block": "theheist:custom_door_2_bottom", "permutations": { "minecraft:cardinal_direction": "north", "theheist:unlocked": true } }, "delay": 40
 },
 {
     "type": "hack_console", "do": { "x": 3104, "z": 116 }, "delay": 40
@@ -78,23 +78,23 @@ LevelConstructor.computer(new VectorXZ(3097.5, 114.5), "Research info", BlockRot
 }]);
 LevelConstructor.gamebandUpgrade(new VectorXZ(3106.5, 117.5), "hacking", "§2§lHacking Lvl. 2", 2, 1, BlockRotation.EAST, []);
 LevelConstructor.keypad(new VectorXZ(3062.5, 150.5), 2, BlockRotation.SOUTH, [{
-    "type": "set_block", "do": { "x": 3061, "y": -60, "z": 151, "block": "theheist:custom_door_2_bottom", "permutations": { "minecraft:cardinal_direction": "south", "theheist:unlocked": true } }, "delay": 40
+    "type": "set_block", "do": { "x": 3061, "y": Utilities.levelPlayingHeight, "z": 151, "block": "theheist:custom_door_2_bottom", "permutations": { "minecraft:cardinal_direction": "south", "theheist:unlocked": true } }, "delay": 40
 }]);
 LevelConstructor.computer(new VectorXZ(3058.5, 156.5), "Research info", BlockRotation.WEST, [{
     "type": "display_research", "do": { "researchID": 102 }, "delay": 40
 }]);
 LevelConstructor.gamebandUpgrade(new VectorXZ(3063.5, 159.5), "recharge", "§1§lRecharge Lvl. 2", 2, 0, BlockRotation.SOUTH, []);
 LevelConstructor.keycardReader(new VectorXZ(3039.5, 129.5), "yellow", [{
-    "type": "set_block", "do": { "x": 3038, "y": -60, "z": 131, "block": "theheist:custom_door_2_bottom", "permutations": { "minecraft:cardinal_direction": "west", "theheist:unlocked": true, "theheist:open": true } }
+    "type": "set_block", "do": { "x": 3038, "y": Utilities.levelPlayingHeight, "z": 131, "block": "theheist:custom_door_2_bottom", "permutations": { "minecraft:cardinal_direction": "west", "theheist:unlocked": true, "theheist:open": true } }
 },
 {
     "type": "play_sound", "do": { "soundID": "random.door_open" }
 }]);
 LevelConstructor.keycardReader(new VectorXZ(3087.5, 131.5), "green", [{
-    "type": "set_block", "do": { "x": 3089, "y": -60, "z": 130, "block": "theheist:custom_door_4_bottom_l", "permutations": { "minecraft:cardinal_direction": "north", "theheist:unlocked": true, "theheist:open": true } }
+    "type": "set_block", "do": { "x": 3089, "y": Utilities.levelPlayingHeight, "z": 130, "block": "theheist:custom_door_4_bottom_l", "permutations": { "minecraft:cardinal_direction": "north", "theheist:unlocked": true, "theheist:open": true } }
 },
 {
-    "type": "set_block", "do": { "x": 3090, "y": -60, "z": 130, "block": "theheist:custom_door_4_bottom_r", "permutations": { "minecraft:cardinal_direction": "north", "theheist:unlocked": true, "theheist:open": true  } }
+    "type": "set_block", "do": { "x": 3090, "y": Utilities.levelPlayingHeight, "z": 130, "block": "theheist:custom_door_4_bottom_r", "permutations": { "minecraft:cardinal_direction": "north", "theheist:unlocked": true, "theheist:open": true  } }
 },
 {
     "type": "play_sound", "do": { "soundID": "random.door_open" }
@@ -127,15 +127,15 @@ LevelConstructor.rechargeStation(new VectorXZ(3091.5, 128.5), BlockRotation.EAST
 LevelConstructor.keycardDrawer(new VectorXZ(3058, 157), "yellow");
 LevelConstructor.keycardDrawer(new VectorXZ(3033, 130), "green");
 
-Utilities.setBlock(new Vector(3066, -60, 118), "minecraft:wooden_door", { "minecraft:cardinal_direction": BlockRotation.WEST });
-Utilities.setBlock(new Vector(3065, -60, 114), "minecraft:wooden_door", { "minecraft:cardinal_direction": BlockRotation.EAST });
-Utilities.setBlock(new Vector(3067, -60, 114), "minecraft:wooden_door", { "minecraft:cardinal_direction": BlockRotation.EAST });
-Utilities.setBlock(new Vector(3062, -60, 118), "minecraft:wooden_door", { "minecraft:cardinal_direction": BlockRotation.WEST });
-Utilities.setBlock(new Vector(3059, -60, 114), "minecraft:wooden_door", { "minecraft:cardinal_direction": BlockRotation.EAST });
-Utilities.setBlock(new Vector(3061, -60, 114), "minecraft:wooden_door", { "minecraft:cardinal_direction": BlockRotation.EAST });
-Utilities.setBlock(new Vector(3063, -60, 114), "minecraft:wooden_door", { "minecraft:cardinal_direction": BlockRotation.EAST, "door_hinge_bit": true });
+Utilities.setBlock(new Vector(3066, Utilities.levelPlayingHeight, 118), "minecraft:wooden_door", { "minecraft:cardinal_direction": BlockRotation.WEST });
+Utilities.setBlock(new Vector(3065, Utilities.levelPlayingHeight, 114), "minecraft:wooden_door", { "minecraft:cardinal_direction": BlockRotation.EAST });
+Utilities.setBlock(new Vector(3067, Utilities.levelPlayingHeight, 114), "minecraft:wooden_door", { "minecraft:cardinal_direction": BlockRotation.EAST });
+Utilities.setBlock(new Vector(3062, Utilities.levelPlayingHeight, 118), "minecraft:wooden_door", { "minecraft:cardinal_direction": BlockRotation.WEST });
+Utilities.setBlock(new Vector(3059, Utilities.levelPlayingHeight, 114), "minecraft:wooden_door", { "minecraft:cardinal_direction": BlockRotation.EAST });
+Utilities.setBlock(new Vector(3061, Utilities.levelPlayingHeight, 114), "minecraft:wooden_door", { "minecraft:cardinal_direction": BlockRotation.EAST });
+Utilities.setBlock(new Vector(3063, Utilities.levelPlayingHeight, 114), "minecraft:wooden_door", { "minecraft:cardinal_direction": BlockRotation.EAST, "door_hinge_bit": true });
 Utilities.setBlock(new Vector(3079, -57, 139), "theheist:white_trapdoor", { "minecraft:cardinal_direction": BlockRotation.SOUTH });
-Utilities.setBlock(new Vector(3107, -60, 125), "minecraft:wooden_door", { "minecraft:cardinal_direction": BlockRotation.WEST });
+Utilities.setBlock(new Vector(3107, Utilities.levelPlayingHeight, 125), "minecraft:wooden_door", { "minecraft:cardinal_direction": BlockRotation.WEST });
 Utilities.setBlock(new Vector(3107, -57, 119), "theheist:white_trapdoor", { "minecraft:cardinal_direction": BlockRotation.SOUTH });
 LevelConstructor.door1(new VectorXZ(3079, 114), BlockRotation.WEST, true);
 LevelConstructor.door1(new VectorXZ(3080, 114), BlockRotation.EAST, true);

@@ -1,5 +1,6 @@
 import { ILevel } from "../TypeDefinitions";
 import Vector from "../Vector";
+import Utilities from "../Utilities";
 
 const level: ILevel = {
 "levelId": "-6",
@@ -14,7 +15,7 @@ const level: ILevel = {
 	"mapLoc": new Vector(7940, -54, 99)
 },
 "loadElevatorLoc": new Vector(7938, -50, 84),
-"startPlayerLoc": new Vector(7938, -60, 84),
+"startPlayerLoc": new Vector(7938, Utilities.levelPlayingHeight, 84),
 "startingItems": [],
 "rechargeLevel": 3,
 "startObjectives": [],
