@@ -124,7 +124,7 @@ export type ICameraSwivel = [ CameraSwivelMode, number, number ];
 export enum CameraSwivelMode {
 	Decrease = 0,
 	Increase = 1,
-	Continous = 2
+	Continuous = 2
 }
 
 export enum BlockRotation {
