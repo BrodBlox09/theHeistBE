@@ -284,7 +284,7 @@ function updateCameras(player: Player, levelCI: ILevelCloneInfo) {
 							rotateMode = 0;
 						}
 						break;
-					case CameraSwivelMode.Continous:
+					case CameraSwivelMode.Continuous:
 						rotation += 5;
 						break;
 				}
