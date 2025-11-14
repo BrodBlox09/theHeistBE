@@ -113,6 +113,10 @@ export interface CameraTracker extends DataNode {
 	"rotation": number
 }
 
+/**
+ * [1] = min
+ * [2] = max
+ */
 export type ICameraSwivel = [ CameraSwivelMode, number, number ];
 
 export enum CameraSwivelMode {

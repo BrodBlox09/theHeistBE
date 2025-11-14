@@ -3,7 +3,7 @@ import Vector from "../Vector";
 import Utilities from "../Utilities";
 import DataManager from "../managers/DataManager";
 import LoreItem from "../LoreItem";
-import { BlockRotation, ActionList, ConsoleActionTracker, KeycardReaderActionTracker, IPrerequisiteList, EnergyTracker, CameraTracker, ICameraSwivel } from "../TypeDefinitions";
+import { BlockRotation, ActionList, ConsoleActionTracker, KeycardReaderActionTracker, IPrerequisiteList, EnergyTracker, CameraTracker, ICameraSwivel, CameraSwivelMode } from "../TypeDefinitions";
 
 let cameras = 0;
 let rechargeStations = 0;
@@ -205,7 +205,7 @@ export default class LevelConstructor {
         const cameraDataNode: CameraTracker = {
             "name": "cameraTracker",
             "isRobot": false,
-            "rotation": swivel[1],
+            "rotation": swivel[swivel[0] == CameraSwivelMode.Decrease ? 2 : 1], // If starting with decreasing, start at max rot
             "swivel": swivel,
             "disabled": false,
             "cameraID": cameras,
