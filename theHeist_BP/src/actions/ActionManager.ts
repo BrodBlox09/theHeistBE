@@ -4,7 +4,7 @@ import VoiceOverManager from "../managers/VoiceOverManager";
 import DataManager from "../managers/DataManager";
 import Utilities from "../Utilities";
 import Vector from "../Vector";
-import { IAction, IInventorySlotData, GamebandTracker } from "../TypeDefinitions";
+import { IAction, IInventorySlotData } from "../TypeDefinitions";
 
 export default class ActionManager {
 	static runActions(actionInfos: IAction[], player: Player) {
@@ -72,7 +72,7 @@ export default class ActionManager {
 				var cameraTrackerDataNode = DataManager.getData(cameraArmorStand, "cameraTracker")!;
 				cameraTrackerDataNode.disabled = true;
 				DataManager.setData(cameraArmorStand, cameraTrackerDataNode);
-				var displayCameraLocation = { "x": cameraArmorStand.location.x, "y": -57, "z": cameraArmorStand.location.z };
+				var displayCameraLocation = { "x": cameraArmorStand.location.x, "y": Utilities.cameraDisplayHeight, "z": cameraArmorStand.location.z };
 				var displayCameraQuery = {
 					"type": `theheist:${cameraTrackerDataNode.type}`,
 					"location": displayCameraLocation,
@@ -219,40 +219,40 @@ export default class ActionManager {
 				player.sendMessage([{ "text": "§5§oVoice:§r " }, { "translate": "map.sub.001.A" }]);
 				player.sendMessage([{ "text": "§5§oVoice:§r " }, { "translate": "map.sub.001.B" }]);
 
-				const hideHud = system.runInterval(() => {
+				const hideHudIntervalId = system.runInterval(() => {
 					player.onScreenDisplay.setTitle('hideHud')
 				}, 0)
 
 				// First TP
-				player.teleport({ x: 998.5, y: -60, z: 112.5 }, { 'dimension': Utilities.dimensions.overworld });
+				player.teleport({ x: 998.5, y: 60, z: 112.5 }, { 'dimension': Utilities.dimensions.overworld });
 				player.camera.setCamera('minecraft:free', {
-					location: { x: 1030.5, y: -57.25, z: 107.5 },
+					location: { x: 1030.5, y: 62.75, z: 107.5 },
 					rotation: { x: 0, y: 180 }
 				})
 
 				system.runTimeout(() => {
 					player.camera.setCamera('minecraft:free', {
-						location: { x: 1031.5, y: -57.25, z: 88.5 },
+						location: { x: 1031.5, y: 62.75, z: 88.5 },
 						rotation: { x: -30, y: 125 }
 					})
 				}, Utilities.SECOND * 5);
 
 				system.runTimeout(() => {
 					player.camera.setCamera('minecraft:free', {
-						location: { x: 1027.5, y: -57.25, z: 68.5 },
+						location: { x: 1027.5, y: 62.75, z: 68.5 },
 						rotation: { x: 0, y: 135 }
 					})
 				}, Utilities.SECOND * 13);
 
 				system.runTimeout(() => {
 					player.camera.setCamera('minecraft:free', {
-						location: { x: 1017.5, y: -57.25, z: 56.5 },
+						location: { x: 1017.5, y: 62.75, z: 56.5 },
 						rotation: { x: -25, y: 80 }
 					})
 				}, Utilities.SECOND * 22);
 
 				system.runTimeout(() => {
-					system.clearRun(hideHud);
+					system.clearRun(hideHudIntervalId);
 					player.camera.clear();
 					system.sendScriptEvent("theheist:load-level", "1");
 				}, Utilities.SECOND * 30.5);

@@ -1,20 +1,23 @@
-import { system, world, Vector3, Player, EntityQueryOptions, BlockVolume, BlockPermutation, GameMode } from "@minecraft/server";
-import VoiceOverManager from "./managers/VoiceOverManager";
+import { system, world, Player, EntityQueryOptions, GameMode } from "@minecraft/server";
 import GameObjectiveManager from "./managers/GameObjectiveManager";
 import DataManager from "./managers/DataManager";
 import Utilities from "./Utilities";
 import Vector from "./Vector";
 import "./customComponents";
 import "./lvl_loader";
-import "./gameband";
-import "./alarm";
+import { gamebandTick } from "./gameband";
+import { alarmTick } from "./alarm";
 import ActionManager from "./actions/ActionManager";
 import LevelDefinitions from "./levels/LevelDefinitions";
-import { LevelNotFoundError } from "./levels/LevelDefinitions";
+
+system.runInterval(() => {
+	gamebandTick();
+	alarmTick();
+});
 
 world.afterEvents.playerSpawn.subscribe(eventData => {
 	if (!eventData.initialSpawn || !eventData.player.hasTag('loadingLevel')) return;
-	var levelInfo = DataManager.getData(eventData.player, "levelInformation");
+	var levelInfo = DataManager.getWorldData("levelInformation");
 	if (!levelInfo) return;
 	system.sendScriptEvent("theheist:load-level", `${levelInfo.id}`);
 });
@@ -70,8 +73,10 @@ system.afterEvents.scriptEventReceive.subscribe(event => { // stable-friendly ve
 			player.setGameMode(GameMode.Adventure);
 			Utilities.clearPlayerInventory(player);
 			DataManager.clearData(player);
+			DataManager.clearWorldData();
+			player.getTags().forEach(tag => player.removeTag(tag));
 			player.resetLevel();
-			player.teleport(new Vector(44.5, -59, 70.5), {
+			player.teleport(new Vector(44.5, 60, 70.5), {
 				dimension: Utilities.dimensions.overworld,
 				rotation: { x: 0, y: 90 }
 			});
@@ -104,7 +109,7 @@ system.afterEvents.scriptEventReceive.subscribe(event => { // stable-friendly ve
 			break;
 		}
 		case "lvlData": {
-			var data = DataManager.getData(player, "levelInformation");
+			var data = DataManager.getWorldData("levelInformation");
 			world.sendMessage(JSON.stringify(data));
 			break;
 		}

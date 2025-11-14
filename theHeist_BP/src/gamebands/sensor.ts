@@ -98,7 +98,7 @@ function endSensorMode(player: Player, gamebandTracker: GamebandTracker, invento
 }
 
 export function sensorTick(player: Player, gamebandTracker: GamebandTracker, inventoryTracker: InventoryTracker) {
-	let levelInformation = DataManager.getData(player, "levelInformation")!;
+	let levelInformation = DataManager.getWorldData("levelInformation")!;
 	tryMap(player, levelInformation, gamebandTracker, inventoryTracker);
     if (!playerIsInSensorMode(gamebandTracker)) return;
     var sensorModeData = gamebandTracker.currentMode!;

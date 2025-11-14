@@ -11,11 +11,11 @@ const level: ILevel = {
 	"startZ": 53,
 	"endX": 1040,
 	"endZ": 118,
-	"mapLoc": new Vector(1000, -34, 68),
+	"mapLoc": Vector.zero,
 	"prisonLoc": Vector.zero
 },
-"loadElevatorLoc": new Vector(0, 0, 0),
-"startPlayerLoc": new Vector(1000.5, -59, 57.5),
+"loadElevatorLoc": Vector.zero,
+"startPlayerLoc": new Vector(1000.5, 60, 57.5),
 "startPlayerRot": 90,
 "startingItems": [{ "slot": 0, "typeId": 'theheist:recharge_mode_lvl_1', "lockMode": "slot" }, { "slot": 1, "typeId": 'theheist:hacking_mode_lvl_1', "lockMode": "slot" }],
 "rechargeLevel": 1,
@@ -25,7 +25,7 @@ const level: ILevel = {
 "customTitle": "§o§7Outside the HQ",
 "customLoadingArea": {
     "waitForLoadLevel": false,
-    "playerLoadingLocation": new Vector(0, 0, 0)
+    "playerLoadingLocation": Vector.zero
 },
 setup: () => {},
 onLoadStart: (player: Player) => { player.camera.clear(); }

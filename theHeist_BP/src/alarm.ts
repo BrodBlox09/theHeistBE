@@ -1,11 +1,11 @@
-import { world, system, GameMode, Player, EntityQueryOptions, MolangVariableMap, BlockComponent, Block } from "@minecraft/server";
+import { world, system, GameMode, Player, EntityQueryOptions, MolangVariableMap } from "@minecraft/server";
 import { solidToTransparent } from "./gamebands/xray";
 import * as StealthModeFunc from "./gamebands/stealth";
 import * as SensorModeFunc from "./gamebands/sensor";
 import DataManager from "./managers/DataManager";
 import Utilities from "./Utilities";
 import Vector from "./Vector";
-import { LevelInformation, CameraSwivelMode, ILevelCloneInfo, AlarmTracker, GamebandTracker } from "./TypeDefinitions";
+import { CameraSwivelMode, ILevelCloneInfo, AlarmTracker, GamebandTracker } from "./TypeDefinitions";
 import LevelDefinitions from "./levels/LevelDefinitions";
 import PlayerBustedManager from "./managers/PlayerBustedManager";
 import GameObjectiveManager from "./managers/GameObjectiveManager";
@@ -18,20 +18,22 @@ const staticSecurityDeviceLoadingRange = 25; // To reduce lag, only map the area
 const sonarTimeoutTime = 3; // Time in ticks that the player is invulnerable to sonar after being seen (to stop double ticking)
 const xrayTransparentBlocks = solidToTransparent.map(x => x.transparent);
 
-system.runInterval(() => {
+export function alarmTick() {
 	// Only include adventure mode players
 	let player = world.getPlayers({ "gameMode": GameMode.Adventure }).filter((x) => (x != undefined && x != null))[0];
 	if (player == undefined) return;
 
-	let levelInformation = DataManager.getData(player, "levelInformation");
+	let levelInformation = DataManager.getWorldData("levelInformation");
 	if (!levelInformation || !levelInformation.runSecurity) return;
 	let levelId = levelInformation.id;
 	let levelDefinition = LevelDefinitions.getLevelDefinitionByID(levelId);
 	if (!levelDefinition) return;
 	let levelCI = levelDefinition.levelCloneInfo;
 
-	let alarmTracker = DataManager.getData(player, "alarmTracker")!;
-	let gamebandTracker = DataManager.getData(player, "gamebandTracker")!;
+	let alarmTracker = DataManager.getData(player, "alarmTracker");
+	let gamebandTracker = DataManager.getData(player, "gamebandTracker");
+
+	if (!alarmTracker || !gamebandTracker) return;
 
 	// Update camera sight blocks and sensor display
 	updateRobots(player);
@@ -52,10 +54,10 @@ system.runInterval(() => {
 		levelInformation.timeLimit.remainingTime -= 1;
 		if (levelInformation.timeLimit.remainingTime < 0) levelInformation.timeLimit.remainingTime = 0;
 		if (levelInformation.timeLimit.remainingTime == 0) PlayerBustedManager.playerBusted(player);
-		DataManager.setData(player, levelInformation);
+		DataManager.setWorldData("levelInformation", levelInformation);
 	}
 	if (levelInformation.timeLimit) GameObjectiveManager.setTimeRemaining(player, levelInformation.timeLimit.remainingTime / Utilities.SECOND);
-});
+}
 
 function updatePlayerAlarmLevel(player: Player, gamebandTracker: GamebandTracker, alarmTracker: AlarmTracker) {
 	// Movement-based security
@@ -194,7 +196,7 @@ function updateRobots(player: Player) {
 				"closest": 1
 			};
 			var cameraRobot = Utilities.dimensions.overworld.getEntities(cameraRobotQuery)[0];
-			cameraRobot.teleport(new Vector(cameraRobotArmorStand.location.x, -59.25, cameraRobotArmorStand.location.z));
+			cameraRobot.teleport(new Vector(cameraRobotArmorStand.location.x, Utilities.robotDisplayHeight, cameraRobotArmorStand.location.z));
 			cameraRobot.setRotation(cameraRobotArmorStand.getRotation());
 			if (Utilities.dimensions.overworld.getBlock(cameraRobot.location)?.typeId == "minecraft:air") Utilities.setBlock(new Vector(cameraRobotArmorStand.location.x, Utilities.robotPathDisplayMapHeight, cameraRobotArmorStand.location.z), "theheist:robot_path");
 		} catch { }
@@ -282,7 +284,7 @@ function updateCameras(player: Player, levelCI: ILevelCloneInfo) {
 							rotateMode = 0;
 						}
 						break;
-					case CameraSwivelMode.Continous:
+					case CameraSwivelMode.Continuous:
 						rotation += 5;
 						break;
 				}
@@ -290,7 +292,7 @@ function updateCameras(player: Player, levelCI: ILevelCloneInfo) {
 				cameraTrackerDataNode.rotation = rotation;
 				const displayCameraQuery = {
 					"type": "theheist:camera",
-					"location": { 'x': armorStand.location.x, 'y': -57, 'z': armorStand.location.z },
+					"location": { 'x': armorStand.location.x, 'y': Utilities.cameraDisplayHeight, 'z': armorStand.location.z },
 					"maxDistance": 3,
 					"closest": 1
 				}
@@ -345,7 +347,7 @@ function updateSonars(player: Player, levelCI: ILevelCloneInfo) {
 		if (cameraTrackerDataNode.disabled) {
 			var displayCameraQuery = {
 				"type": `theheist:sonar`,
-				"location": { 'x': x.location.x, 'y': -57, 'z': x.location.z },
+				"location": { 'x': x.location.x, 'y': Utilities.cameraDisplayHeight, 'z': x.location.z },
 				"maxDistance": 3,
 				"closest": 1
 			}
@@ -409,7 +411,7 @@ function updateSonar360s(player: Player) {
 		if (cameraTrackerDataNode.disabled) {
 			var displayCameraQuery = {
 				"type": `theheist:sonar360`,
-				"location": { 'x': x.location.x, 'y': -57, 'z': x.location.z },
+				"location": { 'x': x.location.x, 'y': Utilities.cameraDisplayHeight, 'z': x.location.z },
 				"maxDistance": 3,
 				"closest": 1
 			}

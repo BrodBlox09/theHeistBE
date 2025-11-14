@@ -13,10 +13,25 @@ export interface IAction {
 
 export type ActionList = Array<IAction>;
 
-export type DataNodeReturnType<T extends string> = T extends keyof DataNodes ? DataNodes[T] : DataNode;
+export type WorldDataNodeType<T extends WorldDataNodeName> = T extends WorldDataNodeName ? WorldDataNodes[T] : undefined;
+export type WorldDataNodeName = keyof WorldDataNodes;
+
+export type WorldDataNodes = {
+	"levelInformation": LevelInformation
+}
+
+export interface WorldDataNode extends Record<string, any> {}
+
+export interface LevelInformation extends WorldDataNode {
+	"id": string,
+	"runSecurity": boolean,
+	"timeLimit"?: TimeLimit
+}
+
+export type DataNodeType<T extends DataNodeName> = T extends DataNodeName ? DataNodes[T] : undefined;
+export type DataNodeName = keyof DataNodes;
 
 export type DataNodes =  {
-	"levelInformation": LevelInformation,
 	"gamebandTracker": GamebandTracker,
 	"alarmTracker": AlarmTracker,
 	"inventoryTracker": InventoryTracker,
@@ -24,8 +39,6 @@ export type DataNodes =  {
 	"energyTracker": EnergyTracker,
 	"cameraTracker": CameraTracker
 }
-
-export interface DataNodeHelper {}
 
 export interface DataNode extends Record<string, any> {
 	"name": string
@@ -57,13 +70,6 @@ export interface KeycardReaderActionTracker extends IActionTracker {
 	"name": "actionTracker",
 	"level"?: undefined,
 	"isKeycardReader": true
-}
-
-export interface LevelInformation extends DataNode {
-	"name": "levelInformation",
-	"id": string,
-	"runSecurity": boolean,
-	"timeLimit"?: TimeLimit
 }
 
 /**
@@ -122,7 +128,7 @@ export type ICameraSwivel = [ CameraSwivelMode, number, number ];
 export enum CameraSwivelMode {
 	Decrease = 0,
 	Increase = 1,
-	Continous = 2
+	Continuous = 2
 }
 
 export enum BlockRotation {

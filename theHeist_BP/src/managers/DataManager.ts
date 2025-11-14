@@ -1,8 +1,21 @@
 import { Entity, world } from '@minecraft/server';
-import { DataNodeReturnType, DataNode } from '../TypeDefinitions';
+import { WorldDataNodeType, WorldDataNodeName, DataNodeType, DataNodeName, DataNode } from '../TypeDefinitions';
 
 export default class DataManager {
-	static getData<T extends string>(entity: Entity, dataNodeName: T): DataNodeReturnType<T> | undefined {
+	static getWorldData<T extends WorldDataNodeName>(dataNodeName: T): WorldDataNodeType<T> | undefined {
+		const dataStr = world.getDynamicProperty(dataNodeName) as string;
+		if (!dataStr) return;
+		return JSON.parse(dataStr);
+	}
+
+	static setWorldData<T extends WorldDataNodeName>(dataNodeName: T, object: WorldDataNodeType<T>) {
+		const data = JSON.stringify(object);
+		world.setDynamicProperty(dataNodeName, data);
+	}
+
+	static clearWorldData() { world.clearDynamicProperties(); }
+
+	static getData<T extends DataNodeName>(entity: Entity, dataNodeName: T): DataNodeType<T> | undefined {
 		const dataStr = entity.getDynamicProperty('data') as string;
 		if (!dataStr) return;
 		const dataNodes = JSON.parse(dataStr);
@@ -35,8 +48,5 @@ export default class DataManager {
 		return true;
 	}
 
-	static clearData(entity: Entity) {
-		entity.setDynamicProperty('data', "");
-		return true;
-	}
+	static clearData(entity: Entity) { entity.clearDynamicProperties(); }
 }

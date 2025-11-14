@@ -1,4 +1,4 @@
-import { MolangVariableMap, BlockPermutation, EffectTypes, world, system, Player, EntityInventoryComponent, ScoreboardObjective, Container, ItemStack, ItemLockMode, Entity, ItemUseAfterEvent, BlockVolume, EntityEquippableComponent, EquipmentSlot, EntityItemComponent, ItemStartUseOnAfterEvent, EntityQueryOptions } from "@minecraft/server";
+import { world, system, Player, ItemUseAfterEvent, ItemStartUseOnAfterEvent } from "@minecraft/server";
 import Vector from "./Vector";
 import DataManager from "./managers/DataManager";
 import Utilities from "./Utilities";
@@ -6,7 +6,6 @@ import GameObjectiveManager from "./managers/GameObjectiveManager";
 import PlayerBustedManager from "./managers/PlayerBustedManager";
 import GamebandManager from "./gamebands/GamebandManager";
 import ActionManager from "./actions/ActionManager";
-import LevelDefinitions from "./levels/LevelDefinitions";
 import { toggleRechargeMode } from "./gamebands/recharge";
 import { tryHackingMode } from "./gamebands/hacking";
 import { toggleSensorMode } from "./gamebands/sensor";
@@ -156,7 +155,7 @@ function clearGlass(loc: Vector) {
 	Utilities.dimensions.overworld.runCommand(`fill ${corner1.x} ${corner1.y} ${corner1.z} ${corner2.x} ${corner2.y} ${corner2.z} air replace glass`);
 }
 
-system.runInterval(() => {
+export function gamebandTick() {
 	const player = world.getPlayers().filter((x: Player) => (x != undefined && x != null))[0];
 	if (player == undefined) return;
 
@@ -164,6 +163,15 @@ system.runInterval(() => {
 	player.addEffect('saturation', 2000, { amplifier: 1, showParticles: false });
 	player.addEffect('night_vision', 2000, { amplifier: 1, showParticles: false });
 	player.addEffect('resistance', 2000, { amplifier: 1, showParticles: false });
+
+	// If recharge mode selected, show objectives
+	const playerInvContainer = player.getComponent('inventory')!.container;
+	var selectedItemStack = playerInvContainer.getItem(player.selectedSlotIndex);
+	if (selectedItemStack != undefined && selectedItemStack.typeId.startsWith("theheist:recharge_mode_lvl_")) {
+		GameObjectiveManager.showSidebar();
+	} else {
+		GameObjectiveManager.hideSidebar();
+	}
 	
 	let inventoryTracker = DataManager.getData(player, "inventoryTracker");
 	let gamebandTracker = DataManager.getData(player, "gamebandTracker");
@@ -194,15 +202,6 @@ system.runInterval(() => {
 	// cloneFloor(Vector.from(player.location));
 	// flattenMap(Vector.from(player.location));
 	// clearGlass(Vector.from(player.location));
-	
-	// If recharge mode selected, show objectives
-	const playerInvContainer = player.getComponent('inventory')!.container;
-	var selectedItemStack = playerInvContainer.getItem(player.selectedSlotIndex);
-	if (selectedItemStack != undefined && selectedItemStack.typeId.startsWith("theheist:recharge_mode_lvl_")) {
-		GameObjectiveManager.showSidebar();
-	} else {
-		GameObjectiveManager.hideSidebar();
-	}
 
 	// Tick all gameband modes
 	if (gamebandTracker) GamebandManager.tickAllGamebands(player, gamebandTracker, inventoryTracker);
@@ -218,4 +217,4 @@ system.runInterval(() => {
 		player.addLevels(-100);
 		player.addLevels(Math.floor(gamebandTracker.energy));
 	}
-});
+}

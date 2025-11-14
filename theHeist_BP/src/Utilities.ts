@@ -1,29 +1,30 @@
-import { BlockPermutation, Vector3, Block, world, Player, Container, EntityInventoryComponent, ItemStack, ItemLockMode, BlockVolume, BlockFillOptions, Entity, EntityEquippableComponent, EquipmentSlot, EntityType, Dimension } from "@minecraft/server";
+import { BlockPermutation, Vector3, Block, world, Player, Container, ItemStack, ItemLockMode, BlockVolume, BlockFillOptions, Entity, EquipmentSlot, EntityType, Dimension } from "@minecraft/server";
 import DataManager from "./managers/DataManager";
-import Vector from "./Vector";
 import LoreItem from "./LoreItem";
 import { BlockStateSuperset } from "@minecraft/vanilla-data";
-import { LevelInformation, IInventorySlotData, InventoryTracker } from "./TypeDefinitions";
+import { IInventorySlotData, InventoryTracker } from "./TypeDefinitions";
 
 export default class Utilities {
-	static levelMapHeight = 20;
-	static floorCloneHeight = 18;
-	static drilledBlocksHeight = 15;
-	static consolesHeight = -15;
-	static rechargeHeight = -20;
-	static cameraHeight = -25;
-	static raycastHeight = -30;
-	static cameraBlockCacheMappingHeight = -32;
-	static cameraBlockMappingHeight = -33;
-	static robotPathDisplayMapHeight = -34;
-	static sonarBlockMappingHeight = -35;
-	static robotPathMapHeight = -49;
-	static magnetModeMagnetBlocksHeight = -51;
-	static ventHeight = -57;
-	static cameraDisplayHeight = -58;
-	static levelPlayingHeight = -60;
-	static levelFloorHeight = -61;
-	static SECOND = 20;
+	static readonly levelMapHeight = 140;
+	static readonly floorCloneHeight = 138;
+	static readonly drilledBlocksHeight = 135;
+	static readonly consolesHeight = 105;
+	static readonly rechargeHeight = 100;
+	static readonly cameraHeight = 95;
+	static readonly raycastHeight = 90;
+	static readonly cameraBlockCacheMappingHeight = 88;
+	static readonly cameraBlockMappingHeight = 87;
+	static readonly robotPathDisplayMapHeight = 86;
+	static readonly sonarBlockMappingHeight = 85;
+	static readonly robotPathMapHeight = 71;
+	static readonly magnetModeMagnetBlocksHeight = 69;
+	static readonly ventHeight = 63;
+	static readonly cameraDisplayHeight = 62;
+	static readonly consoleDisplayHeight = 61;
+	static readonly robotDisplayHeight = 60.75;
+	static readonly levelPlayingHeight = 60;
+	static readonly levelFloorHeight = 59;
+	static readonly SECOND = 20;
 	static dimensions: Record<string, Dimension> = {};
 
 	static sin(d: number): number {

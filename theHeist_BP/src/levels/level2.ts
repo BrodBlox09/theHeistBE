@@ -1,4 +1,5 @@
 import Vector from "../Vector";
+import VectorXZ from "../VectorXZ";
 import LevelConstructor from "./LevelConstructor";
 import ActionListBuilder from "../actions/ActionListBuilder";
 import { ManageObjectiveAction, ObjectiveManagementType, SlideshowAction } from "../actions/ActionDefinitions";
@@ -13,11 +14,11 @@ const level: ILevel = {
 	"startZ": 56,
 	"endX": -20,
 	"endZ": 65,
-	"mapLoc": new Vector(-25, -50, 56),
+	"mapLoc": Vector.zero,
 	"prisonLoc": Vector.zero
 },
 "loadElevatorLoc": Vector.zero,
-"startPlayerLoc": new Vector(-22.5, -59, 61.5),
+"startPlayerLoc": new Vector(-22.5, 60, 61.5),
 "startPlayerRot": -90,
 "startingItems": [{ "slot": 0, "typeId": 'theheist:recharge_mode_lvl_1', "lockMode": "slot" }, { "slot": 1, "typeId": 'theheist:hacking_mode_lvl_1', "lockMode": "slot" }],
 "rechargeLevel": 1,
@@ -29,10 +30,10 @@ const level: ILevel = {
 },
 "customTitle": "",
 setup: () => {
-    LevelConstructor.rechargeStation(new Vector(-21.5, -59, 62.5), BlockRotation.EAST, 21.0, new ActionListBuilder(0)
+    LevelConstructor.rechargeStation(new VectorXZ(-21.5, 62.5), BlockRotation.EAST, 21.0, new ActionListBuilder(0)
         .add(new ManageObjectiveAction(ObjectiveManagementType.COMPLETE_OBJECTIVE, "Recharge Gameband", 1))
         .build());
-    LevelConstructor.computer(new Vector(-21.5, -58, 58.5), "Start slideshow", BlockRotation.EAST, new ActionListBuilder()
+    LevelConstructor.computer(new VectorXZ(-21.5, 58.5), "Start slideshow", BlockRotation.EAST, new ActionListBuilder()
         .add(new ManageObjectiveAction(ObjectiveManagementType.COMPLETE_OBJECTIVE, "Activate Slideshow", 0))
         .add(new SlideshowAction(1), 44)
         .build());

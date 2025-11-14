@@ -11,16 +11,7 @@ import LoreItem from "./LoreItem";
 import { LevelInformation, InventoryTracker, AlarmTracker, GamebandTracker } from "./TypeDefinitions";
 import { rechargeModeInfo } from "./gamebands/recharge";
 
-/**
- * Layer information:
- * 20: Level map
- * 0: Hackable consoles
- * -5: Recharge stations
- * -10: Cameras, sonars, and robots
- * -15: Cameras and sonars mappout area
- */
-
-const persistentEntities = ["minecraft:player","minecraft:painting","minecraft:chicken","theheist:driver","theheist:rideable"];
+const persistentEntities = ["minecraft:player","minecraft:painting","theheist:driver","theheist:rideable"];
 const persistentTags = ["loadingLevel","developer","persistent"];
 
 system.afterEvents.scriptEventReceive.subscribe((event) => {
@@ -56,20 +47,18 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 			const levelId = levelDefinition.levelId;
 
 			// Add mandatory data
-			const playerLevelInformationDataNode: LevelInformation = {
-				"name": "levelInformation",
+			const levelInformationDataNode: LevelInformation = {
 				"id": levelId,
 				"runSecurity": !levelDefinition.noRunSecurity
 			};
 			if (levelDefinition.timeLimit) {
-				playerLevelInformationDataNode.timeLimit = {
+				levelInformationDataNode.timeLimit = {
 					"maxTime": levelDefinition.timeLimit * Utilities.SECOND,
 					"remainingTime": levelDefinition.timeLimit * Utilities.SECOND
 				};
-				GameObjectiveManager.setTimeRemaining(player, playerLevelInformationDataNode.timeLimit.remainingTime);
+				GameObjectiveManager.setTimeRemaining(player, levelInformationDataNode.timeLimit.remainingTime);
 			}
-			DataManager.setData(player, playerLevelInformationDataNode);
-
+			DataManager.setWorldData("levelInformation", levelInformationDataNode);
 			
 			const maxEnergy = rechargeModeInfo[levelDefinition.rechargeLevel].max;
 			const gamebandTracker: GamebandTracker = {
@@ -217,7 +206,6 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 			PlayerBustedManager.setTimesBusted(player, 0);
 			// Remove all tags (except persistent), even p_ tags (like for voice over)
 			player.getTags().forEach((x) => { if (!persistentTags.includes(x)) player.removeTag(x); });
-			GameObjectiveManager.hideSidebar();
 			if (!nextLevel) {
 				if (currLevel != -5) system.sendScriptEvent("theheist:load-level", `${currLevel - 1}`);
 				else endDemo(player);

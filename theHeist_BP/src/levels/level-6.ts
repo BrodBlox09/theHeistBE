@@ -12,11 +12,11 @@ const level: ILevel = {
 	"startZ": 63,
 	"endX": 7999,
 	"endZ": 191,
-	"prisonLoc": new Vector(7916.5, -59, 94.5),
-	"mapLoc": new Vector(7940, -54, 99)
+	"prisonLoc": new Vector(7916.5, 61, 94.5),
+	"mapLoc": new Vector(7940, 66, 99)
 },
-"loadElevatorLoc": new Vector(7938, -50, 84),
-"startPlayerLoc": new Vector(7938, -60, 84),
+"loadElevatorLoc": new Vector(7938, 70, 84),
+"startPlayerLoc": new Vector(7938, Utilities.levelPlayingHeight, 84),
 "startingItems": [],
 "rechargeLevel": 3,
 "startObjectives": [],
