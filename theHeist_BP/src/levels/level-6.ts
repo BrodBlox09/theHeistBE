@@ -1,5 +1,6 @@
 import { BlockRotation, CameraSwivelMode, ILevel } from "../TypeDefinitions";
 import Vector from "../Vector";
+import Utilities from "../Utilities";
 import LevelConstructor from "./LevelConstructor";
 import VectorXZ from "../VectorXZ";
 
