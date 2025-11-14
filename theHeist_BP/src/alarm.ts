@@ -315,7 +315,7 @@ function updateCameras(player: Player, levelCI: ILevelCloneInfo) {
 		Utilities.dimensions.overworld.runCommand(`clone ${levelCI.startX} ${Utilities.cameraBlockCacheMappingHeight} ${levelCI.startZ} ${levelCI.endX} ${Utilities.cameraBlockCacheMappingHeight} ${levelCI.endZ} ${levelCI.startX} ${Utilities.cameraBlockMappingHeight} ${levelCI.startZ}`);
 		Utilities.dimensions.overworld.runCommand(`fill ${levelCI.startX} ${Utilities.cameraBlockCacheMappingHeight} ${levelCI.startZ} ${levelCI.endX} ${Utilities.cameraBlockCacheMappingHeight} ${levelCI.endZ} air`);
 	} else {
-		const tpDistance = 0.55;
+		const tpDistance = 0.55; // Should have a range of 14 blocks
 		cameraMappingArmorStands.forEach(armorStand => {
 			// x sin() must be inverted to work properly for some reason
 			let belowBlock = { "x": armorStand.location.x, "y": armorStand.location.y - 2, "z": armorStand.location.z };
