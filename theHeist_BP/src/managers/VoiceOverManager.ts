@@ -1,7 +1,7 @@
 import { Player } from '@minecraft/server'
 
 export default class VoiceOverManager {
-	static play(player: Player, part: string) {
+	static play(player: Player, part: string | number) {
 		let permanentTag = "p_" + part;
 		if (!player.hasTag(permanentTag)) {
 			// Player has not heard the song already
