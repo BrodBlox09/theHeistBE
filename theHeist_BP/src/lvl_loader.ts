@@ -24,10 +24,6 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 				world.sendMessage("Could not find player");
 				return;
 			}
-			if (player.hasTag('loadingLevel')) {
-				world.sendMessage("Player already loading level");
-				return;
-			}
 			player.addTag('loadingLevel');
 			
 			const entities = Utilities.dimensions.overworld.getEntities();
@@ -90,6 +86,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 			levelDefinition.startObjectives.forEach((objData) => {
 				GameObjectiveManager.addObjective(objData.name, objData.sortOrder, false);
 			});
+			if (levelDefinition.onInitialLoadStart && !player.hasTag("p_initialLevelLoad")) levelDefinition.onInitialLoadStart(player);
 			if (levelDefinition.onLoadStart) levelDefinition.onLoadStart(player);
 
 			var elevatorIntervalId: number;
@@ -113,7 +110,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 
 			let chunkWaitTime = waitForLoadLevel ? Utilities.SECOND * 7.5 : 0;
 			let levelLoadWaitTime = chunkWaitTime + (waitForLoadLevel ? Utilities.SECOND * 2.5 : 0);
-			if (waitForLoadLevel && levelDefinition.initialAdditionalLoadWaitTime && !player.hasTag("p_initialLevelLoad")) levelLoadWaitTime += levelDefinition.initialAdditionalLoadWaitTime;
+			if (waitForLoadLevel && levelDefinition.initialAdditionalLoadWaitTime && !player.hasTag("p_initialLevelLoad")) levelLoadWaitTime += levelDefinition.initialAdditionalLoadWaitTime * Utilities.SECOND;
 			system.runTimeout(() => {
 				if (!levelDefinition.noAutoCleanup) {
 					const entities = Utilities.dimensions.overworld.getEntities();
@@ -128,15 +125,14 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 						// Clear sensor mode residue
 						Utilities.dimensions.overworld.runCommand(`clone ${levelCloneInfo.startX} ${Utilities.floorCloneHeight} ${levelCloneInfo.startZ} ${levelCloneInfo.endX} ${Utilities.floorCloneHeight} ${levelCloneInfo.endZ} ${levelCloneInfo.startX} ${Utilities.levelFloorHeight} ${levelCloneInfo.startZ}`);
 						// Move drilled areas back into position
-						Utilities.dimensions.overworld.runCommand(`clone ${levelCloneInfo.startX} ${Utilities.drilledBlocksHeight} ${levelCloneInfo.startZ} ${levelCloneInfo.endX} ${Utilities.drilledBlocksHeight + 1} ${levelCloneInfo.endZ} ${levelCloneInfo.startX} ${Utilities.levelFloorHeight} ${levelCloneInfo.startZ} filtered normal minecraft:hardened_clay`);
 						Utilities.dimensions.overworld.runCommand(`clone ${levelCloneInfo.startX} ${Utilities.drilledBlocksHeight} ${levelCloneInfo.startZ} ${levelCloneInfo.endX} ${Utilities.drilledBlocksHeight + 1} ${levelCloneInfo.endZ} ${levelCloneInfo.startX} ${Utilities.levelPlayingHeight} ${levelCloneInfo.startZ} filtered move minecraft:hardened_clay`);
 					}
 				}
 
 				LevelConstructor.start();
 				levelDefinition.setup();
-			},chunkWaitTime); // After 7.5 seconds load level objects
-			system.runTimeout(() => { // After 10 seconds bring the player out of the elevator and end the interval
+			},chunkWaitTime); // After at least 7.5 seconds load level objects
+			system.runTimeout(() => { // After at least 10 seconds bring the player out of the elevator and end the interval
 				if (elevatorIntervalId) system.clearRun(elevatorIntervalId);
 				player.teleport(levelDefinition.startPlayerLoc, { rotation: levelDefinition.startPlayerRot ? { 'x': 0, 'y': levelDefinition.startPlayerRot } : player.getRotation() });
 				if (levelDefinition.onStart) levelDefinition.onStart(player);

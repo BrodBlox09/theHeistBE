@@ -189,17 +189,21 @@ export interface ILevel {
 	"playerNoPhone"?: boolean,
 	"timer"?: number,
 	/**
-	 * Second in function execution order.
-	 */
-	"setup": () => void,
-	/**
 	 * Last in function execution order.
 	 */
 	"onStart"?: (player: Player) => void,
 	/**
-	 * First in function execution order.
+	 * Third in function execution order.
+	 */
+	"setup": () => void,
+	/**
+	 * Second in function execution order.
 	 */
 	"onLoadStart"?: (player: Player) => void
+	/**
+	 * First in function execution order, only run once on initial level load.
+	 */
+	"onInitialLoadStart"?: (player: Player) => void
 }
 
 /**
