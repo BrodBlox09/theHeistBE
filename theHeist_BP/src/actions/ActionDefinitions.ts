@@ -30,9 +30,9 @@ export class PlaySoundAction implements IAction {
 
 export class VoiceSaysAction implements IAction {
     type = "voice_says";
-    do: { "soundID": string };
+    do: { "soundID": string | number };
 
-    constructor(soundId: string) {
+    constructor(soundId: string | number) {
         this.do = { "soundID": soundId };
     }
 }
