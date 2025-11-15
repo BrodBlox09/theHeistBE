@@ -38,6 +38,7 @@ class LoreItem {
 		new LoreItem("theheist:stealth_mode_lvl_2", "§r§fStealth mode Lvl. 2", ["Use item to §r§6toggle", "Energy: 10 units/second"]),
 		new LoreItem("theheist:stun_mode_lvl_1", "§r§eStun mode Lvl. 1", ["Use item to §r§6use", "Energy: 10 units"]),
 		new LoreItem("theheist:drill_mode_lvl_1", "§r§3Drill mode Lvl. 1", ["Use item to §r§6use", "Energy: 30 units"]),
+		new LoreItem("theheist:teleportation_mode_lvl_1", "§r§dTeleportation mode Lvl. 1", ["Use item to §r§6use", "Energy: 200 units"]),
 		new LoreItem('minecraft:paper', '§oUse Keycard§r', ['Can trigger any Keycard reader', 'for which you own a matching card']),
 		new LoreItem('minecraft:red_dye', '§oRed Keycard§r', ['Used on matching Keycard reader']),
 		new LoreItem('minecraft:yellow_dye', '§oYellow Keycard§r', ['Used on matching Keycard reader']),
