@@ -107,6 +107,9 @@ const level: ILevel = {
 	LevelConstructor.computer(new VectorXZ(7920.5, 170.5), "Research info", BlockRotation.SOUTH, new ActionListBuilder()
 		.add(new DisplayResearchAction(600))
 		.build());
+	LevelConstructor.newGameband(new VectorXZ(7908.5, 164.5), "teleportation", "§r§dTeleportation", 8, BlockRotation.EAST, new ActionListBuilder()
+		.add(new VoiceSaysAction(703))
+		.build());
 }
 
 }

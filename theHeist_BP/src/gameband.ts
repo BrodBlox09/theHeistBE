@@ -14,6 +14,7 @@ import { toggleMagnetMode } from "./gamebands/magnet";
 import { toggleStealthMode } from "./gamebands/stealth";
 import { tryStunMode } from "./gamebands/stun";
 import { tryDrillMode } from "./gamebands/drill";
+import { tryTeleportationMode } from "./gamebands/teleportation";
 
 world.afterEvents.itemStartUseOn.subscribe(itemUse);
 world.afterEvents.itemUse.subscribe(itemUse);
@@ -78,6 +79,9 @@ function itemUse(event: ItemUseAfterEvent | ItemStartUseOnAfterEvent) {
 			break;
 		case "theheist:drill_mode_lvl_1":
 			tryDrillMode(player, 1);
+			break;
+		case "theheist:teleportation_mode_lvl_1":
+			tryTeleportationMode(player, 1);
 			break;
 		case "minecraft:red_dye":
 			keycardType = "red"
@@ -164,14 +168,8 @@ export function gamebandTick() {
 	player.addEffect('night_vision', 2000, { amplifier: 1, showParticles: false });
 	player.addEffect('resistance', 2000, { amplifier: 1, showParticles: false });
 
-	// If recharge mode selected, show objectives
 	const playerInvContainer = player.getComponent('inventory')!.container;
 	var selectedItemStack = playerInvContainer.getItem(player.selectedSlotIndex);
-	if (selectedItemStack != undefined && selectedItemStack.typeId.startsWith("theheist:recharge_mode_lvl_")) {
-		GameObjectiveManager.showSidebar();
-	} else {
-		GameObjectiveManager.hideSidebar();
-	}
 	
 	let inventoryTracker = DataManager.getData(player, "inventoryTracker");
 	let gamebandTracker = DataManager.getData(player, "gamebandTracker");
@@ -204,7 +202,7 @@ export function gamebandTick() {
 	// clearGlass(Vector.from(player.location));
 
 	// Tick all gameband modes
-	if (gamebandTracker) GamebandManager.tickAllGamebands(player, gamebandTracker, inventoryTracker);
+	if (gamebandTracker) GamebandManager.tickAllGamebands(player, gamebandTracker, inventoryTracker, selectedItemStack);
 
 	// Check to see if XP bar display needs to be updated
 	if (gamebandTracker.energy != player.level || player.xpEarnedAtCurrentLevel != ((((alarmTracker.level / 100) - 0.06) * 742) + 41)) {

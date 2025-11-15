@@ -11,9 +11,6 @@ import LoreItem from "./LoreItem";
 import { LevelInformation, InventoryTracker, AlarmTracker, GamebandTracker } from "./TypeDefinitions";
 import { rechargeModeInfo } from "./gamebands/recharge";
 
-const persistentEntities = ["minecraft:player","minecraft:painting","theheist:driver","theheist:rideable"];
-const persistentTags = ["loadingLevel","developer","persistent"];
-
 system.afterEvents.scriptEventReceive.subscribe((event) => {
 	const id = event.id;
 	const msg = event.message;
@@ -28,11 +25,11 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 			
 			const entities = Utilities.dimensions.overworld.getEntities();
 			for (const entity of entities) {
-				if (!persistentEntities.includes(entity.typeId) && !entity.hasTag("persistent")) entity.remove();
+				if (!Utilities.persistentEntities.includes(entity.typeId) && !entity.hasTag("persistent")) entity.remove();
 			}
 			// Clear all data on player
 			DataManager.clearData(player);
-			player.getTags().forEach((x) => { if (!persistentTags.includes(x) && !x.startsWith("p_")) player.removeTag(x); });
+			player.getTags().forEach((x) => { if (!Utilities.persistentTags.includes(x) && !x.startsWith("p_")) player.removeTag(x); });
 
 			// Ensure player is in correct game mode
 			player.setGameMode(GameMode.Adventure);
@@ -115,7 +112,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 				if (!levelDefinition.noAutoCleanup) {
 					const entities = Utilities.dimensions.overworld.getEntities();
 					for (const entity of entities) {
-						if (!persistentEntities.includes(entity.typeId) && !entity.hasTag("persistent")) entity.remove();
+						if (!Utilities.persistentEntities.includes(entity.typeId) && !entity.hasTag("persistent")) entity.remove();
 					}
 					if (levelCloneInfo) {
 						// Clear robot paths in the air
@@ -201,40 +198,13 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 			}
 			PlayerBustedManager.setTimesBusted(player, 0);
 			// Remove all tags (except persistent), even p_ tags (like for voice over)
-			player.getTags().forEach((x) => { if (!persistentTags.includes(x)) player.removeTag(x); });
-			if (!nextLevel) {
-				if (currLevel != -5) system.sendScriptEvent("theheist:load-level", `${currLevel - 1}`);
-				else endDemo(player);
-			} else if (nextLevel == "end") {
-				endDemo(player);
-			} else {
-				system.sendScriptEvent("theheist:load-level", `${nextLevel}`)
-			}
-			break;
-		}
-		case "theheist:end_demo": {
-			const player = world.getPlayers().filter((player) => (player != undefined && player != null))[0];
-			endDemo(player);
+			player.getTags().forEach((x) => { if (!Utilities.persistentTags.includes(x)) player.removeTag(x); });
+			if (!nextLevel) system.sendScriptEvent("theheist:load-level", `${currLevel - 1}`);
+			else system.sendScriptEvent("theheist:load-level", `${nextLevel}`);
 			break;
 		}
 	}
 });
-
-function endDemo(player: Player) {
-	Utilities.clearPlayerInventory(player);
-	DataManager.clearData(player);
-	player.resetLevel();
-	player.onScreenDisplay.setHudVisibility(HudVisibility.Hide);
-	player.camera.fade({"fadeTime":{"holdTime": 5,"fadeInTime":0.5,"fadeOutTime":0.5}});
-	player.onScreenDisplay.setTitle("Thanks for playing!", {
-		"fadeInDuration": 10,
-		"fadeOutDuration": 10,
-		"stayDuration": 100,
-		"subtitle": "More levels coming soon"
-	});
-	system.runTimeout(() => player.teleport(new Vector(44.5, -59, 70.5), {"rotation":{"x":0,"y":90}}), 20);
-	system.runTimeout(() => player.onScreenDisplay.setHudVisibility(HudVisibility.Reset), 120);
-}
 
 /**
  * Assumes elevator height of 12 blocks

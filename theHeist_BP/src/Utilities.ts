@@ -25,6 +25,8 @@ export default class Utilities {
 	static readonly levelPlayingHeight = 60;
 	static readonly levelFloorHeight = 59;
 	static readonly SECOND = 20;
+	static readonly persistentTags = ["loadingLevel","developer","persistent"];
+	static readonly persistentEntities = ["minecraft:player","minecraft:painting","theheist:driver","theheist:rideable"];
 	static dimensions: Record<string, Dimension> = {};
 
 	static sin(d: number): number {
