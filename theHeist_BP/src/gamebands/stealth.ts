@@ -24,6 +24,7 @@ export function toggleStealthMode(player: Player, lvl: number) {
 function tryStartStealthMode(player: Player, lvl: number, gamebandTracker: GamebandTracker, inventoryTracker: InventoryTracker) {
     GamebandManager.cancelMode(player, gamebandTracker.currentMode);
     gamebandTracker = DataManager.getData(player, "gamebandTracker")!;
+    inventoryTracker = DataManager.getData(player, "inventoryTracker")!;
     
     var costPerSecond = stealthModeInfo[lvl].cost;
     var costPerTick = costPerSecond / 20;
