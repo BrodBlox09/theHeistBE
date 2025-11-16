@@ -1,0 +1,20 @@
+{
+	"entity_sounds": {
+		"entities": {
+			"theheist:camera_robot": {
+				"events": {
+					"ambient": "map.robot2"
+				},
+				"pitch" : 2.0,
+				"volume" : 1.0
+			},
+			"theheist:sonar_robot": {
+				"events": {
+					"ambient": "map.robot"
+				},
+				"pitch" : 1.5,
+				"volume" : 1.0
+			}
+		}
+	}
+}

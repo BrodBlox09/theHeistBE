@@ -17,9 +17,9 @@
                 }
             },
             "minecraft:ambient_sound_interval": {
-				"event_name": "map.robot2",
-				"range": 2.2,
-				"value": 2.2
+				"event_name": "ambient",
+				"range": 0,
+				"value": 3.33
 			}
         }
 	}
