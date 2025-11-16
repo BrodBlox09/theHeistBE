@@ -204,9 +204,9 @@ function updateRobots(player: Player) {
 }
 
 function disabledSecurityDeviceEffect(loc: Vector) {
-	loc = loc.add(new Vector(0, 0.5, 0));
+	loc = loc.getCenter();
 	var molangVarMap = new MolangVariableMap();
-	molangVarMap.setSpeedAndDirection("direction", 1, new Vector(0, 0, 0));
+	molangVarMap.setVector3("velocity", new Vector(0, 0, 0));
 	Utilities.dimensions.overworld.spawnParticle("minecraft:explosion_particle", loc, molangVarMap);
 }
 
