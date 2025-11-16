@@ -33,6 +33,7 @@ export function toggleXRayMode(player: Player, lvl: number) {
 function tryStartXRayMode(player: Player, lvl: number, gamebandTracker: GamebandTracker, inventoryTracker: InventoryTracker) {
     GamebandManager.cancelMode(player, gamebandTracker.currentMode);
     gamebandTracker = DataManager.getData(player, "gamebandTracker")!;
+	inventoryTracker = DataManager.getData(player, "inventoryTracker")!;
     
     var costPerSecond = xrayModeInfo[lvl].cost;
     var costPerTick = costPerSecond / 20;

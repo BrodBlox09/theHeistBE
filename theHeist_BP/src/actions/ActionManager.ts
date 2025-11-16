@@ -81,20 +81,6 @@ export default class ActionManager {
 				var displayCamera = Utilities.dimensions.overworld.getEntities(displayCameraQuery)[0];
 				displayCamera.triggerEvent("theheist:disable");
 				if (!actionInfo.do.noMessage) player.sendMessage([{ "translate": `map.console.${cameraTrackerDataNode.type != "sonar360" ? cameraTrackerDataNode.type : "sonar"}` }]);
-				var maxParticles = 10;
-				var radius = 0.4;
-				for (var i = 0; i < maxParticles; i++) {
-					const x = displayCameraLocation.x + ((Utilities.cos(360 * (i / maxParticles)) * radius));
-					const y = displayCameraLocation.y + 0.5;
-					const z = displayCameraLocation.z + ((Utilities.sin(360 * (i / maxParticles)) * radius));
-
-					try {
-						const molangVarMap = new MolangVariableMap();
-						molangVarMap.setVector3("variable.velocity", new Vector(x, y, z));
-						Utilities.dimensions.overworld.spawnParticle("minecraft:explosion_particle", { x, y, z }, molangVarMap);
-					} catch (err) { }
-
-				}
 				break;
 			case "voice_says":
 				var soundID = actionInfo.do.soundID;

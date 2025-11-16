@@ -1,4 +1,4 @@
-import { Player } from "@minecraft/server";
+import { ItemStack, Player } from "@minecraft/server";
 import * as RechargeModeFunc from "./recharge";
 import * as HackingModeFunc from "./hacking";
 import * as SensorModeFunc from "./sensor";
@@ -7,15 +7,17 @@ import * as MagnetModeFunc from "./magnet";
 import * as StealthModeFunc from "./stealth";
 import * as StunModeFunc from "./stun";
 import * as DrillModeFunc from "./drill";
+import * as TeleportationModeFunc from "./teleportation";
 import { ModeData, InventoryTracker, GamebandTracker } from "../TypeDefinitions";
 
 export default class GamebandManager {
-	static tickAllGamebands(player: Player, gamebandTracker: GamebandTracker, inventoryTracker: InventoryTracker) {
-		RechargeModeFunc.rechargeTick(player, gamebandTracker, inventoryTracker);
+	static tickAllGamebands(player: Player, gamebandTracker: GamebandTracker, inventoryTracker: InventoryTracker, selectedItemStack: ItemStack | undefined) {
+		RechargeModeFunc.rechargeTick(player, gamebandTracker, inventoryTracker, selectedItemStack);
 		SensorModeFunc.sensorTick(player, gamebandTracker, inventoryTracker);
 		XRayModeFunc.xrayTick(player, gamebandTracker, inventoryTracker);
 		MagnetModeFunc.magnetTick(player, gamebandTracker, inventoryTracker);
 		StealthModeFunc.stealthTick(player, gamebandTracker, inventoryTracker);
+		TeleportationModeFunc.teleportationTick(player, gamebandTracker, inventoryTracker, selectedItemStack);
 	}
 
     static cancelMode(player: Player, modeData: ModeData | null) {

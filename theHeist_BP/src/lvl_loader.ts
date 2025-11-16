@@ -11,27 +11,25 @@ import LoreItem from "./LoreItem";
 import { LevelInformation, InventoryTracker, AlarmTracker, GamebandTracker } from "./TypeDefinitions";
 import { rechargeModeInfo } from "./gamebands/recharge";
 
-const persistentEntities = ["minecraft:player","minecraft:painting","theheist:driver","theheist:rideable"];
-const persistentTags = ["loadingLevel","developer","persistent"];
-
 system.afterEvents.scriptEventReceive.subscribe((event) => {
 	const id = event.id;
 	const msg = event.message;
 	switch (id) {
 		case "theheist:load-level": {
-			const entities = Utilities.dimensions.overworld.getEntities();
-			for (const entity of entities) {
-				if (!persistentEntities.includes(entity.typeId) && !entity.hasTag("persistent")) entity.remove();
-			}
 			const player = world.getPlayers().filter((x) => (x != undefined && x != null))[0];
 			if (player == undefined) {
 				world.sendMessage("Could not find player");
 				return;
 			}
 			player.addTag('loadingLevel');
+			
+			const entities = Utilities.dimensions.overworld.getEntities();
+			for (const entity of entities) {
+				if (!Utilities.persistentEntities.includes(entity.typeId) && !entity.hasTag("persistent")) entity.remove();
+			}
 			// Clear all data on player
 			DataManager.clearData(player);
-			player.getTags().forEach((x) => { if (!persistentTags.includes(x) && !x.startsWith("p_")) player.removeTag(x); });
+			player.getTags().forEach((x) => { if (!Utilities.persistentTags.includes(x) && !x.startsWith("p_")) player.removeTag(x); });
 
 			// Ensure player is in correct game mode
 			player.setGameMode(GameMode.Adventure);
@@ -85,15 +83,16 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 			levelDefinition.startObjectives.forEach((objData) => {
 				GameObjectiveManager.addObjective(objData.name, objData.sortOrder, false);
 			});
+			if (levelDefinition.onInitialLoadStart && !player.hasTag("p_initialLevelLoad")) levelDefinition.onInitialLoadStart(player);
 			if (levelDefinition.onLoadStart) levelDefinition.onLoadStart(player);
 
-			var elevatorInterval: number;
+			var elevatorIntervalId: number;
 			var waitForLoadLevel = true;
 			if (levelDefinition.customTitle == undefined) player.onScreenDisplay.setTitle(`§o§7Level ${levelId}`, { "fadeInDuration": 20, "fadeOutDuration": 20, "stayDuration": 160 });
 			else if (levelDefinition.customTitle != "") player.onScreenDisplay.setTitle(levelDefinition.customTitle, { "fadeInDuration": 20, "fadeOutDuration": 20, "stayDuration": 160 });
 			if (!levelDefinition.customLoadingArea) {
 				player.teleport(Vector.from(levelDefinition.loadElevatorLoc).add(new Vector(0, 4, 0)), { rotation: player.getRotation() });
-				elevatorInterval = runElelevatorAnimation(Vector.from(levelDefinition.loadElevatorLoc));
+				elevatorIntervalId = runElelevatorAnimation(Vector.from(levelDefinition.loadElevatorLoc));
 			} else if (levelDefinition.customLoadingArea.waitForLoadLevel) {
 				player.teleport(levelDefinition.customLoadingArea.playerLoadingLocation, { rotation: player.getRotation() });
 			} else waitForLoadLevel = false;
@@ -104,13 +103,16 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 			if (levelCloneInfo) system.runTimeout(() => {
 				// Ticking area doesn't depend on Y level and it uses rounded X and Z coordinates
 				Utilities.dimensions.overworld.runCommand(`tickingarea add ${levelCloneInfo.startX} 0 ${levelCloneInfo.startZ} ${levelCloneInfo.endX} 0 ${levelCloneInfo.endZ} level-wide`);
-			}, waitForLoadLevel ? 2 : 0); // Ensure this ticking area isn't removed
+			}, waitForLoadLevel ? 2 : 0); // Wait to ensure this ticking area isn't removed
 
+			let chunkWaitTime = waitForLoadLevel ? Utilities.SECOND * 7.5 : 0;
+			let levelLoadWaitTime = chunkWaitTime + (waitForLoadLevel ? Utilities.SECOND * 2.5 : 0);
+			if (waitForLoadLevel && levelDefinition.initialAdditionalLoadWaitTime && !player.hasTag("p_initialLevelLoad")) levelLoadWaitTime += levelDefinition.initialAdditionalLoadWaitTime * Utilities.SECOND;
 			system.runTimeout(() => {
 				if (!levelDefinition.noAutoCleanup) {
 					const entities = Utilities.dimensions.overworld.getEntities();
 					for (const entity of entities) {
-						if (!persistentEntities.includes(entity.typeId) && !entity.hasTag("persistent")) entity.remove();
+						if (!Utilities.persistentEntities.includes(entity.typeId) && !entity.hasTag("persistent")) entity.remove();
 					}
 					if (levelCloneInfo) {
 						// Clear robot paths in the air
@@ -120,20 +122,20 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 						// Clear sensor mode residue
 						Utilities.dimensions.overworld.runCommand(`clone ${levelCloneInfo.startX} ${Utilities.floorCloneHeight} ${levelCloneInfo.startZ} ${levelCloneInfo.endX} ${Utilities.floorCloneHeight} ${levelCloneInfo.endZ} ${levelCloneInfo.startX} ${Utilities.levelFloorHeight} ${levelCloneInfo.startZ}`);
 						// Move drilled areas back into position
-						Utilities.dimensions.overworld.runCommand(`clone ${levelCloneInfo.startX} ${Utilities.drilledBlocksHeight} ${levelCloneInfo.startZ} ${levelCloneInfo.endX} ${Utilities.drilledBlocksHeight + 1} ${levelCloneInfo.endZ} ${levelCloneInfo.startX} ${Utilities.levelFloorHeight} ${levelCloneInfo.startZ} filtered normal minecraft:hardened_clay`);
 						Utilities.dimensions.overworld.runCommand(`clone ${levelCloneInfo.startX} ${Utilities.drilledBlocksHeight} ${levelCloneInfo.startZ} ${levelCloneInfo.endX} ${Utilities.drilledBlocksHeight + 1} ${levelCloneInfo.endZ} ${levelCloneInfo.startX} ${Utilities.levelPlayingHeight} ${levelCloneInfo.startZ} filtered move minecraft:hardened_clay`);
 					}
 				}
 
 				LevelConstructor.start();
-				levelDefinition.setup(player);
-			}, waitForLoadLevel ? Utilities.SECOND * 7.5 : 0); // After 7.5 seconds load level objects
-			system.runTimeout(() => { // After 10 seconds bring the player out of the elevator and end the interval
-				if (elevatorInterval) system.clearRun(elevatorInterval);
+				levelDefinition.setup();
+			},chunkWaitTime); // After at least 7.5 seconds load level objects
+			system.runTimeout(() => { // After at least 10 seconds bring the player out of the elevator and end the interval
+				if (elevatorIntervalId) system.clearRun(elevatorIntervalId);
 				player.teleport(levelDefinition.startPlayerLoc, { rotation: levelDefinition.startPlayerRot ? { 'x': 0, 'y': levelDefinition.startPlayerRot } : player.getRotation() });
 				if (levelDefinition.onStart) levelDefinition.onStart(player);
 				player.removeTag('loadingLevel');
-			}, waitForLoadLevel ? Utilities.SECOND * 10 : 0);
+				player.addTag('p_initialLevelLoad');
+			}, levelLoadWaitTime);
 			break;
 		}
 		case "theheist:voice-says": {
@@ -196,40 +198,13 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 			}
 			PlayerBustedManager.setTimesBusted(player, 0);
 			// Remove all tags (except persistent), even p_ tags (like for voice over)
-			player.getTags().forEach((x) => { if (!persistentTags.includes(x)) player.removeTag(x); });
-			if (!nextLevel) {
-				if (currLevel != -5) system.sendScriptEvent("theheist:load-level", `${currLevel - 1}`);
-				else endDemo(player);
-			} else if (nextLevel == "end") {
-				endDemo(player);
-			} else {
-				system.sendScriptEvent("theheist:load-level", `${nextLevel}`)
-			}
-			break;
-		}
-		case "theheist:end_demo": {
-			const player = world.getPlayers().filter((player) => (player != undefined && player != null))[0];
-			endDemo(player);
+			player.getTags().forEach((x) => { if (!Utilities.persistentTags.includes(x)) player.removeTag(x); });
+			if (!nextLevel) system.sendScriptEvent("theheist:load-level", `${currLevel - 1}`);
+			else system.sendScriptEvent("theheist:load-level", `${nextLevel}`);
 			break;
 		}
 	}
 });
-
-function endDemo(player: Player) {
-	Utilities.clearPlayerInventory(player);
-	DataManager.clearData(player);
-	player.resetLevel();
-	player.onScreenDisplay.setHudVisibility(HudVisibility.Hide);
-	player.camera.fade({"fadeTime":{"holdTime": 5,"fadeInTime":0.5,"fadeOutTime":0.5}});
-	player.onScreenDisplay.setTitle("Thanks for playing!", {
-		"fadeInDuration": 10,
-		"fadeOutDuration": 10,
-		"stayDuration": 100,
-		"subtitle": "More levels coming soon"
-	});
-	system.runTimeout(() => player.teleport(new Vector(44.5, -59, 70.5), {"rotation":{"x":0,"y":90}}), 20);
-	system.runTimeout(() => player.onScreenDisplay.setHudVisibility(HudVisibility.Reset), 120);
-}
 
 /**
  * Assumes elevator height of 12 blocks

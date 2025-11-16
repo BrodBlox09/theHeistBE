@@ -1,4 +1,4 @@
-import { Vector3 } from "@minecraft/server";
+import { Player, Vector3 } from "@minecraft/server";
 
 export interface ModeData {
 	mode: string,
@@ -119,12 +119,16 @@ export interface CameraTracker extends DataNode {
 	"rotation": number
 }
 
+/**
+ * [1] = min
+ * [2] = max
+ */
 export type ICameraSwivel = [ CameraSwivelMode, number, number ];
 
 export enum CameraSwivelMode {
 	Decrease = 0,
 	Increase = 1,
-	Continous = 2
+	Continuous = 2
 }
 
 export enum BlockRotation {
@@ -167,27 +171,39 @@ export interface ILevel {
 	"levelCloneInfo": ILevelCloneInfo,
 	"startingItems": Array<IInventorySlotData>,
 	"rechargeLevel": number,
+	/**
+	 * Default is the maximum energy that can be stored in the current recharge mode (increases by level).
+	 */
 	"startEnergyUnits"?: number,
 	"startObjectives": Array<IObjectiveData>,
 	"customTitle"?: string,
 	"customLoadingArea"?: {
-		"waitForLoadLevel": boolean,
+		"waitForLoadLevel"?: boolean,
 		"playerLoadingLocation": Vector3
 	},
+	/** 
+	 * Custom total wait time (in seconds) for first-time level load, on top of the .
+	 * Ignored on subsequent loads.
+	 */
+	"initialAdditionalLoadWaitTime"?: number;
 	"playerNoPhone"?: boolean,
 	"timer"?: number,
 	/**
-	 * Second in function execution order.
-	 */
-	"setup": Function,
-	/**
 	 * Last in function execution order.
 	 */
-	"onStart"?: (player: any) => any,
+	"onStart"?: (player: Player) => void,
 	/**
-	 * First in function execution order.
+	 * Third in function execution order.
 	 */
-	"onLoadStart"?: (player: any) => any
+	"setup": () => void,
+	/**
+	 * Second in function execution order.
+	 */
+	"onLoadStart"?: (player: Player) => void
+	/**
+	 * First in function execution order, only run once on initial level load.
+	 */
+	"onInitialLoadStart"?: (player: Player) => void
 }
 
 /**

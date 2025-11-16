@@ -25,6 +25,8 @@ export default class Utilities {
 	static readonly levelPlayingHeight = 60;
 	static readonly levelFloorHeight = 59;
 	static readonly SECOND = 20;
+	static readonly persistentTags = ["loadingLevel","developer","persistent"];
+	static readonly persistentEntities = ["minecraft:player","minecraft:painting","theheist:driver","theheist:rideable"];
 	static dimensions: Record<string, Dimension> = {};
 
 	static sin(d: number): number {
@@ -38,6 +40,10 @@ export default class Utilities {
 	// Inclusive min, exclusive max
 	static getRandInt(min: number, max: number): number {
 		return Math.floor(Math.random() * (max - min) + min);
+	}
+
+	static getRandPN(): number {
+		return 2 * (Math.random() - 0.5);
 	}
 
 	static spawnEntity(location: Vector3, identitifier: EntityType | string): Entity {

@@ -1,0 +1,19 @@
+{
+    "format_version": "1.21.30",
+    "minecraft:block": {
+        "description": {
+            "identifier": "theheist:teleportation_mode_lvl_1"
+        },
+        "components": {
+            "minecraft:geometry": "geometry.teleportation_mode",
+            "minecraft:material_instances": {
+                "icon": {
+                    "texture": "teleportation_icon"
+                },
+                "*": {
+                    "texture": "teleportation_mode"
+                }
+            }
+        }
+    }
+}

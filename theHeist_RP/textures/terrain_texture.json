@@ -138,6 +138,12 @@
         "drill_icon": {
             "textures": "textures/blocks/drill_icon"
         },
+		"teleportation_mode": {
+            "textures": "textures/blocks/teleportation_mode"
+        },
+        "teleportation_icon": {
+            "textures": "textures/blocks/teleportation_icon"
+        },
         "laserscanner": {
             "textures": "textures/blocks/laserscanner"
         },

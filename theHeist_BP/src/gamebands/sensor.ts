@@ -63,6 +63,7 @@ export function toggleSensorMode(player: Player, lvl: number) {
 function tryStartSensorMode(player: Player, lvl: number, gamebandTracker: GamebandTracker, inventoryTracker: InventoryTracker) {
     GamebandManager.cancelMode(player, gamebandTracker.currentMode);
     gamebandTracker = DataManager.getData(player, "gamebandTracker")!;
+    inventoryTracker = DataManager.getData(player, "inventoryTracker")!;
 
     var costPerSecond = sensorModeInfo[lvl].cost;
     var costPerTick = costPerSecond / 20;
