@@ -17,8 +17,36 @@
         "components": {
             "minecraft:geometry": "geometry.vending_machine",
             "minecraft:material_instances": {
-                "*": {
-                    "texture": "vending_machine",
+                "light_blue": {
+                    "texture": "matte_beacon",
+                    "ambient_occlusion": false
+                },
+				"green": {
+                    "texture": "emerald_block",
+                    "ambient_occlusion": false
+                },
+				"orange": {
+                    "texture": "orange_terracotta",
+                    "ambient_occlusion": false
+                },
+				"red": {
+                    "texture": "bed_feet_top",
+                    "ambient_occlusion": false
+                },
+				"blue": {
+                    "texture": "lapis_block",
+                    "ambient_occlusion": false
+                },
+				"iron_block": {
+                    "texture": "iron_block",
+                    "ambient_occlusion": false
+                },
+				"numpad": {
+					"texture": "numpad",
+					"ambient_occlusion": false
+				},
+				"*": {
+                    "texture": "anvil_base",
                     "ambient_occlusion": false
                 }
             }

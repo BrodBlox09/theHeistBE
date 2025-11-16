@@ -174,8 +174,11 @@
         "drawer_decoration": {
             "textures": "textures/blocks/drawer_decoration"
         },
-        "vending_machine": {
-            "textures": "textures/blocks/vending_machine"
+        "bed_feet_top": {
+            "textures": "textures/blocks/bed_feet_top"
+        },
+        "matte_beacon": {
+            "textures": "textures/blocks/matte_beacon"
         },
         "black_wool": {
             "textures": "textures/blocks/wool_colored_black"
