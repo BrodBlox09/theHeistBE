@@ -1,6 +1,12 @@
-import { BlockComponentPlayerBreakEvent, BlockComponentPlayerPlaceBeforeEvent, BlockComponentPlayerInteractEvent, world, system, BlockComponentOnPlaceEvent, BlockPermutation, BlockComponentTickEvent, BlockComponentRegistry } from "@minecraft/server";
+import { BlockComponentPlayerBreakEvent, BlockComponentPlayerPlaceBeforeEvent, BlockComponentPlayerInteractEvent, world, system, BlockComponentOnPlaceEvent, BlockPermutation, BlockComponentTickEvent, BlockComponentRegistry, CustomComponentParameters, MolangVariableMap } from "@minecraft/server";
 import Utilities from "./Utilities";
 import Vector from "./Vector";
+import { spawnPortalParticle } from "./gamebands/teleportation";
+
+function portalParticleEmitterTick(event: BlockComponentTickEvent) {
+	let location = Vector.from(event.block.location).getCenter().add(new Vector(0, 0.5, 0));
+	spawnPortalParticle(location);
+}
 
 function robotPathTick(event: BlockComponentTickEvent) {
     let block = event.block;
@@ -138,5 +144,8 @@ system.beforeEvents.startup.subscribe(event => {
     });
     event.blockComponentRegistry.registerCustomComponent('theheist:robot_path', {
         onTick: robotPathTick
-    })
+    });
+	event.blockComponentRegistry.registerCustomComponent('theheist:portal_particle_emitter', {
+		onTick: portalParticleEmitterTick
+	});
 });

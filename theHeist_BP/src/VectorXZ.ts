@@ -7,6 +7,13 @@ export default class VectorXZ {
 		return new VectorXZ(this.x, this.z);
 	}
 
+	getCentered(): VectorXZ {
+		let centered = this.clone();
+		centered.x = Math.floor(centered.x) + 0.5;
+		centered.z = Math.floor(centered.z) + 0.5;
+		return centered;
+	}
+
 	/**
 	 * Converts a VectorXZ to a Vector
 	 * @param y The y value the new vector will have. Default value is 0.

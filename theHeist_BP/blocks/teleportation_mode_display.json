@@ -27,7 +27,12 @@
                 "origin": [ -6, 5, -2 ],
                 "size": [ 12, 11, 4 ]
             },
-            "minecraft:collision_box": false
+            "minecraft:collision_box": false,
+			"theheist:portal_particle_emitter": {},
+			"minecraft:tick": {
+				"looping": true,
+				"interval_range": [2,2]
+			}
         },
         "permutations": [
             {

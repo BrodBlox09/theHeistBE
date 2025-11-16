@@ -51,6 +51,8 @@ const level: ILevel = {
 	LevelConstructor.staticCamera(new VectorXZ(7909.5, 125.5), 25);
 	LevelConstructor.sonar(new VectorXZ(7905.5, 125.5), -25);
 
+	Utilities.setBlock(new Vector(7910, Utilities.levelPlayingHeight, 130), "minecraft:spruce_door", { "minecraft:cardinal_direction": BlockRotation.SOUTH });
+
 	LevelConstructor.rechargeStation(new VectorXZ(7911, 132), BlockRotation.WEST);
 }
 
@@ -104,10 +106,12 @@ const level: ILevel = {
 	LevelConstructor.rechargeStation(new VectorXZ(7926.5, 166.5), BlockRotation.EAST);
 	LevelConstructor.rechargeStation(new VectorXZ(7926.5, 167.5), BlockRotation.EAST);
 
+	Utilities.setBlock(new Vector(7919, Utilities.levelPlayingHeight + 2, 158), "minecraft:portal", { "portal_axis": "x" });
+
 	LevelConstructor.computer(new VectorXZ(7920.5, 170.5), "Research info", BlockRotation.SOUTH, new ActionListBuilder()
 		.add(new DisplayResearchAction(600))
 		.build());
-	LevelConstructor.newGameband(new VectorXZ(7908.5, 164.5), "teleportation", "§r§dTeleportation", 8, BlockRotation.EAST, new ActionListBuilder()
+	LevelConstructor.newGameband(new VectorXZ(7908.5, 164.5), "teleportation", "§r§dTeleportation", 8, BlockRotation.EAST, new ActionListBuilder(0)
 		.add(new VoiceSaysAction(703))
 		.build());
 }

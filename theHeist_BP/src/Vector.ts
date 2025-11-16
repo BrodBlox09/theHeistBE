@@ -15,6 +15,14 @@ export default class Vector implements Vector3 {
         return this.add(Vector.down);
     }
 
+	getCenter(): Vector {
+		let centered = this.clone();
+		centered.x = Math.floor(centered.x) + 0.5;
+		centered.y = Math.floor(centered.y) + 0.5;
+		centered.z = Math.floor(centered.z) + 0.5;
+		return centered;
+	}
+
     /**
      * 
      * @param oV Other vector to add
