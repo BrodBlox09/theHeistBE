@@ -59,13 +59,13 @@ const level: ILevel = {
 { // 6-Camera Matrix Hall
 	// 0 | 1 - 2 | 3
 	// Second row, 0
-	LevelConstructor.dynamicCamera(new VectorXZ(7922.5, 129.5), [CameraSwivelMode.Decrease, 40, 285]);
+	LevelConstructor.dynamicCamera(new VectorXZ(7922.5, 129.5), [CameraSwivelMode.Increase, -75, 40]);
 	// Second row, 2
-	LevelConstructor.dynamicCamera(new VectorXZ(7922.5, 141.5), [CameraSwivelMode.Decrease, -55, 195]);
+	LevelConstructor.dynamicCamera(new VectorXZ(7922.5, 141.5), [CameraSwivelMode.Increase, -165, -55]);
 	// Third row, 3
 	LevelConstructor.dynamicCamera(new VectorXZ(7929.5, 145.5), [CameraSwivelMode.Increase, 110, 250]);
 	// Between fourth and fifth row, 1
-	LevelConstructor.dynamicCamera(new VectorXZ(7936.5, 134.5), [CameraSwivelMode.Increase, 90, 275]);
+	LevelConstructor.dynamicCamera(new VectorXZ(7936.5, 134.5), [CameraSwivelMode.Increase, -85, 90]);
 	// Between sixth and seventh row, 0
 	LevelConstructor.dynamicCamera(new VectorXZ(7946.5, 132.5), [CameraSwivelMode.Increase, 65, 100]);
 	// Seventh row, 3
