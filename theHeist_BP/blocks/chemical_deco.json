@@ -18,106 +18,124 @@
         },
         "permutations": [
             {
-                // Water
                 "condition": "query.block_state('theheist:type') == 0",
                 "components": {
                     "minecraft:geometry": "geometry.chemical_deco_1",
                     "minecraft:material_instances": {
-                        "*": {
-                            "texture": "chemical_deco_blue",
+						"fire": {
+                            "texture": "fire",
                             "ambient_occlusion": false,
-                            // Blend allows for transparent textures
+                            "render_method": "blend"
+                        },
+						"grate": {
+                            "texture": "grate",
+                            "ambient_occlusion": false,
+                            "render_method": "blend"
+                        },
+                        "*": {
+                            "texture": "anvil_base",
+                            "ambient_occlusion": false,
                             "render_method": "blend"
                         }
                     }
                 }
             },
             {
-                // Blood lookin thing
                 "condition": "query.block_state('theheist:type') == 1",
                 "components": {
                     "minecraft:geometry": "geometry.chemical_deco_2",
                     "minecraft:material_instances": {
-                        "*": {
-                            "texture": "chemical_deco_red",
+                        "chemical_3": {
+                            "texture": "chemical_3",
                             "ambient_occlusion": false,
-                            // Blend allows for transparent textures
+                            "render_method": "blend"
+                        },
+						"*": {
+                            "texture": "white_glass",
+                            "ambient_occlusion": false,
                             "render_method": "blend"
                         }
                     }
                 }
             },
             {
-                // Double vials
                 "condition": "query.block_state('theheist:type') == 2",
                 "components": {
                     "minecraft:geometry": "geometry.chemical_deco_3",
                     "minecraft:material_instances": {
-                        "*": {
-                            "texture": "chemical_deco_2color",
+                        "chemical_1": {
+                            "texture": "chemical_1",
                             "ambient_occlusion": false,
-                            // Blend allows for transparent textures
+                            "render_method": "blend"
+                        },
+						"chemical_2": {
+                            "texture": "chemical_2",
+                            "ambient_occlusion": false,
+                            "render_method": "blend"
+                        },
+						"*": {
+                            "texture": "white_glass",
+                            "ambient_occlusion": false,
                             "render_method": "blend"
                         }
                     }
                 }
             },
             {
-                // Double vials on a stand
                 "condition": "query.block_state('theheist:type') == 3",
                 "components": {
                     "minecraft:geometry": "geometry.chemical_deco_4",
                     "minecraft:material_instances": {
-                        "wood": {
-                            "texture": "oak_log",
+                        "chemical_1": {
+                            "texture": "chemical_1",
                             "ambient_occlusion": false,
-                            // Blend is required here because "MaterialInstances can't mix and match opaque and blend rendering methods"
                             "render_method": "blend"
                         },
-                        "*": {
-                            "texture": "chemical_deco_2color",
+						"chemical_2": {
+                            "texture": "chemical_2",
                             "ambient_occlusion": false,
-                            // Blend allows for transparent textures
+                            "render_method": "blend"
+                        },
+						"*": {
+                            "texture": "white_glass",
+                            "ambient_occlusion": false,
                             "render_method": "blend"
                         }
                     }
                 }
             },
             {
-                // Single large vial
                 "condition": "query.block_state('theheist:type') == 4",
                 "components": {
                     "minecraft:geometry": "geometry.chemical_deco_5",
                     "minecraft:material_instances": {
-                        "*": {
-                            "texture": "chemical_deco_red",
+                        "water": {
+                            "texture": "water_flow",
                             "ambient_occlusion": false,
-                            // Blend allows for transparent textures
+                            "render_method": "blend"
+                        },
+						"*": {
+                            "texture": "white_glass",
+                            "ambient_occlusion": false,
                             "render_method": "blend"
                         }
                     }
                 }
             },
             {
-                // Bunsen Burner
                 "condition": "query.block_state('theheist:type') == 5",
                 "components": {
                     "minecraft:geometry": "geometry.chemical_deco_6",
                     "minecraft:material_instances": {
-                        "fire": {
-                            "texture": "fire",
+                        "chemical_3": {
+                            "texture": "chemical_3",
                             "ambient_occlusion": false,
-                            "render_method": "alpha_test"
+                            "render_method": "blend"
                         },
-                        "grate": {
-                            "texture": "grate",
+						"*": {
+                            "texture": "white_glass",
                             "ambient_occlusion": false,
-                            "render_method": "alpha_test"
-                        },
-                        "*": {
-                            "texture": "chemical_deco_metal",
-                            "ambient_occlusion": false,
-                            "render_method": "alpha_test"
+                            "render_method": "blend"
                         }
                     }
                 }

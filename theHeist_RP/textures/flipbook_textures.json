@@ -220,5 +220,34 @@
         "flipbook_texture": "textures/blocks/anvil_base_animated",
         "atlas_tile": "anvil_base_animated",
         "ticks_per_frame": 14
+    },
+	{
+        "flipbook_texture": "textures/blocks/anvil_base_animated",
+        "atlas_tile": "anvil_base_animated",
+        "ticks_per_frame": 14
+    },
+	{
+        "flipbook_texture": "textures/blocks/chemical_decos/chem1",
+        "atlas_tile": "chemical_1",
+        "ticks_per_frame": 2,
+		"blend_frames": false
+    },
+	{
+        "flipbook_texture": "textures/blocks/chemical_decos/chem2",
+        "atlas_tile": "chemical_2",
+        "ticks_per_frame": 2,
+		"blend_frames": false
+    },
+	{
+        "flipbook_texture": "textures/blocks/chemical_decos/chem3",
+        "atlas_tile": "chemical_3",
+        "ticks_per_frame": 2,
+		"blend_frames": false
+    },
+	{
+        "flipbook_texture": "textures/blocks/water_flow",
+        "atlas_tile": "water_flow",
+        "ticks_per_frame": 2,
+		"blend_frames": false
     }
 ]
