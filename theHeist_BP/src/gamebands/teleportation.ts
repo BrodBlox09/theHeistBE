@@ -40,7 +40,7 @@ export function tryTeleportationMode(player: Player, lvl: number) {
 	player.onScreenDisplay.setTitle("To be continued...", {
 		"fadeInDuration": 10,
 		"fadeOutDuration": 10,
-		"stayDuration": finalSceneHoldTimeSeconds * Utilities.SECOND,
+		"stayDuration": finalSceneHoldTimeSeconds * Utilities.SECOND - 10, // Subtract 10 to account for fade in
 		"subtitle": `You finished "The Heist"!`
 	});
 	player.onScreenDisplay.setActionBar("");
