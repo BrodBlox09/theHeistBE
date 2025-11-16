@@ -24,9 +24,6 @@
     "theheist:sonar_sight": {
         "textures": "sonar_sight"
     },
-    "theheist:white_trapdoor": {
-        "textures": "white_trapdoor"
-    },
     "theheist:reinforced_iron_block": {
         "textures": "reinforced_iron_block"
     },

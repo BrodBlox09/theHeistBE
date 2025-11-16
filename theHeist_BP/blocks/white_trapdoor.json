@@ -19,12 +19,10 @@
         "components": {
             "minecraft:material_instances": {
                 "*": {
-                    "texture": "white_trapdoor"
+                    "texture": "iron_block"
                 }
             },
-            "minecraft:custom_components": [
-                "theheist:trapdoor"
-            ],
+            "theheist:trapdoor": {},
             "tag:one_way_collidable": {} // Prevents the player from being pushed out by the trapdoor collision, just like vanilla
         },
         "permutations": [
@@ -53,7 +51,7 @@
                 }
             },
             {
-                "condition": "query.block_state('theheist:isopen') == true",
+                "condition": "query.block_state('theheist:isopen') == 1",
                 "components": {
                     "minecraft:geometry": "geometry.white_trapdoor_open",
                     "minecraft:selection_box": {
@@ -67,7 +65,7 @@
                 }
             },
             {
-                "condition": "query.block_state('theheist:isopen') == false",
+                "condition": "query.block_state('theheist:isopen') == 0",
                 "components": {
                     "minecraft:geometry": "geometry.white_trapdoor_closed",
                     "minecraft:selection_box": {

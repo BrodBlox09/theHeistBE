@@ -54,9 +54,6 @@
         "sonar_sight": {
             "textures": "textures/blocks/sonar_sight"
         },
-        "white_trapdoor": {
-            "textures": "textures/blocks/white_trapdoor"
-        },
         "reinforced_iron_block": {
             "textures": "textures/blocks/reinforced_iron_block"
         },
