@@ -33,6 +33,7 @@ export default class LevelConstructor {
     }
 
     static gamebandUpgrade(loc: VectorXZ, mode: string, modeText: string, level: number, inventorySlot: number, blockRot: BlockRotation, actions: ActionList) {
+		loc = loc.getCentered();
         const console = Utilities.spawnEntity({ "x": loc.x, "y": Utilities.consolesHeight, "z": loc.z }, "armor_stand");
         Utilities.setBlock(loc.toVector(Utilities.consoleDisplayHeight), `theheist:${mode}_mode_display`, { "minecraft:cardinal_direction": blockRot });
         const modeInCase = mode.substring(0, 1).toUpperCase() + mode.substring(1).toLowerCase();
@@ -61,6 +62,7 @@ export default class LevelConstructor {
     }
 
     static newGameband(loc: VectorXZ, mode: string, modeText: string, inventorySlot: number, blockRot: BlockRotation, actions: ActionList) {
+		loc = loc.getCentered();
         const console = Utilities.spawnEntity({ "x": loc.x, "y": Utilities.consolesHeight, "z": loc.z }, "armor_stand");
         Utilities.setBlock(loc.toVector(Utilities.consoleDisplayHeight), `theheist:${mode}_mode_display`, { "minecraft:cardinal_direction": blockRot });
         const modeInCase = mode.substring(0, 1).toUpperCase() + mode.substring(1).toLowerCase();
@@ -89,6 +91,7 @@ export default class LevelConstructor {
     }
 
     static keycardReader(loc: VectorXZ, color: string, actions: ActionList) {
+		loc = loc.getCentered();
         const console = Utilities.spawnEntity({ "x": loc.x, "y": Utilities.consolesHeight, "z": loc.z }, "armor_stand");
         const consoleActionTracker: KeycardReaderActionTracker = {
             "name": "actionTracker",
@@ -101,6 +104,7 @@ export default class LevelConstructor {
     }
 
     static keypad(loc: VectorXZ, level: number, blockRot: BlockRotation, actions: ActionList) {
+		loc = loc.getCentered();
         const console = Utilities.spawnEntity({ "x": loc.x, "y": Utilities.consolesHeight, "z": loc.z }, "armor_stand");
         Utilities.setBlock(loc.toVector(Utilities.consoleDisplayHeight), "theheist:keypad", { "minecraft:cardinal_direction": blockRot });
         Utilities.spawnEntity(loc.toVector(Utilities.consoleDisplayHeight), "theheist:hover_text").nameTag = `Lvl. ${level}`;
@@ -123,6 +127,7 @@ export default class LevelConstructor {
     }
 
     static keypadWithPrereq(loc: VectorXZ, level: number, blockRot: BlockRotation, actions: ActionList, prereq: IPrerequisiteList, desc: string = "") {
+		loc = loc.getCentered();
         const console = Utilities.spawnEntity({ "x": loc.x, "y": Utilities.consolesHeight, "z": loc.z }, "armor_stand");
         Utilities.setBlock(loc.toVector(Utilities.consoleDisplayHeight), "theheist:keypad", { "minecraft:cardinal_direction": blockRot });
         if (desc.length > 0) Utilities.spawnEntity(loc.toVector(Utilities.consoleDisplayHeight), "theheist:hover_text").nameTag = desc;
@@ -146,6 +151,7 @@ export default class LevelConstructor {
     }
 
     static computer(loc: VectorXZ, desc: string, blockRot: BlockRotation, actions: ActionList) {
+		loc = loc.getCentered();
         const console = Utilities.spawnEntity({ "x": loc.x, "y": Utilities.consolesHeight, "z": loc.z }, "armor_stand");
         Utilities.setBlock(loc.toVector(Utilities.consoleDisplayHeight), "theheist:computer", { "minecraft:cardinal_direction": blockRot });
         Utilities.spawnEntity(loc.toVector(Utilities.consoleDisplayHeight), "theheist:hover_text").nameTag = desc;
@@ -168,6 +174,7 @@ export default class LevelConstructor {
     }
 
     static rechargeStation(loc: VectorXZ, blockRot: BlockRotation, energyUnits: number = 100.0, onDepletionActionList: ActionList = []) {
+		loc = loc.getCentered();
         const recharge = Utilities.spawnEntity(new Vector(loc.x, Utilities.rechargeHeight, loc.z), "minecraft:armor_stand");
         Utilities.setBlock(loc.toVector(Utilities.levelPlayingHeight), "theheist:recharge_station", { "minecraft:cardinal_direction": blockRot });
         const rechargeDataNode: EnergyTracker = {
@@ -182,6 +189,7 @@ export default class LevelConstructor {
     }
 
     static staticCamera(loc: VectorXZ, rot: number) {
+		loc = loc.getCentered();
         const camera = Utilities.spawnEntity(new Vector(loc.x, Utilities.cameraHeight, loc.z), "armor_stand");
         var rotationVector = { 'x': 0, 'y': rot };
         camera.setRotation(rotationVector);
@@ -199,6 +207,7 @@ export default class LevelConstructor {
     }
 
     static dynamicCamera(loc: VectorXZ, swivel: ICameraSwivel) {
+		loc = loc.getCentered();
         const camera = Utilities.spawnEntity(new Vector(loc.x, Utilities.cameraHeight, loc.z), "armor_stand");
         var rotationVector = { 'x': 0, 'y': swivel[1] };
         camera.setRotation(rotationVector);
@@ -217,6 +226,7 @@ export default class LevelConstructor {
     }
 
     static sonar(loc: VectorXZ, rot: number) {
+		loc = loc.getCentered();
         const sonar = Utilities.spawnEntity(new Vector(loc.x, Utilities.cameraHeight, loc.z), "armor_stand");
         var rotationVector = { 'x': 0, 'y': rot };
         sonar.setRotation(rotationVector);
@@ -234,6 +244,7 @@ export default class LevelConstructor {
     }
 
     static sonar360(loc: VectorXZ) {
+		loc = loc.getCentered();
         const sonar360 = Utilities.spawnEntity(new Vector(loc.x, Utilities.cameraHeight, loc.z), "armor_stand");
         Utilities.spawnEntity(loc.toVector(Utilities.cameraDisplayHeight), "theheist:sonar360");
         const sonarDataNode: CameraTracker = {
@@ -249,6 +260,7 @@ export default class LevelConstructor {
     }
 
     static cameraRobot(loc: VectorXZ, rot: number) {
+		loc = loc.getCentered();
         const robot = Utilities.spawnEntity({ "x": loc.x, "y": Utilities.cameraHeight, "z": loc.z }, "armor_stand");
         robot.setRotation({ "x": 0, "y": rot });
         robot.addTag("robot");
@@ -267,6 +279,7 @@ export default class LevelConstructor {
     }
 
     static staticCameraRobot(loc: VectorXZ, rot: number) {
+		loc = loc.getCentered();
         const robot = Utilities.spawnEntity({ "x": loc.x, "y": Utilities.cameraHeight, "z": loc.z }, "armor_stand");
         robot.setRotation({ "x": 0, "y": rot });
         robot.addTag("robot");
@@ -286,6 +299,7 @@ export default class LevelConstructor {
     }
 
     static sonarRobot(loc: VectorXZ, rot: number) {
+		loc = loc.getCentered();
         const robot = Utilities.spawnEntity({ "x": loc.x, "y": Utilities.cameraHeight, "z": loc.z }, "armor_stand");
         robot.setRotation({ "x": 0, "y": rot });
         robot.addTag("robot");
@@ -304,6 +318,7 @@ export default class LevelConstructor {
     }
 
     static staticSonarRobot(loc: VectorXZ, rot: number) {
+		loc = loc.getCentered();
         const robot = Utilities.spawnEntity({ "x": loc.x, "y": Utilities.cameraHeight, "z": loc.z }, "armor_stand");
         robot.setRotation({ "x": 0, "y": rot });
         robot.addTag("robot");
