@@ -159,14 +159,10 @@ function updateRobots(player: Player) {
 				if (cameraDataNode.stunTimer <= 0) cameraDataNode.isStunned = false;
 				DataManager.setData(cameraRobotArmorStand, cameraDataNode);
 
-				var cameraRobotQuery = {
-					"type": (cameraDataNode.type == "camera") ? "theheist:camera_robot" : "theheist:sonar_robot",
-					"location": { 'x': cameraRobotArmorStand.location.x, 'y': Utilities.levelPlayingHeight, 'z': cameraRobotArmorStand.location.z },
-					"maxDistance": 5,
-					"closest": 1
-				};
-				var cameraRobot = Utilities.dimensions.overworld.getEntities(cameraRobotQuery)[0];
-				if (system.currentTick % 3 == 0) disabledSecurityDeviceEffect(Vector.from(cameraRobot.location));
+				let trackerLocation = Vector.from(cameraRobotArmorStand.location);
+				let cameraRobotLocation = trackerLocation.clone();
+				cameraRobotLocation.y = Utilities.robotDisplayHeight;
+				if (system.currentTick % 3 == 0) disabledSecurityDeviceEffect(cameraRobotLocation.add(new Vector(0, 0.5, 0)));
 				return;
 			}
 			var move = (!cameraDataNode.isStatic);
@@ -204,9 +200,8 @@ function updateRobots(player: Player) {
 }
 
 function disabledSecurityDeviceEffect(loc: Vector) {
-	loc = loc.getCenter();
 	var molangVarMap = new MolangVariableMap();
-	molangVarMap.setVector3("velocity", new Vector(0, 0, 0));
+	molangVarMap.setVector3("velocity", Vector.zero);
 	Utilities.dimensions.overworld.spawnParticle("minecraft:explosion_particle", loc, molangVarMap);
 }
 
@@ -242,7 +237,7 @@ function updateCameras(player: Player, levelCI: ILevelCloneInfo) {
 				let trackerLocation = Vector.from(x.location);
 				let displayCameraLocation = trackerLocation.clone();
 				displayCameraLocation.y = Utilities.cameraDisplayHeight;
-				disabledSecurityDeviceEffect(displayCameraLocation);
+				disabledSecurityDeviceEffect(displayCameraLocation.getCenter());
 			}
 			return false;
 		}
@@ -345,19 +340,15 @@ function updateSonars(player: Player, levelCI: ILevelCloneInfo) {
 		var cameraTrackerDataNode = DataManager.getData(x, "cameraTracker");
 		if (x.location.y != Utilities.cameraHeight || !cameraTrackerDataNode || cameraTrackerDataNode.type != "sonar") return false;
 		if (cameraTrackerDataNode.disabled) {
-			var displayCameraQuery = {
-				"type": `theheist:sonar`,
-				"location": { 'x': x.location.x, 'y': Utilities.cameraDisplayHeight, 'z': x.location.z },
-				"maxDistance": 3,
-				"closest": 1
+			if (system.currentTick % 3 == 0) {
+				let trackerLocation = Vector.from(x.location);
+				let displayCameraLocation = trackerLocation.clone();
+				displayCameraLocation.y = Utilities.cameraDisplayHeight;
+				disabledSecurityDeviceEffect(displayCameraLocation.getCenter());
 			}
-			var displayCamera = Utilities.dimensions.overworld.getEntities(displayCameraQuery)[0];
-			if (system.currentTick % 3 == 0) disabledSecurityDeviceEffect(Vector.from(displayCamera.location));
 			return false;
 		}
-		if (cameraTrackerDataNode.isStunned) {
-			return false;
-		}
+		if (cameraTrackerDataNode.isStunned) return false;
 		return true;
 	});
 
@@ -409,19 +400,15 @@ function updateSonar360s(player: Player) {
 		var cameraTrackerDataNode = DataManager.getData(x, "cameraTracker");
 		if (x.location.y != Utilities.cameraHeight || !cameraTrackerDataNode || cameraTrackerDataNode.type != "sonar360") return false;
 		if (cameraTrackerDataNode.disabled) {
-			var displayCameraQuery = {
-				"type": `theheist:sonar360`,
-				"location": { 'x': x.location.x, 'y': Utilities.cameraDisplayHeight, 'z': x.location.z },
-				"maxDistance": 3,
-				"closest": 1
+			if (system.currentTick % 3 == 0) {
+				let trackerLocation = Vector.from(x.location);
+				let displayCameraLocation = trackerLocation.clone();
+				displayCameraLocation.y = Utilities.cameraDisplayHeight;
+				disabledSecurityDeviceEffect(displayCameraLocation.getCenter());
 			}
-			var displayCamera = Utilities.dimensions.overworld.getEntities(displayCameraQuery)[0];
-			if (system.currentTick % 3 == 0) disabledSecurityDeviceEffect(Vector.from(displayCamera.location));
 			return false;
 		}
-		if (cameraTrackerDataNode.isStunned) {
-			return false;
-		}
+		if (cameraTrackerDataNode.isStunned) return false;
 		return true;
 	});
 
@@ -439,7 +426,6 @@ function updateSonar360s(player: Player) {
 			armorStand.kill();
 		});
 		sonarArmorStands.forEach((armorStand) => {
-			var yRot = armorStand.getRotation().y;
 			var maxCount = rayDensity;
 			//system.runTimeout(() => {
 				for (var i = 0; i < maxCount; i++) {
