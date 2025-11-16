@@ -4,28 +4,28 @@
     "num_mip_levels": 1,
     "texture_data": {
         "power_green": {
-            "textures": "textures/blocks/gameband-displays/power_green"
+            "textures": "textures/blocks/gamebands/gameband_displays/power_green"
         },
         "power_blue": {
-            "textures": "textures/blocks/gameband-displays/power_blue"
+            "textures": "textures/blocks/gamebands/gameband_displays/power_blue"
         },
         "power_blank": {
-            "textures": "textures/blocks/gameband-displays/power_blank"
+            "textures": "textures/blocks/gamebands/gameband_displays/power_blank"
         },
         "quartz_theme_side": {
-            "textures": "textures/blocks/gameband-displays/quartz_theme_side"
+            "textures": "textures/blocks/gamebands/gameband_displays/quartz_theme_side"
         },
         "forcefield": {
             "textures": "textures/blocks/forcefield_texture"
         },
         "quartz_theme_top": {
-            "textures": "textures/blocks/gameband-displays/quartz_theme_top"
+            "textures": "textures/blocks/gamebands/gameband_displays/quartz_theme_top"
         },
         "command_decoration": {
             "textures": "textures/blocks/command_block"
         },
         "gray_base": {
-            "textures": "textures/blocks/gameband-displays/gray_base"
+            "textures": "textures/blocks/gamebands/gameband_displays/gray_base"
         },
         "locked_screen": {
             "textures": "textures/blocks/redstone_block_animated"
@@ -61,34 +61,34 @@
             "textures": "textures/blocks/file_cabinet"
         },
         "recharge_mode": {
-            "textures": "textures/blocks/recharge_mode"
+            "textures": "textures/blocks/gamebands/recharge/recharge_mode"
         },
         "recharge_icon": {
-            "textures": "textures/blocks/recharge_icon"
+            "textures": "textures/blocks/gamebands/recharge/recharge_icon"
         },
         "recharge_mode_enchanted": {
-            "textures": "textures/blocks/recharge_mode_enchanted"
+            "textures": "textures/blocks/gamebands/recharge/recharge_mode_enchanted"
         },
         "recharge_icon_enchanted": {
-            "textures": "textures/blocks/recharge_icon_enchanted"
+            "textures": "textures/blocks/gamebands/recharge/recharge_icon_enchanted"
         },
         "hacking_mode": {
-            "textures": "textures/blocks/hacking_mode"
+            "textures": "textures/blocks/gamebands/hacking/hacking_mode"
         },
         "hack_icon": {
-            "textures": "textures/blocks/hack_icon"
+            "textures": "textures/blocks/gamebands/hacking/hacking_icon"
         },
         "sensor_mode": {
-            "textures": "textures/blocks/sensor_mode"
+            "textures": "textures/blocks/gamebands/sensor/sensor_mode"
         },
         "sensor_icon": {
-            "textures": "textures/blocks/sensor_icon"
+            "textures": "textures/blocks/gamebands/sensor/sensor_icon"
         },
         "sensor_mode_enchanted": {
-            "textures": "textures/blocks/sensor_mode_enchanted"
+            "textures": "textures/blocks/gamebands/sensor/sensor_mode_enchanted"
         },
         "sensor_icon_enchanted": {
-            "textures": "textures/blocks/sensor_icon_enchanted"
+            "textures": "textures/blocks/gamebands/sensor/sensor_icon_enchanted"
         },
         "camera_sight_enchanted": {
             "textures": "textures/blocks/camera_sight_enchanted"
@@ -97,49 +97,49 @@
             "textures": "textures/blocks/sonar_sight_enchanted"
         },
         "xray_mode": {
-            "textures": "textures/blocks/xray_mode"
+            "textures": "textures/blocks/gamebands/xray/xray_mode"
         },
         "xray_icon": {
-            "textures": "textures/blocks/xray_icon"
+            "textures": "textures/blocks/gamebands/xray/xray_icon"
         },
         "xray_mode_enchanted": {
-            "textures": "textures/blocks/xray_mode_enchanted"
+            "textures": "textures/blocks/gamebands/xray/xray_mode_enchanted"
         },
         "xray_icon_enchanted": {
-            "textures": "textures/blocks/xray_icon_enchanted"
+            "textures": "textures/blocks/gamebands/xray/xray_icon_enchanted"
         },
         "stealth_mode": {
-            "textures": "textures/blocks/stealth_mode"
+            "textures": "textures/blocks/gamebands/stealth/stealth_mode"
         },
         "stealth_icon": {
-            "textures": "textures/blocks/stealth_icon"
+            "textures": "textures/blocks/gamebands/stealth/stealth_icon"
         },
         "stealth_mode_enchanted": {
-            "textures": "textures/blocks/stealth_mode_enchanted"
+            "textures": "textures/blocks/gamebands/stealth/stealth_mode_enchanted"
         },
         "stealth_icon_enchanted": {
-            "textures": "textures/blocks/stealth_icon_enchanted"
+            "textures": "textures/blocks/gamebands/stealth/stealth_icon_enchanted"
         },
         "stun_mode": {
-            "textures": "textures/blocks/stun_mode"
+            "textures": "textures/blocks/gamebands/stun/stun_mode"
         },
         "stun_icon": {
-            "textures": "textures/blocks/stun_icon"
+            "textures": "textures/blocks/gamebands/stun/stun_icon"
         },
         "lightning": {
             "textures": "textures/blocks/lightning"
         },
         "drill_mode": {
-            "textures": "textures/blocks/drill_mode"
+            "textures": "textures/blocks/gamebands/drill/drill_mode"
         },
         "drill_icon": {
-            "textures": "textures/blocks/drill_icon"
+            "textures": "textures/blocks/gamebands/drill/drill_icon"
         },
 		"teleportation_mode": {
-            "textures": "textures/blocks/teleportation_mode"
+            "textures": "textures/blocks/gamebands/teleportation/teleportation_mode"
         },
         "teleportation_icon": {
-            "textures": "textures/blocks/teleportation_icon"
+            "textures": "textures/blocks/gamebands/teleportation/teleportation_icon"
         },
         "laserscanner": {
             "textures": "textures/blocks/laserscanner"
@@ -217,16 +217,16 @@
             "textures": "textures/blocks/conveyor"
         },
         "magnet_mode": {
-            "textures": "textures/blocks/magnet_mode"
+            "textures": "textures/blocks/gamebands/magnet/magnet_mode"
         },
         "magnet_icon": {
-            "textures": "textures/blocks/magnet_icon"
+            "textures": "textures/blocks/gamebands/magnet/magnet_icon"
         },
         "magnet_mode_enchanted": {
-            "textures": "textures/blocks/magnet_mode_enchanted"
+            "textures": "textures/blocks/gamebands/magnet/magnet_mode_enchanted"
         },
         "magnet_icon_enchanted": {
-            "textures": "textures/blocks/magnet_icon_enchanted"
+            "textures": "textures/blocks/gamebands/magnet/magnet_icon_enchanted"
         },
         "mushroom_insides": {
             "textures": "textures/blocks/mushroom_insides"
