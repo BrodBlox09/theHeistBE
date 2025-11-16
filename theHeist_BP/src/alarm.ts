@@ -71,7 +71,7 @@ function updatePlayerAlarmLevel(player: Player, gamebandTracker: GamebandTracker
 		let playerVelocity = Math.abs(playerVelocityV3.x) + Math.abs(playerVelocityV3.y) + Math.abs(playerVelocityV3.z);
 		playerVelocity *= 100; // Because the player's velocity is a small number, raise it
 		if (playerVelocity > 5) {
-			player.playSound("note.snare", { "pitch": 1.75, "volume": 0.5 });
+			player.playSound("note.snare", { "pitch": 1.8, "volume": 0.5 });
 			if (playerVelocity > 40) playerVelocity = 40;
 			alarmTracker.level += playerVelocity;
 		} else player.playSound("note.pling", { "pitch": 2, "volume": 0.4 });
