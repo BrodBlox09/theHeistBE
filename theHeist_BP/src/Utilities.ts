@@ -42,6 +42,10 @@ export default class Utilities {
 		return Math.floor(Math.random() * (max - min) + min);
 	}
 
+	static getRandPN(): number {
+		return 2 * (Math.random() - 0.5);
+	}
+
 	static spawnEntity(location: Vector3, identitifier: EntityType | string): Entity {
 		return this.dimensions.overworld.spawnEntity(identitifier, location);
 	}

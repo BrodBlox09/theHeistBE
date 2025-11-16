@@ -1,4 +1,5 @@
 import { Vector3 } from "@minecraft/server";
+import Utilities from "./Utilities";
 
 export default class Vector implements Vector3 {
     constructor(public x: number, public y: number, public z: number) {}
@@ -50,6 +51,10 @@ export default class Vector implements Vector3 {
     toString() {
         return `${this.x} ${this.y} ${this.z}`;
     }
+
+	static getRandom(): Vector {
+		return new Vector(Utilities.getRandPN(), Utilities.getRandPN(), Utilities.getRandPN());
+	}
 
     static from(v3: Vector3) {
         return new Vector(v3.x, v3.y, v3.z);

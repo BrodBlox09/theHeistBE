@@ -59,10 +59,6 @@ export function teleportationTick(player: Player, gamebandTracker: GamebandTrack
 
 export function spawnPortalParticle(location: Vector3) {
 	let varMap = new MolangVariableMap();
-	varMap.setVector3("direction", new Vector(getRandPN(), getRandPN(), getRandPN()));
+	varMap.setVector3("direction", Vector.getRandom());
 	Utilities.dimensions.overworld.spawnParticle("minecraft:portal_directional", location, varMap);
-}
-
-function getRandPN() {
-	return 2 * (Math.random() - 0.5);
 }
