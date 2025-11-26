@@ -60,7 +60,7 @@ export default class Vector implements Vector3 {
         return new Vector(v3.x, v3.y, v3.z);
     }
 
-    static up = new Vector(0, 1, 0);
-    static down = new Vector(0, -1, 0);
-	static zero = new Vector(0, 0, 0);
+    static readonly up = new Vector(0, 1, 0);
+    static readonly down = new Vector(0, -1, 0);
+	static readonly zero = new Vector(0, 0, 0);
 }
