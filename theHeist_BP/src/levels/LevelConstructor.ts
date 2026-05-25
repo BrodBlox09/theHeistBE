@@ -337,8 +337,8 @@ export default class LevelConstructor {
         cameras++;
     }
 
-    static keycardDrawer(loc: VectorXZ, color: string) {
-        const drawerInventoryContainer = Utilities.dimensions.overworld.getBlock(loc.toVector(Utilities.levelPlayingHeight))?.getComponent("inventory")!.container!;
+    static keycardDrawer(loc: VectorXZ, color: string, height = Utilities.levelPlayingHeight) {
+		const drawerInventoryContainer = Utilities.dimensions.overworld.getBlock(loc.toVector(height))?.getComponent("inventory")!.container!;
         drawerInventoryContainer.clearAll();
         var keycardTypeId = `minecraft:${color}_dye`;
         if (color == "blue") keycardTypeId = "minecraft:lapis_lazuli";

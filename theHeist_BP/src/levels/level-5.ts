@@ -305,7 +305,7 @@ setup: () => {
     {
         "type": "hack_console", "do": { "x": 6910, "z": 102 }
     }]);
-    LevelConstructor.keycardDrawer(new VectorXZ(6900, 110), "red");
+    LevelConstructor.keycardDrawer(new VectorXZ(6900, 110), "red", Utilities.levelPlayingHeight + 1);
 
     Utilities.setBlock(new Vector(6902, Utilities.levelPlayingHeight, 110), "minecraft:wooden_door", {"direction":2});
 } // Chief of Staff
